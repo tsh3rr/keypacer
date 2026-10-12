@@ -38,7 +38,7 @@ Projekt → **Authentication** → **URL Configuration**:
 Projekt → **Authentication** → **Sign In / Providers** → **Email**:
 
 - **Enable Email provider**: an
-- **Confirm email**: **aus**, solange es keinen eigenen Mailversand gibt (Schritt 6). Sonst bekommt jeder neue Nutzer eine Bestätigungsmail, die der eingebaute Versand nicht zustellt, und kann sich nie anmelden. Nachteil: Die E-Mail-Adresse wird nicht geprüft. Passwort vergessen geht in dieser Zeit auch nicht (braucht ebenfalls eine Mail), der Link ist in der App ausgeblendet.
+- **Confirm email**: **aus**, solange es keinen eigenen Mailversand gibt (Schritt 6). Sonst bekommt jeder neue Nutzer eine Bestätigungsmail, die der eingebaute Versand nicht zustellt, und kann sich nie anmelden. Nachteil: Die E-Mail-Adresse wird nicht geprüft. Passwort vergessen geht in dieser Zeit auch nicht (braucht ebenfalls eine Mail), die Links sind in der App ausgeblendet, solange `EMAIL_LINKS` aus ist.
 - **Minimum password length**: `8`
 - **Save**
 
@@ -68,31 +68,13 @@ Einmal in der Google Cloud Console, dann in beiden Supabase-Projekten:
    - **Erstellen** → **Client-ID** und **Clientschlüssel** kopieren.
 4. In **jedem** Supabase-Projekt: **Authentication** → **Sign In / Providers** → **Google** → **Enable Sign in with Google** an, Client-ID und Client Secret einfügen → **Save**.
 
-## 5. Code in die Anmelde-E-Mail (später, mit Schritt 6)
+## 5. Vorlagen für die Anmelde-E-Mails
 
-Erst nötig, wenn Code-Login und „Passwort vergessen“ freigeschaltet werden (`EMAIL_LINKS` in `src/sync/account.ts`).
+Kommen mit Schritt 6 automatisch: der Workflow *Email templates* trägt `supabase/templates` (sechs Sprachen) ein.
 
-Projekt → **Authentication** → **Emails** → **Templates**. In **Magic Link** und in **Confirm signup** den Text ersetzen durch:
+## 6. E-Mail-Versand über Resend
 
-Betreff: `Dein Keypacer-Code: {{ .Token }}`
-
-```html
-<h2>Anmelden bei Keypacer</h2>
-<p>Dein Code: <strong style="font-size: 1.4em; letter-spacing: 0.1em">{{ .Token }}</strong></p>
-<p>Oder klick auf diesem Gerät hier: <a href="{{ .ConfirmationURL }}">Anmelden</a></p>
-<p>Your sign-in code: <strong>{{ .Token }}</strong></p>
-<p>Wenn du das nicht warst, ignoriere diese E-Mail.</p>
-```
-
-## 6. E-Mail-Versand für echte Nutzer (später, braucht eine Domain)
-
-Der eingebaute Versand von Supabase schickt nur an Mitglieder deines Supabase-Teams und nur wenige Mails pro Stunde. Für alle anderen:
-
-1. Domain registrieren.
-2. Bei [Resend](https://resend.com) (kostenlos bis 3.000 Mails/Monat) die Domain hinzufügen und die angezeigten DNS-Einträge setzen.
-3. Supabase (Produktion) → **Authentication** → **Emails** → **SMTP Settings** → **Enable custom SMTP**: Host `smtp.resend.com`, Port `465`, User `resend`, Passwort = Resend-API-Key, Absender z. B. `login@deine-domain`.
-4. **Confirm email** (Schritt 3) wieder einschalten, Schritt 5 erledigen und in `src/sync/account.ts` `EMAIL_LINKS = true` setzen.
-5. Datenschutzerklärung (`src/legal/content.ts`) um Resend als Auftragsverarbeiter ergänzen, im selben PR.
+Anleitung: [email-setup.md](email-setup.md). Code-Anmeldung, „Passwort vergessen“ und die Bestätigung der Adresse schaltet `EMAIL_LINKS` in `vite.config.ts` je Supabase-Projekt ein; der Absatz zu Resend in der Datenschutzerklärung schaltet mit.
 
 ## 7. Sicherheit vor dem öffentlichen Start
 

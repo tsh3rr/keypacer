@@ -1,5 +1,5 @@
 import { t, type MessageKey } from '../i18n';
-import { EMAIL_LINKS, OAUTH_PROVIDERS, type Account, type AccountState, type OAuthProvider } from './account';
+import { EMAIL_LINKS, OAUTH_PROVIDERS, type Account, type AccountState, type CodePurpose, type OAuthProvider } from './account';
 import { captchaEnabled, captchaToken } from './captcha';
 import {
   MIN_PASSWORD, accountNotActivated, avatar, benefits, button, displayName, field, form, p, privacyLink, runIn, syncStatus, termsCheck,
@@ -18,10 +18,12 @@ export type SignedOutStep =
   | { kind: 'signin' }
   | { kind: 'signup' }
   | { kind: 'code' }
-  | { kind: 'code-sent'; email: string }
+  | { kind: 'code-sent'; email: string; purpose: CodePurpose }
   | { kind: 'reset' };
 
 const PROVIDER_LABEL: Record<OAuthProvider, MessageKey> = { google: 'account.google', github: 'account.github' };
+/** What the panel says once a code is on its way. */
+const CODE_SENT: Record<CodePurpose, MessageKey> = { signin: 'account.codeSent', signup: 'account.confirmCodeSent', reset: 'account.resetCodeSent' };
 
 export class AccountView {
   private state: AccountState = { signedIn: false };
@@ -56,6 +58,10 @@ export class AccountView {
       this.password = '';
       this.repeat = '';
       this.terms = false;
+    }
+    if (!state.signedIn && state.linkFailed) {
+      this.step = { kind: 'signin' };
+      this.notice = t('account.linkFailed');
     }
     this.state = state;
     this.render();
@@ -123,7 +129,17 @@ export class AccountView {
         const email = this.emailField();
         const password = this.passwordField('current-password');
         nodes.push(form([email, password], [
-          { label: t('account.signIn'), primary: true, go: () => this.run(async () => this.account.signInWithPassword(email.value.trim(), password.value, await this.captcha())) },
+          { label: t('account.signIn'), primary: true, go: () => this.run(async () => {
+            const address = email.value.trim();
+            try {
+              await this.account.signInWithPassword(address, password.value, await this.captcha());
+            } catch (err) {
+              // Signed up but never typed the code: send a fresh one and ask for it.
+              if (!EMAIL_LINKS || (err as { code?: string }).code !== 'email_not_confirmed') throw err;
+              await this.account.resendConfirmation(address, await this.captcha());
+              this.step = { kind: 'code-sent', email: address, purpose: 'signup' };
+            }
+          }) },
         ]), ...this.captchaBox());
         if (EMAIL_LINKS) {
           nodes.push(button(t('account.useCode'), 'link-btn', () => this.go({ kind: 'code' })));
@@ -152,8 +168,8 @@ export class AccountView {
             const signedIn = await this.account.signUp(email.value.trim(), password.value, name, await this.captcha());
             if (signedIn) return;
             if (!EMAIL_LINKS) throw accountNotActivated();
-            this.notice = t('account.confirmSent', { email: email.value.trim() });
-            this.step = { kind: 'signin' };
+            // The project checks addresses: the e-mail has a code (and a link) that finishes signing up.
+            this.step = { kind: 'code-sent', email: email.value.trim(), purpose: 'signup' };
           });
         } }]), ...this.captchaBox(), benefits());
         break;
@@ -162,18 +178,22 @@ export class AccountView {
         const email = this.emailField();
         nodes.push(form([email], [{ label: t('account.sendCode'), primary: true, go: () => this.run(async () => {
           await this.account.sendCode(email.value.trim(), await this.captcha());
-          this.step = { kind: 'code-sent', email: email.value.trim() };
+          this.step = { kind: 'code-sent', email: email.value.trim(), purpose: 'signin' };
         }) }]), ...this.captchaBox());
         nodes.push(this.back());
         break;
       }
       case 'code-sent': {
-        nodes.push(p(t('account.codeSent', { email: step.email }), 'account-note'));
+        nodes.push(p(t(CODE_SENT[step.purpose], { email: step.email }), 'account-note'));
         const code = field('text', t('account.code'), {
           autocomplete: 'one-time-code', inputmode: 'numeric', pattern: '[0-9]{6,10}', maxlength: '10',
         });
         nodes.push(form([code], [{ label: t('account.verify'), primary: true, go: () =>
-          this.run(() => this.account.verifyCode(step.email, code.value.trim())) }]));
+          this.run(() => this.account.verifyCode(step.email, code.value.trim(), step.purpose)) }]));
+        nodes.push(button(t('account.resendCode'), 'link-btn', () => this.run(async () => {
+          await this.resend(step.email, step.purpose, await this.captcha());
+          this.notice = t('account.codeResent');
+        })), ...this.captchaBox());
         nodes.push(this.back());
         break;
       }
@@ -181,8 +201,7 @@ export class AccountView {
         const email = this.emailField();
         nodes.push(form([email], [{ label: t('account.sendReset'), primary: true, go: () => this.run(async () => {
           await this.account.sendPasswordReset(email.value.trim(), await this.captcha());
-          this.step = { kind: 'signin' };
-          this.notice = t('account.resetSent', { email: email.value.trim() });
+          this.step = { kind: 'code-sent', email: email.value.trim(), purpose: 'reset' };
         }) }]), ...this.captchaBox());
         nodes.push(this.back());
         break;
@@ -249,6 +268,14 @@ export class AccountView {
     input.value = this.password;
     input.addEventListener('input', () => (this.password = input.value));
     return input;
+  }
+
+  private resend(email: string, purpose: CodePurpose, captchaToken: string | undefined): Promise<void> {
+    switch (purpose) {
+      case 'signin': return this.account.sendCode(email, captchaToken);
+      case 'signup': return this.account.resendConfirmation(email, captchaToken);
+      case 'reset': return this.account.sendPasswordReset(email, captchaToken);
+    }
   }
 
   private back(): HTMLButtonElement {

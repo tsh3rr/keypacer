@@ -50,11 +50,20 @@ const SUPABASE = {
  */
 const TURNSTILE = { production: '', staging: '' };
 
+/**
+ * Sign-in by e-mail code, password reset and the address check at sign-up,
+ * per Supabase project. All of them send e-mail, so each is on only where
+ * that project sends through Resend (docs/email-setup.md). Also switches the
+ * paragraph about the mail service in the privacy policy.
+ * VITE_EMAIL_LINKS=true|false in .env.local overrides both.
+ */
+const EMAIL_LINKS = { production: true, staging: true };
+
 export default defineConfig(({ mode }) => {
   // Cloudflare Workers Builds sets WORKERS_CI_BRANCH: main is production,
   // every other branch, local development and tests use staging.
   // VITE_SUPABASE_URL / VITE_SUPABASE_PUBLISHABLE_KEY in .env.local override both.
-  const env = loadEnv(mode, process.cwd(), ['VITE_SUPABASE_', 'VITE_TURNSTILE_']);
+  const env = loadEnv(mode, process.cwd(), ['VITE_SUPABASE_', 'VITE_TURNSTILE_', 'VITE_EMAIL_LINKS']);
   const target = process.env.WORKERS_CI_BRANCH === 'main' ? 'production' : 'staging';
   const supabase = env.VITE_SUPABASE_URL && env.VITE_SUPABASE_PUBLISHABLE_KEY
     ? { url: env.VITE_SUPABASE_URL, key: env.VITE_SUPABASE_PUBLISHABLE_KEY }
@@ -66,6 +75,7 @@ export default defineConfig(({ mode }) => {
       __SUPABASE_URL__: JSON.stringify(supabase.url),
       __SUPABASE_KEY__: JSON.stringify(supabase.key),
       __TURNSTILE_SITE_KEY__: JSON.stringify(env.VITE_TURNSTILE_SITE_KEY ?? TURNSTILE[target]),
+      __EMAIL_LINKS__: JSON.stringify(env.VITE_EMAIL_LINKS ? env.VITE_EMAIL_LINKS === 'true' : EMAIL_LINKS[target]),
     },
     // The landing pages (/ in English, /de/, /es/, …), the trainer at /app/, and the
     // Impressum, privacy policy and terms of use, which must be reachable by their

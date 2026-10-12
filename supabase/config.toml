@@ -244,6 +244,22 @@ otp_expiry = 3600
 # admin_email = "admin@email.com"
 # sender_name = "Admin"
 
+# Keystrider's e-mails, for local development. Written by scripts/email-templates.mjs;
+# the hosted projects get them from the "Email templates" workflow (docs/email-setup.md).
+# BEGIN email templates
+[auth.email.template.confirmation]
+subject = '{{ $l := or .Data.locale "en" }}{{ if eq $l "de" }}Bestätige dein Keypacer-Konto: {{ .Token }}{{ else if eq $l "fr" }}Confirme ton compte Keypacer : {{ .Token }}{{ else if eq $l "es" }}Confirma tu cuenta de Keypacer: {{ .Token }}{{ else if eq $l "it" }}Conferma il tuo account Keypacer: {{ .Token }}{{ else if eq $l "pl" }}Potwierdź swoje konto Keypacer: {{ .Token }}{{ else }}Confirm your Keypacer account: {{ .Token }}{{ end }}'
+content_path = "./supabase/templates/confirmation.html"
+
+[auth.email.template.magic_link]
+subject = '{{ $l := or .Data.locale "en" }}{{ if eq $l "de" }}Dein Keypacer-Anmeldecode: {{ .Token }}{{ else if eq $l "fr" }}Ton code de connexion Keypacer : {{ .Token }}{{ else if eq $l "es" }}Tu código de acceso a Keypacer: {{ .Token }}{{ else if eq $l "it" }}Il tuo codice di accesso a Keypacer: {{ .Token }}{{ else if eq $l "pl" }}Twój kod logowania do Keypacer: {{ .Token }}{{ else }}Your Keypacer sign-in code: {{ .Token }}{{ end }}'
+content_path = "./supabase/templates/magic_link.html"
+
+[auth.email.template.recovery]
+subject = '{{ $l := or .Data.locale "en" }}{{ if eq $l "de" }}Dein Keypacer-Passwort zurücksetzen: {{ .Token }}{{ else if eq $l "fr" }}Réinitialise ton mot de passe Keypacer : {{ .Token }}{{ else if eq $l "es" }}Restablece tu contraseña de Keypacer: {{ .Token }}{{ else if eq $l "it" }}Reimposta la tua password di Keypacer: {{ .Token }}{{ else if eq $l "pl" }}Zresetuj hasło do Keypacer: {{ .Token }}{{ else }}Reset your Keypacer password: {{ .Token }}{{ end }}'
+content_path = "./supabase/templates/recovery.html"
+# END email templates
+
 # Uncomment to customize email template
 # [auth.email.template.invite]
 # subject = "You have been invited"

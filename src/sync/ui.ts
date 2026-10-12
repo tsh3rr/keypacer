@@ -24,6 +24,7 @@ export function errorMessage(err: unknown): string {
     case 'email_not_confirmed': return t(EMAIL_LINKS ? 'account.errorNotConfirmed' : 'account.errorNotActivated');
     case 'not_activated': return t('account.errorNotActivated');
     case 'otp_expired': return t('account.errorCode');
+    case 'otp_disabled': return t('account.errorNoAccount');
     case 'validation_failed': case 'email_address_invalid': return t('account.errorEmail');
     case 'username_taken': return t('account.usernameTaken');
     case 'captcha_failed': return t('account.errorCaptcha');

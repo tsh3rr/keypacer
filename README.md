@@ -1,4 +1,4 @@
-# Keystrider
+# Keypacer
 
 A touch-typing trainer that analyzes your errors and weak keys and adapts practice to make you faster.
 
@@ -13,6 +13,15 @@ npm run build    # typecheck + production build into dist/
 
 Static app (TypeScript + Vite). No backend: all data stays in the browser.
 
+## Pages
+
+- **Landing pages** at `/` (English), `/de/`, `/es/`, `/fr/`, `/it/` and `/pl/`: what Keypacer is, with a one-line typing demo in the hero that shows speed, accuracy and the keys that held you up. They are static HTML built from `src/landing/content.ts` at build time (`index.html` and `<lang>/index.html` are placeholders the plugin in `vite.config.ts` fills), so search engines and link previews read the full text. The build also writes `sitemap.xml` and `robots.txt`; preview builds tell search engines to stay away. `SITE_URL` sets the public address used in canonical links and the sitemap.
+- **The trainer** at `/app/`. Landing links pass `?lang=<lang>` so a first visit starts in that language (`?signin` opens sign-in). Someone who has set up the trainer before, and sign-in or invite links that point at `/`, go straight on to `/app/` (`public/to-app.js`); `/?home` shows the landing page anyway.
+
+## First visit
+
+The landing page's typing line is the start of the placement test: its keystrokes are handed to the trainer (`src/handoff.ts`), along with the layout the keys showed. A beginner (under 20 WPM or 90 % accuracy) goes straight into lesson 1. Whoever is fast enough to skip ahead types the rest of the placement test in the trainer (the letters the first line left out come first), then starts where it puts them. Someone who opens `/app/` directly gets the same, with a short first line of common words in the trainer. "How it works" follows the first round, and the offer of an account comes after the third. The full setup (keyboard check, where to start, how it works) is still in Settings.
+
 ## Screens
 
 - **Practice**: the drill text in one centred column with the finger guide below it. A slim coach bar above the text has four chips: **Path** (unlock stage and next letter), **Round** (where this drill sits in the round, and its focus keys), **Now** (live speed and accuracy) and the **break check**. Each chip opens a bubble with only its own details (`src/coachView.ts`).
@@ -21,7 +30,7 @@ Static app (TypeScript + Vite). No backend: all data stays in the browser.
 
 ## Keystroke log
 
-Every typed character on the practice screen is stored in IndexedDB (database `typing-trainer`, store `keystrokes`) with the following fields. The database and the `typing-trainer.*` localStorage keys keep the app's old name on purpose, so renaming the app to Keystrider didn't wipe anyone's history or settings.
+Every typed character on the practice screen is stored in IndexedDB (database `typing-trainer`, store `keystrokes`) with the following fields. The database and the `typing-trainer.*` localStorage keys keep the app's old name on purpose, so renaming the app to Keypacer didn't wipe anyone's history or settings.
 
 Fields:
 
@@ -138,3 +147,7 @@ GitHub Actions:
 ## Impressum and privacy policy
 
 `/impressum` and `/datenschutz` (`impressum.html`, `datenschutz.html`, texts in `src/legal/content.ts`) are written for a private, non-commercial site run from Austria, in German (binding) and English. The owner's name, town and e-mail are in `src/legal/owner.ts`. The privacy policy says the site sets no cookies, has no analytics, and stores practice data only in the browser unless the learner signs in (then in Supabase, Frankfurt); if that changes (Cloudflare Web Analytics, ads, a mail provider), update the texts first. A cookie banner is not needed while all browser storage is strictly necessary for the trainer (§ 165 Abs. 3 TKG 2021).
+
+## Thanks
+
+Keypacer is inspired by [Monkeytype](https://github.com/monkeytypegame/monkeytype), the open-source typing test by Miodec and its contributors. Its clean, distraction-free practice set the bar for how typing in a browser should feel. Keypacer contains no Monkeytype code or word lists, so Monkeytype's GPL-3.0 license does not apply here.

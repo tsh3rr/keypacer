@@ -1,25 +1,34 @@
 import '@fontsource-variable/jetbrains-mono';
 import { TypingSession } from './session';
 import { KeystrokeStore, toCsv } from './store';
+import { withFlag } from './flags';
 import { DEFAULT_LANGUAGE, availableLanguages, getCorpus, guessLanguage, loadCorpus } from './corpus';
 import { clearCurriculum, hasAnyCurriculum, loadCurriculum, saveCurriculum } from './curriculum-store';
 import {
-  CAPITALS, DEFAULT_DRILL_PARAMS, afterDrill, drillFeedback, drillResult, initialCurriculum, isNewSession, meetsBar, modelOptions, needsShift,
+  CAPITALS, DEFAULT_DRILL_PARAMS, afterDrill, blockingKeys, drillFeedback, drillResult, initialCurriculum, isNewSession, meetsBar, modelOptions, needsShift,
   nextDrill, nextKind, sentencesReady, tierTargetMs, tierWpm, unlockSteps,
   type CurriculumChange, type CurriculumState, type Drill, type ItemChange,
 } from './drill';
-import { loadWeaknessModel, type WeaknessModel } from './weakness';
+import { firstAttempts, loadWeaknessModel, type WeaknessModel } from './weakness';
 import {
   KeyObserver, LAYOUTS, browserLayoutMap, charLabel, detectLayout, getLayout, guessFromLocale, keyLabel, relabelPlan,
 } from './layouts';
 import { FingerGuide } from './fingerGuide';
 import { DEFAULT_FATIGUE_PARAMS, FatigueTracker, type FatigueSignal } from './fatigue';
-import { learningPath, sessionPlan, type StageId } from './path';
+import { learningPath, sessionPlan, type PathSummary, type StageId } from './path';
+import { renderGateLine, type GateData } from './gateView';
 import { renderProgress, revealSection, type ProgressSection, type Range } from './progressView';
-import { weakest } from './progress';
+import { periodTotals, sessionSummaries, startOfWeek, weakest } from './progress';
+import { isoDate, loadShareSpeed, pendingInvite, takeInviteFromUrl, type BuddyStats } from './sync/buddies';
+import { BuddiesView, InvitePrompt, type BuddiesDeps } from './sync/buddiesView';
+import {
+  dailyActiveMs, freshStart, goalNews, goalStreak, loadFreshSeen, loadGoal, loadMastered, loadPlan, loadPlanSeen, newBest, newlyMastered,
+  planDue, saveFreshSeen, saveGoal, saveMastered, savePlan, savePlanSeen, type FreshStart,
+} from './goals';
 import { CoachBar, type CoachData } from './coachView';
 import { renderResult, type Tone } from './resultCard';
 import { Onboarding } from './onboarding';
+import { takeLandingTest } from './handoff';
 import {
   backfillDone, loadBreakRemindersSetting, loadOnboardedSetting, saveOnboardedSetting, loadFingerGuideSetting, loadGuideFadeSetting, loadLanguageSetting, loadLayoutSetting,
   loadShowKeysSetting, loadThemeSetting, loadWordFilterSetting, markBackfillDone, saveBreakRemindersSetting, saveFingerGuideSetting,
@@ -29,6 +38,10 @@ import {
 } from './settings';
 import type { KeystrokeEvent, PracticeContext } from './types';
 import { setWordFilterEnabled } from './wordfilter';
+import {
+  MAIN_KEYBOARD, MAX_KEYBOARDS, MAX_NAME_LENGTH, activeKeyboard, keyboardWithLayout, loadKeyboardSettings,
+  loadKeyboards, mainKeyboard, newKeyboardId, saveKeyboardSettings, saveKeyboards, visibleKeyboards, type KeyboardProfile,
+} from './keyboards';
 import { Account } from './sync/account';
 import { AccountView, benefits } from './sync/accountView';
 import { ProfileView } from './sync/profileView';
@@ -45,15 +58,30 @@ const logSummary = $('log-summary');
 
 const LOG_TABLE_LIMIT = 500;
 
-const locales = navigator.languages?.length ? navigator.languages : [navigator.language];
+const browserLocales = navigator.languages?.length ? navigator.languages : [navigator.language];
+// A landing page links here with ?lang=<its language>: on a first visit that
+// language goes ahead of the browser's for the menus and the practice text.
+// Anything the learner already picked still wins, and the keyboard layout is
+// still guessed from the browser (a Swiss reader of the German page keeps Swiss QWERTZ).
+const linkLanguage = new URLSearchParams(location.search).get('lang');
+const locales = linkLanguage ? [linkLanguage, ...browserLocales] : browserLocales;
+const signInLink = new URLSearchParams(location.search).has('signin');
+if (linkLanguage || signInLink) {
+  const url = new URL(location.href);
+  url.searchParams.delete('lang');
+  url.searchParams.delete('signin');
+  history.replaceState(history.state, '', url);
+}
 
 // Interface language: the learner's pick, else the browser's language if we have it, else English.
 const savedUiLanguage = loadUiLanguageSetting();
-setUiLanguage(isUiLanguage(savedUiLanguage) ? savedUiLanguage : guessUiLanguage(locales));
+// Waits for the interface language before anything is drawn; English if it cannot be loaded.
+await setUiLanguage(isUiLanguage(savedUiLanguage) ? savedUiLanguage : guessUiLanguage(locales))
+  .catch((err) => console.error('Failed to load interface language', err));
 document.documentElement.lang = uiLanguage();
 applyTranslations();
 // Until a key is pressed or the browser reports the layout, guess from the browser language.
-let layoutSetting: LayoutSetting = loadLayoutSetting() ?? { layout: guessFromLocale(locales), source: 'guessed' };
+let layoutSetting: LayoutSetting = loadLayoutSetting() ?? { layout: guessFromLocale(browserLocales), source: 'guessed' };
 
 // The picked language; on a first visit the browser language, but a browser
 // that already practised before the picker existed keeps English.
@@ -66,6 +94,21 @@ const context: PracticeContext = { language: startLanguage, layout: layoutSettin
 // Replaced by the first drill once the keystroke log is open.
 let session = new TypingSession('', context);
 let store: KeystrokeStore;
+
+// Keyboard profiles (keyboards.ts): off unless turned on in Settings; then
+// each keystroke records the keyboard picked in the top-bar menu, and the
+// Progress page compares keyboards. Drills and progress stay the learner's,
+// across all keyboards.
+let keyboards = loadKeyboards();
+let keyboardSettings = loadKeyboardSettings();
+/** The keyboard in use, or null while profiles are off. */
+const currentKeyboard = () => activeKeyboard(keyboardSettings, keyboards);
+/** Marks a keystroke with the keyboard it is typed on; the main keyboard's stay unmarked, like those from before profiles. */
+function onKeyboard(event: KeystrokeEvent): KeystrokeEvent {
+  const kb = currentKeyboard();
+  if (kb !== null && kb !== MAIN_KEYBOARD) event.keyboard = kb;
+  return event;
+}
 
 // The row of every key, unlocked or not; the learning-path panel covers the same ground, so it is optional.
 const keysToggle = $<HTMLInputElement>('keys-toggle');
@@ -148,7 +191,9 @@ function renderText(): void {
     frag.append(span);
   });
   textEl.replaceChildren(frag);
-  if (centredText !== session.text) centreText();
+  const fresh = centredText !== session.text;
+  if (fresh) centreText();
+  scrollText(fresh);
   updateFingerGuide();
 }
 
@@ -173,7 +218,43 @@ function centreText(): void {
   const shift = (box.right - right - (left - box.left)) / 2;
   if (shift > 1) textEl.style.transform = `translateX(${shift.toFixed(1)}px)`;
 }
-new ResizeObserver(() => centreText()).observe(textEl.parentElement ?? textEl);
+new ResizeObserver(() => { centreText(); scrollText(true); }).observe(textEl.parentElement ?? textEl);
+
+/**
+ * The text box shows a fixed number of lines (see .text-wrap in style.css), so
+ * a long drill never pushes the keyboard down. As the learner types, the text
+ * slides up a line at a time, keeping the line before the current one in view.
+ * The hidden input is pinned to the screen next to the current letter. Browsers
+ * scroll a focused field into view as it is typed into (phones even try to
+ * centre it), so parked anywhere on the page it would drag a learner who
+ * scrolled down to the keyboard back up; a fixed field is always in view.
+ */
+function scrollText(instant: boolean): void {
+  const wrap = textEl.parentElement;
+  const first = textEl.firstElementChild as HTMLElement | null;
+  const last = textEl.lastElementChild as HTMLElement | null;
+  const cur = textEl.querySelector<HTMLElement>('.current') ?? last;
+  const style = getComputedStyle(textEl);
+  const lh = parseFloat(style.lineHeight);
+  let offset = 0;
+  if (wrap && first && last && cur && lh > 0) {
+    const pad = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+    const shown = Math.max(1, Math.floor((wrap.clientHeight - pad) / lh));
+    const lines = Math.round((last.offsetTop - first.offsetTop) / lh) + 1;
+    const line = Math.round((cur.offsetTop - first.offsetTop) / lh);
+    offset = Math.max(0, Math.min(line - 1, lines - shown)) * lh;
+    const box = wrap.getBoundingClientRect();
+    const top = box.top + cur.offsetTop - offset;
+    inputEl.style.top = `${Math.min(Math.max(top, 0), window.innerHeight - lh).toFixed(0)}px`;
+    inputEl.style.left = `${(box.left + cur.offsetLeft).toFixed(0)}px`;
+  }
+  if (instant) textEl.style.transition = 'none';
+  textEl.style.translate = offset ? `0 ${(-offset).toFixed(1)}px` : '';
+  if (instant) {
+    void textEl.offsetWidth; // apply the jump before turning the slide back on
+    textEl.style.transition = '';
+  }
+}
 
 /** Live speed and accuracy for the coach bar's speed chip. */
 function nowData(): CoachData['now'] {
@@ -232,8 +313,9 @@ inputEl.addEventListener('keydown', (e) => {
 });
 
 function handleChar(ch: string): void {
-  const event = session.press(ch, Date.now(), lastCode);
-  if (!event) return;
+  const pressed = session.press(ch, Date.now(), lastCode);
+  if (!pressed) return;
+  const event = onKeyboard(pressed);
   drillEvents.push(event);
   pendingWrites.push(store.add(event).catch((err) => console.error('Failed to log keystroke', err)));
   if (!event.correct) {
@@ -268,13 +350,15 @@ inputEl.addEventListener('drop', (e) => e.preventDefault());
 const startPill = $('start-pill');
 inputEl.addEventListener('focus', () => { textEl.classList.add('focused'); startPill.hidden = true; });
 inputEl.addEventListener('blur', () => { textEl.classList.remove('focused'); startPill.hidden = false; });
-textEl.addEventListener('click', () => inputEl.focus());
-startPill.addEventListener('click', () => inputEl.focus());
+// Listened on the wrapper: a click on the text blurs the field, the pill shows
+// up under the pointer, and the click then lands on the wrapper, not the text.
+// No focus scroll here or below: the page stays wherever the learner put it.
+textEl.parentElement?.addEventListener('click', () => inputEl.focus({ preventScroll: true }));
 // Any printable key starts typing: focusing the field here lets the same key land in it.
 document.addEventListener('keydown', (e) => {
   if (document.activeElement !== document.body || e.ctrlKey || e.metaKey || e.altKey || [...e.key].length !== 1) return;
   if (practiceView.hidden || session.done || coach.isOpen || !drawer.hidden || menus.some((m) => !m.menu.hidden)) return;
-  inputEl.focus();
+  inputEl.focus({ preventScroll: true });
 });
 
 $('new-text').addEventListener('click', () => {
@@ -290,6 +374,7 @@ $('new-text').addEventListener('click', () => {
 const drillKeysEl = $('drill-keys');
 const drillCueEl = $('drill-cue');
 const drillFocusEl = $('drill-focus');
+const drillGateEl = $('drill-gate');
 const resultEl = $('result');
 const practiceView = $('practice-view');
 
@@ -343,12 +428,14 @@ async function buildModel(state: CurriculumState): Promise<WeaknessModel> {
 function renderDrillBar(): void {
   if (!curriculum) return;
   const unlocked = new Set(curriculum.unlocked);
+  const mastered = masteredSteps();
   const frag = document.createDocumentFragment();
   for (const ch of unlockSteps(corpus(), context.layout)) {
     const span = document.createElement('span');
     span.textContent = keyCap(ch);
-    span.className = 'key' + (unlocked.has(ch) ? '' : ' locked') + (ch === curriculum.focusKey ? ' focus' : '');
-    span.title = t(ch === curriculum.focusKey ? 'keys.focus' : unlocked.has(ch) ? 'keys.unlocked' : 'keys.locked');
+    const star = unlocked.has(ch) && mastered.has(ch) && ch !== curriculum.focusKey;
+    span.className = 'key' + (unlocked.has(ch) ? '' : ' locked') + (ch === curriculum.focusKey ? ' focus' : '') + (star ? ' mastered' : '');
+    span.title = t(ch === curriculum.focusKey ? 'keys.focus' : star ? 'keys.mastered' : unlocked.has(ch) ? 'keys.unlocked' : 'keys.locked');
     frag.append(span);
   }
   drillKeysEl.replaceChildren(frag);
@@ -380,6 +467,27 @@ const coach = new CoachBar(
 );
 /** The last path summary the coach showed; the Progress page repeats it in its path card. */
 let coachPath: CoachData['path'] | null = null;
+/** What the next unlock waits on, as last shown above the text; the result card repeats it. */
+let gate: GateData | null = null;
+
+function gateData(path: PathSummary): GateData | null {
+  if (path.next === null || !model) return null;
+  const of = (reason: PathSummary['gaps'][number]['reason']) => path.gaps.filter((g) => g.reason === reason);
+  return {
+    next: path.next === CAPITALS ? stageName('capitals') : keyCap(path.next),
+    maxError: DEFAULT_DRILL_PARAMS.unlockMaxErrorRate,
+    errors: of('errors').map((g) => ({ label: keyCap(g.step), errorRate: g.errorRate })),
+    slow: of('slow').map((g) => ({ label: keyCap(g.step), ms: g.latencyMs, targetMs: g.targetMs })),
+    few: of('few').map((g) => keyCap(g.step)),
+  };
+}
+
+/** Keys typed wrong on the first try in a drill, most often first. */
+function drillMisses(events: readonly KeystrokeEvent[]): { label: string; count: number }[] {
+  const counts = new Map<string, number>();
+  for (const a of firstAttempts(events)) if (a.error) counts.set(a.expected, (counts.get(a.expected) ?? 0) + 1);
+  return [...counts].sort((a, b) => b[1] - a[1]).map(([ch, count]) => ({ label: keyCap(ch), count }));
+}
 
 function renderCoach(): void {
   if (!curriculum || !drill) return;
@@ -404,6 +512,8 @@ function renderCoach(): void {
     }
   }
   const current = path.stages.find((st) => st.state === 'current') ?? path.stages[path.stages.length - 1];
+  gate = gateData(path);
+  renderGateLine(drillGateEl, gate);
 
   // Once a drill is done, the round shows the one Enter starts next.
   const kind = session.done ? nextKind(curriculum, drill.kind, { sentences: path.sentencesOpen }) : drill.kind;
@@ -504,24 +614,93 @@ function changeTone(c: CurriculumChange): Tone {
 
 const itemLabel = (it: ItemChange) => (it.kind === 'key' ? keyCap(it.item) : showItem(it.item));
 
+// --- Milestones: goal reached, personal best, key mastered ---
+//
+// Feedback about the learner's own progress, added to the drill summary.
+// No points: each line says what was achieved (see goals.ts).
+
+interface Milestone { tone: Tone; text: () => string }
+
+/** Steps that meet the unlock bar in `m`. */
+const knownSteps = (m: WeaknessModel, state: CurriculumState) => {
+  const blocking = new Set(blockingKeys(m, state));
+  return state.unlocked.filter((k) => !blocking.has(k));
+};
+
+function masteredSteps(): Set<string> {
+  return loadMastered(context.language, context.layout) ?? new Set();
+}
+
+async function milestones(
+  before: WeaknessModel | null, after: WeaknessModel, state: CurriculumState, changes: CurriculumChange[], sessionId: string | undefined,
+): Promise<Milestone[]> {
+  const out: Milestone[] = [];
+  try {
+    const now = Date.now();
+    // The weekly goal counts every language; only this week's typing is needed to see it reached.
+    const week = sessionSummaries(await store.since(startOfWeek(now)));
+    const g = goalNews(dailyActiveMs(week.filter((x) => x.sessionId !== sessionId)), dailyActiveMs(week), goal, now);
+    if (g.weekMet) {
+      const streak = goalStreak(dailyActiveMs(sessionSummaries(await store.all())), goal, now).current;
+      out.push({ tone: 'win', text: () => t('goal.weekDone', { days: goal.days }) + ' ' + t('goal.streak', { n: streak }) });
+    } else if (g.dayMet) {
+      const st = goalStreak(dailyActiveMs(week), goal, now);
+      out.push({ tone: 'good', text: () => t('goal.dayDone', { min: goal.minutes, n: st.daysThisWeek, goal: goal.days }) });
+    }
+
+    if (sessionId) {
+      const best = newBest(sessionSummaries(await store.forLanguage(context.language, context.layout)), sessionId);
+      if (best) {
+        out.push({ tone: 'win', text: () => t('best.new', { wpm: Math.round(best.wpm), previous: Math.round(best.previous) }) });
+      }
+    }
+
+    // Keys meeting the bar for the first time. The first check only records (see newlyMastered).
+    let stored = loadMastered(context.language, context.layout);
+    if (!stored && before) stored = newlyMastered(knownSteps(before, state), null).all;
+    const { added, all } = newlyMastered(knownSteps(after, state), stored);
+    saveMastered(context.language, context.layout, all);
+    // The focus key already gets its own line.
+    const focusMet = new Set(changes.flatMap((c) => (c.type === 'focus-met' ? [c.key] : [])));
+    const shown = added.filter((k) => !focusMet.has(k));
+    if (shown.length) {
+      const keys = shown.slice(0, 8).map(keyCap).join(' ') + (shown.length > 8 ? ` +${shown.length - 8}` : '');
+      out.push({ tone: 'win', text: () => t('milestone.mastered', { n: shown.length, keys }) });
+    }
+  } catch (err) {
+    console.error('Failed to check milestones', err);
+  }
+  return out;
+}
+
 async function finishDrill(): Promise<void> {
   if (!drill || !curriculum) return;
   finishing = true;
   try {
     await Promise.all(pendingWrites);
     lastDrillAt = Date.now();
+    hideFreshStart();
     const result = drillResult(drillEvents);
     const finished = drill;
     const typed: RoundStep = roundStep ?? { kind: finished.kind, n: 0 };
     const errors = session.errors;
     const recovery = curriculum.recovery;
+    const misses = drillMisses(drillEvents);
+    /** Whether the curriculum moved on with this drill, so the unlock line fits it. */
+    let counted = false;
     // Kept so a switch of interface language can redraw the card in the new language.
-    const show = (changes: CurriculumChange[], improved: ItemChange[], slipped: ItemChange[], next: RoundStep | null) => {
+    const show = (
+      changes: CurriculumChange[], improved: ItemChange[], slipped: ItemChange[], next: RoundStep | null, extra: Milestone[] = [],
+    ) => {
       redrawResult = () => renderResult(resultEl, {
         drillName: stepName(typed), wpm: result.wpm, accuracy: result.accuracy, errors, paceWpm: finished.paceWpm,
-        recovery, news: changes.map((c) => ({ tone: changeTone(c), text: describeChange(c) })),
+        recovery, news: [
+          ...changes.map((c) => ({ tone: changeTone(c), text: describeChange(c) })),
+          ...extra.map((m) => ({ tone: m.tone, text: m.text() })),
+        ],
         improved: improved.map(itemLabel), slipped: slipped.map(itemLabel), next: next && stepName(next),
         nextKey: next?.kind === 'focus' && curriculum?.focusKey ? keyCap(curriculum.focusKey) : null,
+        misses, gate: counted ? gate : null, maxError: DEFAULT_DRILL_PARAMS.unlockMaxErrorRate,
       }, () => {
         if (!finishing && breakEndsAt === null) startDrill().catch((err) => console.error('Failed to start drill', err));
       });
@@ -547,10 +726,14 @@ async function finishDrill(): Promise<void> {
     model = after;
 
     const { improved, slipped } = before ? drillFeedback(before, after, finished) : { improved: [], slipped: [] };
+    const extra = await milestones(before, after, state, changes, drillEvents[0]?.sessionId);
     renderDrillBar();
-    show(changes, improved, slipped, roundStep);
+    counted = true;
+    show(changes, improved, slipped, roundStep, extra);
     account.push().catch((err) => console.error('Sync failed', err));
-    maybeNudge(state.coreDrills);
+    if (account.inBuddyGroup) buddyDeps.stats().then((st) => account.publishBuddyStats(st)).catch((err) => console.error('Failed to update buddies', err));
+    if (methodPending()) showMethod();
+    else maybeNudge(state.coreDrills);
   } finally {
     finishing = false;
   }
@@ -731,7 +914,7 @@ function renderLanguage(): void {
   const lang = availableLanguages().find((c) => c.language === context.language);
   $('language-name').textContent = lang?.name ?? context.language;
   $('language-options').replaceChildren(...availableLanguages().map((c) =>
-    menuItem(c.name, '', c.language === context.language, () => {
+    menuItem(withFlag(c.language, c.name), '', c.language === context.language, () => {
       setLanguage(c.language).catch((err) => console.error('Failed to switch language', err));
     })));
 }
@@ -748,6 +931,8 @@ const layoutStatus = $('layout-status');
 const suggestBox = $('layout-suggest');
 const observer = new KeyObserver();
 let suggested: string | null = null;
+/** The keyboard profile set to the suggested layout, which "Switch" then switches to. */
+let suggestedKeyboard: string | null = null;
 /** Suggestions the user answered "Keep mine" to, so they are not asked again this visit. */
 const declined = new Set<string>();
 
@@ -771,8 +956,13 @@ function showSuggestion(id: string | null): void {
   suggested = id;
   suggestBox.hidden = id === null;
   if (id !== null) {
-    $('layout-suggest-text').textContent =
-      t('layout.suggest', { detected: layoutName(id), current: layoutName(layoutSetting.layout) });
+    // With keyboard profiles, typing that fits another keyboard's layout probably means that keyboard.
+    const kb = currentKeyboard();
+    const other = kb === null ? null : keyboardWithLayout(keyboards, id, kb);
+    suggestedKeyboard = other?.id ?? null;
+    $('layout-suggest-text').textContent = other
+      ? t('keyboards.suggest', { detected: layoutName(id), name: keyboardName(other) })
+      : t('layout.suggest', { detected: layoutName(id), current: layoutName(layoutSetting.layout) });
   }
 }
 
@@ -787,6 +977,7 @@ async function setLayout(layout: string, source: LayoutSetting['source']): Promi
   renderLayout();
   showSuggestion(null);
   onboarding.layoutChanged();
+  rememberLayout(layout);
   if (changed) {
     // Keystrokes already logged in this text (and any earlier session whose own
     // keys contradict its tag) were recorded under the wrong layout: retag them.
@@ -810,7 +1001,7 @@ async function backfillLegacyLog(): Promise<void> {
 
 function checkObservedLayout(): void {
   if (observer.size === 0) return;
-  const d = detectLayout(observer.observations(), locales);
+  const d = detectLayout(observer.observations(), browserLocales);
   // Nothing typed so far contradicts the current layout.
   if (!d.layout || d.candidates.includes(layoutSetting.layout)) return showSuggestion(null);
   if (layoutSetting.source === 'user') {
@@ -826,13 +1017,14 @@ async function detectFromBrowser(): Promise<void> {
   if (layoutSetting.source === 'user') return;
   const map = await browserLayoutMap();
   if (!map) return;
-  const d = detectLayout(map, locales);
+  const d = detectLayout(map, browserLocales);
   // The Keyboard API reports the real OS layout; a tie only means layouts that share a base layer.
   if (d.layout) await setLayout(d.layout, 'detected');
 }
 
 $('layout-suggest-yes').addEventListener('click', () => {
-  if (suggested) setLayout(suggested, 'user').catch((err) => console.error('Failed to update layout', err));
+  if (suggestedKeyboard) setKeyboard(suggestedKeyboard);
+  else if (suggested) setLayout(suggested, 'user').catch((err) => console.error('Failed to update layout', err));
   inputEl.focus();
 });
 $('layout-suggest-no').addEventListener('click', () => {
@@ -840,6 +1032,161 @@ $('layout-suggest-no').addEventListener('click', () => {
   // Keeping the current layout is a confirmation of it.
   setLayout(layoutSetting.layout, 'user').catch((err) => console.error('Failed to update layout', err));
   inputEl.focus();
+});
+
+// --- Keyboard profiles ---
+//
+// For learners with several physical keyboards: each keeps its own
+// statistics, and drills adapt to the one in use. Browsers cannot tell
+// keyboards apart, so the learner picks one in the top-bar menu; switching
+// also switches to the layout last used on it. Off unless turned on in
+// Settings. See keyboards.ts.
+
+const keyboardsToggle = $<HTMLInputElement>('keyboards-toggle');
+const keyboardList = $('keyboard-list');
+
+const keyboardName = (k: KeyboardProfile) => k.name || t(k.id === MAIN_KEYBOARD ? 'keyboards.mainName' : 'keyboards.unnamed');
+
+function renderKeyboards(): void {
+  const kb = currentKeyboard();
+  const list = visibleKeyboards(keyboards);
+  const active = list.find((k) => k.id === kb) ?? list[0];
+  keyboardsToggle.checked = kb !== null;
+  for (const el of [$('keyboard-name'), document.querySelector<HTMLElement>('.keyboard-sep')!, $('keyboard-section'), $('keyboards-manage')]) {
+    el.hidden = kb === null;
+  }
+  $('keyboard-name').textContent = kb === null ? '' : keyboardName(active);
+  $('keyboard-options').replaceChildren(...list.map((k) =>
+    menuItem(keyboardName(k), k.layout ? layoutShortName(k.layout) : '', k.id === kb, () => setKeyboard(k.id))));
+
+  // Rebuilt in place; the name field being edited keeps the focus.
+  const editing = (document.activeElement as HTMLElement | null)?.closest<HTMLElement>('[data-keyboard]')?.dataset.keyboard;
+  keyboardList.replaceChildren(...list.map((k) => keyboardRow(k, k.id === kb)));
+  if (editing) keyboardList.querySelector<HTMLInputElement>(`[data-keyboard="${editing}"] input`)?.focus();
+  $('keyboard-add').hidden = list.length >= MAX_KEYBOARDS;
+}
+
+function keyboardRow(k: KeyboardProfile, active: boolean): HTMLLIElement {
+  const row = Object.assign(document.createElement('li'), { className: `kbp-row${active ? ' active' : ''}` });
+  row.dataset.keyboard = k.id;
+  const name = Object.assign(document.createElement('input'), {
+    type: 'text', className: 'account-input', value: keyboardName(k), maxLength: MAX_NAME_LENGTH,
+  });
+  name.setAttribute('aria-label', t('keyboards.nameLabel'));
+  name.addEventListener('change', () => {
+    let value = name.value.trim().slice(0, MAX_NAME_LENGTH);
+    // The main keyboard's default name stays unset, so it follows the interface language.
+    if (k.id === MAIN_KEYBOARD && (!value || value === t('keyboards.mainName'))) value = '';
+    if (!value && k.id !== MAIN_KEYBOARD) name.value = keyboardName(k);
+    else if (value !== k.name) updateKeyboard({ ...k, name: value });
+  });
+  const meta = Object.assign(document.createElement('span'), {
+    className: 'kbp-meta', textContent: k.layout ? layoutShortName(k.layout) : '',
+  });
+  const remove = Object.assign(document.createElement('button'), { type: 'button', className: 'kbp-remove', textContent: '✕' });
+  remove.setAttribute('aria-label', t('keyboards.remove', { name: keyboardName(k) }));
+  remove.title = t('keyboards.remove', { name: keyboardName(k) });
+  // The main keyboard holds everything typed before profiles were on, so it stays.
+  remove.disabled = k.id === MAIN_KEYBOARD;
+  remove.addEventListener('click', () => {
+    removeKeyboard(k).catch((err) => console.error('Failed to remove keyboard', err));
+  });
+  row.append(name, meta, remove);
+  return row;
+}
+
+/** Saves a changed profile and sends it to the account. */
+function updateKeyboard(k: KeyboardProfile): void {
+  keyboards = { ...keyboards, [k.id]: { ...k, at: Date.now() } };
+  saveKeyboards(keyboards);
+  renderKeyboards();
+  account.push().catch((err) => console.error('Sync failed', err));
+}
+
+/** Starts the next drill afresh, so it adapts to the keyboard now in use. */
+function restartForKeyboard(): void {
+  showSuggestion(null);
+  fatigue.reset();
+  drill = null;
+  renderKeyboards();
+  startDrill().catch((err) => console.error('Failed to start drill', err));
+}
+
+function setKeyboard(id: string): void {
+  // A finished drill is still being scored on the old keyboard: keep it.
+  if (finishing || id === currentKeyboard()) return;
+  keyboardSettings = { ...keyboardSettings, active: id };
+  saveKeyboardSettings(keyboardSettings);
+  const layout = keyboards[id]?.layout;
+  if (layout && layout !== layoutSetting.layout && getLayout(layout)) {
+    setLayout(layout, 'user').catch((err) => console.error('Failed to update layout', err));
+  }
+  restartForKeyboard();
+}
+
+/** The layout in use is remembered on the keyboard in use. */
+function rememberLayout(layout: string): void {
+  const kb = currentKeyboard();
+  if (kb === null) return;
+  const k = keyboards[kb] ?? mainKeyboard(Date.now());
+  if (k.layout === layout) return;
+  keyboards = { ...keyboards, [k.id]: { ...k, layout, at: Date.now() } };
+  saveKeyboards(keyboards);
+  renderKeyboards();
+}
+
+async function removeKeyboard(k: KeyboardProfile): Promise<void> {
+  const synced = account.state.signedIn;
+  if (!confirm(t(synced ? 'keyboards.removeConfirmSynced' : 'keyboards.removeConfirm', { name: keyboardName(k) }))) return;
+  if (synced) {
+    // Server first: otherwise the next sync would bring the deleted rounds back.
+    try {
+      await account.clearRemoteKeyboard(k.id);
+    } catch (err) {
+      console.error('Failed to delete synced rounds of keyboard', err);
+      alert(t('keyboards.removeFailed'));
+      return;
+    }
+  }
+  const wasActive = currentKeyboard() === k.id;
+  // Kept as removed, so the removal reaches the learner's other devices.
+  updateKeyboard({ ...k, deleted: true });
+  await store.deleteSessions(await store.sessionsOnKeyboard(k.id));
+  if (wasActive) {
+    keyboardSettings = { ...keyboardSettings, active: MAIN_KEYBOARD };
+    saveKeyboardSettings(keyboardSettings);
+    if (!finishing) restartForKeyboard();
+  }
+}
+
+keyboardsToggle.addEventListener('change', () => {
+  keyboardSettings = { ...keyboardSettings, enabled: keyboardsToggle.checked };
+  saveKeyboardSettings(keyboardSettings);
+  // Turned on for the first time: everything typed so far was on the main keyboard.
+  if (keyboardsToggle.checked && !keyboards[MAIN_KEYBOARD]) {
+    keyboards = { ...keyboards, [MAIN_KEYBOARD]: mainKeyboard(Date.now(), layoutSetting.layout) };
+    saveKeyboards(keyboards);
+  }
+  // The next drill picks up the new statistics; the one on screen carries on.
+  renderKeyboards();
+});
+
+$('keyboard-add').addEventListener('click', () => {
+  const list = visibleKeyboards(keyboards);
+  if (list.length >= MAX_KEYBOARDS) return;
+  const now = Date.now();
+  const id = newKeyboardId(now);
+  if (!keyboards[MAIN_KEYBOARD]) keyboards = { ...keyboards, [MAIN_KEYBOARD]: mainKeyboard(now, layoutSetting.layout) };
+  updateKeyboard({ id, name: t('keyboards.newName', { n: list.length + 1 }), layout: layoutSetting.layout, created: now, at: now });
+  const input = keyboardList.querySelector<HTMLInputElement>(`[data-keyboard="${id}"] input`);
+  input?.focus();
+  input?.select();
+});
+
+$('keyboard-manage').addEventListener('click', () => {
+  openSettings();
+  $('keyboards-group').scrollIntoView({ block: 'nearest' });
+  $('keyboard-add').focus();
 });
 
 // --- Log inspector ---
@@ -918,7 +1265,14 @@ $('clear-log').addEventListener('click', async () => {
 
 // --- Progress ---
 
+/** Practice days a week and minutes a day; per device, like the other settings. */
+let goal = loadGoal();
+
 const RANGE_KEY = 'typing-trainer.progressRange';
+/** The keyboard the Progress page is narrowed to; all of them unless the learner picks one. */
+const PROGRESS_KEYBOARD_KEY = 'typing-trainer.progressKeyboard';
+let progressKeyboard: string | null = null;
+try { progressKeyboard = localStorage.getItem(PROGRESS_KEYBOARD_KEY) || null; } catch { /* storage blocked: all keyboards */ }
 let progressRange: Range = 30;
 try {
   const saved = localStorage.getItem(RANGE_KEY);
@@ -930,7 +1284,34 @@ try {
 async function showProgress(section?: ProgressSection): Promise<void> {
   try {
     const lang = availableLanguages().find((c) => c.language === context.language)?.name ?? context.language;
-    await renderProgress(store, context, { range: progressRange, contextName: `${lang} · ${layoutName(context.layout)}`, path: coachPath });
+    await renderProgress(store, context, {
+      range: progressRange, contextName: `${lang} · ${layoutName(context.layout)}`, path: coachPath,
+      keyboards: currentKeyboard() === null ? null : {
+        list: visibleKeyboards(keyboards).map((k) => ({ id: k.id, name: keyboardName(k) })),
+        filter: progressKeyboard,
+        onFilter: (id) => {
+          progressKeyboard = id;
+          try { localStorage.setItem(PROGRESS_KEYBOARD_KEY, id ?? ''); } catch { /* not remembered */ }
+          void showProgress();
+        },
+      },
+      goal, onGoal: (g) => {
+        goal = g;
+        saveGoal(g);
+        void showProgress();
+      },
+      plan: loadPlan(),
+      onPlan: (p) => {
+        savePlan(p);
+        void showProgress();
+      },
+      mastered: masteredSteps(),
+    });
+    // With no practice in this language yet the rest of the page is hidden; the buddies card stays.
+    const buddiesCard = $('progress-buddies');
+    if ($('progress-body').hidden) $('progress-empty').after(buddiesCard);
+    else $('progress-plan').after(buddiesCard);
+    void buddiesView.refresh();
     if (section) revealSection(section);
   } catch (err) {
     console.error('Failed to render progress', err);
@@ -979,11 +1360,11 @@ $('log-back').addEventListener('click', () => showView('practice'));
 $('profile-back').addEventListener('click', () => showView('practice'));
 
 /** One choice in a top-bar menu, with a tick on the current one. */
-function menuItem(label: string, detail: string, checked: boolean, pick: () => void): HTMLButtonElement {
+function menuItem(label: string | (Node | string)[], detail: string, checked: boolean, pick: () => void): HTMLButtonElement {
   const b = Object.assign(document.createElement('button'), { type: 'button', className: 'menu-item' });
   b.setAttribute('role', 'menuitemradio');
   b.setAttribute('aria-checked', String(checked));
-  b.append(label);
+  b.append(...(Array.isArray(label) ? label : [label]));
   if (detail) b.append(Object.assign(document.createElement('small'), { textContent: detail }));
   b.addEventListener('click', () => {
     closeMenus();
@@ -1013,7 +1394,7 @@ for (const m of menus) {
     coach.close(false);
     m.menu.hidden = !open;
     m.btn.setAttribute('aria-expanded', String(open));
-    if (open && m.menu.id === 'account-pop') accountView.focus();
+    if (open && m.menu.id === 'account-pop') openAccount();
     else if (open) m.menu.querySelector<HTMLElement>('[aria-checked="true"]')?.focus();
   });
   m.menu.addEventListener('click', (e) => e.stopPropagation());
@@ -1083,9 +1464,11 @@ applyTheme();
 
 // --- First-run setup ---
 //
-// Keyboard check, where to start (with an optional placement test) and how
-// the method works; see onboarding.ts. Shown once on a first visit, and
-// again from Settings. The top bar stays out of the way meanwhile.
+// A first visit gets the short setup: the placement test, starting from the
+// line typed on the landing page if there was one, then straight into lesson
+// 1; "How it works" follows the first round. Settings opens the full setup
+// (keyboard check, where to start, how it works). See onboarding.ts. The top
+// bar stays out of the way meanwhile.
 
 const onboarding = new Onboarding($('onboarding-view'), {
   context: () => context,
@@ -1093,12 +1476,13 @@ const onboarding = new Onboarding($('onboarding-view'), {
   hasLessons: () => loadCurriculum(context) !== null,
   setLanguage: (language) => setLanguage(language, false),
   setLayout,
-  log: (event) => store.add(event),
+  log: (event) => store.add(onKeyboard(event)),
   signedIn: () => account.state.signedIn,
   // Deferred past the click, which would otherwise reach the document and close the panel again.
   openAccount: (kind) => setTimeout(() => openAccount(kind), 0),
-  finish: (lessons) => {
+  finish: (lessons, quick) => {
     saveOnboardedSetting();
+    if (quick) setMethodPending(true);
     // Saved even when it was only guessed, so the next visit keeps it (see startLanguage).
     saveLanguageSetting(context.language);
     document.body.classList.remove('onboarding');
@@ -1109,7 +1493,7 @@ const onboarding = new Onboarding($('onboarding-view'), {
     }
     startDrill(lessons ? 'core' : undefined).catch((err) => console.error('Failed to start drill', err));
   },
-}, locales);
+}, browserLocales);
 
 function openOnboarding(): void {
   showView('practice');
@@ -1121,6 +1505,80 @@ function openOnboarding(): void {
 
 $('rerun-setup').addEventListener('click', openOnboarding);
 
+/** The first visit's setup, carrying on from the landing page's line if one was typed there. */
+async function openFirstRun(): Promise<void> {
+  const test = takeLandingTest();
+  if (test && availableLanguages().some((c) => c.language === test.language)) {
+    await setLanguage(test.language, false);
+    if (test.layoutSource === 'detected' && layoutSetting.source !== 'user') await setLayout(test.layout, 'detected');
+    // Logged like any placement keystrokes, under the layout now in use.
+    await Promise.all(test.events.map((e) => store.add(onKeyboard({ ...e, language: context.language, layout: context.layout }))));
+  }
+  showView('practice');
+  closeSettings(false);
+  practiceView.hidden = true;
+  document.body.classList.add('onboarding');
+  onboarding.openQuick(test?.language === context.language ? test.events : []);
+}
+
+// --- How it works, after the first round ---
+//
+// The four points of the method, shown once after a first visit's first
+// round: by then the learner has felt each of them.
+
+const METHOD_KEY = 'typing-trainer.method-pending';
+const methodPop = $('method-pop');
+
+function setMethodPending(on: boolean): void {
+  try {
+    if (on) localStorage.setItem(METHOD_KEY, '1');
+    else localStorage.removeItem(METHOD_KEY);
+  } catch { /* storage blocked: it is shown now or not at all */ }
+}
+
+function methodPending(): boolean {
+  try { return localStorage.getItem(METHOD_KEY) === '1'; } catch { return false; }
+}
+
+function renderMethod(): void {
+  const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls = '', text?: string) =>
+    Object.assign(document.createElement(tag), { className: cls }, text === undefined ? {} : { textContent: text });
+  const card = el('div', 'ob-card method-card');
+  const title = el('h2', '', t('onboarding.methodTitle'));
+  title.id = 'method-title';
+  const list = el('ol', 'ob-method');
+  ([1, 2, 3, 4] as const).forEach((n) => {
+    const li = el('li');
+    const body = el('div');
+    body.append(el('b', '', t(`onboarding.method${n}Title`)), el('p', '', t(`onboarding.method${n}`, { acc: pct(0.92) })));
+    li.append(el('span', 'ob-num', String(n)), body);
+    list.append(li);
+  });
+  const ok = el('button', 'primary', t('method.ok'));
+  ok.type = 'button';
+  ok.addEventListener('click', closeMethod);
+  const foot = el('div', 'ob-foot');
+  foot.append(ok);
+  card.append(title, el('p', 'ob-intro', t('method.after')), list, el('p', 'ob-note', t('onboarding.methodTip')), foot);
+  methodPop.replaceChildren(card);
+}
+
+function showMethod(): void {
+  setMethodPending(false);
+  renderMethod();
+  methodPop.hidden = false;
+  methodPop.querySelector<HTMLButtonElement>('button.primary')?.focus();
+}
+
+function closeMethod(): void {
+  methodPop.hidden = true;
+  inputEl.focus();
+}
+
+methodPop.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeMethod();
+});
+
 // Interface language: every string on screen is redrawn in place, so a drill in progress carries on.
 const uiLanguageEl = $('ui-language');
 
@@ -1130,7 +1588,8 @@ let uiChoice: string = isUiLanguage(savedUiLanguage) ? savedUiLanguage : 'auto';
 function renderUiLanguagePicker(): void {
   const choices = [{ id: 'auto', name: t('settings.uiAuto') }, ...UI_LANGUAGES];
   uiLanguageEl.replaceChildren(...choices.map((l) => {
-    const b = Object.assign(document.createElement('button'), { type: 'button', textContent: l.name });
+    const b = Object.assign(document.createElement('button'), { type: 'button' });
+    b.append(...withFlag(l.id, l.name));
     b.setAttribute('role', 'radio');
     if (isUiLanguage(l.id)) b.setAttribute('lang', l.id);
     else b.title = t('settings.uiAutoTitle');
@@ -1138,7 +1597,8 @@ function renderUiLanguagePicker(): void {
     b.addEventListener('click', () => {
       uiChoice = l.id;
       saveUiLanguageSetting(l.id);
-      setUiLanguage(isUiLanguage(l.id) ? l.id : guessUiLanguage(locales));
+      setUiLanguage(isUiLanguage(l.id) ? l.id : guessUiLanguage(browserLocales))
+        .catch((err) => console.error('Failed to load interface language', err));
       // The language may not change (e.g. Automatic picks the one already shown); the choice did.
       renderUiLanguagePicker();
     });
@@ -1152,9 +1612,11 @@ onUiLanguageChange(() => {
   applyTranslations();
   renderUiLanguagePicker();
   renderLayout();
+  renderKeyboards();
   if (suggested) showSuggestion(suggested);
   fingerGuide.retranslate();
   onboarding.languageChanged();
+  if (!methodPop.hidden) renderMethod();
   renderDrillBar();
   renderStats();
   redrawResult?.();
@@ -1163,6 +1625,9 @@ onUiLanguageChange(() => {
   accountView.render();
   profileView.render();
   if (!accountNudge.hidden) renderNudge();
+  renderFreshStart();
+  buddiesView.render();
+  invitePrompt.retranslate();
   if (!$('progress-view').hidden) void showProgress();
   if (!$('log-view').hidden) renderLog().catch((err) => console.error('Failed to render log', err));
 });
@@ -1176,8 +1641,10 @@ const account = new Account({
   store: () => store,
   activeSession: () => (session.done ? null : session.id),
   dataChanged: () => {
-    // Another device practised: pick up its curriculum and redraw what shows history.
+    // Another device practised: pick up its curriculum and keyboards, and redraw what shows history.
     curriculum = loadCurriculum(context) ?? curriculum;
+    keyboards = loadKeyboards();
+    renderKeyboards();
     // Signed in during first-run setup on a new device: the lessons came along, so the setup is done.
     if (document.body.classList.contains('onboarding') && loadCurriculum(context)) onboarding.dismiss();
     renderDrillBar();
@@ -1185,6 +1652,8 @@ const account = new Account({
     if (!$('log-view').hidden) renderLog().catch((err) => console.error('Failed to render log', err));
   },
   stateChanged: (state) => {
+    // Signed in from the dialog: close it, the top-bar button now shows who is signed in.
+    if (state.signedIn && $('account-pop').classList.contains('as-dialog') && !$('account-pop').hidden) closeMenus();
     accountView.update(state);
     profileView.update(state);
     // Came in through a password-reset link: the new password is chosen there.
@@ -1193,19 +1662,61 @@ const account = new Account({
     // An e-mail link that did not sign in: the panel says why and offers the code instead.
     if (!state.signedIn && state.linkFailed) setTimeout(() => openAccount('signin'), 0);
     onboarding.accountChanged();
+    buddiesView.update(state);
+    invitePrompt.update(state);
   },
 });
-const accountView = new AccountView($('account'), account, $<HTMLButtonElement>('account-btn'), $('account-summary'), () => openProfile());
+// --- Training buddies ---
+//
+// Friends in a small group see each other's weekly goal and streak (see
+// sync/buddies.ts). Only with an account, and only for people who joined
+// through an invite link.
+
+takeInviteFromUrl();
+const buddyDeps: BuddiesDeps = {
+  stats: async (): Promise<BuddyStats> => {
+    const now = Date.now();
+    const sessions = sessionSummaries(await store.all());
+    const st = goalStreak(dailyActiveMs(sessions), goal, now);
+    const wpm = periodTotals(sessions, startOfWeek(now), Infinity).wpm;
+    return {
+      week_start: isoDate(startOfWeek(now)), goal_days: goal.days, days_this_week: st.daysThisWeek,
+      week_streak: st.current, met_this_week: st.metThisWeek,
+      wpm: loadShareSpeed() && wpm !== null ? Math.round(wpm * 10) / 10 : null,
+    };
+  },
+  week: () => isoDate(startOfWeek(Date.now())),
+  openSignIn: (kind) => setTimeout(() => openAccount(kind), 0),
+  openProfile: () => openProfile(),
+  openProgress: () => showView('progress', 'buddies'),
+};
+const buddiesView = new BuddiesView($('progress-buddies'), account, buddyDeps);
+buddiesView.render();
+const invitePrompt = new InvitePrompt($('buddy-invite'), account, buddyDeps);
+
+const accountView = new AccountView($('account'), account, $<HTMLButtonElement>('account-btn'), $('account-summary'), () => openProfile(), () => {
+  closeMenus();
+  inputEl.focus();
+});
 accountView.render();
 const profileView = new ProfileView($('profile'), account, () => setTimeout(() => openAccount('signin'), 0));
 
-/** Opens the account panel under the top-bar button; signed out, on signing in or creating an account. */
+/**
+ * Opens the account panel. Signed in, it is the small menu under the
+ * top-bar button. Signed out, signing in and creating an account open as
+ * one centred dialog, wherever they were asked for (top bar, setup,
+ * reminder, buddies), so it always looks and sits the same.
+ */
 function openAccount(kind?: 'signin' | 'signup'): void {
   if (kind) accountView.show(kind);
   closeSettings(false);
   closeMenus();
   coach.close(false);
-  $('account-pop').hidden = false;
+  const pop = $('account-pop');
+  const dialog = !account.state.signedIn;
+  pop.classList.toggle('as-dialog', dialog);
+  pop.setAttribute('aria-modal', String(dialog));
+  pop.hidden = false;
   $('account-btn').setAttribute('aria-expanded', 'true');
   accountView.focus();
 }
@@ -1226,7 +1737,7 @@ $('open-account').addEventListener('click', (e) => {
 // After a few rounds, a learner without an account is offered one once, under the round's result.
 const accountNudge = $('account-nudge');
 const NUDGE_KEY = 'typing-trainer.account-nudge';
-const NUDGE_AFTER = 5;
+const NUDGE_AFTER = 3;
 
 function nudgeDismissed(): boolean {
   try { return localStorage.getItem(NUDGE_KEY) === 'dismissed'; } catch { return true; }
@@ -1267,6 +1778,74 @@ document.addEventListener('visibilitychange', () => {
     Date.now() - (state.lastSync ?? 0) > RESYNC_MS) account.syncNow().catch((err) => console.error('Sync failed', err));
 });
 
+// --- Fresh start ---
+//
+// A new week, a new month or coming back after a break are natural moments
+// to begin again (the "fresh start effect"). One line on the practice page
+// says so, with the weekly goal; it never mentions a broken streak.
+
+const freshEl = $('fresh-start');
+/** What the line says: a fresh start, or that now is a planned practice time. */
+let fresh: FreshStart | 'plan' | null = null;
+
+function renderFreshStart(): void {
+  if (!fresh) return;
+  const plan = loadPlan();
+  $('fresh-start-text').textContent = fresh === 'plan'
+    ? plan?.cue ? t('schedule.dueCue', { min: goal.minutes, cue: plan.cue }) : t('schedule.due', { min: goal.minutes })
+    : t(`restart.${fresh}`) + ' ' + t('restart.goal', { n: goal.days, min: goal.minutes });
+}
+
+function hideFreshStart(): void {
+  freshEl.hidden = true;
+  fresh = null;
+}
+
+async function maybeFreshStart(): Promise<void> {
+  const pick = freshStart(await store.latest(), Date.now(), loadFreshSeen());
+  if (!pick) return maybePlanned();
+  saveFreshSeen(pick.id);
+  fresh = pick.reason;
+  renderFreshStart();
+  freshEl.hidden = false;
+}
+
+/** Around a planned practice time, once a day, unless today's goal is already done. */
+async function maybePlanned(): Promise<void> {
+  const now = Date.now();
+  const day = planDue(loadPlan(), now);
+  if (day === null || loadPlanSeen() === day || !freshEl.hidden) return;
+  const today = dailyActiveMs(sessionSummaries(await store.since(day))).get(day) ?? 0;
+  if (today >= goal.minutes * 60_000) return;
+  savePlanSeen(day);
+  fresh = 'plan';
+  renderFreshStart();
+  freshEl.hidden = false;
+}
+
+// Coming back to an open tab at the planned time counts as opening the app.
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && store) maybePlanned().catch((err) => console.error('Failed to check the plan', err));
+});
+
+// Touch screens without a mouse are usually phones or tablets: say once that the app is built for a keyboard.
+const phoneNote = $('phone-note');
+const PHONE_NOTE_KEY = 'typing-trainer.phone-note';
+try {
+  phoneNote.hidden = !matchMedia('(pointer: coarse) and (hover: none)').matches || localStorage.getItem(PHONE_NOTE_KEY) === 'dismissed';
+} catch {
+  phoneNote.hidden = true;
+}
+$('phone-note-close').addEventListener('click', () => {
+  phoneNote.hidden = true;
+  try { localStorage.setItem(PHONE_NOTE_KEY, 'dismissed'); } catch { /* storage blocked: it only hides for this visit */ }
+});
+
+$('fresh-start-close').addEventListener('click', () => {
+  hideFreshStart();
+  inputEl.focus();
+});
+
 // Console access for ad-hoc inspection: `await typingLog.all()`
 declare global {
   interface Window {
@@ -1279,9 +1858,16 @@ Promise.all([KeystrokeStore.open(), withLoadBar(loadCorpus(context.language))]).
   window.typingLog = { all: () => s.all(), count: () => s.count() };
   renderLayout();
   renderLanguage();
+  renderKeyboards();
   // A browser that practised before the setup existed goes straight to practice.
-  if (!loadOnboardedSetting() && !hasAnyCurriculum()) openOnboarding();
-  else startDrill().catch((err) => console.error('Failed to start drill', err));
+  if (!loadOnboardedSetting() && !hasAnyCurriculum()) openFirstRun().catch((err) => console.error('Failed to open setup', err));
+  else {
+    startDrill().catch((err) => console.error('Failed to start drill', err));
+    maybeFreshStart().catch((err) => console.error('Failed to check for a fresh start', err));
+  }
+  if (pendingInvite()) void invitePrompt.show();
+  // The landing page's "Sign in" link.
+  if (signInLink) openAccount('signin');
   account.init().catch((err) => console.error('Account setup failed', err));
   detectFromBrowser()
     .then(backfillLegacyLog)

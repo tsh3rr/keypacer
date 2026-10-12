@@ -2,14 +2,16 @@ import type { SupabaseClient, Session } from '@supabase/supabase-js';
 import type { KeystrokeStore } from '../store';
 import { uiLanguage } from '../i18n';
 import { allCurricula, saveCurriculum } from '../curriculum-store';
+import { loadKeyboards, mergeKeyboards, saveKeyboards, type KeyboardList } from '../keyboards';
 import { decodeSession, encodeSession, rowSignature, type SessionRow } from './codec';
 import { mergeCurricula, pendingUploads, planSync, type Curricula } from './plan';
+import type { BuddyInvite, BuddyRow, BuddyStats } from './buddies';
 
 /**
  * Optional account: sign in with Google or e-mail and password, and practice rounds
  * and curricula are copied between the learner's devices through Supabase.
  *
- * Everything works without an account. The Supabase library is only loaded
+ * Everything works without an account (data then stays in this browser). The Supabase library is only loaded
  * for someone who is signed in or is signing in, so nobody else downloads it
  * or talks to Supabase at all.
  */
@@ -18,9 +20,9 @@ import { mergeCurricula, pendingUploads, planSync, type Curricula } from './plan
 export const OAUTH_PROVIDERS: readonly OAuthProvider[] = [];
 /**
  * Sign-in by one-time code or link, password reset and confirming the address
- * at sign-up all send e-mail. Off until the Supabase project has its own mail
- * server, since its built-in one only delivers to the project's team; switched
- * per project in vite.config.ts (docs/email-setup.md).
+ * at sign-up all send e-mail. On only where the Supabase project has its own
+ * mail server, since its built-in one only delivers to the project's team;
+ * switched per project in vite.config.ts (docs/email-setup.md).
  */
 export const EMAIL_LINKS: boolean = __EMAIL_LINKS__;
 
@@ -32,6 +34,8 @@ export type CodePurpose = 'signin' | 'signup' | 'reset';
 const AUTH_KEY = 'typing-trainer.auth';
 const SYNC_KEY = 'typing-trainer.sync';
 const PROFILE_KEY = 'typing-trainer.profile';
+/** Whether the account is in a buddy group, so finished drills know to update what buddies see. */
+const BUDDY_KEY = 'typing-trainer.buddy-group';
 /** Rows per request, to keep each request well under the API's limits. */
 const UPLOAD_BATCH = 25;
 const DOWNLOAD_BATCH = 50;
@@ -96,9 +100,9 @@ export class Account {
    * accounts, since a new one needs a username: throws `{ code: 'otp_disabled' }`
    * for an address without one.
    */
-  async sendCode(email: string): Promise<void> {
+  async sendCode(email: string, captchaToken?: string): Promise<void> {
     const client = await this.connect();
-    const { error } = await client.auth.signInWithOtp({ email, options: { emailRedirectTo: here(), shouldCreateUser: false } });
+    const { error } = await client.auth.signInWithOtp({ email, options: { emailRedirectTo: here(), captchaToken, shouldCreateUser: false } });
     if (error) throw error;
   }
 
@@ -115,9 +119,9 @@ export class Account {
   }
 
   /** Sends the e-mail that confirms a new account's address again. */
-  async resendConfirmation(email: string): Promise<void> {
+  async resendConfirmation(email: string, captchaToken?: string): Promise<void> {
     const client = await this.connect();
-    const { error } = await client.auth.resend({ type: 'signup', email, options: { emailRedirectTo: here() } });
+    const { error } = await client.auth.resend({ type: 'signup', email, options: { emailRedirectTo: here(), captchaToken } });
     if (error) throw error;
   }
 
@@ -127,9 +131,9 @@ export class Account {
     if (error) throw error;
   }
 
-  async signInWithPassword(email: string, password: string): Promise<void> {
+  async signInWithPassword(email: string, password: string, captchaToken?: string): Promise<void> {
     const client = await this.connect();
-    const { error } = await client.auth.signInWithPassword({ email, password });
+    const { error } = await client.auth.signInWithPassword({ email, password, options: { captchaToken } });
     if (error) throw error;
   }
 
@@ -138,12 +142,12 @@ export class Account {
    * in the same step, see the usernames migrations). Returns false when it
    * still has to be confirmed by e-mail. Throws `{ code: 'username_taken' }`.
    */
-  async signUp(email: string, password: string, username: string): Promise<boolean> {
+  async signUp(email: string, password: string, username: string, captchaToken?: string): Promise<boolean> {
     const client = await this.connect();
     const { data: free, error: checkError } = await client.rpc('username_available', { name: username });
     if (checkError) throw checkError;
     if (free === false) throw usernameTaken();
-    const { data, error } = await client.auth.signUp({ email, password, options: { data: { username, locale: uiLanguage() }, emailRedirectTo: here() } });
+    const { data, error } = await client.auth.signUp({ email, password, options: { data: { username, locale: uiLanguage() }, emailRedirectTo: here(), captchaToken } });
     if (error) throw error;
     if (data.user) saveUsername(data.user.id, username);
     this.emit();
@@ -151,9 +155,9 @@ export class Account {
   }
 
   /** Sends a code and a link to choose a new password (needs EMAIL_LINKS); either signs in, then `setPassword`. */
-  async sendPasswordReset(email: string): Promise<void> {
+  async sendPasswordReset(email: string, captchaToken?: string): Promise<void> {
     const client = await this.connect();
-    const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: here() });
+    const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: here(), captchaToken });
     if (error) throw error;
   }
 
@@ -173,6 +177,74 @@ export class Account {
     if (error) throw error.code === '23505' ? usernameTaken() : error;
     saveUsername(user, username);
     this.emit();
+  }
+
+  // --- Training buddies (see supabase/migrations/*_training_buddies.sql) ---
+
+  /** Who sent an invite code, before signing in; null when the code does not work. */
+  async buddyInvite(code: string): Promise<BuddyInvite | null> {
+    const client = await this.connect();
+    const { data, error } = await client.rpc('buddy_invite', { code });
+    if (error) throw error;
+    const row = (data as { owner: string | null; members: number; full_group: boolean }[])[0];
+    return row ? { owner: row.owner, members: row.members, full: row.full_group } : null;
+  }
+
+  /** The caller's group for the week starting `week` (YYYY-MM-DD); empty when in none. */
+  async buddies(week: string): Promise<BuddyRow[]> {
+    const client = this.requireSignedIn();
+    const { data, error } = await client.rpc('my_buddies', { week });
+    if (error) throw error;
+    const rows = data as BuddyRow[];
+    saveBuddyFlag(this.session!.user.id, rows.length > 0);
+    return rows;
+  }
+
+  /** Whether the last look found this account in a group. */
+  get inBuddyGroup(): boolean {
+    return this.session !== null && loadBuddyFlag(this.session.user.id);
+  }
+
+  async createBuddyGroup(): Promise<void> {
+    await this.buddyCall('create_buddy_group', {});
+    saveBuddyFlag(this.session!.user.id, true);
+  }
+
+  async joinBuddyGroup(code: string): Promise<void> {
+    await this.buddyCall('join_buddy_group', { code });
+    saveBuddyFlag(this.session!.user.id, true);
+  }
+
+  async leaveBuddyGroup(): Promise<void> {
+    await this.buddyCall('leave_buddy_group', {});
+    saveBuddyFlag(this.session!.user.id, false);
+  }
+
+  removeBuddy(buddy: string): Promise<void> {
+    return this.buddyCall('remove_buddy', { buddy });
+  }
+
+  newBuddyInvite(): Promise<void> {
+    return this.buddyCall('new_buddy_invite', {});
+  }
+
+  cheerBuddy(buddy: string, week: string): Promise<void> {
+    return this.buddyCall('cheer_buddy', { buddy, week });
+  }
+
+  /** Updates the numbers buddies see; only while in a group (the database refuses it otherwise). */
+  async publishBuddyStats(stats: BuddyStats): Promise<void> {
+    if (!this.inBuddyGroup) return;
+    const client = this.requireSignedIn();
+    const { error } = await client.from('buddy_stats').upsert({ user_id: this.session!.user.id, ...stats });
+    if (error) throw error;
+  }
+
+  /** Runs a buddy function; its own errors (e.g. "group_full") come back as `{ code }`. */
+  private async buddyCall(fn: string, args: Record<string, string>): Promise<void> {
+    const client = this.requireSignedIn();
+    const { error } = await client.rpc(fn, args);
+    if (error) throw error.code === 'P0001' ? Object.assign(new Error(error.message), { code: `buddy:${error.message}` }) : error;
   }
 
   /** Signs out on this device. Practice data stays here. */
@@ -199,6 +271,21 @@ export class Account {
       const { error } = await client.from('practice_sessions').delete().eq('user_id', user);
       if (error) throw error;
       saveSyncState({ ...loadSyncState(user), sessions: {} });
+    });
+  }
+
+  /** Deletes the synced rounds typed on a keyboard profile, when the learner removes it. */
+  async clearRemoteKeyboard(keyboard: string): Promise<void> {
+    if (!this.session) return;
+    const client = this.requireSignedIn();
+    const user = this.session.user.id;
+    await this.queue(async () => {
+      const { data, error } = await client.from('practice_sessions').delete()
+        .eq('user_id', user).eq('data->>kb', keyboard).select('id');
+      if (error) throw error;
+      const saved = loadSyncState(user);
+      for (const { id } of data as { id: string }[]) delete saved.sessions[id];
+      saveSyncState(saved);
     });
   }
 
@@ -237,10 +324,11 @@ export class Account {
     const store = this.deps.store();
     const saved = loadSyncState(user);
     const synced = new Map(Object.entries(saved.sessions));
+    // First, so rounds of a keyboard removed on another device are gone before anything is uploaded.
+    let changed = await syncKeyboards(client, user, store);
     const local = await store.sessionSignatures();
     const active = this.deps.activeSession();
     if (active) local.delete(active);
-    let changed = false;
 
     let upload: string[];
     if (full) {
@@ -327,6 +415,7 @@ export class Account {
         this.recovery = false;
         clearSyncState();
         clearUsername();
+        clearBuddyFlag();
       }
       if (!ready) return;
       this.emit();
@@ -379,6 +468,36 @@ async function syncCurricula(client: SupabaseClient, user: string): Promise<bool
     if (upsertError) throw upsertError;
   }
   return takeRemote.length > 0;
+}
+
+/**
+ * Merges the keyboard profiles both ways, and deletes the rounds of
+ * keyboards removed on another device. Returns whether this device's data
+ * changed.
+ */
+async function syncKeyboards(client: SupabaseClient, user: string, store: KeystrokeStore): Promise<boolean> {
+  const { data, error } = await client.from('user_state').select('keyboards').eq('user_id', user).maybeSingle();
+  if (error) throw error;
+  const local = loadKeyboards();
+  const { merged, localChanged, pushRemote } = mergeKeyboards(local, (data?.keyboards ?? {}) as KeyboardList);
+  let removed = false;
+  if (localChanged) {
+    saveKeyboards(merged);
+    for (const k of Object.values(merged)) {
+      if (!k.deleted || local[k.id]?.deleted) continue;
+      // Also on the server: another device may have uploaded rounds of it after it was removed.
+      const { error: deleteError } = await client.from('practice_sessions').delete().eq('user_id', user).eq('data->>kb', k.id);
+      if (deleteError) throw deleteError;
+      const rounds = await store.sessionsOnKeyboard(k.id);
+      await store.deleteSessions(rounds);
+      removed ||= rounds.length > 0;
+    }
+  }
+  if (pushRemote) {
+    const { error: upsertError } = await client.from('user_state').upsert({ user_id: user, keyboards: merged });
+    if (upsertError) throw upsertError;
+  }
+  return localChanged || removed;
 }
 
 /** This page's address without query or hash, where sign-in links return to. */
@@ -455,6 +574,31 @@ function saveUsername(user: string, username: string | null): void {
 function clearUsername(): void {
   try {
     localStorage.removeItem(PROFILE_KEY);
+  } catch {
+    // ignore
+  }
+}
+
+function loadBuddyFlag(user: string): boolean {
+  try {
+    return localStorage.getItem(BUDDY_KEY) === user;
+  } catch {
+    return false;
+  }
+}
+
+function saveBuddyFlag(user: string, inGroup: boolean): void {
+  try {
+    if (inGroup) localStorage.setItem(BUDDY_KEY, user);
+    else localStorage.removeItem(BUDDY_KEY);
+  } catch {
+    // checked again the next time the buddies card loads
+  }
+}
+
+function clearBuddyFlag(): void {
+  try {
+    localStorage.removeItem(BUDDY_KEY);
   } catch {
     // ignore
   }

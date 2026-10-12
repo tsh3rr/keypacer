@@ -1,11 +1,17 @@
 import { num, pct as fmtPct, t, uiLanguage, type MessageKey } from './i18n';
 import { ROWS, keyLabel } from './layouts';
 import {
-  dailyModels, errorRateTrend, keyHeat, periodTotals, sessionSummaries, startOfDay, weakest,
-  type PeriodTotals, type SessionSummary,
+  dailyModels, errorRateTrend, keyHeat, periodTotals, sessionSummaries, smoothedTrend, startOfDay, startOfWeek, weakest,
+  weeklyTotals, weeklyTrend,
+  type PeriodTotals, type SessionSummary, type WeekTotals,
 } from './progress';
+import {
+  GOAL_DAY_CHOICES, GOAL_MINUTE_CHOICES, PLAN_CUE_MAX, bestDrill, cleanPlan, dailyActiveMs, goalStreak, nextPlanned, planIcs, planUid, weekDays,
+  type DayState, type GoalStreak, type PracticePlan, type WeeklyGoal,
+} from './goals';
 import type { KeystrokeEvent, PracticeContext } from './types';
-import type { BigramStats, KeyStats, WeaknessModel } from './weakness';
+import { buildWeaknessModel, type BigramStats, type KeyStats, type WeaknessModel } from './weakness';
+import { forKeyboard } from './keyboards';
 import type { CoachData, ProgressTarget } from './coachView';
 
 /**
@@ -15,6 +21,8 @@ import type { CoachData, ProgressTarget } from './coachView';
 
 const DAY_MS = 86_400_000;
 const TREND_DAYS = 14;
+/** Calendar weeks in the week-by-week card. */
+const WEEKS = 8;
 /** Error-rate bin edges for the heatmap; below the first is the model's 2% target. */
 const HEAT_BINS = [0.02, 0.05, 0.08, 0.12];
 
@@ -44,6 +52,7 @@ const pct = (x: number, digits = 1) => fmtPct(x, digits);
 const width = (x: number) => `${Math.round(x * 100)}%`;
 const showChars = (s: string) => s.replace(/ /g, '␣');
 const fmtDate = (ms: number) => new Date(ms).toLocaleDateString(uiLanguage(), { day: 'numeric', month: 'short' });
+const fmtShortDate = (ms: number) => new Date(ms).toLocaleDateString(uiLanguage(), { day: 'numeric', month: 'numeric' });
 const fmtDateTime = (ms: number) =>
   new Date(ms).toLocaleString(uiLanguage(), { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
 
@@ -254,19 +263,23 @@ function heatBin(errorRate: number | undefined): number {
   return HEAT_BINS.filter((edge) => errorRate >= edge).length;
 }
 
-function renderKeyboard(model: WeaknessModel): void {
+function renderKeyboard(model: WeaknessModel, mastered: ReadonlySet<string>): void {
   const heat = keyHeat(model);
+  // Physical keys whose character was mastered (lower case, as the curriculum names letters).
+  const masteredCodes = new Set(model.keys.filter((k) => k.code !== null && mastered.has(k.item)).map((k) => k.code!));
   const kb = el('div', 'kb');
   const keyEl = (code: string, label: string, cls = '') => {
     const h = heat.get(code);
     const bin = heatBin(h?.errorRate);
-    const k = el('div', `kb-key heat-${bin < 0 ? 'none' : bin} ${cls}`, label);
+    const star = masteredCodes.has(code);
+    const k = el('div', `kb-key heat-${bin < 0 ? 'none' : bin} ${cls}${star ? ' mastered' : ''}`, label);
     k.tabIndex = 0;
     const lines = () =>
       h
         ? [
           t('progress.keyTitle', { label }), t('progress.keyErrors', { pct: pct(h.errorRate) }),
           t('progress.keyTries', { n: num(h.attempts), chars: h.chars.map(showChars).join(' ') }),
+          ...(star ? [t('progress.keyMastered')] : []),
         ]
         : [t('progress.keyTitle', { label }), t('progress.keyNotTyped')];
     k.setAttribute('aria-label', lines().join(', '));
@@ -361,6 +374,291 @@ function renderWeakTable(
   );
 }
 
+// --- Week by week ---
+
+function renderStreak(st: GoalStreak, goal: WeeklyGoal): void {
+  const big = $('week-streak');
+  big.replaceChildren(num(st.current));
+  big.append(el('small', undefined, t('week.weeks', { n: st.current })));
+  const note = $('week-streak-note');
+  note.className = 'pg-delta';
+  const missing = goal.days - st.daysThisWeek;
+  if (st.metThisWeek) {
+    note.textContent = t('week.goalMet');
+    note.classList.add('good');
+  } else if (st.current > 0 && missing <= st.daysLeft) {
+    note.textContent = t('week.toKeep', { n: missing });
+    note.classList.add('good');
+  } else {
+    // A missed week is not called out: the best run is shown instead.
+    note.textContent = t('week.bestWeeks', { n: st.best });
+  }
+}
+
+function renderGoalPicker(goal: WeeklyGoal, st: GoalStreak, onGoal: (goal: WeeklyGoal) => void): void {
+  $('week-goal-count').textContent = t('week.goalCount', { n: st.daysThisWeek, goal: goal.days });
+  const fill = (select: HTMLSelectElement, choices: readonly number[], value: number, label: (n: number) => string) => {
+    select.replaceChildren(...choices.map((n) => {
+      const o = el('option', undefined, label(n));
+      o.value = String(n);
+      o.selected = n === value;
+      return o;
+    }));
+  };
+  const days = $<HTMLSelectElement>('goal-days');
+  const minutes = $<HTMLSelectElement>('goal-minutes');
+  fill(days, GOAL_DAY_CHOICES, goal.days, (n) => t('goal.days', { n }));
+  fill(minutes, GOAL_MINUTE_CHOICES, goal.minutes, (n) => t('goal.minutes', { n }));
+  const change = () => onGoal({ days: Number(days.value), minutes: Number(minutes.value) });
+  days.onchange = change;
+  minutes.onchange = change;
+}
+
+// --- Practice plan: when the learner means to practise, with a calendar entry ---
+
+/** Whether the plan box shows its form; kept across redraws until saved or cancelled. */
+let planEditing = false;
+
+const dayName = (d: number, style: 'short' | 'long' = 'short') =>
+  // 5 January 2026 was a Monday.
+  new Intl.DateTimeFormat(uiLanguage(), { weekday: style }).format(new Date(2026, 0, 5 + d));
+
+function downloadPlan(plan: PracticePlan, goal: WeeklyGoal): void {
+  const ics = planIcs(plan, {
+    minutes: goal.minutes, title: t('schedule.icsTitle'),
+    description: plan.cue ? t('schedule.icsTextCue', { min: goal.minutes, cue: plan.cue }) : t('schedule.icsText', { min: goal.minutes }),
+    url: `${location.origin}/app/`, uid: planUid(),
+  });
+  const a = Object.assign(document.createElement('a'), {
+    href: URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })), download: 'keypacer-practice.ics',
+  });
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+function planButton(label: string, cls: string, go: () => void): HTMLButtonElement {
+  const b = el('button', cls, label);
+  b.type = 'button';
+  b.addEventListener('click', go);
+  return b;
+}
+
+/** "Today at 08:00", "Tomorrow at 08:00" or "Friday at 08:00". */
+function planWhen(at: number, time: string, now: number): string {
+  const days = Math.round((startOfDay(at) - startOfDay(now)) / 86_400_000);
+  if (days === 0) return t('schedule.today', { time });
+  if (days === 1) return t('schedule.tomorrow', { time });
+  return t('schedule.on', { day: dayName((new Date(at).getDay() + 6) % 7, 'long'), time });
+}
+
+/**
+ * The practice plan card: a form until a plan exists, then the week with the
+ * planned days, the next session and the calendar download.
+ */
+function renderPlan(
+  plan: PracticePlan | null, goal: WeeklyGoal, week: readonly DayState[], now: number,
+  onPlan: (plan: PracticePlan | null) => void,
+): void {
+  const body = $('plan-body');
+  const head = $('plan-head-actions');
+  const redraw = () => renderPlan(plan, goal, week, now, onPlan);
+  head.replaceChildren();
+
+  if (plan && !planEditing) {
+    head.append(
+      planButton(t('schedule.change'), 'link-btn', () => { planEditing = true; redraw(); }),
+      planButton(t('schedule.remove'), 'link-btn', () => onPlan(null)),
+    );
+    const next = nextPlanned(plan, now);
+    const nextBox = el('div', 'pl-next');
+    nextBox.append(el('div', 'pg-label', t('schedule.next')), el('div', 'pg-big', planWhen(next, plan.time, now)));
+    if (plan.cue) nextBox.append(el('div', 'pl-cue', plan.cue));
+
+    const today = (new Date(now).getDay() + 6) % 7;
+    const strip = el('ol', 'pl-week');
+    strip.setAttribute('aria-label', t('schedule.daysAria'));
+    for (let d = 0; d < 7; d++) {
+      const planned = plan.days.includes(d);
+      const met = week[d] === 'met';
+      const li = el('li', [planned && 'planned', met && 'met', d === today && 'today'].filter(Boolean).join(' '));
+      li.title = dayName(d, 'long');
+      li.append(el('b', undefined, dayName(d)), el('span', undefined, met ? '✓' : planned ? plan.time : ''));
+      strip.append(li);
+    }
+
+    const cal = el('div', 'pl-cal');
+    cal.append(planButton(t('schedule.calendar'), 'primary', () => downloadPlan(plan, goal)), el('p', undefined, t('schedule.calendarNote')));
+    body.replaceChildren(nextBox, strip, cal);
+    if (plan.days.length < goal.days) {
+      body.append(el('p', 'pl-hint', t('schedule.fewer', { goal: t('goal.days', { n: goal.days }) })));
+    }
+    return;
+  }
+
+  const form = el('form', 'pl-form');
+  const chosen = new Set(plan?.days ?? []);
+  const dayField = el('fieldset', 'pl-field');
+  const days = el('div', 'pl-days');
+  for (let d = 0; d < 7; d++) {
+    const b = planButton(dayName(d), '', () => {
+      if (chosen.has(d)) chosen.delete(d);
+      else chosen.add(d);
+      b.setAttribute('aria-pressed', String(chosen.has(d)));
+      error.textContent = '';
+    });
+    b.title = dayName(d, 'long');
+    b.setAttribute('aria-pressed', String(chosen.has(d)));
+    days.append(b);
+  }
+  dayField.append(el('legend', undefined, t('schedule.daysAria')), days);
+
+  const field = (label: string, input: HTMLInputElement) => {
+    const f = el('label', 'pl-field');
+    f.append(el('span', undefined, label), input);
+    return f;
+  };
+  const time = Object.assign(el('input'), { type: 'time', value: plan?.time ?? '18:00', required: true });
+  const cue = Object.assign(el('input'), { type: 'text', value: plan?.cue ?? '', maxLength: PLAN_CUE_MAX, placeholder: t('schedule.cuePlaceholder') });
+  const row = el('div', 'pl-row');
+  row.append(field(t('schedule.timeAria'), time), field(t('schedule.cueAria'), cue));
+
+  const error = el('p', 'pl-error');
+  error.setAttribute('role', 'alert');
+  const actions = el('div', 'pl-actions');
+  const save = el('button', 'primary', t('schedule.save'));
+  save.type = 'submit';
+  actions.append(save);
+  if (plan) actions.append(planButton(t('schedule.cancel'), 'link-btn', () => { planEditing = false; redraw(); }));
+
+  form.append(el('p', 'pl-why', t('schedule.why')), dayField, row, error, actions);
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const next = cleanPlan({ days: [...chosen], time: time.value, cue: cue.value });
+    if (!next) {
+      error.textContent = t('schedule.needDay');
+      return;
+    }
+    planEditing = false;
+    onPlan(next);
+  });
+  body.replaceChildren(form);
+}
+
+function renderBest(best: SessionSummary | null): void {
+  const big = $('week-best');
+  big.replaceChildren(best ? num(best.wpm) : '–');
+  if (best) big.append(el('small', undefined, t('now.wpm')));
+  $('week-best-note').textContent = best ? fmtDate(best.start) : t('week.bestNone');
+}
+
+function renderWeekDays(days: readonly DayState[], weekStart: number, now: number): void {
+  const fmt = new Intl.DateTimeFormat(uiLanguage(), { weekday: 'narrow' });
+  const long = new Intl.DateTimeFormat(uiLanguage(), { weekday: 'long' });
+  const todayIdx = Math.round((startOfDay(now) - weekStart) / DAY_MS);
+  $('week-days').replaceChildren(
+    ...days.map((state, i) => {
+      const day = new Date(weekStart);
+      day.setDate(day.getDate() + i);
+      const cls = state === 'met' ? 'on' : state === 'part' ? 'part' : '';
+      const li = el('li', [cls, i === todayIdx ? 'today' : '', i > todayIdx ? 'future' : ''].join(' ').trim());
+      li.append(el('i'), el('span', undefined, fmt.format(day)));
+      const what = state === 'met' ? t('week.goalDay') : state === 'part' ? t('week.practised') : t('week.notPractised');
+      li.title = `${long.format(day)}: ${what}`;
+      li.setAttribute('aria-label', li.title);
+      return li;
+    }),
+  );
+}
+
+/** Average speed per calendar week as columns; weeks without practice keep their slot so gaps show. */
+function weekChart(host: HTMLElement, weeks: readonly WeekTotals[]): void {
+  const W = Math.max(300, Math.round(host.clientWidth) || 720);
+  const H = W < 500 ? 150 : 170;
+  const m = { l: 8, r: 8, t: 22, b: 24 };
+  const iw = W - m.l - m.r;
+  const ih = H - m.t - m.b;
+  const slot = iw / weeks.length;
+  const bw = Math.min(56, slot * 0.62);
+  const max = niceMax(Math.max(10, ...weeks.map((w) => w.wpm ?? 0)) * 1.1, 10);
+  const root = svg('svg', { viewBox: `0 0 ${W} ${H}`, class: 'chart-svg', role: 'img' });
+  root.setAttribute('aria-label', t('week.chartLabel'));
+  root.append(svg('line', { x1: m.l, x2: W - m.r, y1: m.t + ih, y2: m.t + ih, class: 'grid' }));
+  weeks.forEach((w, i) => {
+    const cx = m.l + slot * (i + 0.5);
+    const current = i === weeks.length - 1;
+    const g = svg('g', { class: `wk-col${current ? ' current' : ''}`, tabindex: 0 });
+    if (w.wpm !== null) {
+      const h = Math.max(3, (w.wpm / max) * ih);
+      g.append(svg('rect', { x: cx - bw / 2, y: m.t + ih - h, width: bw, height: h, rx: 4, class: 'wk-bar' }));
+      const v = svg('text', { x: cx, y: m.t + ih - h - 6, class: 'wk-value', 'text-anchor': 'middle' });
+      v.textContent = num(w.wpm);
+      g.append(v);
+    } else {
+      g.append(svg('rect', { x: cx - bw / 2, y: m.t + ih - 2, width: bw, height: 2, rx: 1, class: 'wk-none' }));
+    }
+    const label = svg('text', { x: cx, y: H - 6, class: 'axis', 'text-anchor': 'middle' });
+    // Narrow slots get numeric dates, so eight labels fit side by side on a phone.
+    label.textContent = slot < 80 ? fmtShortDate(w.start) : current ? t('week.now') : fmtDate(w.start);
+    g.append(label);
+    g.append(svg('rect', { x: cx - slot / 2, y: 0, width: slot, height: H, fill: 'transparent' }));
+    const end = new Date(w.start);
+    end.setDate(end.getDate() + 6);
+    const lines = () => [
+      t('week.range', { from: fmtDate(w.start), to: fmtDate(end.getTime()) }),
+      ...(w.wpm === null || w.accuracy === null
+        ? [t('week.noPractice')]
+        : [
+          t('progress.wpm', { n: num(w.wpm, 1) }), t('progress.tipAccuracy', { acc: pct(w.accuracy) }),
+          t('week.tipTime', { time: fmtDuration(w.activeMs), n: w.activeDays.filter(Boolean).length }),
+        ]),
+    ];
+    g.setAttribute('aria-label', lines().join(', '));
+    tipOnHover(g, lines);
+    root.append(g);
+  });
+  const trend = smoothedTrend(weeks);
+  if (trend.length > 0) {
+    const points = trend.map(([i, v]) => `${m.l + slot * (i + 0.5)},${m.t + ih - (v / max) * ih}`).join(' ');
+    // Drawn above the columns but never catches the pointer, so tooltips still work.
+    root.append(svg('polyline', { points, class: 'wk-trend' }));
+  }
+  host.replaceChildren(root);
+}
+
+/** The goal and streak count practice in any language; speeds are for the current language and layout only. */
+function renderWeeks(
+  weeks: readonly WeekTotals[], sessions: readonly SessionSummary[], allSessions: readonly SessionSummary[],
+  goal: WeeklyGoal, onGoal: (goal: WeeklyGoal) => void, plan: PracticePlan | null, onPlan: (plan: PracticePlan | null) => void, now: number,
+): void {
+  const daily = dailyActiveMs(allSessions);
+  const st = goalStreak(daily, goal, now);
+  renderStreak(st, goal);
+  renderGoalPicker(goal, st, onGoal);
+  const week = weekDays(daily, goal, startOfWeek(now));
+  renderPlan(plan, goal, week, now, onPlan);
+  renderWeekDays(week, startOfWeek(now), now);
+  renderBest(bestDrill(sessions));
+  weekChart($('week-chart'), weeks);
+  const [prev, cur] = weeks.slice(-2);
+  const speed = $('week-speed');
+  speed.replaceChildren(cur.wpm === null ? '–' : num(cur.wpm));
+  if (cur.wpm !== null) speed.append(el('small', undefined, t('now.wpm')));
+  const note = $('week-speed-note');
+  note.className = 'pg-delta';
+  if (cur.wpm !== null && prev.wpm !== null) {
+    const d = cur.wpm - prev.wpm;
+    note.textContent = t('week.vsLast', { arrow: d >= 0 ? '▲' : '▼', d: t('progress.wpm', { n: num(Math.abs(d), 1) }) });
+    note.classList.add(d >= 0 ? 'good' : 'bad');
+  } else {
+    note.textContent = cur.wpm === null ? t('week.noPractice') : '\u00a0';
+  }
+  const trend = weeklyTrend(weeks);
+  const trendText = trend
+    ? `${t('week.trend', { arrow: trend.slope >= 0 ? '▲' : '▼', d: t('progress.wpm', { n: num(Math.abs(trend.slope), 1) }) })} `
+    : '';
+  $('week-caption').textContent = trendText + t('week.caption');
+}
+
 // --- Path ---
 
 /** The path card mirrors the Path chip's bubble, with room for every stage. */
@@ -374,9 +672,19 @@ function renderPath(path: CoachData['path'] | null): void {
       const fill = el('b');
       fill.style.width = width(st.state === 'done' ? 1 : st.total ? st.done / st.total : 0);
       bar.append(fill);
-      const state = st.state === 'done' ? t('progress.stageDone') : st.state === 'locked' ? t('progress.stageLocked')
-        : t('progress.stageOf', { done: st.done, total: st.total });
-      li.append(el('span', 'pg-stage-name', st.name), el('span', 'pg-stage-state', state), bar);
+      const state = el('span', 'pg-stage-state');
+      if (st.state === 'locked') {
+        // A long "not started" wrapped under the stage name in narrow columns; a lock fits in any width.
+        state.setAttribute('role', 'img');
+        state.setAttribute('aria-label', t('progress.stageLocked'));
+        state.title = t('progress.stageLocked');
+        const lock = svg('svg', { viewBox: '0 0 16 16', class: 'pg-lock', 'aria-hidden': 'true' });
+        lock.append(svg('rect', { x: 3, y: 7, width: 10, height: 7, rx: 1.5 }), svg('path', { d: 'M5.5 7V5a2.5 2.5 0 0 1 5 0v2' }));
+        state.append(lock);
+      } else {
+        state.textContent = st.state === 'done' ? t('progress.stageDone') : t('progress.stageOf', { done: st.done, total: st.total });
+      }
+      li.append(el('span', 'pg-stage-name', st.name), state, bar);
       return li;
     }),
   );
@@ -391,16 +699,34 @@ export interface ProgressOptions {
   contextName: string;
   /** The coach's path summary, when practice has loaded one. */
   path?: CoachData['path'] | null;
+  /** The weekly goal, and what to do when the learner changes it on the card. */
+  goal: WeeklyGoal;
+  onGoal: (goal: WeeklyGoal) => void;
+  /** When the learner plans to practise, and what to do when they change it. */
+  plan: PracticePlan | null;
+  onPlan: (plan: PracticePlan | null) => void;
+  /** Steps mastered in this language and layout, marked on the keyboard. */
+  mastered?: ReadonlySet<string>;
+  /**
+   * With keyboard profiles on: the keyboards, the one the page is narrowed
+   * to (null for all of them, the default) and what to do when the learner
+   * picks another. Null while profiles are off.
+   */
+  keyboards?: { list: { id: string; name: string }[]; filter: string | null; onFilter: (id: string | null) => void } | null;
   now?: number;
 }
 
 export async function renderProgress(
-  store: { forLanguage(language: string, layout?: string): Promise<KeystrokeEvent[]> },
+  store: { forLanguage(language: string, layout?: string): Promise<KeystrokeEvent[]>; all(): Promise<KeystrokeEvent[]> },
   context: PracticeContext,
-  { range, contextName, path = null, now = Date.now() }: ProgressOptions,
+  { range, contextName, path = null, goal, onGoal, plan, onPlan, mastered = new Set(), keyboards = null, now = Date.now() }: ProgressOptions,
 ): Promise<void> {
-  const events = await store.forLanguage(context.language, context.layout);
-  $('progress-context').textContent = contextName;
+  // Progress is the learner's, whatever they typed on; one keyboard only when they pick it.
+  const everyKeyboard = await store.forLanguage(context.language, context.layout);
+  const filter = keyboards?.list.find((k) => k.id === keyboards.filter) ?? null;
+  const events = forKeyboard(everyKeyboard, filter?.id ?? null);
+  $('progress-context').textContent = filter ? `${contextName} · ${filter.name}` : contextName;
+  renderKeyboardFilter(keyboards, filter?.id ?? null);
   document.querySelectorAll<HTMLButtonElement>('[data-range]').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.range === String(range))));
   const all = sessionSummaries(events);
   const from = range === 'all' ? -Infinity : startOfDay(now) - (range - 1) * DAY_MS;
@@ -413,6 +739,9 @@ export async function renderProgress(
 
   const prev = range === 'all' ? null : periodTotals(all, from - range * DAY_MS, from);
   renderTiles(periodTotals(sessions, from, Infinity), prev, range === 'all' ? 0 : range);
+  renderCompare(keyboards?.list ?? [], everyKeyboard, context, from, filter?.id ?? null, now);
+  const everywhere = sessionSummaries(await store.all());
+  renderWeeks(weeklyTotals(all, { weeks: WEEKS, now }), all, everywhere, goal, onGoal, plan, onPlan, now);
   renderPath(path);
   $('progress-speed').hidden = sessions.length === 0;
   $('progress-no-sessions').hidden = sessions.length > 0;
@@ -420,9 +749,54 @@ export async function renderProgress(
 
   const models = dailyModels(events, context, { days: TREND_DAYS, now });
   const model = models[models.length - 1];
-  renderKeyboard(model);
+  renderKeyboard(model, mastered);
   renderWeakTable($('weak-keys'), weakest(model.keys, minTries.key, 8), models, t('progress.emptyKeys'));
   renderWeakTable($('weak-bigrams'), weakest(model.bigrams, minTries.bigram, 8), models, t('progress.emptyPairs'));
+}
+
+/** "All keyboards" and one button per keyboard, above the page; hidden while profiles are off. */
+function renderKeyboardFilter(keyboards: ProgressOptions['keyboards'], filter: string | null): void {
+  const host = $('progress-keyboards');
+  host.hidden = !keyboards;
+  if (!keyboards) return;
+  const choices = [{ id: null as string | null, name: t('progress.keyboardAll') }, ...keyboards.list];
+  host.replaceChildren(...choices.map((k) => {
+    const b = el('button', undefined, k.name);
+    b.type = 'button';
+    b.setAttribute('role', 'radio');
+    b.setAttribute('aria-checked', String(k.id === filter));
+    b.addEventListener('click', () => keyboards.onFilter(k.id));
+    return b;
+  }));
+}
+
+/** One row per keyboard practised on in this language and layout; shown from two keyboards on. */
+function renderCompare(
+  list: readonly { id: string; name: string }[], events: readonly KeystrokeEvent[], context: PracticeContext,
+  from: number, filter: string | null, now: number,
+): void {
+  const rows = list.flatMap((k) => {
+    const own = forKeyboard([...events], k.id);
+    return own.length === 0 ? [] : [{ k, own, totals: periodTotals(sessionSummaries(own), from, Infinity) }];
+  });
+  const card = $('progress-compare');
+  card.hidden = rows.length < 2;
+  if (card.hidden) return;
+  $('compare-rows').replaceChildren(...rows.map(({ k, own, totals }) => {
+    const tr = el('tr', k.id === filter ? 'current' : undefined);
+    const weak = weakest(buildWeaknessModel(own, context, { now }).keys, minTries.key, 3);
+    const weakTd = el('td', 'item');
+    if (weak.length === 0) weakTd.append(el('span', 'muted', '–'));
+    for (const w of weak) weakTd.append(el('kbd', undefined, w.item === ' ' ? t('key.space') : w.label), ' ');
+    tr.append(
+      el('td', undefined, k.name),
+      el('td', 'num', totals.wpm === null ? '–' : t('progress.wpm', { n: num(totals.wpm) })),
+      el('td', 'num', totals.accuracy === null ? '–' : pct(totals.accuracy)),
+      el('td', 'num', num(totals.sessions)),
+      weakTd,
+    );
+    return tr;
+  }));
 }
 
 /** Scrolls a card into view and outlines it for a moment, so a link from a coach bubble shows where it landed. */

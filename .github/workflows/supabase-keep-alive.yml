@@ -1,0 +1,85 @@
+name: Database keep-alive
+
+# Supabase pauses free-tier projects after a week without database activity.
+# This asks both projects a small question three times a week, at times that
+# change from week to week, so neither gets paused while nobody practises.
+#
+# The schedule wakes up every three hours; most runs do nothing. Each week
+# and project gets its own random slot (one run time) in each of three
+# windows: Monday–Tuesday, Wednesday–Thursday and Friday–Sunday. That keeps
+# the gap between two pings under five days, and even after one dropped
+# scheduled run still under seven. A ping waits a further random
+# 0–20 minutes and asks one or two of the queries the sign-up and buddy
+# forms use, with made-up names and codes.
+#
+# Uses the public URL and publishable key from vite.config.ts; no secrets.
+# Run workflow (workflow_dispatch) pings both projects right away.
+
+on:
+  schedule:
+    - cron: "23 */3 * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping the projects whose slot is now
+        env:
+          FORCE: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          set -euo pipefail
+          projects=(
+            "production https://ubjwlxcawxwrgolszlkz.supabase.co sb_publishable_QnvlL5E5MkUhOZENBSrkdg_rUaim9ep"
+            "staging https://dghypouxfnfcdvpylznt.supabase.co sb_publishable_pSD1knxbPjl5ih5bqi0zog_bcDsSb_o"
+          )
+          week=$(date -u +%G-%V)
+          day=$(date -u +%u)          # 1 = Monday … 7 = Sunday
+          slot=$(( 10#$(date -u +%H) / 3 ))  # 0 … 7, matches the cron
+          now=$(( (day - 1) * 8 + slot ))     # this run's slot in the week
+
+          # Slot chosen for a project in one window (first day, number of days).
+          pick() {
+            local h
+            h=$(printf '%s %s %s' "$1" "$week" "$2" | sha256sum | cut -c1-8)
+            echo $(( ($3 - 1) * 8 + 16#$h % ($4 * 8) ))
+          }
+
+          rand_name() { tr -dc 'a-z0-9' < /dev/urandom | head -c "$1" || true; }
+
+          query() {
+            local url=$1 key=$2 fn body
+            if (( RANDOM % 2 )); then
+              fn=username_available; body="{\"name\":\"$(rand_name $(( 5 + RANDOM % 8 )))\"}"
+            else
+              fn=buddy_invite; body="{\"code\":\"$(rand_name 6)\"}"
+            fi
+            echo "  $fn"
+            curl --fail-with-body -sS --retry 3 --retry-all-errors --max-time 30 \
+              -X POST "$url/rest/v1/rpc/$fn" \
+              -H "apikey: $key" -H "Content-Type: application/json" -d "$body" > /dev/null
+          }
+
+          due=()
+          for p in "${projects[@]}"; do
+            read -r name url key <<< "$p"
+            if [ "$FORCE" = true ] || [ "$now" -eq "$(pick "$name" a 1 2)" ] \
+              || [ "$now" -eq "$(pick "$name" b 3 2)" ] || [ "$now" -eq "$(pick "$name" c 5 3)" ]; then
+              due+=("$p")
+            fi
+          done
+          if [ ${#due[@]} -eq 0 ]; then
+            echo "No project is due in this slot."
+            exit 0
+          fi
+
+          [ "$FORCE" = true ] || sleep $(( RANDOM % 1200 ))
+          for p in "${due[@]}"; do
+            read -r name url key <<< "$p"
+            echo "$name:"
+            for _ in $(seq $(( 1 + RANDOM % 2 ))); do
+              query "$url" "$key"
+            done
+          done

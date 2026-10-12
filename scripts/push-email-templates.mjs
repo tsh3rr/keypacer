@@ -1,4 +1,4 @@
-// Points a hosted Supabase project's mail at Resend and sends Keystrider's
+// Points a hosted Supabase project's mail at Resend and sends Keypacer's
 // e-mail templates, through the Management API. Run by the "Email templates"
 // workflow; see docs/email-setup.md.
 //
@@ -22,7 +22,7 @@ export function smtpConfig(env) {
     smtp_user: 'resend',
     smtp_pass: env.RESEND_API_KEY,
     smtp_admin_email: env.MAIL_FROM,
-    smtp_sender_name: env.MAIL_SENDER_NAME || 'Keystrider',
+    smtp_sender_name: env.MAIL_SENDER_NAME || 'Keypacer',
   };
 }
 

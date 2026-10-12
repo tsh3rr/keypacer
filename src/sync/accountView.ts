@@ -1,7 +1,8 @@
 import { t, type MessageKey } from '../i18n';
 import { EMAIL_LINKS, OAUTH_PROVIDERS, type Account, type AccountState, type CodePurpose, type OAuthProvider } from './account';
+import { captchaEnabled, captchaToken } from './captcha';
 import {
-  MIN_PASSWORD, avatar, benefits, button, displayName, field, form, p, privacyLink, runIn, syncStatus,
+  MIN_PASSWORD, accountNotActivated, avatar, benefits, button, displayName, field, form, p, privacyLink, runIn, syncStatus, termsCheck,
   userIcon, usernameError, usernameField, usernameHint, type SignedIn,
 } from './ui';
 
@@ -28,12 +29,16 @@ export class AccountView {
   private state: AccountState = { signedIn: false };
   private step: SignedOutStep = { kind: 'signin' };
   private busy = false;
+  private readonly captchaHost = Object.assign(document.createElement('div'), { className: 'account-captcha' });
   private error = '';
   private notice = '';
   private email = '';
   private username = '';
   /** Kept while the panel redraws (a wrong password, a taken username), dropped once signed in. */
   private password = '';
+  private repeat = '';
+  /** The terms tick box on the sign-up form. */
+  private terms = false;
 
   constructor(
     private readonly root: HTMLElement,
@@ -43,12 +48,16 @@ export class AccountView {
     /** One line about the account in Settings. */
     private readonly summary: HTMLElement,
     private readonly openProfile: () => void,
+    /** Closes the panel (the × in the signed-out dialog). */
+    private readonly close: () => void,
   ) {}
 
   update(state: AccountState): void {
     if (state.signedIn && !this.state.signedIn) {
       this.step = { kind: 'signin' };
       this.password = '';
+      this.repeat = '';
+      this.terms = false;
     }
     if (!state.signedIn && state.linkFailed) {
       this.step = { kind: 'signin' };
@@ -123,15 +132,15 @@ export class AccountView {
           { label: t('account.signIn'), primary: true, go: () => this.run(async () => {
             const address = email.value.trim();
             try {
-              await this.account.signInWithPassword(address, password.value);
+              await this.account.signInWithPassword(address, password.value, await this.captcha());
             } catch (err) {
               // Signed up but never typed the code: send a fresh one and ask for it.
               if (!EMAIL_LINKS || (err as { code?: string }).code !== 'email_not_confirmed') throw err;
-              await this.account.resendConfirmation(address);
+              await this.account.resendConfirmation(address, await this.captcha());
               this.step = { kind: 'code-sent', email: address, purpose: 'signup' };
             }
           }) },
-        ]));
+        ]), ...this.captchaBox());
         if (EMAIL_LINKS) {
           nodes.push(button(t('account.useCode'), 'link-btn', () => this.go({ kind: 'code' })));
           nodes.push(button(t('account.forgot'), 'link-btn', () => this.go({ kind: 'reset' })));
@@ -140,34 +149,37 @@ export class AccountView {
         break;
       }
       case 'signup': {
-        nodes.push(benefits(), ...this.providers());
-        const username = usernameField(this.username);
-        username.addEventListener('input', () => (this.username = username.value));
+        // E-mail and password sit where they sit when signing in, so switching tabs keeps them in place.
+        const terms = termsCheck(this.terms, (checked) => (this.terms = checked));
+        // Signing up with Google creates the account too, so it needs the tick as well.
+        nodes.push(...this.providers(() => terms.box.reportValidity()));
         const email = this.emailField();
         const password = this.passwordField('new-password');
-        nodes.push(form([username, email, password], [{ label: t('account.signUp'), primary: true, go: () => {
+        const repeat = field('password', t('account.passwordRepeat'), { autocomplete: 'new-password', minlength: String(MIN_PASSWORD) });
+        repeat.value = this.repeat;
+        repeat.addEventListener('input', () => (this.repeat = repeat.value));
+        const username = usernameField(this.username);
+        username.addEventListener('input', () => (this.username = username.value));
+        nodes.push(form([email, password, repeat, username, usernameHint(), terms.label], [{ label: t('account.signUp'), primary: true, go: () => {
           const name = username.value.trim();
-          const problem = usernameError(name);
+          const problem = password.value !== repeat.value ? t('account.passwordMismatch') : usernameError(name);
           if (problem) return this.fail(problem);
           void this.run(async () => {
-            const address = email.value.trim();
-            const signedIn = await this.account.signUp(address, password.value, name);
+            const signedIn = await this.account.signUp(email.value.trim(), password.value, name, await this.captcha());
+            if (signedIn) return;
+            if (!EMAIL_LINKS) throw accountNotActivated();
             // The project checks addresses: the e-mail has a code (and a link) that finishes signing up.
-            if (!signedIn && EMAIL_LINKS) this.step = { kind: 'code-sent', email: address, purpose: 'signup' };
-            else if (!signedIn) {
-              this.notice = t('account.confirmSent', { email: address });
-              this.step = { kind: 'signin' };
-            }
+            this.step = { kind: 'code-sent', email: email.value.trim(), purpose: 'signup' };
           });
-        } }]), usernameHint(), p(t('account.optional'), 'account-note'));
+        } }]), ...this.captchaBox(), benefits());
         break;
       }
       case 'code': {
         const email = this.emailField();
         nodes.push(form([email], [{ label: t('account.sendCode'), primary: true, go: () => this.run(async () => {
-          await this.account.sendCode(email.value.trim());
+          await this.account.sendCode(email.value.trim(), await this.captcha());
           this.step = { kind: 'code-sent', email: email.value.trim(), purpose: 'signin' };
-        }) }]));
+        }) }]), ...this.captchaBox());
         nodes.push(this.back());
         break;
       }
@@ -179,28 +191,43 @@ export class AccountView {
         nodes.push(form([code], [{ label: t('account.verify'), primary: true, go: () =>
           this.run(() => this.account.verifyCode(step.email, code.value.trim(), step.purpose)) }]));
         nodes.push(button(t('account.resendCode'), 'link-btn', () => this.run(async () => {
-          await this.resend(step.email, step.purpose);
+          await this.resend(step.email, step.purpose, await this.captcha());
           this.notice = t('account.codeResent');
-        })));
+        })), ...this.captchaBox());
         nodes.push(this.back());
         break;
       }
       case 'reset': {
         const email = this.emailField();
         nodes.push(form([email], [{ label: t('account.sendReset'), primary: true, go: () => this.run(async () => {
-          await this.account.sendPasswordReset(email.value.trim());
+          await this.account.sendPasswordReset(email.value.trim(), await this.captcha());
           this.step = { kind: 'code-sent', email: email.value.trim(), purpose: 'reset' };
-        }) }]));
+        }) }]), ...this.captchaBox());
         nodes.push(this.back());
         break;
       }
     }
-    nodes.push(...this.errorLine(), privacyLink());
+    // The error goes right under the form's button, where the eye already is.
+    const after = nodes.findIndex((n) => n instanceof HTMLFormElement) + 1 || nodes.length;
+    nodes.splice(after, 0, ...this.errorLine());
+    nodes.push(privacyLink());
     return nodes;
+  }
+
+  /** Where Turnstile shows its checkbox if it needs one; nothing when the captcha is off. */
+  private captchaBox(): Node[] {
+    if (!captchaEnabled) return [];
+    this.captchaHost.replaceChildren();
+    return [this.captchaHost];
+  }
+
+  private captcha(): Promise<string | undefined> {
+    return captchaToken(this.captchaHost);
   }
 
   /** "Sign in | Create account" switch at the top of the signed-out panel. */
   private tabs(current: 'signin' | 'signup'): HTMLElement {
+    const head = Object.assign(document.createElement('div'), { className: 'account-tabs-row' });
     const row = Object.assign(document.createElement('div'), { className: 'account-tabs' });
     row.setAttribute('role', 'tablist');
     for (const kind of ['signin', 'signup'] as const) {
@@ -211,12 +238,19 @@ export class AccountView {
       b.setAttribute('aria-selected', String(kind === current));
       row.append(b);
     }
-    return row;
+    const close = button('×', 'account-close', this.close);
+    close.setAttribute('aria-label', t('account.close'));
+    close.title = t('account.close');
+    head.append(row, close);
+    return head;
   }
 
-  private providers(): Node[] {
-    const nodes: Node[] = OAUTH_PROVIDERS.map((provider) => button(t(PROVIDER_LABEL[provider]), 'account-provider', () =>
-      this.run(() => this.account.signInWithProvider(provider))));
+
+  /** Sign-in buttons for Google and the like; `allowed` can hold them back (e.g. until the terms are ticked). */
+  private providers(allowed: () => boolean = () => true): Node[] {
+    const nodes: Node[] = OAUTH_PROVIDERS.map((provider) => button(t(PROVIDER_LABEL[provider]), 'account-provider', () => {
+      if (allowed()) void this.run(() => this.account.signInWithProvider(provider));
+    }));
     if (nodes.length) nodes.push(p(t('account.orEmail'), 'account-or'));
     return nodes;
   }
@@ -236,11 +270,11 @@ export class AccountView {
     return input;
   }
 
-  private resend(email: string, purpose: CodePurpose): Promise<void> {
+  private resend(email: string, purpose: CodePurpose, captchaToken: string | undefined): Promise<void> {
     switch (purpose) {
-      case 'signin': return this.account.sendCode(email);
-      case 'signup': return this.account.resendConfirmation(email);
-      case 'reset': return this.account.sendPasswordReset(email);
+      case 'signin': return this.account.sendCode(email, captchaToken);
+      case 'signup': return this.account.resendConfirmation(email, captchaToken);
+      case 'reset': return this.account.sendPasswordReset(email, captchaToken);
     }
   }
 

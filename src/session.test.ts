@@ -95,7 +95,10 @@ describe('KeystrokeStore', () => {
     expect(await store.forLanguage('en')).toHaveLength(2);
     expect(await store.forLanguage('pl', 'pl-programmer')).toMatchObject([{ actual: 'ą', code: 'KeyA' }]);
     expect(await store.forLanguage('pl', 'qwerty-us')).toHaveLength(0);
+    expect(await store.since(2)).toHaveLength(2);
+    expect(await store.latest()).toBe(3);
     await store.clear();
+    expect(await store.latest()).toBeNull();
     expect(await store.count()).toBe(0);
     store.close();
   });
@@ -126,6 +129,6 @@ describe('toCsv', () => {
     s.press('a', 0);
     const csv = toCsv([s.press(',', 10, 'Comma')!]);
     const [, row] = csv.split('\n');
-    expect(row).toBe(',z,en,qwerty-us,10,1," ",",",Comma,a,a,10,false');
+    expect(row).toBe(',z,en,qwerty-us,10,1," ",",",Comma,a,a,10,false,');
   });
 });

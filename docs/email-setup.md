@@ -6,47 +6,56 @@ Reihenfolge: erst Staging (Vorschau-Builds) testen, dann Produktion.
 
 ## 1. Domain
 
-- [ ] Domain registrieren, z. B. bei Cloudflare (dann sind DNS-Einträge mit einem Klick gesetzt).
-- [ ] Optional: in Cloudflare die Domain als **Custom Domain** des Workers `keystrider` eintragen.
+- [x] keypacer.com gekauft, liegt bei Cloudflare.
 
-## 2. Resend
+## 2. Resend: keypacer.com verifizieren
 
 - [ ] Auf [resend.com](https://resend.com) ein kostenloses Konto anlegen.
-- [ ] **Domains** → **Add Domain**: deine Domain, **Region: Ireland (eu-west-1)**. Die Datenschutzerklärung sagt „Server in der EU“, das muss stimmen.
-- [ ] Die angezeigten DNS-Einträge (MX, SPF, DKIM) beim Domain-Anbieter setzen → **Verify DNS Records**, warten bis „Verified“. Empfohlen zusätzlich: TXT `_dmarc` = `v=DMARC1; p=none;`
-- [ ] In der Domain unter **Configuration**: **Click Tracking** und **Open Tracking** aus. (Die Datenschutzerklärung sagt, dass beides aus ist; Klick-Tracking würde außerdem die Anmeldelinks umschreiben.)
-- [ ] **API Keys** → **Create API Key**: Name `supabase`, Permission **Sending access**, nur deine Domain. Schlüssel kopieren (wird nur einmal gezeigt).
-- [ ] Den Auftragsverarbeitungsvertrag ansehen: [resend.com/legal/dpa](https://resend.com/legal/dpa). Prüfen, ob er automatisch gilt oder unterschrieben werden muss.
+- [ ] **Domains** → **Add Domain** → `keypacer.com`, **Region: Ireland (eu-west-1)** → **Add**. Die Region lässt sich später nicht ändern, und die Datenschutzerklärung sagt „Server in der EU“.
+- [ ] DNS-Einträge setzen, am einfachsten mit **Auto configure** / **Sign in to Cloudflare** auf der Resend-Seite (Cloudflare-Login, Zone `keypacer.com` erlauben). Von Hand: Cloudflare → `keypacer.com` → **DNS** → **Records** → **Add record**, jeden Eintrag genau so übernehmen, wie Resend ihn zeigt:
+  - **MX**, Name `send`, Mail server `feedback-smtp.eu-west-1.amazonses.com`, Priority `10`
+  - **TXT**, Name `send`, Inhalt `v=spf1 include:amazonses.com ~all`
+  - **TXT**, Name `resend._domainkey`, Inhalt = der lange `p=…`-Schlüssel von Resend
+  - empfohlen: **TXT**, Name `_dmarc`, Inhalt `v=DMARC1; p=none;`
+  - Ein MX für `keypacer.com` selbst (z. B. Cloudflare Email Routing) stört nicht: Resend nutzt nur die Subdomain `send`.
+- [ ] Zurück bei Resend: **Verify DNS Records**. Meist nach wenigen Minuten „Verified“.
+- [ ] In der Domain unter **Configuration**: **Click Tracking** und **Open Tracking** aus.
+- [ ] **API Keys** → **Create API Key**: Name `supabase`, Permission **Sending access**, Domain `keypacer.com`. Schlüssel kopieren (wird nur einmal gezeigt).
+- [ ] Den Auftragsverarbeitungsvertrag ansehen: [resend.com/legal/dpa](https://resend.com/legal/dpa).
 
-## 3. GitHub: Vorlagen und Mailserver in die Supabase-Projekte
+## 3. Supabase: über Resend versenden (Produktion, optional auch Staging)
 
-Der Workflow *Email templates* stellt Supabase auf den Resend-Server um und schickt die Vorlagen aus `supabase/templates` (sechs Sprachen). Vorher tut er nichts: Im kostenlosen Supabase-Tarif lassen sich die Vorlagen erst mit eigenem Mailserver ändern.
+- [ ] Supabase → Projekt → **Authentication** → **Emails** → **SMTP Settings** → **Enable custom SMTP**:
+  - Sender email: `login@keypacer.com`
+  - Sender name: `Keypacer`
+  - Host: `smtp.resend.com`
+  - Port: `465`
+  - Username: `resend`
+  - Password: der Resend-API-Key aus Schritt 2
+  - **Save changes**
+- [ ] Test: Supabase → **Authentication** → **Users** → **Add user** → **Send invitation** an deine eigene Adresse. Kommt die Mail von `login@keypacer.com` an, funktioniert der Versand. Bei Resend unter **Emails** siehst du sie als „Delivered“. (Den eingeladenen Testnutzer danach wieder löschen.)
 
-- [ ] `tsh3rr/keystrider` → **Settings** → **Environments** → `staging`:
-  - **Environment secrets** → `RESEND_API_KEY` = Schlüssel aus Schritt 2
-  - **Environment variables** → `MAIL_FROM` = z. B. `login@deine-domain`
-- [ ] Dasselbe für `production`.
-- [ ] **Actions** → *Email templates* → **Run workflow** → `staging`. Dann noch einmal mit `production`.
-- [ ] Prüfen in Supabase → **Authentication** → **Emails**: unter **SMTP Settings** steht `smtp.resend.com`, unter **Templates** die Keystrider-Vorlagen.
+Die Keypacer-Vorlagen (sechs Sprachen, mit Code) trägt der Workflow *Email templates* ein:
 
-Ohne GitHub geht es auch von Hand: **SMTP Settings** → **Enable custom SMTP**, Host `smtp.resend.com`, Port `465`, User `resend`, Passwort = API-Key, Absender `login@deine-domain`, Name `Keystrider`. Vorlagen: Inhalt von `supabase/templates/*.html` und die Betreffzeilen aus `supabase/config.toml` einfügen.
+- [ ] GitHub → `tsh3rr/keypacer` → **Settings** → **Environments** → `production` (und `staging`, falls dort auch Resend eingetragen ist):
+  - **Environment secrets** → `RESEND_API_KEY` = derselbe API-Key
+  - **Environment variables** → `MAIL_FROM` = `login@keypacer.com`
+- [ ] **Actions** → *Email templates* → **Run workflow** → `production`. Danach stehen in Supabase unter **Authentication** → **Emails** → **Templates** die Keypacer-Vorlagen.
 
 ## 4. Supabase (zuerst Staging, nach dem Test Produktion)
 
-- [ ] **Authentication** → **URL Configuration**: **Site URL** = `https://deine-domain`, unter **Redirect URLs** `https://deine-domain/**` ergänzen (die `workers.dev`-Einträge dürfen bleiben).
+- [ ] **Authentication** → **URL Configuration**: **Site URL** = `https://keypacer.com`, unter **Redirect URLs** `https://keypacer.com/**` ergänzen (die `workers.dev`-Einträge dürfen bleiben).
 - [ ] **Authentication** → **Rate Limits**: „Emails sent per hour“ z. B. auf `30` (Resend Free schafft 100 am Tag).
 - [ ] **Authentication** → **Sign In / Providers** → **Email** → **Confirm email** **an** → **Save**. Wer sich bisher registriert hat, gilt schon als bestätigt und merkt nichts.
 
 ## 5. App umschalten
 
-In `vite.config.ts` steht `EMAIL_LINKS = { production: false, staging: false }`. Der Schalter macht in der App „Mit Code anmelden“, „Passwort vergessen?“ und die Code-Eingabe nach der Registrierung sichtbar und schaltet in der Datenschutzerklärung den Absatz zu Resend ein.
+`EMAIL_LINKS` in `vite.config.ts` (je Supabase-Projekt) macht in der App „Mit Code anmelden“, „Passwort vergessen?“ und die Code-Eingabe nach der Registrierung sichtbar und schaltet in der Datenschutzerklärung den Absatz zu Resend ein. Seit PR #33 steht er für beide Projekte auf `true`.
 
-- [ ] `staging: true` setzen, als PR. Im Vorschau-Build testen (nutzt Staging):
-  - Konto mit echter Adresse anlegen → Mail kommt, Code eingeben → angemeldet
-  - Abmelden → „Stattdessen mit Code per E-Mail anmelden“ → Code kommt → angemeldet
-  - „Passwort vergessen?“ → Code → neues Passwort wählen
-  - Oberfläche auf Polnisch stellen, einmal synchronisieren (App neu laden), dann „Passwort vergessen?“ → Mail kommt auf Polnisch
-  - `/datenschutz` zeigt den Absatz „E-Mail-Versand“
-- [ ] Schritt 4 für Produktion, dann `production: true` setzen, als PR, mergen.
+Test nach dem Deploy:
+- Konto mit echter Adresse anlegen → Mail kommt (mit „Confirm email“ an: Code eingeben) → angemeldet
+- Abmelden → „Stattdessen mit Code per E-Mail anmelden“ → Code kommt → angemeldet
+- „Passwort vergessen?“ → Code → neues Passwort wählen
+- `/datenschutz` zeigt den Absatz „E-Mail-Versand“
 
-Sag einfach Bescheid („E-Mail einschalten, Domain ist …“), dann mache ich Schritt 5 und passe die Adressen in den Anleitungen an.
+Wichtig: Sobald Supabase über Resend versendet, ist Resend ein Auftragsverarbeiter; der Absatz dazu in der Datenschutzerklärung schaltet mit `EMAIL_LINKS` ein.

@@ -1,4 +1,4 @@
-// The e-mails Supabase sends for Keystrider accounts, in every interface language.
+// The e-mails Supabase sends for Keypacer accounts, in every interface language.
 //
 // Supabase fills each template in with Go's template language. The account
 // stores the learner's interface language as `locale` in its user metadata
@@ -17,170 +17,170 @@ import { fileURLToPath } from 'node:url';
 
 export const LANGUAGES = ['en', 'de', 'fr', 'es', 'it', 'pl'];
 
-/** The templates Keystrider uses, by their Supabase name. */
+/** The templates Keypacer uses, by their Supabase name. */
 export const KINDS = ['confirmation', 'magic_link', 'recovery'];
 
 const TEXT = {
   en: {
     confirmation: {
-      subject: 'Confirm your Keystrider account: {{ .Token }}',
-      heading: 'Welcome to Keystrider',
-      intro: 'Enter this code in Keystrider to confirm your e-mail address and finish creating your account:',
+      subject: 'Confirm your Keypacer account: {{ .Token }}',
+      heading: 'Welcome to Keypacer',
+      intro: 'Enter this code in Keypacer to confirm your e-mail address and finish creating your account:',
       button: 'Confirm my address',
       ignore: 'If you did not create an account, just ignore this e-mail. Without the code, no account is opened.',
     },
     magic_link: {
-      subject: 'Your Keystrider sign-in code: {{ .Token }}',
-      heading: 'Sign in to Keystrider',
-      intro: 'Enter this code in Keystrider to sign in:',
+      subject: 'Your Keypacer sign-in code: {{ .Token }}',
+      heading: 'Sign in to Keypacer',
+      intro: 'Enter this code in Keypacer to sign in:',
       button: 'Sign in',
       ignore: 'If you did not ask to sign in, just ignore this e-mail. Nobody can sign in without the code.',
     },
     recovery: {
-      subject: 'Reset your Keystrider password: {{ .Token }}',
+      subject: 'Reset your Keypacer password: {{ .Token }}',
       heading: 'Choose a new password',
-      intro: 'Enter this code in Keystrider to choose a new password for your account:',
+      intro: 'Enter this code in Keypacer to choose a new password for your account:',
       button: 'Choose a new password',
       ignore: 'If you did not ask for this, just ignore this e-mail. Your password stays as it is.',
     },
     or: 'Or open this link on the device where you asked for the code:',
     expires: 'The code and the link work for one hour.',
-    tagline: 'Keystrider, the free touch-typing trainer',
+    tagline: 'Keypacer, the free touch-typing trainer',
     privacy: 'Privacy policy',
   },
   de: {
     confirmation: {
-      subject: 'Bestätige dein Keystrider-Konto: {{ .Token }}',
-      heading: 'Willkommen bei Keystrider',
-      intro: 'Gib diesen Code in Keystrider ein, um deine E-Mail-Adresse zu bestätigen und dein Konto fertig anzulegen:',
+      subject: 'Bestätige dein Keypacer-Konto: {{ .Token }}',
+      heading: 'Willkommen bei Keypacer',
+      intro: 'Gib diesen Code in Keypacer ein, um deine E-Mail-Adresse zu bestätigen und dein Konto fertig anzulegen:',
       button: 'Adresse bestätigen',
       ignore: 'Wenn du kein Konto angelegt hast, ignoriere diese E-Mail einfach. Ohne den Code wird kein Konto eröffnet.',
     },
     magic_link: {
-      subject: 'Dein Keystrider-Anmeldecode: {{ .Token }}',
-      heading: 'Bei Keystrider anmelden',
-      intro: 'Gib diesen Code in Keystrider ein, um dich anzumelden:',
+      subject: 'Dein Keypacer-Anmeldecode: {{ .Token }}',
+      heading: 'Bei Keypacer anmelden',
+      intro: 'Gib diesen Code in Keypacer ein, um dich anzumelden:',
       button: 'Anmelden',
       ignore: 'Wenn du dich nicht anmelden wolltest, ignoriere diese E-Mail einfach. Ohne den Code kann sich niemand anmelden.',
     },
     recovery: {
-      subject: 'Dein Keystrider-Passwort zurücksetzen: {{ .Token }}',
+      subject: 'Dein Keypacer-Passwort zurücksetzen: {{ .Token }}',
       heading: 'Neues Passwort wählen',
-      intro: 'Gib diesen Code in Keystrider ein, um ein neues Passwort für dein Konto zu wählen:',
+      intro: 'Gib diesen Code in Keypacer ein, um ein neues Passwort für dein Konto zu wählen:',
       button: 'Neues Passwort wählen',
       ignore: 'Wenn du das nicht angefordert hast, ignoriere diese E-Mail einfach. Dein Passwort bleibt, wie es ist.',
     },
     or: 'Oder öffne diesen Link auf dem Gerät, auf dem du den Code angefordert hast:',
     expires: 'Code und Link gelten eine Stunde lang.',
-    tagline: 'Keystrider, der kostenlose Trainer fürs Zehnfingersystem',
+    tagline: 'Keypacer, der kostenlose Trainer fürs Zehnfingersystem',
     privacy: 'Datenschutzerklärung',
   },
   fr: {
     confirmation: {
-      subject: 'Confirme ton compte Keystrider : {{ .Token }}',
-      heading: 'Bienvenue sur Keystrider',
-      intro: 'Saisis ce code dans Keystrider pour confirmer ton adresse e-mail et terminer la création de ton compte :',
+      subject: 'Confirme ton compte Keypacer : {{ .Token }}',
+      heading: 'Bienvenue sur Keypacer',
+      intro: 'Saisis ce code dans Keypacer pour confirmer ton adresse e-mail et terminer la création de ton compte :',
       button: 'Confirmer mon adresse',
       ignore: 'Si tu n’as pas créé de compte, ignore simplement cet e-mail. Sans le code, aucun compte n’est ouvert.',
     },
     magic_link: {
-      subject: 'Ton code de connexion Keystrider : {{ .Token }}',
-      heading: 'Se connecter à Keystrider',
-      intro: 'Saisis ce code dans Keystrider pour te connecter :',
+      subject: 'Ton code de connexion Keypacer : {{ .Token }}',
+      heading: 'Se connecter à Keypacer',
+      intro: 'Saisis ce code dans Keypacer pour te connecter :',
       button: 'Se connecter',
       ignore: 'Si tu n’as pas demandé à te connecter, ignore simplement cet e-mail. Personne ne peut se connecter sans le code.',
     },
     recovery: {
-      subject: 'Réinitialise ton mot de passe Keystrider : {{ .Token }}',
+      subject: 'Réinitialise ton mot de passe Keypacer : {{ .Token }}',
       heading: 'Choisir un nouveau mot de passe',
-      intro: 'Saisis ce code dans Keystrider pour choisir un nouveau mot de passe pour ton compte :',
+      intro: 'Saisis ce code dans Keypacer pour choisir un nouveau mot de passe pour ton compte :',
       button: 'Choisir un nouveau mot de passe',
       ignore: 'Si tu n’as rien demandé, ignore simplement cet e-mail. Ton mot de passe reste inchangé.',
     },
     or: 'Ou ouvre ce lien sur l’appareil où tu as demandé le code :',
     expires: 'Le code et le lien sont valables une heure.',
-    tagline: 'Keystrider, l’entraîneur de dactylographie gratuit',
+    tagline: 'Keypacer, l’entraîneur de dactylographie gratuit',
     privacy: 'Politique de confidentialité',
   },
   es: {
     confirmation: {
-      subject: 'Confirma tu cuenta de Keystrider: {{ .Token }}',
-      heading: 'Te damos la bienvenida a Keystrider',
-      intro: 'Escribe este código en Keystrider para confirmar tu dirección de correo y terminar de crear tu cuenta:',
+      subject: 'Confirma tu cuenta de Keypacer: {{ .Token }}',
+      heading: 'Te damos la bienvenida a Keypacer',
+      intro: 'Escribe este código en Keypacer para confirmar tu dirección de correo y terminar de crear tu cuenta:',
       button: 'Confirmar mi dirección',
       ignore: 'Si no has creado ninguna cuenta, ignora este correo. Sin el código no se abre ninguna cuenta.',
     },
     magic_link: {
-      subject: 'Tu código de acceso a Keystrider: {{ .Token }}',
-      heading: 'Iniciar sesión en Keystrider',
-      intro: 'Escribe este código en Keystrider para iniciar sesión:',
+      subject: 'Tu código de acceso a Keypacer: {{ .Token }}',
+      heading: 'Iniciar sesión en Keypacer',
+      intro: 'Escribe este código en Keypacer para iniciar sesión:',
       button: 'Iniciar sesión',
       ignore: 'Si no has pedido iniciar sesión, ignora este correo. Nadie puede entrar sin el código.',
     },
     recovery: {
-      subject: 'Restablece tu contraseña de Keystrider: {{ .Token }}',
+      subject: 'Restablece tu contraseña de Keypacer: {{ .Token }}',
       heading: 'Elige una contraseña nueva',
-      intro: 'Escribe este código en Keystrider para elegir una contraseña nueva para tu cuenta:',
+      intro: 'Escribe este código en Keypacer para elegir una contraseña nueva para tu cuenta:',
       button: 'Elegir una contraseña nueva',
       ignore: 'Si no lo has pedido tú, ignora este correo. Tu contraseña no cambia.',
     },
     or: 'O abre este enlace en el dispositivo donde pediste el código:',
     expires: 'El código y el enlace valen durante una hora.',
-    tagline: 'Keystrider, el entrenador de mecanografía gratuito',
+    tagline: 'Keypacer, el entrenador de mecanografía gratuito',
     privacy: 'Política de privacidad',
   },
   it: {
     confirmation: {
-      subject: 'Conferma il tuo account Keystrider: {{ .Token }}',
-      heading: 'Ti diamo il benvenuto su Keystrider',
-      intro: 'Inserisci questo codice in Keystrider per confermare il tuo indirizzo e-mail e completare la creazione dell’account:',
+      subject: 'Conferma il tuo account Keypacer: {{ .Token }}',
+      heading: 'Ti diamo il benvenuto su Keypacer',
+      intro: 'Inserisci questo codice in Keypacer per confermare il tuo indirizzo e-mail e completare la creazione dell’account:',
       button: 'Conferma il mio indirizzo',
       ignore: 'Se non hai creato un account, ignora pure questa e-mail. Senza il codice non viene aperto nessun account.',
     },
     magic_link: {
-      subject: 'Il tuo codice di accesso a Keystrider: {{ .Token }}',
-      heading: 'Accedi a Keystrider',
-      intro: 'Inserisci questo codice in Keystrider per accedere:',
+      subject: 'Il tuo codice di accesso a Keypacer: {{ .Token }}',
+      heading: 'Accedi a Keypacer',
+      intro: 'Inserisci questo codice in Keypacer per accedere:',
       button: 'Accedi',
       ignore: 'Se non hai chiesto di accedere, ignora pure questa e-mail. Senza il codice nessuno può entrare.',
     },
     recovery: {
-      subject: 'Reimposta la tua password di Keystrider: {{ .Token }}',
+      subject: 'Reimposta la tua password di Keypacer: {{ .Token }}',
       heading: 'Scegli una nuova password',
-      intro: 'Inserisci questo codice in Keystrider per scegliere una nuova password per il tuo account:',
+      intro: 'Inserisci questo codice in Keypacer per scegliere una nuova password per il tuo account:',
       button: 'Scegli una nuova password',
       ignore: 'Se non l’hai chiesto tu, ignora pure questa e-mail. La tua password resta invariata.',
     },
     or: 'Oppure apri questo link sul dispositivo da cui hai chiesto il codice:',
     expires: 'Il codice e il link valgono per un’ora.',
-    tagline: 'Keystrider, l’allenatore di dattilografia gratuito',
+    tagline: 'Keypacer, l’allenatore di dattilografia gratuito',
     privacy: 'Informativa sulla privacy',
   },
   pl: {
     confirmation: {
-      subject: 'Potwierdź swoje konto Keystrider: {{ .Token }}',
-      heading: 'Witaj w Keystrider',
-      intro: 'Wpisz ten kod w Keystrider, aby potwierdzić adres e-mail i dokończyć zakładanie konta:',
+      subject: 'Potwierdź swoje konto Keypacer: {{ .Token }}',
+      heading: 'Witaj w Keypacer',
+      intro: 'Wpisz ten kod w Keypacer, aby potwierdzić adres e-mail i dokończyć zakładanie konta:',
       button: 'Potwierdź adres',
       ignore: 'Jeśli to nie Ty zakładasz konto, po prostu zignoruj tę wiadomość. Bez kodu żadne konto nie zostanie utworzone.',
     },
     magic_link: {
-      subject: 'Twój kod logowania do Keystrider: {{ .Token }}',
-      heading: 'Zaloguj się do Keystrider',
-      intro: 'Wpisz ten kod w Keystrider, aby się zalogować:',
+      subject: 'Twój kod logowania do Keypacer: {{ .Token }}',
+      heading: 'Zaloguj się do Keypacer',
+      intro: 'Wpisz ten kod w Keypacer, aby się zalogować:',
       button: 'Zaloguj się',
       ignore: 'Jeśli ta prośba o logowanie nie pochodzi od Ciebie, po prostu zignoruj tę wiadomość. Bez kodu nikt się nie zaloguje.',
     },
     recovery: {
-      subject: 'Zresetuj hasło do Keystrider: {{ .Token }}',
+      subject: 'Zresetuj hasło do Keypacer: {{ .Token }}',
       heading: 'Ustaw nowe hasło',
-      intro: 'Wpisz ten kod w Keystrider, aby ustawić nowe hasło do swojego konta:',
+      intro: 'Wpisz ten kod w Keypacer, aby ustawić nowe hasło do swojego konta:',
       button: 'Ustaw nowe hasło',
       ignore: 'Jeśli ta prośba nie pochodzi od Ciebie, po prostu zignoruj tę wiadomość. Twoje hasło się nie zmieni.',
     },
     or: 'Albo otwórz ten link na urządzeniu, na którym poproszono o kod:',
     expires: 'Kod i link są ważne przez godzinę.',
-    tagline: 'Keystrider, darmowy trener pisania bezwzrokowego',
+    tagline: 'Keypacer, darmowy trener pisania bezwzrokowego',
     privacy: 'Polityka prywatności',
   },
 };
@@ -227,7 +227,7 @@ export function html(kind) {
 <tr><td style="padding:0 4px 16px">
 <table role="presentation" cellpadding="0" cellspacing="0"><tr>
 ${step(C.ember, 8)}${step(C.magenta, 14)}${step(C.cobalt, 20)}
-<td valign="bottom" style="padding-left:8px;font-size:18px;font-weight:700;letter-spacing:-0.01em;color:${C.ink}">Keystrider</td>
+<td valign="bottom" style="padding-left:8px;font-size:18px;font-weight:700;letter-spacing:-0.01em;color:${C.ink}">Keypacer</td>
 </tr></table>
 </td></tr>
 <tr><td style="background:${C.panel};border:1px solid ${C.border};border-radius:14px;padding:28px 28px 24px">

@@ -49,7 +49,7 @@ describe('pushing the templates', () => {
     expect(smtpConfig({})).toBeNull();
     expect(smtpConfig({ RESEND_API_KEY: 'key' })).toBeNull();
     expect(smtpConfig({ RESEND_API_KEY: 'key', MAIL_FROM: 'login@example.org' })).toEqual({
-      smtp_host: 'smtp.resend.com', smtp_port: '465', smtp_user: 'resend', smtp_pass: 'key', smtp_admin_email: 'login@example.org', smtp_sender_name: 'Keystrider',
+      smtp_host: 'smtp.resend.com', smtp_port: '465', smtp_user: 'resend', smtp_pass: 'key', smtp_admin_email: 'login@example.org', smtp_sender_name: 'Keypacer',
     });
     // "Confirm email" stays a decision made by hand.
     expect(templates).not.toHaveProperty('mailer_autoconfirm');

@@ -185,8 +185,16 @@ const TEXT = {
   },
 };
 
-// Brand colours from src/style.css (the stair logo's ember, magenta and cobalt), as hex for mail apps.
-const C = { ember: '#dd5400', magenta: '#a22697', cobalt: '#214dba', ink: '#262b3d', muted: '#5f6476', bg: '#f5f6fa', panel: '#ffffff', border: '#e3e5ec', code: '#eef1fb' };
+// Colours from src/style.css (light theme), as hex for mail apps: surfaces and ink,
+// the cobalt key of buttons and the three steps of the stair logo.
+const C = {
+  bg: '#f5f6fa', panel: '#ffffff', ink: '#1c2232', muted: '#636877', border: '#e2e4ea', soft: '#e3ebfb',
+  cobaltTop: '#3d6ddf', cobalt: '#214dba', cobaltEdge: '#173d9d', magenta: '#a22697',
+  // Each logo step: front, top face, side face.
+  steps: [['#dd5400', '#ffac72', '#a23a00'], ['#a22697', '#eb82dd', '#6e0d67'], ['#214dba', '#6d9bfd', '#0c2b7e']],
+};
+const MONO = "'JetBrains Mono',ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace";
+const SANS = "system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
@@ -211,35 +219,43 @@ export function subject(kind) {
 export function html(kind) {
   const k = (key) => byLanguage((l) => esc(TEXT[l][kind][key]));
   const common = (key) => byLanguage((l) => esc(TEXT[l][key]));
-  const step = (color, height) => `<td valign="bottom" style="padding:0 2px 0 0"><div style="width:7px;height:${height}px;background:${color};border-radius:2px"></div></td>`;
+  // The stair logo from table cells, no image: a lighter top and a darker side make each step a key.
+  const step = ([front, top, side], height) =>
+    `<td valign="bottom" style="padding:0 2px 0 0"><div style="width:8px;height:${height}px;background:${front};border-top:3px solid ${top};border-right:2px solid ${side};border-radius:2px 2px 1px 1px"></div></td>`;
   return `${LANGUAGE}<!doctype html>
 <html lang="{{ $l }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light">
 <title>${k('heading')}</title>
 </head>
-<body style="margin:0;padding:0;background:${C.bg};color:${C.ink};font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+<body style="margin:0;padding:0;background:${C.bg};color:${C.ink};font-family:${SANS}">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C.bg}">
-<tr><td align="center" style="padding:32px 16px">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:480px">
-<tr><td style="padding:0 4px 16px">
+<tr><td align="center" style="padding:28px 16px 36px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px">
+<tr><td style="padding:0 4px 18px">
 <table role="presentation" cellpadding="0" cellspacing="0"><tr>
-${step(C.ember, 8)}${step(C.magenta, 14)}${step(C.cobalt, 20)}
-<td valign="bottom" style="padding-left:8px;font-size:18px;font-weight:700;letter-spacing:-0.01em;color:${C.ink}">Keypacer</td>
+${C.steps.map((c, i) => step(c, [7, 15, 23][i])).join('')}
+<td valign="bottom" style="padding-left:9px;font-family:${MONO};font-size:19px;line-height:1;letter-spacing:-0.01em;color:${C.ink}"><span style="font-weight:500">key</span><span style="font-weight:800">pacer</span></td>
 </tr></table>
 </td></tr>
-<tr><td style="background:${C.panel};border:1px solid ${C.border};border-radius:14px;padding:28px 28px 24px">
-<h1 style="margin:0 0 12px;font-size:22px;line-height:1.3;color:${C.ink}">${k('heading')}</h1>
-<p style="margin:0 0 18px;font-size:16px;line-height:1.5">${k('intro')}</p>
-<p style="margin:0 0 18px;padding:14px 0;background:${C.code};border-radius:10px;text-align:center;font-family:'JetBrains Mono',Menlo,Consolas,monospace;font-size:30px;font-weight:700;letter-spacing:0.18em;color:${C.ink}">{{ .Token }}</p>
-<p style="margin:0 0 12px;font-size:14px;line-height:1.5;color:${C.muted}">${common('or')}</p>
-<p style="margin:0 0 20px"><a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:11px 20px;background:${C.cobalt};color:#ffffff;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none">${k('button')}</a></p>
-<p style="margin:0 0 8px;font-size:14px;line-height:1.5;color:${C.muted}">${common('expires')}</p>
-<p style="margin:0;font-size:14px;line-height:1.5;color:${C.muted}">${k('ignore')}</p>
+<tr><td style="background:${C.panel};border:1px solid ${C.border};border-radius:16px;padding:32px 30px 28px;box-shadow:0 1px 2px rgba(28,34,50,0.08),0 3px 8px rgba(28,34,50,0.05)">
+<h1 style="margin:0 0 12px;font-family:${SANS};font-size:24px;line-height:1.25;font-weight:800;letter-spacing:-0.01em;color:${C.ink}">${k('heading')}</h1>
+<p style="margin:0 0 22px;font-size:16px;line-height:1.55;color:${C.muted}">${k('intro')}</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px"><tr>
+<td align="center" style="padding:18px 12px;background:${C.panel};border:1px solid ${C.border};border-radius:12px;box-shadow:0 1px 2px rgba(28,34,50,0.08),0 3px 8px rgba(28,34,50,0.05)">
+<span style="font-family:${MONO};font-size:34px;line-height:1.2;font-weight:700;letter-spacing:0.22em;color:${C.ink}">{{ .Token }}</span><span style="display:inline-block;width:3px;height:32px;margin-left:4px;vertical-align:-5px;background:${C.magenta};border-radius:2px"></span>
+</td></tr></table>
+<p style="margin:0 0 14px;font-size:14px;line-height:1.5;color:${C.muted}">${common('or')}</p>
+<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 24px"><tr>
+<td style="border-radius:12px;background:${C.cobalt};background-image:linear-gradient(${C.cobaltTop},${C.cobalt});border-bottom:3px solid ${C.cobaltEdge}">
+<a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:12px 22px;font-family:${SANS};font-size:16px;font-weight:700;color:#ffffff;text-decoration:none">${k('button')}</a>
+</td></tr></table>
+<p style="margin:0;padding-top:18px;border-top:1px solid ${C.border};font-size:13px;line-height:1.55;color:${C.muted}">${common('expires')} ${k('ignore')}</p>
 </td></tr>
-<tr><td style="padding:16px 4px 0;font-size:12px;line-height:1.5;color:${C.muted}">
+<tr><td style="padding:18px 4px 0;font-size:12px;line-height:1.5;color:${C.muted}">
 ${common('tagline')} · <a href="{{ .SiteURL }}/datenschutz" style="color:${C.muted}">${common('privacy')}</a>
 </td></tr>
 </table>

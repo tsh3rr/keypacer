@@ -185,7 +185,7 @@ export function renderLanding(lang: LandingLanguage, site: string): string {
     {
       '@context': 'https://schema.org',
       '@type': 'WebApplication',
-      name: 'Keystrider',
+      name: 'Keypacer',
       url,
       description: c.description,
       applicationCategory: 'EducationalApplication',
@@ -227,7 +227,7 @@ export function renderLanding(lang: LandingLanguage, site: string): string {
     ${alternates}
     <link rel="alternate" hreflang="x-default" href="${site}/" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Keystrider" />
+    <meta property="og:site_name" content="Keypacer" />
     <meta property="og:title" content="${esc(c.hero.title)}" />
     <meta property="og:description" content="${esc(c.description)}" />
     <meta property="og:url" content="${url}" />
@@ -249,7 +249,7 @@ export function renderLanding(lang: LandingLanguage, site: string): string {
   <body class="lp">
     <a class="lp-skip" href="#inhalt">${esc(c.nav.skip)}</a>
     <header class="topbar lp-top">
-      <a class="brand" href="${landingPath(lang)}">${BRAND_MARK}<span class="brand-word">key<b>strider</b></span></a>
+      <a class="brand" href="${landingPath(lang)}">${BRAND_MARK}<span class="brand-word">key<b>pacer</b></span></a>
       <nav class="lp-sections" aria-label="${esc(c.nav.sections)}">
         <a href="#methode">${esc(c.nav.method)}</a>
         <a href="#funktionen">${esc(c.nav.features)}</a>

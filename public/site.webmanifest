@@ -1,6 +1,6 @@
 {
-  "name": "Keystrider",
-  "short_name": "Keystrider",
+  "name": "Keypacer",
+  "short_name": "Keypacer",
   "start_url": "/app/",
   "display": "standalone",
   "background_color": "#ffffff",

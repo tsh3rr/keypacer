@@ -309,7 +309,7 @@ export function planIcs(
   // Text values escape backslash, semicolon, comma and newlines (RFC 5545, 3.3.11).
   const text = (s: string) => s.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
   const lines = [
-    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Keystrider//Practice plan//EN', 'CALSCALE:GREGORIAN',
+    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Keypacer//Practice plan//EN', 'CALSCALE:GREGORIAN',
     'BEGIN:VEVENT',
     `UID:${uid}`, `DTSTAMP:${stamp}`, `DTSTART:${local(start)}`, `DTEND:${local(end)}`,
     `RRULE:FREQ=WEEKLY;BYDAY=${plan.days.map((d) => ICS_DAYS[d]).join(',')}`,
@@ -329,7 +329,7 @@ const PLAN_UID_KEY = 'typing-trainer.plan-uid';
 export function planUid(storage = safeStorage()): string {
   let uid = read<string>(PLAN_UID_KEY, storage);
   if (typeof uid !== 'string' || !uid) {
-    uid = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}@keystrider`;
+    uid = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}@keypacer`;
     write(PLAN_UID_KEY, JSON.stringify(uid), storage);
   }
   return uid;

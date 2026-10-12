@@ -430,7 +430,7 @@ function downloadPlan(plan: PracticePlan, goal: WeeklyGoal): void {
     url: `${location.origin}/app/`, uid: planUid(),
   });
   const a = Object.assign(document.createElement('a'), {
-    href: URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })), download: 'keystrider-practice.ics',
+    href: URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })), download: 'keypacer-practice.ics',
   });
   a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);

@@ -1,4 +1,4 @@
-# Keystrider
+# Keypacer
 
 A touch-typing trainer that analyzes your errors and weak keys and adapts practice to make you faster.
 
@@ -15,7 +15,7 @@ Static app (TypeScript + Vite). No backend: all data stays in the browser.
 
 ## Pages
 
-- **Landing pages** at `/` (English), `/de/`, `/es/`, `/fr/`, `/it/` and `/pl/`: what Keystrider is, with a one-line typing demo in the hero that shows speed, accuracy and the keys that held you up. They are static HTML built from `src/landing/content.ts` at build time (`index.html` and `<lang>/index.html` are placeholders the plugin in `vite.config.ts` fills), so search engines and link previews read the full text. The build also writes `sitemap.xml` and `robots.txt`; preview builds tell search engines to stay away. `SITE_URL` sets the public address used in canonical links and the sitemap.
+- **Landing pages** at `/` (English), `/de/`, `/es/`, `/fr/`, `/it/` and `/pl/`: what Keypacer is, with a one-line typing demo in the hero that shows speed, accuracy and the keys that held you up. They are static HTML built from `src/landing/content.ts` at build time (`index.html` and `<lang>/index.html` are placeholders the plugin in `vite.config.ts` fills), so search engines and link previews read the full text. The build also writes `sitemap.xml` and `robots.txt`; preview builds tell search engines to stay away. `SITE_URL` sets the public address used in canonical links and the sitemap.
 - **The trainer** at `/app/`. Landing links pass `?lang=<lang>` so a first visit starts in that language (`?signin` opens sign-in). Someone who has set up the trainer before, and sign-in or invite links that point at `/`, go straight on to `/app/` (`public/to-app.js`); `/?home` shows the landing page anyway.
 
 ## First visit
@@ -30,7 +30,7 @@ The landing page's typing line is the start of the placement test: its keystroke
 
 ## Keystroke log
 
-Every typed character on the practice screen is stored in IndexedDB (database `typing-trainer`, store `keystrokes`) with the following fields. The database and the `typing-trainer.*` localStorage keys keep the app's old name on purpose, so renaming the app to Keystrider didn't wipe anyone's history or settings.
+Every typed character on the practice screen is stored in IndexedDB (database `typing-trainer`, store `keystrokes`) with the following fields. The database and the `typing-trainer.*` localStorage keys keep the app's old name on purpose, so renaming the app to Keypacer didn't wipe anyone's history or settings.
 
 Fields:
 
@@ -150,4 +150,4 @@ GitHub Actions:
 
 ## Thanks
 
-Keystrider is inspired by [Monkeytype](https://github.com/monkeytypegame/monkeytype), the open-source typing test by Miodec and its contributors. Its clean, distraction-free practice set the bar for how typing in a browser should feel. Keystrider contains no Monkeytype code or word lists, so Monkeytype's GPL-3.0 license does not apply here.
+Keypacer is inspired by [Monkeytype](https://github.com/monkeytypegame/monkeytype), the open-source typing test by Miodec and its contributors. Its clean, distraction-free practice set the bar for how typing in a browser should feel. Keypacer contains no Monkeytype code or word lists, so Monkeytype's GPL-3.0 license does not apply here.

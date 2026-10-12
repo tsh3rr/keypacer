@@ -28,7 +28,7 @@ let lang: LegalLanguage = ui === 'de' ? 'de' : 'en';
 function render(): void {
   const ui = LEGAL_UI[lang];
   document.documentElement.lang = lang;
-  document.title = `${ui[page]} · Keystrider`;
+  document.title = `${ui[page]} · Keypacer`;
   title.textContent = ui[page];
   back.textContent = ui.back;
   note.textContent = ui.note;

@@ -56,13 +56,13 @@ Der Knopf ist ausgeblendet, bis `OAUTH_PROVIDERS` in `src/sync/account.ts` `'goo
 
 Einmal in der Google Cloud Console, dann in beiden Supabase-Projekten:
 
-1. [console.cloud.google.com](https://console.cloud.google.com) → oben Projektauswahl → **Neues Projekt** → Name `Keystrider` → **Erstellen**.
+1. [console.cloud.google.com](https://console.cloud.google.com) → oben Projektauswahl → **Neues Projekt** → Name `Keypacer` → **Erstellen**.
 2. Menü → **APIs & Dienste** → **OAuth-Zustimmungsbildschirm** (heißt auch **Google Auth Platform**) → **Jetzt starten**:
-   - App-Name `Keystrider`, Support-E-Mail: deine Adresse → **Weiter**
+   - App-Name `Keypacer`, Support-E-Mail: deine Adresse → **Weiter**
    - Zielgruppe: **Extern** → **Weiter**, Kontakt-E-Mail → **Weiter** → zustimmen → **Erstellen**
    - **Branding**: Startseite `https://keystrider.jeremiasz-kapek.workers.dev`, Datenschutzerklärung `…/datenschutz`, Nutzungsbedingungen leer lassen; unter **Autorisierte Domains** `supabase.co` und `workers.dev`-Adresse bzw. später deine Domain → **Speichern**
    - **Zielgruppe** → **App veröffentlichen** (Status „In Produktion“). Für E-Mail und Name braucht es keine Prüfung durch Google.
-3. **Clients** → **Client erstellen** → Anwendungstyp **Webanwendung**, Name `Keystrider`:
+3. **Clients** → **Client erstellen** → Anwendungstyp **Webanwendung**, Name `Keypacer`:
    - **Autorisierte JavaScript-Quellen**: `https://keystrider.jeremiasz-kapek.workers.dev` und `http://localhost:5173`
    - **Autorisierte Weiterleitungs-URIs**: `https://ubjwlxcawxwrgolszlkz.supabase.co/auth/v1/callback` und `https://dghypouxfnfcdvpylznt.supabase.co/auth/v1/callback`
    - **Erstellen** → **Client-ID** und **Clientschlüssel** kopieren.
@@ -74,10 +74,10 @@ Erst nötig, wenn Code-Login und „Passwort vergessen“ freigeschaltet werden 
 
 Projekt → **Authentication** → **Emails** → **Templates**. In **Magic Link** und in **Confirm signup** den Text ersetzen durch:
 
-Betreff: `Dein Keystrider-Code: {{ .Token }}`
+Betreff: `Dein Keypacer-Code: {{ .Token }}`
 
 ```html
-<h2>Anmelden bei Keystrider</h2>
+<h2>Anmelden bei Keypacer</h2>
 <p>Dein Code: <strong style="font-size: 1.4em; letter-spacing: 0.1em">{{ .Token }}</strong></p>
 <p>Oder klick auf diesem Gerät hier: <a href="{{ .ConfirmationURL }}">Anmelden</a></p>
 <p>Your sign-in code: <strong>{{ .Token }}</strong></p>

@@ -173,7 +173,7 @@ export class BuddiesView {
     }));
     if (typeof navigator.share === 'function') {
       actions.append(button(t('buddies.share'), '', () => {
-        navigator.share({ title: 'Keystrider', text: t('buddies.shareText'), url: link }).catch(() => undefined);
+        navigator.share({ title: 'Keypacer', text: t('buddies.shareText'), url: link }).catch(() => undefined);
       }));
     }
     if (owner) actions.append(button(t('buddies.newLink'), 'link-btn', () => {

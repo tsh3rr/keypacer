@@ -70,7 +70,7 @@ const licenses = {
       <li>Der Filter für anstößige Wörter nutzt die <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, Lizenz <a href="https://creativecommons.org/licenses/by/4.0/deed.de">CC BY 4.0</a>.</li>
     </ul>
     <h2>Danke</h2>
-    <p>Keystrider ist von <a href="https://monkeytype.com">Monkeytype</a> inspiriert, dem quelloffenen Tipptrainer von Miodec und seiner Community. Das schlichte, ablenkungsfreie Üben dort hat gezeigt, wie gut sich Tippen im Browser anfühlen kann. Keystrider verwendet keinen Code und keine Wortlisten von Monkeytype.</p>`,
+    <p>Keypacer ist von <a href="https://monkeytype.com">Monkeytype</a> inspiriert, dem quelloffenen Tipptrainer von Miodec und seiner Community. Das schlichte, ablenkungsfreie Üben dort hat gezeigt, wie gut sich Tippen im Browser anfühlen kann. Keypacer verwendet keinen Code und keine Wortlisten von Monkeytype.</p>`,
   en: `
     <h2>Sources and licenses</h2>
     <ul>
@@ -78,7 +78,7 @@ const licenses = {
       <li>The offensive-word filter uses the <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</li>
     </ul>
     <h2>Thanks</h2>
-    <p>Keystrider is inspired by <a href="https://monkeytype.com">Monkeytype</a>, the open-source typing test by Miodec and its community. Its clean, distraction-free practice showed how good typing in a browser can feel. Keystrider uses no code or word lists from Monkeytype.</p>`,
+    <p>Keypacer is inspired by <a href="https://monkeytype.com">Monkeytype</a>, the open-source typing test by Miodec and its community. Its clean, distraction-free practice showed how good typing in a browser can feel. Keypacer uses no code or word lists from Monkeytype.</p>`,
 };
 
 const imprint: Record<LegalLanguage, string> = {
@@ -86,36 +86,36 @@ const imprint: Record<LegalLanguage, string> = {
     <h2>Offenlegung gemäß § 25 Mediengesetz</h2>
     <p>Medieninhaber:<br>${name}<br>Wohnort: ${town}, Österreich</p>
     <p>Kontakt: ${mail}</p>
-    <p>Inhalt der Website: Keystrider ist ein kostenloser Trainer für das Zehnfingersystem. Die Website ist ein privates, nicht kommerzielles Projekt ohne Werbung.</p>
+    <p>Inhalt der Website: Keypacer ist ein kostenloser Trainer für das Zehnfingersystem. Die Website ist ein privates, nicht kommerzielles Projekt ohne Werbung.</p>
     ${licenses.de}`,
   en: `
     <h2>Disclosure under § 25 of the Austrian Media Act (MedienG)</h2>
     <p>Media owner:<br>${name}<br>Place of residence: ${town}, Austria</p>
     <p>Contact: ${mail}</p>
-    <p>About this website: Keystrider is a free touch-typing trainer. The website is a private, non-commercial project without advertising.</p>
+    <p>About this website: Keypacer is a free touch-typing trainer. The website is a private, non-commercial project without advertising.</p>
     ${licenses.en}`,
 };
 
 const privacy: Record<LegalLanguage, string> = {
   de: `
     <h2>Kurz gesagt</h2>
-    <p>Keystrider braucht kein Konto und setzt keine Cookies. Es gibt keine Werbung, keine Analyse- oder Tracking-Dienste und keine eingebundenen Inhalte von Dritten, auch keine externen Schriftarten.${captcha.short.de} Was du übst, bleibt in deinem Browser. Nur wenn du dich freiwillig anmeldest, um deinen Fortschritt zwischen Geräten abzugleichen, werden deine Übungsdaten auf einem Server in der EU gespeichert (siehe <em>Freiwilliges Konto</em>).</p>
+    <p>Keypacer braucht kein Konto und setzt keine Cookies. Es gibt keine Werbung, keine Analyse- oder Tracking-Dienste und keine eingebundenen Inhalte von Dritten, auch keine externen Schriftarten.${captcha.short.de} Was du übst, bleibt in deinem Browser. Nur wenn du dich freiwillig anmeldest, um deinen Fortschritt zwischen Geräten abzugleichen, werden deine Übungsdaten auf einem Server in der EU gespeichert (siehe <em>Freiwilliges Konto</em>).</p>
 
     <h2>Verantwortlicher</h2>
     <p>${name}<br>${town}, Österreich<br>${mail}</p>
 
     <h2>Daten in deinem Browser</h2>
-    <p>Damit das Training funktioniert und dein Fortschritt erhalten bleibt, speichert Keystrider auf deinem Gerät im lokalen Speicher deines Browsers (localStorage und IndexedDB):</p>
+    <p>Damit das Training funktioniert und dein Fortschritt erhalten bleibt, speichert Keypacer auf deinem Gerät im lokalen Speicher deines Browsers (localStorage und IndexedDB):</p>
     <ul>
       <li><strong>Einstellungen:</strong> Tastaturlayout, Übungs- und Oberflächensprache, Farbschema, Hilfen beim Tippen, ob die Einrichtung abgeschlossen ist und ob du einen Hinweis weggeklickt hast, dein Wochenziel; falls du mehrere Tastaturen nutzt, deren Namen und Layouts und welche gerade gewählt ist.</li>
       <li><strong>Lernstand:</strong> welche Tasten freigeschaltet sind und welche du schon beherrschst, und wie weit du im Lernpfad bist, je Sprache und Layout.</li>
-      <li><strong>Tastenprotokoll:</strong> für jeden Anschlag im Übungstext das erwartete und das getippte Zeichen, die Taste, die Zeit seit dem vorigen Anschlag, Datum und Uhrzeit sowie die Übungsrunde, und wenn du unter <em>Einstellungen → Tastaturen</em> mehrere Tastaturen angelegt hast, auf welcher davon. Daraus berechnet Keystrider deine schwachen Tasten und die nächsten Übungen. Erfasst wird nur, was du in das Übungsfeld tippst.</li>
+      <li><strong>Tastenprotokoll:</strong> für jeden Anschlag im Übungstext das erwartete und das getippte Zeichen, die Taste, die Zeit seit dem vorigen Anschlag, Datum und Uhrzeit sowie die Übungsrunde, und wenn du unter <em>Einstellungen → Tastaturen</em> mehrere Tastaturen angelegt hast, auf welcher davon. Daraus berechnet Keypacer deine schwachen Tasten und die nächsten Übungen. Erfasst wird nur, was du in das Übungsfeld tippst.</li>
     </ul>
     <p>Ohne Konto verlassen diese Daten dein Gerät nicht; wir erhalten sie nicht und können sie nicht einsehen. Wenn du angemeldet bist, liegen hier außerdem deine Anmeldung (ein Zugangsschlüssel, damit du angemeldet bleibst) und der Stand des letzten Abgleichs. Das Speichern ist technisch unbedingt erforderlich, um den Dienst bereitzustellen, den du ausdrücklich nutzt (§ 165 Abs. 3 TKG 2021); eine Einwilligung und ein Cookie-Banner sind dafür nicht nötig.</p>
     <p>Du behältst die Kontrolle: Unter <em>Einstellungen → Tastenprotokoll und Export</em> kannst du das Protokoll ansehen, als JSON oder CSV exportieren und löschen. Alles zusammen entfernst du, indem du in deinem Browser die Websitedaten für diese Seite löschst.</p>
 
     <h2>Freiwilliges Konto und Abgleich zwischen Geräten</h2>
-    <p>Du kannst dich unter <em>Einstellungen → Konto</em> mit deinem Google-Konto oder mit E-Mail-Adresse und Passwort anmelden. Dann gleicht Keystrider deinen Fortschritt zwischen deinen Geräten ab. Dafür verarbeiten wir:</p>
+    <p>Du kannst dich unter <em>Einstellungen → Konto</em> mit deinem Google-Konto oder mit E-Mail-Adresse und Passwort anmelden. Dann gleicht Keypacer deinen Fortschritt zwischen deinen Geräten ab. Dafür verarbeiten wir:</p>
     <ul>
       <li><strong>Anmeldedaten:</strong> deine E-Mail-Adresse, dein Passwort (nur als nicht umkehrbarer Hash gespeichert), eine interne Benutzerkennung, Zeitpunkt der Registrierung und der letzten Anmeldung sowie technische Protokolle der Anmeldung (IP-Adresse, Browserangaben, Zeitpunkt), die der Absicherung gegen Missbrauch dienen.</li>
       <li><strong>Benutzername:</strong> den du beim Registrieren wählst. Er wird in der App statt deiner E-Mail-Adresse angezeigt. Andere Nutzer sehen ihn nur, wenn du einer Gruppe von Trainingspartnern beitrittst (siehe unten); beim Registrieren lässt sich nur prüfen, ob ein Name schon vergeben ist.</li>
@@ -138,26 +138,26 @@ const privacy: Record<LegalLanguage, string> = {
     <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung, auf Datenübertragbarkeit und auf Widerspruch (Art. 15 bis 21 DSGVO). Schreib uns dazu einfach eine E-Mail. Wenn du meinst, dass wir deine Daten nicht rechtmäßig verarbeiten, kannst du dich bei der Österreichischen Datenschutzbehörde beschweren: Barichgasse 40–42, 1030 Wien, <a href="https://www.dsb.gv.at">www.dsb.gv.at</a>.</p>
 
     <h2>Änderungen</h2>
-    <p>Wenn Keystrider neue Funktionen bekommt, die Daten verarbeiten, oder einen weiteren Dienstleister einsetzt, passen wir diese Erklärung vorher an.</p>`,
+    <p>Wenn Keypacer neue Funktionen bekommt, die Daten verarbeiten, oder einen weiteren Dienstleister einsetzt, passen wir diese Erklärung vorher an.</p>`,
   en: `
     <h2>In short</h2>
-    <p>Keystrider needs no account and sets no cookies. There are no ads, no analytics or tracking services and no embedded third-party content, not even external fonts.${captcha.short.en} What you practise stays in your browser. Only if you choose to sign in, to keep your progress in sync between devices, is your practice data stored on a server in the EU (see <em>Optional account</em>).</p>
+    <p>Keypacer needs no account and sets no cookies. There are no ads, no analytics or tracking services and no embedded third-party content, not even external fonts.${captcha.short.en} What you practise stays in your browser. Only if you choose to sign in, to keep your progress in sync between devices, is your practice data stored on a server in the EU (see <em>Optional account</em>).</p>
 
     <h2>Controller</h2>
     <p>${name}<br>${town}, Austria<br>${mail}</p>
 
     <h2>Data in your browser</h2>
-    <p>So that training works and your progress is kept, Keystrider stores the following on your device, in your browser's local storage (localStorage and IndexedDB):</p>
+    <p>So that training works and your progress is kept, Keypacer stores the following on your device, in your browser's local storage (localStorage and IndexedDB):</p>
     <ul>
       <li><strong>Settings:</strong> keyboard layout, practice and interface language, colour theme, typing aids, whether setup is finished or a notice was dismissed, your weekly goal, and, if you use several keyboards, their names and layouts and which one is selected.</li>
       <li><strong>Learning state:</strong> which keys are unlocked and which you have mastered, and how far along the learning path you are, per language and layout.</li>
-      <li><strong>Keystroke log:</strong> for each keystroke in the practice text, the expected and the typed character, the key, the time since the previous keystroke, the date and time, and the practice round, plus which keyboard you typed on if you set up several under <em>Settings → Keyboards</em>. Keystrider uses it to work out your weak keys and your next drills. Only what you type into the practice field is recorded.</li>
+      <li><strong>Keystroke log:</strong> for each keystroke in the practice text, the expected and the typed character, the key, the time since the previous keystroke, the date and time, and the practice round, plus which keyboard you typed on if you set up several under <em>Settings → Keyboards</em>. Keypacer uses it to work out your weak keys and your next drills. Only what you type into the practice field is recorded.</li>
     </ul>
     <p>Without an account this data does not leave your device; we do not receive it and cannot see it. When you are signed in, your sign-in (an access token, so you stay signed in) and the state of the last sync are stored here too. Storing it is strictly necessary to provide the service you explicitly use (§ 165(3) of the Austrian Telecommunications Act 2021, TKG 2021), so it needs no consent and no cookie banner.</p>
     <p>You stay in control: under <em>Settings → Keystroke log and export</em> you can view the log, export it as JSON or CSV, and delete it. To remove everything, clear this site's data in your browser.</p>
 
     <h2>Optional account and sync between devices</h2>
-    <p>Under <em>Settings → Account</em> you can sign in with your Google account or with an e-mail address and password. Keystrider then keeps your progress in sync between your devices. For this we process:</p>
+    <p>Under <em>Settings → Account</em> you can sign in with your Google account or with an e-mail address and password. Keypacer then keeps your progress in sync between your devices. For this we process:</p>
     <ul>
       <li><strong>Sign-in data:</strong> your e-mail address, your password (stored only as a one-way hash), an internal user ID, when you registered and last signed in, and technical sign-in logs (IP address, browser details, time) used to protect against abuse.</li>
       <li><strong>Username:</strong> the one you choose when you sign up. The app shows it instead of your e-mail address. Other users only see it if you join a group of training buddies (see below); signing up only reveals whether a name is already taken.</li>
@@ -180,7 +180,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>You have the right of access, rectification, erasure and restriction of processing, the right to data portability and the right to object (Art. 15 to 21 GDPR). Just send us an e-mail. If you believe we process your data unlawfully, you can complain to the Austrian Data Protection Authority (Datenschutzbehörde): Barichgasse 40–42, 1030 Vienna, <a href="https://www.dsb.gv.at">www.dsb.gv.at</a>.</p>
 
     <h2>Changes</h2>
-    <p>If Keystrider gets new features that process data, or uses another service provider, we will update this policy first.</p>`,
+    <p>If Keypacer gets new features that process data, or uses another service provider, we will update this policy first.</p>`,
 };
 
 /**
@@ -191,13 +191,13 @@ const privacy: Record<LegalLanguage, string> = {
 const terms: Record<LegalLanguage, string> = {
   de: `
     <h2>Kurz gesagt</h2>
-    <p>Keystrider ist kostenlos und ein privates Projekt. Üben kannst du ohne Konto und ohne diese Bedingungen zu lesen. Legst du ein Konto an, gelten sie zusätzlich: Wähle einen anständigen Benutzernamen, geh fair mit anderen um und lass den Dienst in Ruhe arbeiten. Wer dagegen verstößt, kann gesperrt werden.</p>
+    <p>Keypacer ist kostenlos und ein privates Projekt. Üben kannst du ohne Konto und ohne diese Bedingungen zu lesen. Legst du ein Konto an, gelten sie zusätzlich: Wähle einen anständigen Benutzernamen, geh fair mit anderen um und lass den Dienst in Ruhe arbeiten. Wer dagegen verstößt, kann gesperrt werden.</p>
 
     <h2>1. Anbieter und Geltung</h2>
-    <p>Keystrider wird von ${name}, ${town}, Österreich, betrieben (Kontakt: ${mail}). Diese Bedingungen gelten für die Nutzung der Website und besonders für das freiwillige Konto. Mit der Registrierung erklärst du dich mit ihnen einverstanden. Bist du jünger als 14 Jahre, brauchst du für ein Konto die Zustimmung deiner Eltern.</p>
+    <p>Keypacer wird von ${name}, ${town}, Österreich, betrieben (Kontakt: ${mail}). Diese Bedingungen gelten für die Nutzung der Website und besonders für das freiwillige Konto. Mit der Registrierung erklärst du dich mit ihnen einverstanden. Bist du jünger als 14 Jahre, brauchst du für ein Konto die Zustimmung deiner Eltern.</p>
 
     <h2>2. Kostenloser Dienst ohne Garantie</h2>
-    <p>Keystrider kostet nichts und enthält keine Werbung. Wir bemühen uns, dass alles funktioniert, können aber nicht versprechen, dass die Website immer erreichbar und fehlerfrei ist oder dass deine Daten nie verloren gehen. Funktionen können sich ändern oder wegfallen. Sichere wichtige Daten über <em>Einstellungen → Tastenprotokoll und Export</em>. Keystrider ist ein Übungswerkzeug und kein Gesundheitsangebot: Wenn dir beim Tippen Hände, Arme oder Nacken wehtun, mach eine Pause und lass dich bei anhaltenden Beschwerden ärztlich beraten.</p>
+    <p>Keypacer kostet nichts und enthält keine Werbung. Wir bemühen uns, dass alles funktioniert, können aber nicht versprechen, dass die Website immer erreichbar und fehlerfrei ist oder dass deine Daten nie verloren gehen. Funktionen können sich ändern oder wegfallen. Sichere wichtige Daten über <em>Einstellungen → Tastenprotokoll und Export</em>. Keypacer ist ein Übungswerkzeug und kein Gesundheitsangebot: Wenn dir beim Tippen Hände, Arme oder Nacken wehtun, mach eine Pause und lass dich bei anhaltenden Beschwerden ärztlich beraten.</p>
 
     <h2>3. Dein Konto</h2>
     <p>Ein Konto ist für eine Person gedacht. Halte dein Passwort geheim und gib dein Konto nicht weiter. Du kannst es jederzeit unter <em>Einstellungen → Konto → Konto löschen</em> selbst löschen.</p>
@@ -206,7 +206,7 @@ const terms: Record<LegalLanguage, string> = {
     <p>Dein Benutzername ist für deine Trainingspartner sichtbar. Er darf nicht</p>
     <ul>
       <li>beleidigend, bedrohend, diskriminierend, sexuell, gewaltverherrlichend oder sonst anstößig sein,</li>
-      <li>vorgeben, eine andere Person, Keystrider selbst oder eine Organisation zu sein,</li>
+      <li>vorgeben, eine andere Person, Keypacer selbst oder eine Organisation zu sein,</li>
       <li>Namens-, Marken- oder andere Rechte Dritter verletzen,</li>
       <li>Werbung, Links oder persönliche Daten anderer enthalten.</li>
     </ul>
@@ -219,10 +219,10 @@ const terms: Record<LegalLanguage, string> = {
     <p>Verstößt jemand gegen diese Bedingungen, können wir je nach Schwere einen Benutzernamen zurücksetzen, die Person aus Gruppen entfernen, das Konto vorübergehend sperren oder es löschen. Meistens melden wir uns vorher per E-Mail und geben dir Gelegenheit, dich zu äußern; bei schweren Verstößen oder Gefahr für andere oder den Dienst handeln wir sofort. Wenn du eine Sperre für falsch hältst, schreib uns.</p>
 
     <h2>7. Haftung</h2>
-    <p>Da Keystrider unentgeltlich ist, haften wir nur für Schäden, die wir vorsätzlich oder grob fahrlässig verursachen. Für Personenschäden haften wir nach den gesetzlichen Bestimmungen. Für die Inhalte verlinkter Websites sind deren Betreiber verantwortlich.</p>
+    <p>Da Keypacer unentgeltlich ist, haften wir nur für Schäden, die wir vorsätzlich oder grob fahrlässig verursachen. Für Personenschäden haften wir nach den gesetzlichen Bestimmungen. Für die Inhalte verlinkter Websites sind deren Betreiber verantwortlich.</p>
 
     <h2>8. Ende des Dienstes</h2>
-    <p>Wir können Keystrider oder das Konto-Angebot einstellen. Konten löschen wir in diesem Fall frühestens 30 Tage nach einer Ankündigung per E-Mail, damit du deine Daten vorher exportieren kannst.</p>
+    <p>Wir können Keypacer oder das Konto-Angebot einstellen. Konten löschen wir in diesem Fall frühestens 30 Tage nach einer Ankündigung per E-Mail, damit du deine Daten vorher exportieren kannst.</p>
 
     <h2>9. Änderungen dieser Bedingungen</h2>
     <p>Wir können diese Bedingungen ändern, etwa wenn neue Funktionen dazukommen. Wesentliche Änderungen kündigen wir Kontoinhabern vorher per E-Mail oder in der App an. Wenn du nicht einverstanden bist, kannst du dein Konto löschen.</p>
@@ -231,13 +231,13 @@ const terms: Record<LegalLanguage, string> = {
     <p>Es gilt österreichisches Recht unter Ausschluss des UN-Kaufrechts und der Verweisungsnormen. Wenn du Verbraucher bist, behältst du den Schutz der zwingenden Bestimmungen des Landes, in dem du lebst.</p>`,
   en: `
     <h2>In short</h2>
-    <p>Keystrider is free and a private project. You can practise without an account and without reading these terms. If you create an account, they apply as well: choose a decent username, treat others fairly and leave the service alone to do its job. Anyone who breaks these rules can be suspended.</p>
+    <p>Keypacer is free and a private project. You can practise without an account and without reading these terms. If you create an account, they apply as well: choose a decent username, treat others fairly and leave the service alone to do its job. Anyone who breaks these rules can be suspended.</p>
 
     <h2>1. Provider and scope</h2>
-    <p>Keystrider is run by ${name}, ${town}, Austria (contact: ${mail}). These terms apply to using the website and in particular to the optional account. By signing up you agree to them. If you are under 14, you need your parents' permission for an account.</p>
+    <p>Keypacer is run by ${name}, ${town}, Austria (contact: ${mail}). These terms apply to using the website and in particular to the optional account. By signing up you agree to them. If you are under 14, you need your parents' permission for an account.</p>
 
     <h2>2. A free service without guarantees</h2>
-    <p>Keystrider costs nothing and has no ads. We try to keep everything working, but cannot promise that the website is always available and free of errors, or that your data is never lost. Features may change or be removed. Keep a copy of important data via <em>Settings → Keystroke log and export</em>. Keystrider is a practice tool, not a health service: if your hands, arms or neck hurt while typing, take a break, and see a doctor if the pain persists.</p>
+    <p>Keypacer costs nothing and has no ads. We try to keep everything working, but cannot promise that the website is always available and free of errors, or that your data is never lost. Features may change or be removed. Keep a copy of important data via <em>Settings → Keystroke log and export</em>. Keypacer is a practice tool, not a health service: if your hands, arms or neck hurt while typing, take a break, and see a doctor if the pain persists.</p>
 
     <h2>3. Your account</h2>
     <p>An account is meant for one person. Keep your password secret and do not share your account. You can delete it yourself at any time under <em>Settings → Account → Delete account</em>.</p>
@@ -246,7 +246,7 @@ const terms: Record<LegalLanguage, string> = {
     <p>Your training buddies can see your username. It must not</p>
     <ul>
       <li>be insulting, threatening, discriminatory, sexual, glorify violence or be otherwise offensive,</li>
-      <li>pretend to be another person, Keystrider itself or an organisation,</li>
+      <li>pretend to be another person, Keypacer itself or an organisation,</li>
       <li>infringe the name, trademark or other rights of others,</li>
       <li>contain advertising, links or other people's personal data.</li>
     </ul>
@@ -259,10 +259,10 @@ const terms: Record<LegalLanguage, string> = {
     <p>If someone breaks these terms, depending on how serious it is, we may reset their username, remove them from groups, suspend the account for a while or delete it. Usually we contact you by e-mail first and give you a chance to respond; for serious breaches or where others or the service are at risk, we act straight away. If you think a suspension is wrong, write to us.</p>
 
     <h2>7. Liability</h2>
-    <p>As Keystrider is free of charge, we are only liable for damage we cause intentionally or through gross negligence. Liability for personal injury follows the law. The operators of linked websites are responsible for their content.</p>
+    <p>As Keypacer is free of charge, we are only liable for damage we cause intentionally or through gross negligence. Liability for personal injury follows the law. The operators of linked websites are responsible for their content.</p>
 
     <h2>8. End of the service</h2>
-    <p>We may shut down Keystrider or the account service. In that case we delete accounts no sooner than 30 days after announcing it by e-mail, so you can export your data first.</p>
+    <p>We may shut down Keypacer or the account service. In that case we delete accounts no sooner than 30 days after announcing it by e-mail, so you can export your data first.</p>
 
     <h2>9. Changes to these terms</h2>
     <p>We may change these terms, for example when new features are added. We announce significant changes to account holders in advance by e-mail or in the app. If you do not agree, you can delete your account.</p>

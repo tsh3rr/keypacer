@@ -98,9 +98,9 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
   en: {
     name: 'English',
     ogLocale: 'en_GB',
-    title: 'Keystrider: free touch typing trainer that adapts to you',
+    title: 'Keypacer: free touch typing trainer that adapts to you',
     description:
-      'Learn to touch type for free. Keystrider measures every keystroke, finds the keys that slow you down and builds each drill around them. No sign-up needed.',
+      'Learn to touch type for free. Keypacer measures every keystroke, finds the keys that slow you down and builds each drill around them. No sign-up needed.',
     nav: { languages: 'Language', signIn: 'Sign in', open: 'Open the trainer', sections: 'Page sections', method: 'Method', features: 'Features', faq: 'Questions', skip: 'Skip to content' },
     hero: {
       eyebrow: 'Free · no sign-up · no ads',
@@ -110,7 +110,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         'Every drill targets your slowest keys',
         'Type cleanly first, then fast',
       ],
-      lead: 'Keystrider measures every keystroke, finds the keys and letter pairs that slow you down, and builds your next drill from them. So you never practise what you already know.',
+      lead: 'Keypacer measures every keystroke, finds the keys and letter pairs that slow you down, and builds your next drill from them. So you never practise what you already know.',
       cta: 'Start practising for free',
       continue: 'Keep practising',
       note: 'Runs in your browser. No ads, no account needed.',
@@ -136,7 +136,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       ],
     },
     facts: {
-      label: 'Keystrider in numbers',
+      label: 'Keypacer in numbers',
       items: [
         { value: '∞', label: 'drills that adapt to your skill' },
         { value: '1 min', label: 'to your first drill, no sign-up' },
@@ -152,13 +152,13 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { title: 'One key at a time', text: 'You start with the six most common letters and type real words early on. The next key joins only once all the previous ones are accurate and fluent.' },
         { title: 'Clean first, then fast', text: 'A wrong key holds you on the letter. When accuracy drops, the speed counter disappears until you type cleanly again.' },
         { title: 'Targeted, not uniform', text: 'Every drill leans on the keys and letter pairs that slow you down, and brings back keys you haven’t practised for a while so they stick.' },
-        { title: 'Short rounds, real breaks', text: 'Warm-up, short focus rounds, then real sentences. When your concentration fades, Keystrider suggests a break instead of letting you drill in mistakes.' },
+        { title: 'Short rounds, real breaks', text: 'Warm-up, short focus rounds, then real sentences. When your concentration fades, Keypacer suggests a break instead of letting you drill in mistakes.' },
       ],
     },
     analysis: {
-      eyebrow: 'What Keystrider measures',
-      title: 'Keystrider notices which keys slow you down',
-      text: 'Do you hesitate for a moment before the q, or mix up b and v? You barely notice, but it costs you speed every time. Keystrider times every keystroke to the millisecond and builds your next drill from exactly those keys and letter pairs.',
+      eyebrow: 'What Keypacer measures',
+      title: 'Keypacer notices which keys slow you down',
+      text: 'Do you hesitate for a moment before the q, or mix up b and v? You barely notice, but it costs you speed every time. Keypacer times every keystroke to the millisecond and builds your next drill from exactly those keys and letter pairs.',
       points: [
         { chip: '1×', strong: 'The first try counts.', text: 'A mistake stays a mistake, even if you correct it right away.' },
         { chip: '2s', strong: 'Thinking pauses don’t count.', text: 'Pauses of more than two seconds don’t distort your speed.' },
@@ -175,9 +175,9 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Features',
       title: 'Everything you need, nothing you don’t',
       items: [
-        { title: 'Your language, your keyboard', text: 'English, German, French, Spanish, Italian or Polish, on QWERTY, QWERTZ, AZERTY, Dvorak, Colemak and more. Keystrider recognises your layout from the keys you press.' },
+        { title: 'Your language, your keyboard', text: 'English, German, French, Spanish, Italian or Polish, on QWERTY, QWERTZ, AZERTY, Dvorak, Colemak and more. Keypacer recognises your layout from the keys you press.' },
         { title: 'Finger guide', text: 'A keyboard under the text shows which finger is next. Keys you already know fade out bit by bit.' },
-        { title: 'Placement test', text: 'Already type a bit? A one-minute test, and Keystrider skips every key you have already mastered.' },
+        { title: 'Placement test', text: 'Already type a bit? A one-minute test, and Keypacer skips every key you have already mastered.' },
         { title: 'Progress you can see', text: 'Speed and accuracy over time, an error heatmap and your slowest keys and letter pairs.' },
         { title: 'Weekly goal and plan', text: 'Set how often you want to practise and add the plan to your calendar. Short, regular rounds do more than rare, long ones.' },
         { title: 'Carry on anywhere', text: 'With a free account your lessons are safe even if your browser data gets deleted, and you pick up where you left off on any device.' },
@@ -199,9 +199,9 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     privacy: {
       eyebrow: 'Privacy',
       title: 'Your typing data stays with you',
-      intro: 'Keystrider knows exactly how you type. That’s why this knowledge stays with you.',
+      intro: 'Keypacer knows exactly how you type. That’s why this knowledge stays with you.',
       items: [
-        { title: 'No cookies, no tracking', text: 'Keystrider sets no cookies, shows no ads and uses no analytics services.', chips: ['0 cookies', '0 trackers'] },
+        { title: 'No cookies, no tracking', text: 'Keypacer sets no cookies, shows no ads and uses no analytics services.', chips: ['0 cookies', '0 trackers'] },
         { title: 'Without an account, it all stays in your browser', text: 'Your keystrokes are only stored locally. You can export or delete them at any time.', chips: ['.json', '.csv'] },
         { title: 'With an account, in the EU', text: 'The optional account syncs your rounds between your devices via servers in Frankfurt.', chips: ['Frankfurt', 'optional account'] },
       ],
@@ -209,24 +209,24 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     faq: {
       title: 'Questions',
       items: [
-        { q: 'Is Keystrider free?', a: 'Yes. Practising, progress and the optional account are free, with no ads.' },
-        { q: 'What makes Keystrider different from other typing trainers?', a: 'Most trainers give everyone the same lessons. Keystrider measures every keystroke and builds each drill from the keys and letter pairs that slow you down most right now.' },
+        { q: 'Is Keypacer free?', a: 'Yes. Practising, progress and the optional account are free, with no ads.' },
+        { q: 'What makes Keypacer different from other typing trainers?', a: 'Most trainers give everyone the same lessons. Keypacer measures every keystroke and builds each drill from the keys and letter pairs that slow you down most right now.' },
         { q: 'Do I need an account?', a: 'No. You can start right away; without an account your browser keeps your progress. A free account keeps it safe even if your browser data is deleted, and lets you carry on on your other devices.' },
         { q: 'How long does it take to learn touch typing?', a: 'Most people can type without looking after a few weeks of 15 to 20 minutes a day. Short daily sessions work better than long, rare ones, and speed keeps growing after that.' },
-        { q: 'Which keyboard layouts are supported?', a: 'US and UK QWERTY, German and Swiss QWERTZ, French and Belgian AZERTY, Spanish, Italian, Swedish/Finnish and Polish layouts, Dvorak and Colemak. Keystrider detects your layout from the keys you press.' },
-        { q: 'Does it work on a phone or tablet?', a: 'Keystrider is made for a real keyboard. A tablet with a keyboard works well; on a phone you can look around, but touch typing needs a physical keyboard.' },
+        { q: 'Which keyboard layouts are supported?', a: 'US and UK QWERTY, German and Swiss QWERTZ, French and Belgian AZERTY, Spanish, Italian, Swedish/Finnish and Polish layouts, Dvorak and Colemak. Keypacer detects your layout from the keys you press.' },
+        { q: 'Does it work on a phone or tablet?', a: 'Keypacer is made for a real keyboard. A tablet with a keyboard works well; on a phone you can look around, but touch typing needs a physical keyboard.' },
       ],
     },
-    final: { title: 'Your first drill takes two minutes', text: 'Type one line and Keystrider knows where you start.', cta: 'Start practising for free' },
+    final: { title: 'Your first drill takes two minutes', text: 'Type one line and Keypacer knows where you start.', cta: 'Start practising for free' },
     foot: { imprint: 'Legal notice', privacy: 'Privacy', terms: 'Terms' },
   },
 
   de: {
     name: 'Deutsch',
     ogLocale: 'de_DE',
-    title: 'Zehnfingersystem lernen: kostenloser Tipptrainer | Keystrider',
+    title: 'Zehnfingersystem lernen: kostenloser Tipptrainer | Keypacer',
     description:
-      'Lerne das Zehnfingersystem kostenlos online. Keystrider misst jeden Tastendruck, erkennt die Tasten, die dich bremsen, und übt gezielt diese. Ohne Anmeldung.',
+      'Lerne das Zehnfingersystem kostenlos online. Keypacer misst jeden Tastendruck, erkennt die Tasten, die dich bremsen, und übt gezielt diese. Ohne Anmeldung.',
     nav: { languages: 'Sprache', signIn: 'Anmelden', open: 'Zum Training', sections: 'Seitenbereiche', method: 'Methode', features: 'Funktionen', faq: 'Fragen', skip: 'Zum Inhalt springen' },
     hero: {
       eyebrow: 'Kostenlos · ohne Anmeldung · ohne Werbung',
@@ -236,7 +236,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         'Jede Übung zielt auf deine langsamsten Tasten',
         'Erst sauber tippen, dann schnell',
       ],
-      lead: 'Keystrider misst jeden Tastendruck, findet die Tasten und Buchstabenpaare, die dich bremsen, und baut daraus deine nächste Übung. So übst du nie, was du schon kannst.',
+      lead: 'Keypacer misst jeden Tastendruck, findet die Tasten und Buchstabenpaare, die dich bremsen, und baut daraus deine nächste Übung. So übst du nie, was du schon kannst.',
       cta: 'Jetzt kostenlos üben',
       continue: 'Weiter üben',
       note: 'Läuft im Browser. Keine Werbung, kein Konto nötig.',
@@ -262,7 +262,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       ],
     },
     facts: {
-      label: 'Keystrider in Zahlen',
+      label: 'Keypacer in Zahlen',
       items: [
         { value: '∞', label: 'Übungen, die sich deinem Können anpassen' },
         { value: '1 Min', label: 'bis zur ersten Übung, ohne Anmeldung' },
@@ -278,13 +278,13 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { title: 'Eine Taste nach der anderen', text: 'Du startest mit den sechs häufigsten Buchstaben und tippst früh echte Wörter. Die nächste Taste kommt erst dazu, wenn alle bisherigen sicher und flüssig sitzen.' },
         { title: 'Erst sauber, dann schnell', text: 'Eine falsche Taste hält dich auf dem Buchstaben fest. Sinkt die Genauigkeit, verschwindet die Tempoanzeige, bis du wieder sauber tippst.' },
         { title: 'Gezielt statt gleichförmig', text: 'Jede Übung setzt auf die Tasten und Buchstabenpaare, die dich bremsen, und holt länger nicht geübte Tasten zurück, damit sie sitzen bleiben.' },
-        { title: 'Kurze Runden, echte Pausen', text: 'Aufwärmen, kurze Fokusrunden, dann echte Sätze. Lässt deine Konzentration nach, schlägt Keystrider eine Pause vor, statt Fehler einzuschleifen.' },
+        { title: 'Kurze Runden, echte Pausen', text: 'Aufwärmen, kurze Fokusrunden, dann echte Sätze. Lässt deine Konzentration nach, schlägt Keypacer eine Pause vor, statt Fehler einzuschleifen.' },
       ],
     },
     analysis: {
-      eyebrow: 'Was Keystrider misst',
-      title: 'Keystrider merkt, welche Tasten dich bremsen',
-      text: 'Du zögerst kurz vor dem ö oder verwechselst z und y? Das spürst du kaum, aber es kostet dich jedes Mal Tempo. Keystrider misst jeden Anschlag auf die Millisekunde und stellt die nächste Übung aus genau diesen Tasten und Buchstabenpaaren zusammen.',
+      eyebrow: 'Was Keypacer misst',
+      title: 'Keypacer merkt, welche Tasten dich bremsen',
+      text: 'Du zögerst kurz vor dem ö oder verwechselst z und y? Das spürst du kaum, aber es kostet dich jedes Mal Tempo. Keypacer misst jeden Anschlag auf die Millisekunde und stellt die nächste Übung aus genau diesen Tasten und Buchstabenpaaren zusammen.',
       points: [
         { chip: '1×', strong: 'Der erste Versuch zählt.', text: 'Ein Fehler bleibt ein Fehler, auch wenn du ihn sofort korrigierst.' },
         { chip: '2s', strong: 'Denkpausen fallen raus.', text: 'Pausen über zwei Sekunden verfälschen dein Tempo nicht.' },
@@ -301,9 +301,9 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Funktionen',
       title: 'Alles, was du brauchst, und nicht mehr',
       items: [
-        { title: 'Deine Sprache, deine Tastatur', text: 'Deutsch, Englisch, Französisch, Spanisch, Italienisch oder Polnisch, auf QWERTZ, QWERTY, AZERTY, Dvorak, Colemak und mehr. Dein Layout erkennt Keystrider an den Tasten, die du drückst.' },
+        { title: 'Deine Sprache, deine Tastatur', text: 'Deutsch, Englisch, Französisch, Spanisch, Italienisch oder Polnisch, auf QWERTZ, QWERTY, AZERTY, Dvorak, Colemak und mehr. Dein Layout erkennt Keypacer an den Tasten, die du drückst.' },
         { title: 'Fingerhilfe', text: 'Unter dem Text zeigt eine Tastatur, welcher Finger dran ist. Tasten, die du schon kannst, blendet sie nach und nach aus.' },
-        { title: 'Einstufungstest', text: 'Du tippst schon ein bisschen? Eine Minute Test, und Keystrider überspringt alle Tasten, die du schon beherrschst.' },
+        { title: 'Einstufungstest', text: 'Du tippst schon ein bisschen? Eine Minute Test, und Keypacer überspringt alle Tasten, die du schon beherrschst.' },
         { title: 'Fortschritt, den du siehst', text: 'Tempo und Genauigkeit im Verlauf, eine Fehler-Heatmap und deine langsamsten Tasten und Buchstabenpaare.' },
         { title: 'Wochenziel und Plan', text: 'Leg fest, wie oft du üben willst, und trag den Plan in deinen Kalender ein. Kurze, regelmäßige Runden bringen mehr als seltene, lange.' },
         { title: 'Überall weitermachen', text: 'Mit einem kostenlosen Konto sind deine Lektionen gesichert, auch wenn Browserdaten gelöscht werden, und du machst auf jedem Gerät dort weiter, wo du aufgehört hast.' },
@@ -325,9 +325,9 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     privacy: {
       eyebrow: 'Datenschutz',
       title: 'Deine Tippdaten bleiben bei dir',
-      intro: 'Keystrider weiß genau, wie du tippst. Deshalb bleibt dieses Wissen bei dir.',
+      intro: 'Keypacer weiß genau, wie du tippst. Deshalb bleibt dieses Wissen bei dir.',
       items: [
-        { title: 'Keine Cookies, kein Tracking', text: 'Keystrider setzt keine Cookies, zeigt keine Werbung und nutzt keine Analysedienste.', chips: ['0 Cookies', '0 Tracker'] },
+        { title: 'Keine Cookies, kein Tracking', text: 'Keypacer setzt keine Cookies, zeigt keine Werbung und nutzt keine Analysedienste.', chips: ['0 Cookies', '0 Tracker'] },
         { title: 'Ohne Konto bleibt alles im Browser', text: 'Deine Anschläge werden nur lokal gespeichert. Du kannst sie jederzeit exportieren oder löschen.', chips: ['.json', '.csv'] },
         { title: 'Mit Konto in der EU', text: 'Das freiwillige Konto gleicht deine Runden über Server in Frankfurt zwischen deinen Geräten ab.', chips: ['Frankfurt', 'freiwilliges Konto'] },
       ],
@@ -335,24 +335,24 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     faq: {
       title: 'Häufige Fragen',
       items: [
-        { q: 'Ist Keystrider kostenlos?', a: 'Ja. Üben, Fortschritt und das freiwillige Konto sind kostenlos und ohne Werbung.' },
-        { q: 'Was macht Keystrider anders als andere Tipptrainer?', a: 'Die meisten Trainer geben allen dieselben Lektionen. Keystrider misst jeden Tastendruck und stellt jede Übung aus den Tasten und Buchstabenpaaren zusammen, die dich gerade am meisten bremsen.' },
+        { q: 'Ist Keypacer kostenlos?', a: 'Ja. Üben, Fortschritt und das freiwillige Konto sind kostenlos und ohne Werbung.' },
+        { q: 'Was macht Keypacer anders als andere Tipptrainer?', a: 'Die meisten Trainer geben allen dieselben Lektionen. Keypacer misst jeden Tastendruck und stellt jede Übung aus den Tasten und Buchstabenpaaren zusammen, die dich gerade am meisten bremsen.' },
         { q: 'Brauche ich ein Konto?', a: 'Nein. Du kannst sofort loslegen, ohne Konto speichert der Browser deinen Fortschritt. Mit einem kostenlosen Konto ist er sicher, auch wenn die Browserdaten gelöscht werden, und du kannst auf weiteren Geräten weitermachen.' },
         { q: 'Wie lange dauert es, das Zehnfingersystem zu lernen?', a: 'Die meisten tippen nach einigen Wochen mit 15 bis 20 Minuten am Tag blind. Kurze tägliche Einheiten bringen mehr als lange, seltene, und das Tempo steigt danach weiter.' },
-        { q: 'Welche Tastaturlayouts gibt es?', a: 'Deutsches und Schweizer QWERTZ, US- und UK-QWERTY, französisches und belgisches AZERTY, spanisch, italienisch, schwedisch/finnisch und polnisch, Dvorak und Colemak. Keystrider erkennt dein Layout an den Tasten, die du drückst.' },
-        { q: 'Geht das auch auf Handy oder Tablet?', a: 'Keystrider ist für eine echte Tastatur gemacht. Ein Tablet mit Tastatur funktioniert gut; auf dem Handy kannst du dich umsehen, aber blind tippen lernt man an einer richtigen Tastatur.' },
+        { q: 'Welche Tastaturlayouts gibt es?', a: 'Deutsches und Schweizer QWERTZ, US- und UK-QWERTY, französisches und belgisches AZERTY, spanisch, italienisch, schwedisch/finnisch und polnisch, Dvorak und Colemak. Keypacer erkennt dein Layout an den Tasten, die du drückst.' },
+        { q: 'Geht das auch auf Handy oder Tablet?', a: 'Keypacer ist für eine echte Tastatur gemacht. Ein Tablet mit Tastatur funktioniert gut; auf dem Handy kannst du dich umsehen, aber blind tippen lernt man an einer richtigen Tastatur.' },
       ],
     },
-    final: { title: 'Deine erste Übung dauert zwei Minuten', text: 'Eine Zeile tippen, und Keystrider weiß, wo du anfängst.', cta: 'Jetzt kostenlos üben' },
+    final: { title: 'Deine erste Übung dauert zwei Minuten', text: 'Eine Zeile tippen, und Keypacer weiß, wo du anfängst.', cta: 'Jetzt kostenlos üben' },
     foot: { imprint: 'Impressum', privacy: 'Datenschutz', terms: 'Nutzungsbedingungen' },
   },
 
   es: {
     name: 'Español',
     ogLocale: 'es_ES',
-    title: 'Curso de mecanografía gratis que se adapta a ti | Keystrider',
+    title: 'Curso de mecanografía gratis que se adapta a ti | Keypacer',
     description:
-      'Aprende mecanografía gratis y online. Keystrider mide cada pulsación, encuentra las teclas que te frenan y practica justo esas. Sin registrarte.',
+      'Aprende mecanografía gratis y online. Keypacer mide cada pulsación, encuentra las teclas que te frenan y practica justo esas. Sin registrarte.',
     nav: { languages: 'Idioma', signIn: 'Iniciar sesión', open: 'Ir al entrenador', sections: 'Secciones de la página', method: 'Método', features: 'Funciones', faq: 'Preguntas', skip: 'Saltar al contenido' },
     hero: {
       eyebrow: 'Gratis · sin registro · sin anuncios',
@@ -362,7 +362,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         'Cada ejercicio apunta a tus teclas más lentas',
         'Primero escribe limpio, luego rápido',
       ],
-      lead: 'Keystrider mide cada pulsación, encuentra las teclas y pares de letras que te frenan y con ellos crea tu próximo ejercicio. Así nunca practicas lo que ya sabes.',
+      lead: 'Keypacer mide cada pulsación, encuentra las teclas y pares de letras que te frenan y con ellos crea tu próximo ejercicio. Así nunca practicas lo que ya sabes.',
       cta: 'Empezar gratis',
       continue: 'Seguir practicando',
       note: 'Funciona en el navegador. Sin anuncios y sin cuenta.',
@@ -388,7 +388,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       ],
     },
     facts: {
-      label: 'Keystrider en cifras',
+      label: 'Keypacer en cifras',
       items: [
         { value: '∞', label: 'ejercicios que se adaptan a tu nivel' },
         { value: '1 min', label: 'hasta tu primer ejercicio, sin registro' },
@@ -404,13 +404,13 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { title: 'Una tecla tras otra', text: 'Empiezas con las seis letras más frecuentes y pronto escribes palabras reales. La siguiente tecla solo llega cuando todas las anteriores son precisas y fluidas.' },
         { title: 'Primero limpio, luego rápido', text: 'Una tecla equivocada te deja en la misma letra. Si baja la precisión, la velocidad se oculta hasta que vuelves a escribir limpio.' },
         { title: 'Dirigido, no uniforme', text: 'Cada ejercicio insiste en las teclas y pares de letras que te frenan y repasa las que llevas tiempo sin practicar para que no se olviden.' },
-        { title: 'Rondas cortas, pausas de verdad', text: 'Calentamiento, rondas cortas de enfoque y luego frases reales. Cuando tu concentración baja, Keystrider te propone una pausa en lugar de repetir errores.' },
+        { title: 'Rondas cortas, pausas de verdad', text: 'Calentamiento, rondas cortas de enfoque y luego frases reales. Cuando tu concentración baja, Keypacer te propone una pausa en lugar de repetir errores.' },
       ],
     },
     analysis: {
-      eyebrow: 'Lo que mide Keystrider',
-      title: 'Keystrider nota qué teclas te frenan',
-      text: '¿Dudas un instante antes de la ñ o confundes la b y la v? Apenas lo notas, pero cada vez te cuesta velocidad. Keystrider mide cada pulsación al milisegundo y arma tu próximo ejercicio justo con esas teclas y pares de letras.',
+      eyebrow: 'Lo que mide Keypacer',
+      title: 'Keypacer nota qué teclas te frenan',
+      text: '¿Dudas un instante antes de la ñ o confundes la b y la v? Apenas lo notas, pero cada vez te cuesta velocidad. Keypacer mide cada pulsación al milisegundo y arma tu próximo ejercicio justo con esas teclas y pares de letras.',
       points: [
         { chip: '1×', strong: 'Cuenta el primer intento.', text: 'Un error sigue siendo un error, aunque lo corrijas al momento.' },
         { chip: '2s', strong: 'Las pausas para pensar no cuentan.', text: 'Las pausas de más de dos segundos no falsean tu velocidad.' },
@@ -427,9 +427,9 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Funciones',
       title: 'Todo lo que necesitas, nada más',
       items: [
-        { title: 'Tu idioma, tu teclado', text: 'Español, inglés, alemán, francés, italiano o polaco, en QWERTY, QWERTZ, AZERTY, Dvorak, Colemak y más. Keystrider reconoce tu distribución por las teclas que pulsas.' },
+        { title: 'Tu idioma, tu teclado', text: 'Español, inglés, alemán, francés, italiano o polaco, en QWERTY, QWERTZ, AZERTY, Dvorak, Colemak y más. Keypacer reconoce tu distribución por las teclas que pulsas.' },
         { title: 'Guía de dedos', text: 'Bajo el texto, un teclado muestra qué dedo toca. Las teclas que ya dominas se van atenuando poco a poco.' },
-        { title: 'Prueba de nivel', text: '¿Ya escribes algo? Un minuto de prueba y Keystrider se salta todas las teclas que ya dominas.' },
+        { title: 'Prueba de nivel', text: '¿Ya escribes algo? Un minuto de prueba y Keypacer se salta todas las teclas que ya dominas.' },
         { title: 'Progreso visible', text: 'Velocidad y precisión a lo largo del tiempo, un mapa de errores y tus teclas y pares de letras más lentos.' },
         { title: 'Meta semanal y plan', text: 'Decide cuántas veces quieres practicar y añade el plan a tu calendario. Rondas cortas y regulares rinden más que largas y esporádicas.' },
         { title: 'Sigue en cualquier lugar', text: 'Con una cuenta gratuita tus lecciones están a salvo aunque se borren los datos del navegador, y sigues donde lo dejaste en cualquier dispositivo.' },
@@ -451,9 +451,9 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     privacy: {
       eyebrow: 'Privacidad',
       title: 'Tus datos de escritura se quedan contigo',
-      intro: 'Keystrider sabe exactamente cómo escribes. Por eso ese conocimiento se queda contigo.',
+      intro: 'Keypacer sabe exactamente cómo escribes. Por eso ese conocimiento se queda contigo.',
       items: [
-        { title: 'Sin cookies ni rastreo', text: 'Keystrider no usa cookies, no muestra anuncios y no utiliza servicios de analítica.', chips: ['0 cookies', '0 rastreadores'] },
+        { title: 'Sin cookies ni rastreo', text: 'Keypacer no usa cookies, no muestra anuncios y no utiliza servicios de analítica.', chips: ['0 cookies', '0 rastreadores'] },
         { title: 'Sin cuenta, todo queda en el navegador', text: 'Tus pulsaciones solo se guardan en tu equipo. Puedes exportarlas o borrarlas cuando quieras.', chips: ['.json', '.csv'] },
         { title: 'Con cuenta, en la UE', text: 'La cuenta opcional sincroniza tus rondas entre tus dispositivos a través de servidores en Fráncfort.', chips: ['Fráncfort', 'cuenta opcional'] },
       ],
@@ -461,24 +461,24 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     faq: {
       title: 'Preguntas frecuentes',
       items: [
-        { q: '¿Keystrider es gratis?', a: 'Sí. Practicar, ver tu progreso y la cuenta opcional son gratis y sin anuncios.' },
-        { q: '¿Qué hace diferente a Keystrider de otros cursos de mecanografía?', a: 'La mayoría da a todos las mismas lecciones. Keystrider mide cada pulsación y crea cada ejercicio con las teclas y pares de letras que más te frenan en ese momento.' },
+        { q: '¿Keypacer es gratis?', a: 'Sí. Practicar, ver tu progreso y la cuenta opcional son gratis y sin anuncios.' },
+        { q: '¿Qué hace diferente a Keypacer de otros cursos de mecanografía?', a: 'La mayoría da a todos las mismas lecciones. Keypacer mide cada pulsación y crea cada ejercicio con las teclas y pares de letras que más te frenan en ese momento.' },
         { q: '¿Necesito una cuenta?', a: 'No. Puedes empezar ya; sin cuenta, el navegador guarda tu progreso. Con una cuenta gratuita está a salvo aunque se borren los datos del navegador, y puedes seguir en tus otros dispositivos.' },
         { q: '¿Cuánto se tarda en aprender mecanografía?', a: 'La mayoría escribe sin mirar tras unas semanas de 15 a 20 minutos al día. Sesiones cortas y diarias funcionan mejor que largas y esporádicas, y la velocidad sigue subiendo después.' },
-        { q: '¿Qué distribuciones de teclado hay?', a: 'Español, QWERTY de EE. UU. y Reino Unido, QWERTZ alemán y suizo, AZERTY francés y belga, italiano, sueco/finés y polaco, Dvorak y Colemak. Keystrider detecta tu distribución por las teclas que pulsas.' },
-        { q: '¿Funciona en el móvil o la tableta?', a: 'Keystrider está pensado para un teclado físico. Una tableta con teclado funciona bien; en el móvil puedes echar un vistazo, pero la mecanografía se aprende con un teclado de verdad.' },
+        { q: '¿Qué distribuciones de teclado hay?', a: 'Español, QWERTY de EE. UU. y Reino Unido, QWERTZ alemán y suizo, AZERTY francés y belga, italiano, sueco/finés y polaco, Dvorak y Colemak. Keypacer detecta tu distribución por las teclas que pulsas.' },
+        { q: '¿Funciona en el móvil o la tableta?', a: 'Keypacer está pensado para un teclado físico. Una tableta con teclado funciona bien; en el móvil puedes echar un vistazo, pero la mecanografía se aprende con un teclado de verdad.' },
       ],
     },
-    final: { title: 'Tu primer ejercicio lleva dos minutos', text: 'Escribe una línea y Keystrider sabrá por dónde empiezas.', cta: 'Empezar gratis' },
+    final: { title: 'Tu primer ejercicio lleva dos minutos', text: 'Escribe una línea y Keypacer sabrá por dónde empiezas.', cta: 'Empezar gratis' },
     foot: { imprint: 'Aviso legal', privacy: 'Privacidad', terms: 'Condiciones de uso' },
   },
 
   fr: {
     name: 'Français',
     ogLocale: 'fr_FR',
-    title: 'Apprendre la dactylographie gratuitement | Keystrider',
+    title: 'Apprendre la dactylographie gratuitement | Keypacer',
     description:
-      'Apprenez à taper au clavier à dix doigts, gratuitement. Keystrider mesure chaque frappe, trouve les touches qui vous freinent et les travaille. Sans inscription.',
+      'Apprenez à taper au clavier à dix doigts, gratuitement. Keypacer mesure chaque frappe, trouve les touches qui vous freinent et les travaille. Sans inscription.',
     nav: { languages: 'Langue', signIn: 'Se connecter', open: 'Ouvrir l’entraîneur', sections: 'Sections de la page', method: 'Méthode', features: 'Fonctionnalités', faq: 'Questions', skip: 'Aller au contenu' },
     hero: {
       eyebrow: 'Gratuit · sans inscription · sans publicité',
@@ -488,7 +488,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         'Chaque exercice cible vos touches les plus lentes',
         'D’abord taper juste, ensuite vite',
       ],
-      lead: 'Keystrider mesure chaque frappe, trouve les touches et paires de lettres qui vous freinent et en fait votre prochain exercice. Vous ne travaillez jamais ce que vous savez déjà.',
+      lead: 'Keypacer mesure chaque frappe, trouve les touches et paires de lettres qui vous freinent et en fait votre prochain exercice. Vous ne travaillez jamais ce que vous savez déjà.',
       cta: 'Commencer gratuitement',
       continue: 'Continuer l’entraînement',
       note: 'Dans le navigateur. Sans publicité, sans compte.',
@@ -514,7 +514,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       ],
     },
     facts: {
-      label: 'Keystrider en chiffres',
+      label: 'Keypacer en chiffres',
       items: [
         { value: '∞', label: 'exercices qui s’adaptent à votre niveau' },
         { value: '1 min', label: 'jusqu’au premier exercice, sans inscription' },
@@ -530,13 +530,13 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { title: 'Une touche après l’autre', text: 'Vous commencez par les six lettres les plus fréquentes et tapez vite de vrais mots. La touche suivante n’arrive que lorsque toutes les précédentes sont sûres et fluides.' },
         { title: 'D’abord juste, ensuite vite', text: 'Une mauvaise touche vous retient sur la lettre. Si la précision baisse, l’affichage de la vitesse disparaît jusqu’à ce que vous tapiez de nouveau proprement.' },
         { title: 'Ciblé, pas uniforme', text: 'Chaque exercice insiste sur les touches et paires de lettres qui vous freinent et ramène celles que vous n’avez pas travaillées depuis un moment, pour qu’elles restent.' },
-        { title: 'Séries courtes, vraies pauses', text: 'Échauffement, courtes séries ciblées, puis de vraies phrases. Quand votre concentration baisse, Keystrider propose une pause plutôt que d’ancrer les erreurs.' },
+        { title: 'Séries courtes, vraies pauses', text: 'Échauffement, courtes séries ciblées, puis de vraies phrases. Quand votre concentration baisse, Keypacer propose une pause plutôt que d’ancrer les erreurs.' },
       ],
     },
     analysis: {
-      eyebrow: 'Ce que mesure Keystrider',
-      title: 'Keystrider repère les touches qui vous freinent',
-      text: 'Vous hésitez un instant avant le é ou confondez le b et le n ? Vous le remarquez à peine, mais cela vous coûte de la vitesse à chaque fois. Keystrider mesure chaque frappe à la milliseconde et compose votre prochain exercice avec exactement ces touches et paires de lettres.',
+      eyebrow: 'Ce que mesure Keypacer',
+      title: 'Keypacer repère les touches qui vous freinent',
+      text: 'Vous hésitez un instant avant le é ou confondez le b et le n ? Vous le remarquez à peine, mais cela vous coûte de la vitesse à chaque fois. Keypacer mesure chaque frappe à la milliseconde et compose votre prochain exercice avec exactement ces touches et paires de lettres.',
       points: [
         { chip: '1×', strong: 'Le premier essai compte.', text: 'Une erreur reste une erreur, même si vous la corrigez aussitôt.' },
         { chip: '2s', strong: 'Les pauses de réflexion ne comptent pas.', text: 'Les pauses de plus de deux secondes ne faussent pas votre vitesse.' },
@@ -553,9 +553,9 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Fonctionnalités',
       title: 'L’essentiel, rien de plus',
       items: [
-        { title: 'Votre langue, votre clavier', text: 'Français, anglais, allemand, espagnol, italien ou polonais, sur AZERTY, QWERTY, QWERTZ, Dvorak, Colemak et d’autres. Keystrider reconnaît votre disposition aux touches que vous tapez.' },
+        { title: 'Votre langue, votre clavier', text: 'Français, anglais, allemand, espagnol, italien ou polonais, sur AZERTY, QWERTY, QWERTZ, Dvorak, Colemak et d’autres. Keypacer reconnaît votre disposition aux touches que vous tapez.' },
         { title: 'Guide des doigts', text: 'Sous le texte, un clavier montre quel doigt utiliser. Les touches que vous connaissez déjà s’estompent peu à peu.' },
-        { title: 'Test de niveau', text: 'Vous tapez déjà un peu ? Une minute de test, et Keystrider saute toutes les touches que vous maîtrisez.' },
+        { title: 'Test de niveau', text: 'Vous tapez déjà un peu ? Une minute de test, et Keypacer saute toutes les touches que vous maîtrisez.' },
         { title: 'Des progrès visibles', text: 'Vitesse et précision dans le temps, une carte des erreurs et vos touches et paires de lettres les plus lentes.' },
         { title: 'Objectif et planning', text: 'Choisissez à quelle fréquence vous entraîner et ajoutez le planning à votre agenda. Des séries courtes et régulières valent mieux que de longues séances rares.' },
         { title: 'Continuez partout', text: 'Avec un compte gratuit, vos leçons sont sauvegardées même si les données du navigateur sont effacées, et vous reprenez là où vous en étiez sur n’importe quel appareil.' },
@@ -577,9 +577,9 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     privacy: {
       eyebrow: 'Confidentialité',
       title: 'Vos données de frappe restent chez vous',
-      intro: 'Keystrider sait exactement comment vous tapez. C’est pourquoi ce savoir reste chez vous.',
+      intro: 'Keypacer sait exactement comment vous tapez. C’est pourquoi ce savoir reste chez vous.',
       items: [
-        { title: 'Ni cookies ni pistage', text: 'Keystrider ne dépose aucun cookie, n’affiche aucune publicité et n’utilise aucun service d’analyse.', chips: ['0 cookie', '0 traceur'] },
+        { title: 'Ni cookies ni pistage', text: 'Keypacer ne dépose aucun cookie, n’affiche aucune publicité et n’utilise aucun service d’analyse.', chips: ['0 cookie', '0 traceur'] },
         { title: 'Sans compte, tout reste dans le navigateur', text: 'Vos frappes sont enregistrées uniquement en local. Vous pouvez les exporter ou les supprimer à tout moment.', chips: ['.json', '.csv'] },
         { title: 'Avec un compte, dans l’UE', text: 'Le compte facultatif synchronise vos séries entre vos appareils via des serveurs à Francfort.', chips: ['Francfort', 'compte facultatif'] },
       ],
@@ -587,24 +587,24 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     faq: {
       title: 'Questions fréquentes',
       items: [
-        { q: 'Keystrider est-il gratuit ?', a: 'Oui. L’entraînement, le suivi des progrès et le compte facultatif sont gratuits et sans publicité.' },
-        { q: 'Qu’est-ce qui distingue Keystrider des autres logiciels de dactylographie ?', a: 'La plupart donnent à tout le monde les mêmes leçons. Keystrider mesure chaque frappe et compose chaque exercice avec les touches et paires de lettres qui vous freinent le plus en ce moment.' },
+        { q: 'Keypacer est-il gratuit ?', a: 'Oui. L’entraînement, le suivi des progrès et le compte facultatif sont gratuits et sans publicité.' },
+        { q: 'Qu’est-ce qui distingue Keypacer des autres logiciels de dactylographie ?', a: 'La plupart donnent à tout le monde les mêmes leçons. Keypacer mesure chaque frappe et compose chaque exercice avec les touches et paires de lettres qui vous freinent le plus en ce moment.' },
         { q: 'Faut-il un compte ?', a: 'Non. Vous pouvez commencer tout de suite ; sans compte, le navigateur garde vos progrès. Avec un compte gratuit, ils sont en sécurité même si les données du navigateur sont effacées, et vous pouvez continuer sur vos autres appareils.' },
         { q: 'Combien de temps faut-il pour apprendre à taper à dix doigts ?', a: 'La plupart des gens tapent sans regarder après quelques semaines à raison de 15 à 20 minutes par jour. Des séances courtes et quotidiennes valent mieux que de longues séances rares, et la vitesse continue ensuite de progresser.' },
-        { q: 'Quelles dispositions de clavier sont prises en charge ?', a: 'AZERTY français et belge, QWERTY américain et britannique, QWERTZ allemand et suisse, espagnol, italien, suédois/finnois et polonais, Dvorak et Colemak. Keystrider reconnaît votre disposition aux touches que vous tapez.' },
-        { q: 'Ça marche sur téléphone ou tablette ?', a: 'Keystrider est fait pour un vrai clavier. Une tablette avec clavier fonctionne bien ; sur téléphone vous pouvez jeter un œil, mais la frappe à dix doigts s’apprend sur un clavier physique.' },
+        { q: 'Quelles dispositions de clavier sont prises en charge ?', a: 'AZERTY français et belge, QWERTY américain et britannique, QWERTZ allemand et suisse, espagnol, italien, suédois/finnois et polonais, Dvorak et Colemak. Keypacer reconnaît votre disposition aux touches que vous tapez.' },
+        { q: 'Ça marche sur téléphone ou tablette ?', a: 'Keypacer est fait pour un vrai clavier. Une tablette avec clavier fonctionne bien ; sur téléphone vous pouvez jeter un œil, mais la frappe à dix doigts s’apprend sur un clavier physique.' },
       ],
     },
-    final: { title: 'Votre premier exercice prend deux minutes', text: 'Tapez une ligne et Keystrider sait par où vous commencez.', cta: 'Commencer gratuitement' },
+    final: { title: 'Votre premier exercice prend deux minutes', text: 'Tapez une ligne et Keypacer sait par où vous commencez.', cta: 'Commencer gratuitement' },
     foot: { imprint: 'Mentions légales', privacy: 'Confidentialité', terms: 'Conditions d’utilisation' },
   },
 
   it: {
     name: 'Italiano',
     ogLocale: 'it_IT',
-    title: 'Corso di dattilografia gratis che si adatta a te | Keystrider',
+    title: 'Corso di dattilografia gratis che si adatta a te | Keypacer',
     description:
-      'Impara a scrivere con dieci dita, gratis e online. Keystrider misura ogni battuta, trova i tasti che ti rallentano e allena proprio quelli. Senza registrazione.',
+      'Impara a scrivere con dieci dita, gratis e online. Keypacer misura ogni battuta, trova i tasti che ti rallentano e allena proprio quelli. Senza registrazione.',
     nav: { languages: 'Lingua', signIn: 'Accedi', open: 'Apri l’allenatore', sections: 'Sezioni della pagina', method: 'Metodo', features: 'Funzioni', faq: 'Domande', skip: 'Vai al contenuto' },
     hero: {
       eyebrow: 'Gratis · senza registrazione · senza pubblicità',
@@ -614,7 +614,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         'Ogni esercizio punta sui tuoi tasti più lenti',
         'Prima scrivi pulito, poi veloce',
       ],
-      lead: 'Keystrider misura ogni battuta, trova i tasti e le coppie di lettere che ti rallentano e ne fa il tuo prossimo esercizio. Così non ti alleni mai su ciò che sai già.',
+      lead: 'Keypacer misura ogni battuta, trova i tasti e le coppie di lettere che ti rallentano e ne fa il tuo prossimo esercizio. Così non ti alleni mai su ciò che sai già.',
       cta: 'Inizia gratis',
       continue: 'Continua ad allenarti',
       note: 'Funziona nel browser. Niente pubblicità, nessun account.',
@@ -640,7 +640,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       ],
     },
     facts: {
-      label: 'Keystrider in cifre',
+      label: 'Keypacer in cifre',
       items: [
         { value: '∞', label: 'esercizi che si adattano al tuo livello' },
         { value: '1 min', label: 'al primo esercizio, senza registrazione' },
@@ -656,13 +656,13 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { title: 'Un tasto dopo l’altro', text: 'Inizi con le sei lettere più frequenti e presto scrivi parole vere. Il tasto successivo arriva solo quando tutti i precedenti sono sicuri e fluidi.' },
         { title: 'Prima pulito, poi veloce', text: 'Un tasto sbagliato ti ferma sulla lettera. Se la precisione cala, l’indicatore di velocità sparisce finché non scrivi di nuovo pulito.' },
         { title: 'Mirato, non uniforme', text: 'Ogni esercizio insiste sui tasti e le coppie di lettere che ti rallentano e riporta quelli che non alleni da un po’, perché restino.' },
-        { title: 'Round brevi, pause vere', text: 'Riscaldamento, brevi round di concentrazione, poi frasi vere. Quando la concentrazione cala, Keystrider ti propone una pausa invece di farti ripetere gli errori.' },
+        { title: 'Round brevi, pause vere', text: 'Riscaldamento, brevi round di concentrazione, poi frasi vere. Quando la concentrazione cala, Keypacer ti propone una pausa invece di farti ripetere gli errori.' },
       ],
     },
     analysis: {
-      eyebrow: 'Cosa misura Keystrider',
-      title: 'Keystrider si accorge di quali tasti ti rallentano',
-      text: 'Esiti un attimo prima della ò o confondi la b e la v? Te ne accorgi appena, ma ogni volta ti costa velocità. Keystrider misura ogni battuta al millisecondo e compone il prossimo esercizio proprio con quei tasti e coppie di lettere.',
+      eyebrow: 'Cosa misura Keypacer',
+      title: 'Keypacer si accorge di quali tasti ti rallentano',
+      text: 'Esiti un attimo prima della ò o confondi la b e la v? Te ne accorgi appena, ma ogni volta ti costa velocità. Keypacer misura ogni battuta al millisecondo e compone il prossimo esercizio proprio con quei tasti e coppie di lettere.',
       points: [
         { chip: '1×', strong: 'Conta il primo tentativo.', text: 'Un errore resta un errore, anche se lo correggi subito.' },
         { chip: '2s', strong: 'Le pause per pensare non contano.', text: 'Le pause oltre i due secondi non falsano la tua velocità.' },
@@ -679,9 +679,9 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Funzioni',
       title: 'Tutto quello che serve, niente di più',
       items: [
-        { title: 'La tua lingua, la tua tastiera', text: 'Italiano, inglese, tedesco, francese, spagnolo o polacco, su QWERTY, QWERTZ, AZERTY, Dvorak, Colemak e altre. Keystrider riconosce il tuo layout dai tasti che premi.' },
+        { title: 'La tua lingua, la tua tastiera', text: 'Italiano, inglese, tedesco, francese, spagnolo o polacco, su QWERTY, QWERTZ, AZERTY, Dvorak, Colemak e altre. Keypacer riconosce il tuo layout dai tasti che premi.' },
         { title: 'Guida per le dita', text: 'Sotto il testo una tastiera mostra quale dito tocca. I tasti che conosci già sbiadiscono a poco a poco.' },
-        { title: 'Test di livello', text: 'Scrivi già un po’? Un minuto di test, e Keystrider salta tutti i tasti che padroneggi.' },
+        { title: 'Test di livello', text: 'Scrivi già un po’? Un minuto di test, e Keypacer salta tutti i tasti che padroneggi.' },
         { title: 'Progressi visibili', text: 'Velocità e precisione nel tempo, una mappa degli errori e i tuoi tasti e coppie di lettere più lenti.' },
         { title: 'Obiettivo settimanale e piano', text: 'Scegli quanto spesso vuoi allenarti e aggiungi il piano al tuo calendario. Round brevi e regolari rendono più di sessioni lunghe e rare.' },
         { title: 'Continua ovunque', text: 'Con un account gratuito le tue lezioni sono al sicuro anche se i dati del browser vengono cancellati, e riprendi da dove avevi lasciato su qualsiasi dispositivo.' },
@@ -703,9 +703,9 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     privacy: {
       eyebrow: 'Privacy',
       title: 'I tuoi dati di battitura restano tuoi',
-      intro: 'Keystrider sa esattamente come scrivi. Per questo questa conoscenza resta a te.',
+      intro: 'Keypacer sa esattamente come scrivi. Per questo questa conoscenza resta a te.',
       items: [
-        { title: 'Niente cookie, niente tracciamento', text: 'Keystrider non usa cookie, non mostra pubblicità e non usa servizi di analisi.', chips: ['0 cookie', '0 tracker'] },
+        { title: 'Niente cookie, niente tracciamento', text: 'Keypacer non usa cookie, non mostra pubblicità e non usa servizi di analisi.', chips: ['0 cookie', '0 tracker'] },
         { title: 'Senza account resta tutto nel browser', text: 'Le tue battute vengono salvate solo in locale. Puoi esportarle o cancellarle quando vuoi.', chips: ['.json', '.csv'] },
         { title: 'Con account, nell’UE', text: 'L’account facoltativo sincronizza i tuoi round tra i dispositivi tramite server a Francoforte.', chips: ['Francoforte', 'account facoltativo'] },
       ],
@@ -713,24 +713,24 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     faq: {
       title: 'Domande frequenti',
       items: [
-        { q: 'Keystrider è gratis?', a: 'Sì. Allenamento, progressi e l’account facoltativo sono gratis e senza pubblicità.' },
-        { q: 'Cosa rende Keystrider diverso dagli altri corsi di dattilografia?', a: 'La maggior parte dà a tutti le stesse lezioni. Keystrider misura ogni battuta e compone ogni esercizio con i tasti e le coppie di lettere che ti rallentano di più in quel momento.' },
+        { q: 'Keypacer è gratis?', a: 'Sì. Allenamento, progressi e l’account facoltativo sono gratis e senza pubblicità.' },
+        { q: 'Cosa rende Keypacer diverso dagli altri corsi di dattilografia?', a: 'La maggior parte dà a tutti le stesse lezioni. Keypacer misura ogni battuta e compone ogni esercizio con i tasti e le coppie di lettere che ti rallentano di più in quel momento.' },
         { q: 'Serve un account?', a: 'No. Puoi iniziare subito; senza account è il browser a salvare i tuoi progressi. Con un account gratuito sono al sicuro anche se i dati del browser vengono cancellati, e puoi continuare sugli altri tuoi dispositivi.' },
         { q: 'Quanto ci vuole per imparare a scrivere con dieci dita?', a: 'La maggior parte delle persone scrive senza guardare dopo qualche settimana di 15–20 minuti al giorno. Sessioni brevi e quotidiane funzionano meglio di sessioni lunghe e rare, e la velocità poi continua a crescere.' },
-        { q: 'Quali layout di tastiera sono supportati?', a: 'Italiano, QWERTY americano e britannico, QWERTZ tedesco e svizzero, AZERTY francese e belga, spagnolo, svedese/finlandese e polacco, Dvorak e Colemak. Keystrider riconosce il tuo layout dai tasti che premi.' },
-        { q: 'Funziona su telefono o tablet?', a: 'Keystrider è pensato per una tastiera vera. Un tablet con tastiera va bene; sul telefono puoi dare un’occhiata, ma a scrivere con dieci dita si impara su una tastiera fisica.' },
+        { q: 'Quali layout di tastiera sono supportati?', a: 'Italiano, QWERTY americano e britannico, QWERTZ tedesco e svizzero, AZERTY francese e belga, spagnolo, svedese/finlandese e polacco, Dvorak e Colemak. Keypacer riconosce il tuo layout dai tasti che premi.' },
+        { q: 'Funziona su telefono o tablet?', a: 'Keypacer è pensato per una tastiera vera. Un tablet con tastiera va bene; sul telefono puoi dare un’occhiata, ma a scrivere con dieci dita si impara su una tastiera fisica.' },
       ],
     },
-    final: { title: 'Il primo esercizio richiede due minuti', text: 'Scrivi una riga e Keystrider sa da dove partire.', cta: 'Inizia gratis' },
+    final: { title: 'Il primo esercizio richiede due minuti', text: 'Scrivi una riga e Keypacer sa da dove partire.', cta: 'Inizia gratis' },
     foot: { imprint: 'Note legali', privacy: 'Privacy', terms: 'Condizioni d’uso' },
   },
 
   pl: {
     name: 'Polski',
     ogLocale: 'pl_PL',
-    title: 'Nauka pisania bezwzrokowego za darmo | Keystrider',
+    title: 'Nauka pisania bezwzrokowego za darmo | Keypacer',
     description:
-      'Naucz się pisać bezwzrokowo, za darmo i online. Keystrider mierzy każde uderzenie, znajduje klawisze, które cię spowalniają, i ćwiczy właśnie je. Bez rejestracji.',
+      'Naucz się pisać bezwzrokowo, za darmo i online. Keypacer mierzy każde uderzenie, znajduje klawisze, które cię spowalniają, i ćwiczy właśnie je. Bez rejestracji.',
     nav: { languages: 'Język', signIn: 'Zaloguj się', open: 'Otwórz trenera', sections: 'Sekcje strony', method: 'Metoda', features: 'Funkcje', faq: 'Pytania', skip: 'Przejdź do treści' },
     hero: {
       eyebrow: 'Za darmo · bez rejestracji · bez reklam',
@@ -740,7 +740,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         'Każde ćwiczenie celuje w twoje najwolniejsze klawisze',
         'Najpierw czysto, potem szybko',
       ],
-      lead: 'Keystrider mierzy każde uderzenie, znajduje klawisze i pary liter, które cię spowalniają, i robi z nich twoje kolejne ćwiczenie. Nigdy nie ćwiczysz tego, co już umiesz.',
+      lead: 'Keypacer mierzy każde uderzenie, znajduje klawisze i pary liter, które cię spowalniają, i robi z nich twoje kolejne ćwiczenie. Nigdy nie ćwiczysz tego, co już umiesz.',
       cta: 'Zacznij za darmo',
       continue: 'Ćwicz dalej',
       note: 'Działa w przeglądarce. Bez reklam i bez konta.',
@@ -766,7 +766,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       ],
     },
     facts: {
-      label: 'Keystrider w liczbach',
+      label: 'Keypacer w liczbach',
       items: [
         { value: '∞', label: 'ćwiczeń dopasowanych do twoich umiejętności' },
         { value: '1 min', label: 'do pierwszego ćwiczenia, bez rejestracji' },
@@ -782,13 +782,13 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { title: 'Klawisz po klawiszu', text: 'Zaczynasz od sześciu najczęstszych liter i szybko piszesz prawdziwe słowa. Kolejny klawisz dochodzi dopiero wtedy, gdy wszystkie dotychczasowe siedzą pewnie i płynnie.' },
         { title: 'Najpierw czysto, potem szybko', text: 'Błędny klawisz zatrzymuje cię na literze. Gdy dokładność spada, licznik tempa znika, dopóki znów nie piszesz czysto.' },
         { title: 'Celowo, nie po równo', text: 'Każde ćwiczenie stawia na klawisze i pary liter, które cię spowalniają, i wraca do tych, których dawno nie ćwiczyłeś(-aś), żeby zostały w pamięci.' },
-        { title: 'Krótkie rundy, prawdziwe przerwy', text: 'Rozgrzewka, krótkie rundy skupienia, potem prawdziwe zdania. Gdy słabnie koncentracja, Keystrider proponuje przerwę, zamiast utrwalać błędy.' },
+        { title: 'Krótkie rundy, prawdziwe przerwy', text: 'Rozgrzewka, krótkie rundy skupienia, potem prawdziwe zdania. Gdy słabnie koncentracja, Keypacer proponuje przerwę, zamiast utrwalać błędy.' },
       ],
     },
     analysis: {
-      eyebrow: 'Co mierzy Keystrider',
-      title: 'Keystrider zauważa, które klawisze cię spowalniają',
-      text: 'Wahasz się chwilę przed ą albo mylisz b i n? Ledwo to czujesz, ale za każdym razem kosztuje cię to tempo. Keystrider mierzy każde uderzenie co do milisekundy i układa kolejne ćwiczenie właśnie z tych klawiszy i par liter.',
+      eyebrow: 'Co mierzy Keypacer',
+      title: 'Keypacer zauważa, które klawisze cię spowalniają',
+      text: 'Wahasz się chwilę przed ą albo mylisz b i n? Ledwo to czujesz, ale za każdym razem kosztuje cię to tempo. Keypacer mierzy każde uderzenie co do milisekundy i układa kolejne ćwiczenie właśnie z tych klawiszy i par liter.',
       points: [
         { chip: '1×', strong: 'Liczy się pierwsza próba.', text: 'Błąd zostaje błędem, nawet jeśli od razu go poprawisz.' },
         { chip: '2s', strong: 'Przerwy na myślenie się nie liczą.', text: 'Przerwy dłuższe niż dwie sekundy nie zaniżają twojego tempa.' },
@@ -805,9 +805,9 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Funkcje',
       title: 'Wszystko, czego trzeba, nic ponad to',
       items: [
-        { title: 'Twój język, twoja klawiatura', text: 'Polski, angielski, niemiecki, francuski, hiszpański lub włoski, na QWERTY, QWERTZ, AZERTY, Dvorak, Colemak i innych. Keystrider rozpoznaje układ po klawiszach, które naciskasz.' },
+        { title: 'Twój język, twoja klawiatura', text: 'Polski, angielski, niemiecki, francuski, hiszpański lub włoski, na QWERTY, QWERTZ, AZERTY, Dvorak, Colemak i innych. Keypacer rozpoznaje układ po klawiszach, które naciskasz.' },
         { title: 'Podpowiedź palców', text: 'Pod tekstem klawiatura pokazuje, który palec jest teraz potrzebny. Klawisze, które już znasz, stopniowo przygasają.' },
-        { title: 'Test poziomujący', text: 'Już trochę piszesz? Minuta testu i Keystrider pomija wszystkie klawisze, które już opanowałeś(-aś).' },
+        { title: 'Test poziomujący', text: 'Już trochę piszesz? Minuta testu i Keypacer pomija wszystkie klawisze, które już opanowałeś(-aś).' },
         { title: 'Widoczne postępy', text: 'Tempo i dokładność w czasie, mapa błędów oraz twoje najwolniejsze klawisze i pary liter.' },
         { title: 'Cel tygodniowy i plan', text: 'Ustal, jak często chcesz ćwiczyć, i dodaj plan do kalendarza. Krótkie, regularne rundy dają więcej niż rzadkie i długie.' },
         { title: 'Kontynuuj wszędzie', text: 'Z darmowym kontem twoje lekcje są bezpieczne, nawet jeśli dane przeglądarki zostaną usunięte, a na każdym urządzeniu kontynuujesz tam, gdzie skończyłeś(-aś).' },
@@ -829,9 +829,9 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     privacy: {
       eyebrow: 'Prywatność',
       title: 'Twoje dane z pisania zostają przy tobie',
-      intro: 'Keystrider wie dokładnie, jak piszesz. Dlatego ta wiedza zostaje przy tobie.',
+      intro: 'Keypacer wie dokładnie, jak piszesz. Dlatego ta wiedza zostaje przy tobie.',
       items: [
-        { title: 'Bez ciasteczek i śledzenia', text: 'Keystrider nie używa ciasteczek, nie wyświetla reklam i nie korzysta z usług analitycznych.', chips: ['0 ciasteczek', '0 trackerów'] },
+        { title: 'Bez ciasteczek i śledzenia', text: 'Keypacer nie używa ciasteczek, nie wyświetla reklam i nie korzysta z usług analitycznych.', chips: ['0 ciasteczek', '0 trackerów'] },
         { title: 'Bez konta wszystko zostaje w przeglądarce', text: 'Twoje uderzenia są zapisywane tylko lokalnie. W każdej chwili możesz je wyeksportować lub usunąć.', chips: ['.json', '.csv'] },
         { title: 'Z kontem w UE', text: 'Dobrowolne konto synchronizuje twoje rundy między urządzeniami przez serwery we Frankfurcie.', chips: ['Frankfurt', 'dobrowolne konto'] },
       ],
@@ -839,15 +839,15 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     faq: {
       title: 'Częste pytania',
       items: [
-        { q: 'Czy Keystrider jest darmowy?', a: 'Tak. Ćwiczenia, postępy i dobrowolne konto są darmowe i bez reklam.' },
-        { q: 'Czym Keystrider różni się od innych trenerów pisania?', a: 'Większość trenerów daje wszystkim te same lekcje. Keystrider mierzy każde uderzenie i układa każde ćwiczenie z klawiszy i par liter, które w tej chwili najbardziej cię spowalniają.' },
+        { q: 'Czy Keypacer jest darmowy?', a: 'Tak. Ćwiczenia, postępy i dobrowolne konto są darmowe i bez reklam.' },
+        { q: 'Czym Keypacer różni się od innych trenerów pisania?', a: 'Większość trenerów daje wszystkim te same lekcje. Keypacer mierzy każde uderzenie i układa każde ćwiczenie z klawiszy i par liter, które w tej chwili najbardziej cię spowalniają.' },
         { q: 'Czy potrzebuję konta?', a: 'Nie. Możesz zacząć od razu; bez konta postępy zapisuje przeglądarka. Z darmowym kontem są bezpieczne, nawet jeśli dane przeglądarki zostaną usunięte, i możesz kontynuować na innych urządzeniach.' },
         { q: 'Ile trwa nauka pisania bezwzrokowego?', a: 'Większość osób pisze bez patrzenia po kilku tygodniach ćwiczeń po 15–20 minut dziennie. Krótkie codzienne sesje działają lepiej niż długie i rzadkie, a tempo rośnie dalej.' },
-        { q: 'Jakie układy klawiatury są obsługiwane?', a: 'Polski (programisty), amerykański i brytyjski QWERTY, niemiecki i szwajcarski QWERTZ, francuski i belgijski AZERTY, hiszpański, włoski, szwedzki/fiński, Dvorak i Colemak. Keystrider rozpoznaje układ po klawiszach, które naciskasz.' },
-        { q: 'Czy działa na telefonie lub tablecie?', a: 'Keystrider jest zrobiony dla prawdziwej klawiatury. Tablet z klawiaturą sprawdza się dobrze; na telefonie możesz się rozejrzeć, ale pisania bezwzrokowego uczy się na fizycznej klawiaturze.' },
+        { q: 'Jakie układy klawiatury są obsługiwane?', a: 'Polski (programisty), amerykański i brytyjski QWERTY, niemiecki i szwajcarski QWERTZ, francuski i belgijski AZERTY, hiszpański, włoski, szwedzki/fiński, Dvorak i Colemak. Keypacer rozpoznaje układ po klawiszach, które naciskasz.' },
+        { q: 'Czy działa na telefonie lub tablecie?', a: 'Keypacer jest zrobiony dla prawdziwej klawiatury. Tablet z klawiaturą sprawdza się dobrze; na telefonie możesz się rozejrzeć, ale pisania bezwzrokowego uczy się na fizycznej klawiaturze.' },
       ],
     },
-    final: { title: 'Pierwsze ćwiczenie zajmie dwie minuty', text: 'Przepisz jedną linijkę, a Keystrider będzie wiedział, od czego zacząć.', cta: 'Zacznij za darmo' },
+    final: { title: 'Pierwsze ćwiczenie zajmie dwie minuty', text: 'Przepisz jedną linijkę, a Keypacer będzie wiedział, od czego zacząć.', cta: 'Zacznij za darmo' },
     foot: { imprint: 'Nota prawna', privacy: 'Prywatność', terms: 'Regulamin' },
   },
 };

@@ -151,7 +151,7 @@ describe('practice plan', () => {
   });
 
   it('writes a weekly calendar event from the next planned day', () => {
-    const ics = planIcs(plan, { minutes: 10, now: NOW, title: 'Keystrider', description: 'Practise, after coffee; 10 min', url: 'https://example.org/', uid: 'x@keystrider' });
+    const ics = planIcs(plan, { minutes: 10, now: NOW, title: 'Keypacer', description: 'Practise, after coffee; 10 min', url: 'https://example.org/', uid: 'x@keypacer' });
     expect(ics).toContain('DTSTART:20261002T080000\r\n');
     expect(ics).toContain('DTEND:20261002T081000\r\n');
     expect(ics).toContain('RRULE:FREQ=WEEKLY;BYDAY=MO,WE,FR\r\n');

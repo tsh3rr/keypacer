@@ -14,9 +14,9 @@ Die App wählt das Projekt selbst (Cloudflare setzt beim Build `WORKERS_CI_BRANC
 
 Die Tabellen kommen aus `supabase/migrations/`. Der Workflow *Database migrations* spielt sie bei einem PR in Staging und nach dem Merge in Produktion ein, sobald diese Secrets gesetzt sind:
 
-1. **Access Token** (einer für beide): supabase.com → rechts oben dein Avatar → **Account preferences** → **Access Tokens** → **Generate new token**, Name `github-keystrider`. Token kopieren.
+1. **Access Token** (einer für beide): supabase.com → rechts oben dein Avatar → **Account preferences** → **Access Tokens** → **Generate new token**, Name `github-keypacer`. Token kopieren.
 2. **Datenbank-Passwort** je Projekt: Projekt öffnen → **Project Settings** (Zahnrad) → **Database** → **Reset database password**. Neues Passwort kopieren.
-3. GitHub: `tsh3rr/keystrider` → **Settings** → **Environments** → `staging` (fehlt es: **New environment**) → **Environment secrets** → **Add environment secret**:
+3. GitHub: `tsh3rr/keypacer` → **Settings** → **Environments** → `staging` (fehlt es: **New environment**) → **Environment secrets** → **Add environment secret**:
    - `SUPABASE_ACCESS_TOKEN` = Token aus Schritt 1
    - `SUPABASE_DB_PASSWORD` = Passwort des Staging-Projekts
    - `SUPABASE_PROJECT_ID` = `dghypouxfnfcdvpylznt`
@@ -28,10 +28,10 @@ Prüfen: GitHub → **Actions** → *Database migrations* → **Run workflow** (
 
 Projekt → **Authentication** → **URL Configuration**:
 
-- **Site URL**: die Adresse der Seite. Produktion: `https://keystrider.jeremiasz-kapek.workers.dev` (oder später deine Domain). Staging: dieselbe Adresse ist in Ordnung.
+- **Site URL**: die Adresse der Seite. Produktion: `https://keypacer.jeremiasz-kapek.workers.dev` (oder später deine Domain). Staging: dieselbe Adresse ist in Ordnung.
 - **Redirect URLs** → **Add URL**:
-  - Produktion: `https://keystrider.jeremiasz-kapek.workers.dev/**`
-  - Staging: `https://*-keystrider.jeremiasz-kapek.workers.dev/**` (Vorschau-Builds) und `http://localhost:5173/**` (lokal)
+  - Produktion: `https://keypacer.jeremiasz-kapek.workers.dev/**`
+  - Staging: `https://*-keypacer.jeremiasz-kapek.workers.dev/**` (Vorschau-Builds) und `http://localhost:5173/**` (lokal)
 
 ## 3. E-Mail und Passwort
 
@@ -56,14 +56,14 @@ Der Knopf ist ausgeblendet, bis `OAUTH_PROVIDERS` in `src/sync/account.ts` `'goo
 
 Einmal in der Google Cloud Console, dann in beiden Supabase-Projekten:
 
-1. [console.cloud.google.com](https://console.cloud.google.com) → oben Projektauswahl → **Neues Projekt** → Name `Keystrider` → **Erstellen**.
+1. [console.cloud.google.com](https://console.cloud.google.com) → oben Projektauswahl → **Neues Projekt** → Name `Keypacer` → **Erstellen**.
 2. Menü → **APIs & Dienste** → **OAuth-Zustimmungsbildschirm** (heißt auch **Google Auth Platform**) → **Jetzt starten**:
-   - App-Name `Keystrider`, Support-E-Mail: deine Adresse → **Weiter**
+   - App-Name `Keypacer`, Support-E-Mail: deine Adresse → **Weiter**
    - Zielgruppe: **Extern** → **Weiter**, Kontakt-E-Mail → **Weiter** → zustimmen → **Erstellen**
-   - **Branding**: Startseite `https://keystrider.jeremiasz-kapek.workers.dev`, Datenschutzerklärung `…/datenschutz`, Nutzungsbedingungen leer lassen; unter **Autorisierte Domains** `supabase.co` und `workers.dev`-Adresse bzw. später deine Domain → **Speichern**
+   - **Branding**: Startseite `https://keypacer.jeremiasz-kapek.workers.dev`, Datenschutzerklärung `…/datenschutz`, Nutzungsbedingungen leer lassen; unter **Autorisierte Domains** `supabase.co` und `workers.dev`-Adresse bzw. später deine Domain → **Speichern**
    - **Zielgruppe** → **App veröffentlichen** (Status „In Produktion“). Für E-Mail und Name braucht es keine Prüfung durch Google.
-3. **Clients** → **Client erstellen** → Anwendungstyp **Webanwendung**, Name `Keystrider`:
-   - **Autorisierte JavaScript-Quellen**: `https://keystrider.jeremiasz-kapek.workers.dev` und `http://localhost:5173`
+3. **Clients** → **Client erstellen** → Anwendungstyp **Webanwendung**, Name `Keypacer`:
+   - **Autorisierte JavaScript-Quellen**: `https://keypacer.jeremiasz-kapek.workers.dev` und `http://localhost:5173`
    - **Autorisierte Weiterleitungs-URIs**: `https://ubjwlxcawxwrgolszlkz.supabase.co/auth/v1/callback` und `https://dghypouxfnfcdvpylznt.supabase.co/auth/v1/callback`
    - **Erstellen** → **Client-ID** und **Clientschlüssel** kopieren.
 4. In **jedem** Supabase-Projekt: **Authentication** → **Sign In / Providers** → **Google** → **Enable Sign in with Google** an, Client-ID und Client Secret einfügen → **Save**.
@@ -74,10 +74,10 @@ Erst nötig, wenn Code-Login und „Passwort vergessen“ freigeschaltet werden 
 
 Projekt → **Authentication** → **Emails** → **Templates**. In **Magic Link** und in **Confirm signup** den Text ersetzen durch:
 
-Betreff: `Dein Keystrider-Code: {{ .Token }}`
+Betreff: `Dein Keypacer-Code: {{ .Token }}`
 
 ```html
-<h2>Anmelden bei Keystrider</h2>
+<h2>Anmelden bei Keypacer</h2>
 <p>Dein Code: <strong style="font-size: 1.4em; letter-spacing: 0.1em">{{ .Token }}</strong></p>
 <p>Oder klick auf diesem Gerät hier: <a href="{{ .ConfirmationURL }}">Anmelden</a></p>
 <p>Your sign-in code: <strong>{{ .Token }}</strong></p>
@@ -110,7 +110,7 @@ Einmal in **beiden** Projekten prüfen (die Datenbank selbst ist über `supabase
 
 Anmelden, Registrieren, Anmeldecode und Passwort-Link mit E-Mail laufen dann über eine meist unsichtbare Prüfung. Google-Anmeldung ist nicht betroffen. Solange in `vite.config.ts` kein Site Key steht, ist alles aus. Die Reihenfolge ist wichtig, sonst kann sich niemand mehr mit E-Mail anmelden:
 
-1. Cloudflare-Dashboard → **Turnstile** → **Add widget**: Name `keystrider`, **Hostname** `jeremiasz-kapek.workers.dev` (deckt auch die Vorschau-Adressen ab), später zusätzlich deine Domain. Für lokale Tests zusätzlich `localhost`. **Widget Mode**: *Managed*. **Pre-clearance**: *No*. **Create**.
+1. Cloudflare-Dashboard → **Turnstile** → **Add widget**: Name `keypacer`, **Hostname** `jeremiasz-kapek.workers.dev` (deckt auch die Vorschau-Adressen ab), später zusätzlich deine Domain. Für lokale Tests zusätzlich `localhost`. **Widget Mode**: *Managed*. **Pre-clearance**: *No*. **Create**.
 2. Den **Site Key** in `vite.config.ts` bei `TURNSTILE` für `production` und `staging` eintragen (oder Claude schicken). Er ist öffentlich. Mergen und warten, bis Cloudflare neu gebaut hat. Erst dann erscheint auch der Turnstile-Absatz in der Datenschutzerklärung.
 3. Den **Secret Key** in Supabase eintragen, zuerst Staging, nach einem Test Produktion: Projekt → **Authentication** → **Attack Protection** → **Enable Captcha protection** an → Provider **Turnstile by Cloudflare** → Secret Key → **Save**. Der Secret Key ist geheim: nicht in Code, Chat oder Screenshots.
 4. Testen: abmelden, mit E-Mail und Passwort anmelden. Klappt es nicht, Schritt 3 wieder ausschalten.

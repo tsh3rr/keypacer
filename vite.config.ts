@@ -7,7 +7,7 @@ import { renderLanding, robotsTxt, sitemapXml } from './src/landing/render.ts';
  * The public address, for canonical links, the sitemap and link previews.
  * SITE_URL overrides it, e.g. once the app has its own domain.
  */
-const SITE_URL = (process.env.SITE_URL ?? 'https://keystrider.jeremiasz-kapek.workers.dev').replace(/\/$/, '');
+const SITE_URL = (process.env.SITE_URL ?? 'https://keypacer.com').replace(/\/$/, '');
 
 /**
  * Landing pages: each /<lang>/index.html is a one-line placeholder that this
@@ -16,11 +16,11 @@ const SITE_URL = (process.env.SITE_URL ?? 'https://keystrider.jeremiasz-kapek.wo
  */
 function landing(production: boolean): Plugin {
   return {
-    name: 'keystrider-landing',
+    name: 'keypacer-landing',
     transformIndexHtml: {
       order: 'pre',
       handler(html) {
-        const lang = /keystrider-landing:(\w+)/.exec(html)?.[1] as LandingLanguage | undefined;
+        const lang = /keypacer-landing:(\w+)/.exec(html)?.[1] as LandingLanguage | undefined;
         return lang && LANDING_LANGUAGES.includes(lang) ? renderLanding(lang, SITE_URL) : html;
       },
     },

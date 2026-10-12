@@ -352,8 +352,7 @@ inputEl.addEventListener('focus', () => { textEl.classList.add('focused'); start
 inputEl.addEventListener('blur', () => { textEl.classList.remove('focused'); startPill.hidden = false; });
 // Listened on the wrapper: a click on the text blurs the field, the pill shows
 // up under the pointer, and the click then lands on the wrapper, not the text.
-// No focus scroll here or below: the hidden field follows the current letter
-// (scrollText), so typing itself brings that into view if it is off-screen.
+// No focus scroll here or below: the page stays wherever the learner put it.
 textEl.parentElement?.addEventListener('click', () => inputEl.focus({ preventScroll: true }));
 // Any printable key starts typing: focusing the field here lets the same key land in it.
 document.addEventListener('keydown', (e) => {

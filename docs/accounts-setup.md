@@ -14,9 +14,9 @@ Die App wählt das Projekt selbst (Cloudflare setzt beim Build `WORKERS_CI_BRANC
 
 Die Tabellen kommen aus `supabase/migrations/`. Der Workflow *Database migrations* spielt sie bei einem PR in Staging und nach dem Merge in Produktion ein, sobald diese Secrets gesetzt sind:
 
-1. **Access Token** (einer für beide): supabase.com → rechts oben dein Avatar → **Account preferences** → **Access Tokens** → **Generate new token**, Name `github-keystrider`. Token kopieren.
+1. **Access Token** (einer für beide): supabase.com → rechts oben dein Avatar → **Account preferences** → **Access Tokens** → **Generate new token**, Name `github-keypacer`. Token kopieren.
 2. **Datenbank-Passwort** je Projekt: Projekt öffnen → **Project Settings** (Zahnrad) → **Database** → **Reset database password**. Neues Passwort kopieren.
-3. GitHub: `tsh3rr/keystrider` → **Settings** → **Environments** → `staging` (fehlt es: **New environment**) → **Environment secrets** → **Add environment secret**:
+3. GitHub: `tsh3rr/keypacer` → **Settings** → **Environments** → `staging` (fehlt es: **New environment**) → **Environment secrets** → **Add environment secret**:
    - `SUPABASE_ACCESS_TOKEN` = Token aus Schritt 1
    - `SUPABASE_DB_PASSWORD` = Passwort des Staging-Projekts
    - `SUPABASE_PROJECT_ID` = `dghypouxfnfcdvpylznt`

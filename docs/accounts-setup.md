@@ -116,3 +116,7 @@ Anmelden, Registrieren, Anmeldecode und Passwort-Link mit E-Mail laufen dann üb
 4. Testen: abmelden, mit E-Mail und Passwort anmelden. Klappt es nicht, Schritt 3 wieder ausschalten.
 
 Die Sicherheits-Header der Seite (Content-Security-Policy usw.) stehen in `public/_headers`. Kommt ein neuer Dienst dazu (z. B. Analytics oder Captcha), muss er dort und in der Datenschutzerklärung ergänzt werden.
+
+## 9. Pausieren im Gratis-Tarif verhindern
+
+Supabase pausiert Gratis-Projekte nach etwa einer Woche ohne Datenbank-Zugriff. Der Workflow *Database keep-alive* (`.github/workflows/supabase-keep-alive.yml`) fragt deshalb montags und donnerstags beide Projekte kurz ab. Er braucht keine Secrets. Testen: GitHub → **Actions** → *Database keep-alive* → **Run workflow**. Schlägt er fehl, schickt GitHub eine Mail; meist ist das Projekt dann schon pausiert und muss einmal im Supabase-Dashboard mit **Restore project** geweckt werden.

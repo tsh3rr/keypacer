@@ -191,7 +191,9 @@ function renderText(): void {
     frag.append(span);
   });
   textEl.replaceChildren(frag);
-  if (centredText !== session.text) centreText();
+  const fresh = centredText !== session.text;
+  if (fresh) centreText();
+  scrollText(fresh);
   updateFingerGuide();
 }
 
@@ -216,7 +218,43 @@ function centreText(): void {
   const shift = (box.right - right - (left - box.left)) / 2;
   if (shift > 1) textEl.style.transform = `translateX(${shift.toFixed(1)}px)`;
 }
-new ResizeObserver(() => centreText()).observe(textEl.parentElement ?? textEl);
+new ResizeObserver(() => { centreText(); scrollText(true); }).observe(textEl.parentElement ?? textEl);
+
+/**
+ * The text box shows a fixed number of lines (see .text-wrap in style.css), so
+ * a long drill never pushes the keyboard down. As the learner types, the text
+ * slides up a line at a time, keeping the line before the current one in view.
+ * The hidden input is pinned to the screen next to the current letter. Browsers
+ * scroll a focused field into view as it is typed into (phones even try to
+ * centre it), so parked anywhere on the page it would drag a learner who
+ * scrolled down to the keyboard back up; a fixed field is always in view.
+ */
+function scrollText(instant: boolean): void {
+  const wrap = textEl.parentElement;
+  const first = textEl.firstElementChild as HTMLElement | null;
+  const last = textEl.lastElementChild as HTMLElement | null;
+  const cur = textEl.querySelector<HTMLElement>('.current') ?? last;
+  const style = getComputedStyle(textEl);
+  const lh = parseFloat(style.lineHeight);
+  let offset = 0;
+  if (wrap && first && last && cur && lh > 0) {
+    const pad = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+    const shown = Math.max(1, Math.floor((wrap.clientHeight - pad) / lh));
+    const lines = Math.round((last.offsetTop - first.offsetTop) / lh) + 1;
+    const line = Math.round((cur.offsetTop - first.offsetTop) / lh);
+    offset = Math.max(0, Math.min(line - 1, lines - shown)) * lh;
+    const box = wrap.getBoundingClientRect();
+    const top = box.top + cur.offsetTop - offset;
+    inputEl.style.top = `${Math.min(Math.max(top, 0), window.innerHeight - lh).toFixed(0)}px`;
+    inputEl.style.left = `${(box.left + cur.offsetLeft).toFixed(0)}px`;
+  }
+  if (instant) textEl.style.transition = 'none';
+  textEl.style.translate = offset ? `0 ${(-offset).toFixed(1)}px` : '';
+  if (instant) {
+    void textEl.offsetWidth; // apply the jump before turning the slide back on
+    textEl.style.transition = '';
+  }
+}
 
 /** Live speed and accuracy for the coach bar's speed chip. */
 function nowData(): CoachData['now'] {
@@ -312,13 +350,15 @@ inputEl.addEventListener('drop', (e) => e.preventDefault());
 const startPill = $('start-pill');
 inputEl.addEventListener('focus', () => { textEl.classList.add('focused'); startPill.hidden = true; });
 inputEl.addEventListener('blur', () => { textEl.classList.remove('focused'); startPill.hidden = false; });
-textEl.addEventListener('click', () => inputEl.focus());
-startPill.addEventListener('click', () => inputEl.focus());
+// Listened on the wrapper: a click on the text blurs the field, the pill shows
+// up under the pointer, and the click then lands on the wrapper, not the text.
+// No focus scroll here or below: the page stays wherever the learner put it.
+textEl.parentElement?.addEventListener('click', () => inputEl.focus({ preventScroll: true }));
 // Any printable key starts typing: focusing the field here lets the same key land in it.
 document.addEventListener('keydown', (e) => {
   if (document.activeElement !== document.body || e.ctrlKey || e.metaKey || e.altKey || [...e.key].length !== 1) return;
   if (practiceView.hidden || session.done || coach.isOpen || !drawer.hidden || menus.some((m) => !m.menu.hidden)) return;
-  inputEl.focus();
+  inputEl.focus({ preventScroll: true });
 });
 
 $('new-text').addEventListener('click', () => {

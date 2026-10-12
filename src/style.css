@@ -473,12 +473,26 @@ main { max-width: 960px; margin: 0 auto; padding: 20px 16px 40px; }
 .text {
   font-family: var(--mono); font-size: clamp(20px, 3vw, 28px); line-height: 1.8;
   padding: 8px 4px; border-radius: 10px; cursor: text;
-  white-space: pre-wrap; word-break: break-word; transition: opacity 0.15s;
+  white-space: pre-wrap; word-break: break-word; transition: opacity 0.15s, translate 0.2s ease;
   /* Room for the longest usual drill, so a shorter one does not pull the guide up. */
   min-height: calc(4 * 1.8em + 16px);
 }
 .text:not(.focused) { opacity: 0.5; }
 @media (max-width: 560px) { .text { min-height: calc(5 * 1.8em + 16px); } }
+/*
+ * In practice the box is a fixed window of lines, so the keyboard below never
+ * moves; a longer drill slides up inside it as you type (scrollText in main.ts).
+ * Clipped only at top and bottom, leaving room for the error shake; the inset
+ * also hides the last sliver of the line that slid out above.
+ */
+#practice-view .text-wrap {
+  --lines: 4;
+  font-size: clamp(20px, 3vw, 28px);
+  height: calc(var(--lines) * 1.8em + 16px);
+  overflow-y: clip;
+  clip-path: inset(4px -100vw 0);
+}
+@media (max-width: 560px) { #practice-view .text-wrap { --lines: 5; } }
 .start-pill {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); white-space: nowrap;
   background: var(--panel); border: 1px solid var(--border); border-radius: var(--r-pill); box-shadow: var(--shadow);
@@ -492,9 +506,9 @@ main { max-width: 960px; margin: 0 auto; padding: 20px 16px 40px; }
   font-family: var(--mono); font-size: 12px; font-weight: 600; padding: 0 6px; border-radius: var(--r-xs);
   background: var(--focus-soft); color: var(--focus); box-shadow: inset 0 -2px 0 color-mix(in oklch, var(--focus) 25%, transparent);
 }
-/* Receives the actual typing (see main.ts); kept focusable but invisible. */
+/* Receives the actual typing (see main.ts); kept focusable but invisible. Fixed, so typing never scrolls the page (scrollText). */
 .typing-input {
-  position: absolute; top: 0; left: 0; width: 1px; height: 1px;
+  position: fixed; top: 0; left: 0; width: 1px; height: 1px;
   opacity: 0; border: 0; padding: 0; resize: none; font-size: 16px;
 }
 .text .typed { color: var(--typed); }
@@ -519,6 +533,7 @@ main { max-width: 960px; margin: 0 auto; padding: 20px 16px 40px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .text .current::before, .text .current.error { animation: none; }
+  .text { transition: opacity 0.15s; }
 }
 .type-hint { margin: -14px 0 0; text-align: center; color: var(--muted); font-size: 14px; }
 .hint { color: var(--muted); font-size: 0.9rem; }

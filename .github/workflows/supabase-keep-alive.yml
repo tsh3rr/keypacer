@@ -1,0 +1,37 @@
+name: Database keep-alive
+
+# Supabase pauses free-tier projects after a week without database activity.
+# Twice a week this asks both projects a tiny question (is a username free?)
+# that runs a real query, so neither gets paused while nobody practises.
+# Uses the public URL and publishable key from vite.config.ts; no secrets.
+
+on:
+  schedule:
+    - cron: "17 6 * * 1,4" # Monday and Thursday, 06:17 UTC
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: production
+            url: https://ubjwlxcawxwrgolszlkz.supabase.co
+            key: sb_publishable_QnvlL5E5MkUhOZENBSrkdg_rUaim9ep
+          - name: staging
+            url: https://dghypouxfnfcdvpylznt.supabase.co
+            key: sb_publishable_pSD1knxbPjl5ih5bqi0zog_bcDsSb_o
+    name: ${{ matrix.name }}
+    steps:
+      - name: Query the database
+        run: |
+          curl --fail-with-body -sS --retry 3 --retry-all-errors --max-time 30 \
+            -X POST "${{ matrix.url }}/rest/v1/rpc/username_available" \
+            -H "apikey: ${{ matrix.key }}" \
+            -H "Content-Type: application/json" \
+            -d '{"name":"keep-alive"}'
+          echo

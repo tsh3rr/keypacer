@@ -5,12 +5,13 @@ name: Database keep-alive
 # change from week to week, so neither gets paused while nobody practises.
 #
 # The schedule wakes up every three hours; most runs do nothing. Each week
-# and project gets its own random slot (one run time) in each of three
-# windows: Monday–Tuesday, Wednesday–Thursday and Friday–Sunday. That keeps
-# the gap between two pings under five days, and even after one dropped
-# scheduled run still under seven. A ping waits a further random
-# 0–20 minutes and asks one or two of the queries the sign-up and buddy
-# forms use, with made-up names and codes.
+# and project gets its own random time in each of three windows:
+# Monday–Tuesday, Wednesday–Thursday and Friday–Sunday. The first run at or
+# after that time pings. GitHub often starts scheduled runs hours late or
+# skips them, so a run doesn't need to land on the chosen time: it pings
+# whenever no successful run has happened since the latest chosen time.
+# A ping waits a further random 0–20 minutes and asks one or two of the
+# queries the sign-up and buddy forms use, with made-up names and codes.
 #
 # Uses the public URL and publishable key from vite.config.ts; no secrets.
 # Run workflow (workflow_dispatch) pings both projects right away.
@@ -20,34 +21,50 @@ on:
     - cron: "23 */3 * * *"
   workflow_dispatch:
 
-permissions: {}
+# Reading earlier runs of this workflow is all it needs.
+permissions:
+  actions: read
 
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping the projects whose slot is now
+      - name: Ping the projects that are due
         env:
           FORCE: ${{ github.event_name == 'workflow_dispatch' }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           projects=(
             "production https://ubjwlxcawxwrgolszlkz.supabase.co sb_publishable_QnvlL5E5MkUhOZENBSrkdg_rUaim9ep"
             "staging https://dghypouxfnfcdvpylznt.supabase.co sb_publishable_pSD1knxbPjl5ih5bqi0zog_bcDsSb_o"
           )
-          week=$(date -u +%G-%V)
-          day=$(date -u +%u)          # 1 = Monday … 7 = Sunday
-          slot=$(( 10#$(date -u +%H) / 3 ))  # 0 … 7, matches the cron
-          now=$(( (day - 1) * 8 + slot ))     # this run's slot in the week
+          now=$(date -u +%s)
 
-          # Slot chosen for a project in one window (first day, number of days).
-          pick() {
-            local h
-            h=$(printf '%s %s %s' "$1" "$week" "$2" | sha256sum | cut -c1-8)
-            echo $(( ($3 - 1) * 8 + 16#$h % ($4 * 8) ))
+          # Chosen times (epoch seconds) of a project in the week starting
+          # at Monday 00:00 UTC $2: one 3-hour slot per window, from a hash.
+          times() {
+            local name=$1 monday=$2 week h first days w
+            week=$(date -u -d "@$monday" +%G-%V)
+            for w in "a 1 2" "b 3 2" "c 5 3"; do
+              read -r w first days <<< "$w"
+              h=$(printf '%s %s %s' "$name" "$week" "$w" | sha256sum | cut -c1-8)
+              echo $(( monday + (( (first - 1) * 8 + 16#$h % (days * 8) )) * 3 * 3600 ))
+            done
+          }
+          monday=$(date -u -d "$(date -u +%F) -$(( $(date -u +%u) - 1 )) days" +%s)
+
+          # True when no other successful run of this workflow started at or
+          # after epoch $1, i.e. nobody has pinged since then.
+          nobody_since() {
+            local n
+            n=$(gh api -X GET "repos/$GITHUB_REPOSITORY/actions/workflows/supabase-keep-alive.yml/runs" \
+              -f status=success -f created=">=$(date -u -d "@$1" +%FT%TZ)" -F per_page=100 \
+              --jq "[.workflow_runs[] | select(.id != $GITHUB_RUN_ID)] | length")
+            [ "$n" -eq 0 ]
           }
 
-          rand_name() { tr -dc 'a-z0-9' < /dev/urandom | head -c "$1" || true; }
+          rand_name() { LC_ALL=C tr -dc 'a-z0-9' < <(head -c 600 /dev/urandom) | head -c "$1"; }
 
           query() {
             local url=$1 key=$2 fn body
@@ -65,13 +82,19 @@ jobs:
           due=()
           for p in "${projects[@]}"; do
             read -r name url key <<< "$p"
-            if [ "$FORCE" = true ] || [ "$now" -eq "$(pick "$name" a 1 2)" ] \
-              || [ "$now" -eq "$(pick "$name" b 3 2)" ] || [ "$now" -eq "$(pick "$name" c 5 3)" ]; then
+            # Latest chosen time that has passed, this week or last.
+            last=$( { times "$name" $(( monday - 7 * 86400 )); times "$name" "$monday"; } \
+              | awk -v now="$now" '$1 <= now' | sort -n | tail -1)
+            if nobody_since "$last"; then
+              echo "$name: due (no ping since $(date -u -d "@$last" +'%a %F %H:%M') UTC)"
+              due+=("$p")
+            elif [ "$FORCE" = true ]; then
+              echo "$name: pinged since $(date -u -d "@$last" +'%a %F %H:%M') UTC, pinging anyway (manual run)"
               due+=("$p")
             fi
           done
           if [ ${#due[@]} -eq 0 ]; then
-            echo "No project is due in this slot."
+            echo "No project is due."
             exit 0
           fi
 

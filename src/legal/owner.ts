@@ -16,4 +16,11 @@ export const OWNER = {
 };
 
 /** The date the texts below were last changed, shown at the end of each page. */
-export const LEGAL_UPDATED = { de: 'Oktober 2026', en: 'October 2026' };
+export const LEGAL_UPDATED = {
+  de: 'Oktober 2026',
+  en: 'October 2026',
+  fr: 'octobre 2026',
+  es: 'octubre de 2026',
+  it: 'ottobre 2026',
+  pl: 'październik 2026',
+};

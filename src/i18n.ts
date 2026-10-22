@@ -156,6 +156,12 @@ export function applyTranslations(root: ParentNode = document): void {
       else replaceText(e, text);
     });
   }
+  root.querySelectorAll<HTMLAnchorElement>('a[data-legal]').forEach((a) => { a.href = legalHref(a.dataset.legal!); });
+}
+
+/** A link to a legal page (/impressum, /datenschutz, /nutzungsbedingungen) that opens it in the interface language. */
+export function legalHref(path: string): string {
+  return `${path}?lang=${current}`;
 }
 
 /** Sets an element's own text, keeping any child elements (icons, inputs) where they are. */

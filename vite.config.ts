@@ -70,7 +70,7 @@ const EMAIL_LINKS = { production: true, staging: true };
  * analytics section. Staging stays empty so previews are not counted.
  * VITE_UMAMI_WEBSITE_ID in .env.local overrides both.
  */
-const UMAMI = { production: '', staging: '' };
+const UMAMI = { production: 'eac528e1-2114-4fe9-b754-0a6b9d3acff0', staging: '' };
 
 export default defineConfig(({ mode }) => {
   // Cloudflare Workers Builds sets WORKERS_CI_BRANCH: main is production,

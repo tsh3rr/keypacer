@@ -183,6 +183,14 @@ export function renderLanding(lang: LandingLanguage, site: string): string {
 
   const structured = [
     {
+      // Lets search engines show "Keypacer" as the site name above the result.
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Keypacer',
+      url: `${site}/`,
+      inLanguage: LANDING_LANGUAGES,
+    },
+    {
       '@context': 'https://schema.org',
       '@type': 'WebApplication',
       name: 'Keypacer',
@@ -191,6 +199,8 @@ export function renderLanding(lang: LandingLanguage, site: string): string {
       applicationCategory: 'EducationalApplication',
       operatingSystem: 'Any (web browser)',
       inLanguage: lang,
+      image: `${site}/og.png`,
+      isAccessibleForFree: true,
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
     },
     {
@@ -234,7 +244,10 @@ export function renderLanding(lang: LandingLanguage, site: string): string {
     <meta property="og:image" content="${site}/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="${esc(c.hero.title)}" />
     <meta property="og:locale" content="${c.ogLocale}" />
+    ${LANDING_LANGUAGES.filter((l) => l !== lang).map((l) =>
+    `<meta property="og:locale:alternate" content="${COPY[l].ogLocale}" />`).join('\n    ')}
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="/favicon.ico?v=2" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
@@ -377,7 +390,10 @@ export function renderLanding(lang: LandingLanguage, site: string): string {
 `;
 }
 
-/** Every landing page, each listing its translations (hreflang) for search engines. */
+/** The legal pages (datenschutz.html and the others at the project root), one address each. */
+const LEGAL_PATHS = ['/impressum', '/datenschutz', '/nutzungsbedingungen'];
+
+/** Every landing page, each listing its translations (hreflang) for search engines, then the legal pages. */
 export function sitemapXml(site: string): string {
   const links = LANDING_LANGUAGES.map((l) =>
     `    <xhtml:link rel="alternate" hreflang="${l}" href="${site}${landingPath(l)}"/>`).join('\n');
@@ -385,7 +401,9 @@ export function sitemapXml(site: string): string {
     <loc>${site}${landingPath(l)}</loc>
 ${links}
     <xhtml:link rel="alternate" hreflang="x-default" href="${site}/"/>
-  </url>`).join('\n');
+  </url>`).concat(LEGAL_PATHS.map((p) => `  <url>
+    <loc>${site}${p}</loc>
+  </url>`)).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls}

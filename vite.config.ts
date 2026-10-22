@@ -12,7 +12,8 @@ const SITE_URL = (process.env.SITE_URL ?? 'https://keypacer.com').replace(/\/$/,
 /**
  * Landing pages: each /<lang>/index.html is a one-line placeholder that this
  * plugin replaces with the page built from src/landing/content.ts, in
- * development and in the build. It also writes sitemap.xml and robots.txt.
+ * development and in the build. It also writes sitemap.xml and robots.txt,
+ * and makes the site-relative canonical links of the other pages absolute.
  */
 function landing(production: boolean): Plugin {
   return {
@@ -21,7 +22,8 @@ function landing(production: boolean): Plugin {
       order: 'pre',
       handler(html) {
         const lang = /keypacer-landing:(\w+)/.exec(html)?.[1] as LandingLanguage | undefined;
-        return lang && LANDING_LANGUAGES.includes(lang) ? renderLanding(lang, SITE_URL) : html;
+        if (lang && LANDING_LANGUAGES.includes(lang)) return renderLanding(lang, SITE_URL);
+        return html.replace(/(<link rel="canonical" href=")\//, `$1${SITE_URL}/`);
       },
     },
     generateBundle() {

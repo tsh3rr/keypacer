@@ -10,8 +10,10 @@ name: Database keep-alive
 # after that time pings. GitHub often starts scheduled runs hours late or
 # skips them, so a run doesn't need to land on the chosen time: it pings
 # whenever no successful run has happened since the latest chosen time.
-# A ping waits a further random 0–20 minutes and asks one or two of the
-# queries the sign-up and buddy forms use, with made-up names and codes.
+# A ping waits a further random 0–20 minutes, asks one or two of the
+# queries the sign-up and buddy forms use, with made-up names and codes,
+# and writes the one-row keep_alive table: Supabase paused staging even
+# though it had been read from two days before, so reads alone don't count.
 #
 # Uses the public URL and publishable key from vite.config.ts; no secrets.
 # Run workflow (workflow_dispatch) pings both projects right away.
@@ -66,6 +68,15 @@ jobs:
 
           rand_name() { LC_ALL=C tr -dc 'a-z0-9' < <(head -c 600 /dev/urandom) | head -c "$1"; }
 
+          # Writes the keep_alive row (supabase/migrations/*_keep_alive.sql):
+          # read-only queries alone did not stop Supabase from pausing.
+          write() {
+            echo "  keep_alive"
+            curl --fail-with-body -sS --retry 3 --retry-all-errors --max-time 30 \
+              -X POST "$1/rest/v1/rpc/keep_alive" \
+              -H "apikey: $2" -H "Content-Type: application/json" -d '{}' > /dev/null
+          }
+
           query() {
             local url=$1 key=$2 fn body
             if (( RANDOM % 2 )); then
@@ -102,7 +113,7 @@ jobs:
           for p in "${due[@]}"; do
             read -r name url key <<< "$p"
             echo "$name:"
-            for _ in $(seq $(( 1 + RANDOM % 2 ))); do
-              query "$url" "$key"
-            done
+            query "$url" "$key"
+            write "$url" "$key"
+            if (( RANDOM % 2 )); then query "$url" "$key"; fi
           done

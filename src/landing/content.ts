@@ -89,6 +89,11 @@ export interface LandingCopy {
     stored: string;
   };
   privacy: { eyebrow: string; title: string; intro: string; items: (Item & { chips: [string, string] })[] };
+  /**
+   * Replaces the "0 trackers" fact and the first privacy item while visitor
+   * statistics (Umami, vite.config.ts) are on.
+   */
+  analytics: { fact: string; item: Item & { chips: [string, string] } };
   faq: { title: string; items: { q: string; a: string }[] };
   final: { title: string; text: string; cta: string };
   foot: { imprint: string; privacy: string; terms: string };
@@ -205,6 +210,10 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { title: 'Without an account, it all stays in your browser', text: 'Your keystrokes are only stored locally. You can export or delete them at any time.', chips: ['.json', '.csv'] },
         { title: 'With an account, in the EU', text: 'The optional account syncs your rounds between your devices via servers in Frankfurt.', chips: ['Frankfurt', 'optional account'] },
       ],
+    },
+    analytics: {
+      fact: 'cookies and ads',
+      item: { title: 'No cookies, no ads', text: 'Keypacer sets no cookies and shows no ads. Only this page counts visits anonymously, without cookies.', chips: ['0 cookies', 'anonymous stats'] },
     },
     faq: {
       title: 'Questions',
@@ -332,6 +341,10 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { title: 'Mit Konto in der EU', text: 'Das freiwillige Konto gleicht deine Runden über Server in Frankfurt zwischen deinen Geräten ab.', chips: ['Frankfurt', 'freiwilliges Konto'] },
       ],
     },
+    analytics: {
+      fact: 'Cookies und Werbung',
+      item: { title: 'Keine Cookies, keine Werbung', text: 'Keypacer setzt keine Cookies und zeigt keine Werbung. Nur diese Seite zählt Besuche anonym, ohne Cookies.', chips: ['0 Cookies', 'anonyme Statistik'] },
+    },
     faq: {
       title: 'Häufige Fragen',
       items: [
@@ -457,6 +470,10 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { title: 'Sin cuenta, todo queda en el navegador', text: 'Tus pulsaciones solo se guardan en tu equipo. Puedes exportarlas o borrarlas cuando quieras.', chips: ['.json', '.csv'] },
         { title: 'Con cuenta, en la UE', text: 'La cuenta opcional sincroniza tus rondas entre tus dispositivos a través de servidores en Fráncfort.', chips: ['Fráncfort', 'cuenta opcional'] },
       ],
+    },
+    analytics: {
+      fact: 'cookies y anuncios',
+      item: { title: 'Sin cookies ni anuncios', text: 'Keypacer no usa cookies ni muestra anuncios. Solo esta página cuenta las visitas de forma anónima, sin cookies.', chips: ['0 cookies', 'estadística anónima'] },
     },
     faq: {
       title: 'Preguntas frecuentes',
@@ -584,6 +601,10 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { title: 'Avec un compte, dans l’UE', text: 'Le compte facultatif synchronise vos séries entre vos appareils via des serveurs à Francfort.', chips: ['Francfort', 'compte facultatif'] },
       ],
     },
+    analytics: {
+      fact: 'cookie ou publicité',
+      item: { title: 'Ni cookies ni publicité', text: 'Keypacer ne dépose aucun cookie et n’affiche aucune publicité. Seule cette page compte les visites de façon anonyme, sans cookie.', chips: ['0 cookie', 'statistiques anonymes'] },
+    },
     faq: {
       title: 'Questions fréquentes',
       items: [
@@ -710,6 +731,10 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { title: 'Con account, nell’UE', text: 'L’account facoltativo sincronizza i tuoi round tra i dispositivi tramite server a Francoforte.', chips: ['Francoforte', 'account facoltativo'] },
       ],
     },
+    analytics: {
+      fact: 'cookie e pubblicità',
+      item: { title: 'Niente cookie, niente pubblicità', text: 'Keypacer non usa cookie e non mostra pubblicità. Solo questa pagina conta le visite in forma anonima, senza cookie.', chips: ['0 cookie', 'statistiche anonime'] },
+    },
     faq: {
       title: 'Domande frequenti',
       items: [
@@ -835,6 +860,10 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { title: 'Bez konta wszystko zostaje w przeglądarce', text: 'Twoje uderzenia są zapisywane tylko lokalnie. W każdej chwili możesz je wyeksportować lub usunąć.', chips: ['.json', '.csv'] },
         { title: 'Z kontem w UE', text: 'Dobrowolne konto synchronizuje twoje rundy między urządzeniami przez serwery we Frankfurcie.', chips: ['Frankfurt', 'dobrowolne konto'] },
       ],
+    },
+    analytics: {
+      fact: 'ciasteczek i reklam',
+      item: { title: 'Bez ciasteczek i reklam', text: 'Keypacer nie używa ciasteczek i nie wyświetla reklam. Tylko ta strona anonimowo liczy odwiedziny, bez ciasteczek.', chips: ['0 ciasteczek', 'anonimowe statystyki'] },
     },
     faq: {
       title: 'Częste pytania',

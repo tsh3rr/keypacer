@@ -14,14 +14,14 @@ const SITE_URL = (process.env.SITE_URL ?? 'https://keypacer.com').replace(/\/$/,
  * plugin replaces with the page built from src/landing/content.ts, in
  * development and in the build. It also writes sitemap.xml and robots.txt.
  */
-function landing(production: boolean): Plugin {
+function landing(production: boolean, umami: string): Plugin {
   return {
     name: 'keypacer-landing',
     transformIndexHtml: {
       order: 'pre',
       handler(html) {
         const lang = /keypacer-landing:(\w+)/.exec(html)?.[1] as LandingLanguage | undefined;
-        return lang && LANDING_LANGUAGES.includes(lang) ? renderLanding(lang, SITE_URL) : html;
+        return lang && LANDING_LANGUAGES.includes(lang) ? renderLanding(lang, SITE_URL, umami) : html;
       },
     },
     generateBundle() {
@@ -59,22 +59,33 @@ const TURNSTILE = { production: '', staging: '' };
  */
 const EMAIL_LINKS = { production: true, staging: true };
 
+/**
+ * Umami Cloud website ID for visitor statistics on the landing pages only
+ * (not the trainer, not the legal pages). Empty means off: no script, the
+ * landing pages keep their "no tracking" claim and the privacy policy has no
+ * analytics section. Staging stays empty so previews are not counted.
+ * VITE_UMAMI_WEBSITE_ID in .env.local overrides both.
+ */
+const UMAMI = { production: '', staging: '' };
+
 export default defineConfig(({ mode }) => {
   // Cloudflare Workers Builds sets WORKERS_CI_BRANCH: main is production,
   // every other branch, local development and tests use staging.
   // VITE_SUPABASE_URL / VITE_SUPABASE_PUBLISHABLE_KEY in .env.local override both.
-  const env = loadEnv(mode, process.cwd(), ['VITE_SUPABASE_', 'VITE_TURNSTILE_', 'VITE_EMAIL_LINKS']);
+  const env = loadEnv(mode, process.cwd(), ['VITE_SUPABASE_', 'VITE_TURNSTILE_', 'VITE_EMAIL_LINKS', 'VITE_UMAMI_']);
   const target = process.env.WORKERS_CI_BRANCH === 'main' ? 'production' : 'staging';
   const supabase = env.VITE_SUPABASE_URL && env.VITE_SUPABASE_PUBLISHABLE_KEY
     ? { url: env.VITE_SUPABASE_URL, key: env.VITE_SUPABASE_PUBLISHABLE_KEY }
     : SUPABASE[target];
+  const umami = env.VITE_UMAMI_WEBSITE_ID ?? UMAMI[target];
 
   return {
-    plugins: [landing(target === 'production')],
+    plugins: [landing(target === 'production', umami)],
     define: {
       __SUPABASE_URL__: JSON.stringify(supabase.url),
       __SUPABASE_KEY__: JSON.stringify(supabase.key),
       __TURNSTILE_SITE_KEY__: JSON.stringify(env.VITE_TURNSTILE_SITE_KEY ?? TURNSTILE[target]),
+      __UMAMI_WEBSITE_ID__: JSON.stringify(umami),
       __EMAIL_LINKS__: JSON.stringify(env.VITE_EMAIL_LINKS ? env.VITE_EMAIL_LINKS === 'true' : EMAIL_LINKS[target]),
     },
     // The landing pages (/ in English, /de/, /es/, …), the trainer at /app/, and the

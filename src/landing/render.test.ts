@@ -37,6 +37,21 @@ describe('landing pages', () => {
     expect(renderLanding('en', SITE)).not.toMatch(/<script type="application\/(ld\+)?json"[^>]*>[^<]*<\/(?!script)/);
   });
 
+  it.each(LANDING_LANGUAGES)('%s: no analytics script or claims change without an Umami ID', (lang) => {
+    const html = renderLanding(lang, SITE);
+    expect(html).not.toContain('umami.is');
+    expect(html).toContain(COPY[lang].privacy.items[0].title);
+  });
+
+  it.each(LANDING_LANGUAGES)('%s: with an Umami ID, loads Umami and drops the "0 trackers" claim', (lang) => {
+    const html = renderLanding(lang, SITE, 'abc-123');
+    expect(html).toContain('<script defer src="https://cloud.umami.is/script.js" data-website-id="abc-123" data-do-not-track="true"');
+    expect(html).toContain(COPY[lang].analytics.item.title);
+    expect(html).not.toContain(COPY[lang].privacy.items[0].title);
+    expect(html).not.toContain(COPY[lang].privacy.items[0].chips[1]);
+    expect(html).toContain(COPY[lang].analytics.fact);
+  });
+
   it('lists every page in the sitemap, and closes previews to search engines', () => {
     const xml = sitemapXml(SITE);
     for (const l of LANDING_LANGUAGES) expect(xml).toContain(`<loc>${SITE}${landingPath(l)}</loc>`);

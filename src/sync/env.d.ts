@@ -5,3 +5,5 @@ declare const __SUPABASE_KEY__: string;
 declare const __TURNSTILE_SITE_KEY__: string;
 /** Whether the Supabase project sends e-mail (code sign-in, password reset), picked per branch in vite.config.ts. */
 declare const __EMAIL_LINKS__: boolean;
+/** Umami Cloud website ID for the landing pages, or '' when statistics are off (vite.config.ts). */
+declare const __UMAMI_WEBSITE_ID__: string;

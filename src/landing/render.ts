@@ -176,8 +176,16 @@ const WEAK_EXAMPLE = [[11.2, 412, 4], [8.4, 365, 3], [6.1, 338, 3], [3.9, 301, 2
 const UMAMI_SCRIPT = 'https://cloud.umami.is/script.js';
 
 /**
+ * The Umami tag for the landing pages and the trainer's page (vite.config.ts).
+ * No cookies, Do Not Track respected, and nothing after the path is sent, so
+ * sign-in and invite links stay out of the statistics.
+ */
+export const umamiTag = (id: string): string =>
+  `<script defer src="${UMAMI_SCRIPT}" data-website-id="${esc(id)}" data-do-not-track="true" data-exclude-search="true" data-exclude-hash="true"></script>`;
+
+/**
  * The page for one language. With an Umami website ID, the page loads Umami
- * (no cookies, ignores the query string, respects Do Not Track) and swaps its
+ * (umamiTag) and swaps its
  * "0 trackers" claims for the analytics copy.
  */
 export function renderLanding(lang: LandingLanguage, site: string, umami = ''): string {
@@ -257,7 +265,7 @@ export function renderLanding(lang: LandingLanguage, site: string, umami = ''): 
     <script src="/to-app.js"></script>
     <link rel="stylesheet" href="/src/style.css" />
     <link rel="stylesheet" href="/src/landing/landing.css" />${umami ? `
-    <script defer src="${UMAMI_SCRIPT}" data-website-id="${esc(umami)}" data-do-not-track="true" data-exclude-search="true" data-exclude-hash="true"></script>` : ''}
+    ${umamiTag(umami)}` : ''}
     <script type="application/ld+json">${jsonBlock(structured)}</script>
   </head>
   <body class="lp">

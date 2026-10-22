@@ -4,13 +4,13 @@ import { LEGAL_UPDATED, OWNER } from './owner';
  * The Impressum, the privacy policy and the terms of use, in German and English.
  *
  * Written for a private, non-commercial site run from Austria: no ads, no
- * payment, no tracking in the trainer. Practice data stays in the browser unless the
+ * payment, no tracking beyond anonymous page counts. Practice data stays in the browser unless the
  * learner signs in to the optional account, which syncs it through Supabase
  * (EU, Frankfurt). Cloudflare delivers the files and, once its site key is
  * set, Turnstile guards e-mail sign-in (the paragraph appears with it).
  * Where the account sends e-mail through Resend (EMAIL_LINKS), the policy
- * says so. Once an Umami website ID is set (UMAMI), the landing pages count
- * visits and the policy gets its analytics section and opt-out button
+ * says so. Once an Umami website ID is set (UMAMI), the landing pages and the
+ * trainer's page count visits and the policy gets its analytics section and opt-out button
  * (wired in page.ts). If any of that changes (analytics, ads, a donation button,
  * another processor), these texts have to change first.
  *
@@ -66,36 +66,36 @@ const captcha = {
   },
 };
 
-/** Whether the landing pages count visits with Umami Cloud (vite.config.ts). */
+/** Whether the landing pages and the trainer count visits with Umami Cloud (vite.config.ts). */
 const ANALYTICS = __UMAMI_WEBSITE_ID__ !== '';
 
-/** What changes in the privacy policy once the landing pages count visits. */
+/** What changes in the privacy policy once the site counts visits. */
 const analytics = {
   short: {
     de: ANALYTICS
-      ? 'Es gibt keine Werbung und keine eingebundenen Inhalte von Dritten, auch keine externen Schriftarten. Nur auf der Startseite zählen wir Besuche anonym mit Umami, ohne Cookies (siehe <em>Reichweitenmessung auf der Startseite</em>); im Trainer selbst gibt es keine Analyse- oder Tracking-Dienste.'
+      ? 'Es gibt keine Werbung und keine eingebundenen Inhalte von Dritten, auch keine externen Schriftarten. Wir zählen nur anonym mit Umami, ohne Cookies, wie oft die Startseite und der Trainer aufgerufen werden (siehe <em>Reichweitenmessung</em>); was du im Trainer tust und tippst, wird dabei nicht erfasst.'
       : 'Es gibt keine Werbung, keine Analyse- oder Tracking-Dienste und keine eingebundenen Inhalte von Dritten, auch keine externen Schriftarten.',
     en: ANALYTICS
-      ? 'There are no ads and no embedded third-party content, not even external fonts. Only the start page counts visits anonymously with Umami, without cookies (see <em>Visitor statistics on the start page</em>); the trainer itself uses no analytics or tracking services.'
+      ? 'There are no ads and no embedded third-party content, not even external fonts. We only count anonymously with Umami, without cookies, how often the start page and the trainer are opened (see <em>Visitor statistics</em>); what you do and type in the trainer is not recorded.'
       : 'There are no ads, no analytics or tracking services and no embedded third-party content, not even external fonts.',
   },
   stored: {
-    de: ANALYTICS ? '\n      <li><strong>Reichweitenmessung ausgeschaltet:</strong> nur wenn du sie unten unter <em>Reichweitenmessung auf der Startseite</em> ausschaltest, ein Vermerk darüber (<code>umami.disabled</code>).</li>' : '',
-    en: ANALYTICS ? '\n      <li><strong>Visitor statistics turned off:</strong> only if you turn them off below under <em>Visitor statistics on the start page</em>, a note saying so (<code>umami.disabled</code>).</li>' : '',
+    de: ANALYTICS ? '\n      <li><strong>Reichweitenmessung ausgeschaltet:</strong> nur wenn du sie unten unter <em>Reichweitenmessung</em> ausschaltest, ein Vermerk darüber (<code>umami.disabled</code>).</li>' : '',
+    en: ANALYTICS ? '\n      <li><strong>Visitor statistics turned off:</strong> only if you turn them off below under <em>Visitor statistics</em>, a note saying so (<code>umami.disabled</code>).</li>' : '',
   },
   section: {
     de: ANALYTICS ? `
 
-    <h2>Reichweitenmessung auf der Startseite</h2>
-    <p>Um zu sehen, wie viele Menschen die Startseite besuchen, woher sie kommen und ob sie mit dem Üben beginnen, zählen wir Besuche auf der Startseite mit Umami Cloud (Umami Software, Inc., USA). Im Trainer und auf diesen Rechtsseiten läuft Umami nicht. Beim Aufruf der Startseite lädt dein Browser ein Skript von Umami und schickt diese Angaben: die aufgerufene Seite ohne Zusätze in der Adresse, die Seite, von der du kommst, Browser, Betriebssystem, Gerätetyp, Bildschirmgröße und Sprache sowie, falls du auf einen der Knöpfe zum Trainer klickst, welchen davon. Aus deiner IP-Adresse ermittelt Umami das Land und die Region; die IP-Adresse selbst wird nicht gespeichert. Damit ein Besuch nur einmal zählt, bildet Umami aus IP-Adresse, Browserangaben und einem Geheimwert, der jeden Monat wechselt, eine Kennung, aus der sich weder deine IP-Adresse ablesen lässt noch du über Monate oder andere Websites hinweg wiedererkannt wirst. Umami setzt keine Cookies und legt nichts auf deinem Gerät ab. Wir sehen nur zusammengefasste Zahlen.</p>
-    <p>Rechtsgrundlage ist unser berechtigtes Interesse, die Startseite anhand anonymer Besucherzahlen zu verbessern (Art. 6 Abs. 1 lit. f DSGVO). Umami verarbeitet die Daten als unser Auftragsverarbeiter auf Grundlage seines Auftragsverarbeitungsvertrags; soweit dabei eine Verarbeitung in den USA möglich ist, ist sie durch die EU-Standardvertragsklauseln abgesichert (Art. 46 Abs. 2 lit. c DSGVO). Die Statistik wird nach höchstens 12 Monaten gelöscht. Mehr dazu in der <a href="https://umami.is/privacy">Datenschutzerklärung von Umami</a>.</p>
+    <h2>Reichweitenmessung</h2>
+    <p>Um zu sehen, wie viele Menschen die Startseite besuchen, woher sie kommen und ob sie den Trainer öffnen, zählen wir Aufrufe der Startseite und des Trainers mit Umami Cloud (Umami Software, Inc., USA). Im Trainer wird nur gezählt, dass die Seite geöffnet wurde; deine Übungen, dein Tastenprotokoll und dein Konto bleiben davon unberührt. Auf diesen Rechtsseiten läuft Umami nicht. Beim Aufruf lädt dein Browser ein Skript von Umami und schickt diese Angaben: die aufgerufene Seite ohne Zusätze in der Adresse, die Seite, von der du kommst, Browser, Betriebssystem, Gerätetyp, Bildschirmgröße und Sprache sowie, falls du auf der Startseite auf einen der Knöpfe zum Trainer klickst, welchen davon. Aus deiner IP-Adresse ermittelt Umami das Land und die Region; die IP-Adresse selbst wird nicht gespeichert. Damit ein Besuch nur einmal zählt, bildet Umami aus IP-Adresse, Browserangaben und einem Geheimwert, der jeden Monat wechselt, eine Kennung, aus der sich weder deine IP-Adresse ablesen lässt noch du über Monate oder andere Websites hinweg wiedererkannt wirst. Umami setzt keine Cookies und legt nichts auf deinem Gerät ab. Wir sehen nur zusammengefasste Zahlen.</p>
+    <p>Rechtsgrundlage ist unser berechtigtes Interesse, die Website anhand anonymer Besucherzahlen zu verbessern (Art. 6 Abs. 1 lit. f DSGVO). Umami verarbeitet die Daten als unser Auftragsverarbeiter auf Grundlage seines Auftragsverarbeitungsvertrags; soweit dabei eine Verarbeitung in den USA möglich ist, ist sie durch die EU-Standardvertragsklauseln abgesichert (Art. 46 Abs. 2 lit. c DSGVO). Die Statistik wird nach höchstens 12 Monaten gelöscht. Mehr dazu in der <a href="https://umami.is/privacy">Datenschutzerklärung von Umami</a>.</p>
     <p>Du kannst widersprechen: Hast du in deinem Browser „Do Not Track“ eingeschaltet, zählt Umami dich nicht. Außerdem kannst du die Messung hier für diesen Browser ausschalten; dafür speichern wir einen Vermerk im lokalen Speicher deines Browsers.</p>
     <p class="legal-optout"><button type="button" data-analytics-optout></button> <span data-analytics-state></span></p>` : '',
     en: ANALYTICS ? `
 
-    <h2>Visitor statistics on the start page</h2>
-    <p>To see how many people visit the start page, where they come from and whether they start practising, we count visits to the start page with Umami Cloud (Umami Software, Inc., USA). Umami does not run in the trainer or on these legal pages. When you open the start page, your browser loads a script from Umami and sends this: the page you opened without anything added to its address, the page you came from, your browser, operating system, device type, screen size and language, and, if you click one of the buttons that lead to the trainer, which one. Umami derives your country and region from your IP address; the IP address itself is not stored. So that a visit counts only once, Umami makes an identifier from your IP address, browser details and a secret value that changes every month; it does not reveal your IP address and cannot recognise you across months or on other websites. Umami sets no cookies and stores nothing on your device. We only see totals.</p>
-    <p>The legal basis is our legitimate interest in improving the start page from anonymous visitor numbers (Art. 6(1)(f) GDPR). Umami processes the data as our processor under its data processing agreement; where processing in the USA is possible, it is covered by the EU Standard Contractual Clauses (Art. 46(2)(c) GDPR). The statistics are deleted after 12 months at the latest. See <a href="https://umami.is/privacy">Umami's privacy policy</a> for more.</p>
+    <h2>Visitor statistics</h2>
+    <p>To see how many people visit the start page, where they come from and whether they open the trainer, we count visits to the start page and the trainer with Umami Cloud (Umami Software, Inc., USA). In the trainer, only the fact that the page was opened is counted; your drills, your keystroke log and your account are not touched by it. Umami does not run on these legal pages. When a page is opened, your browser loads a script from Umami and sends this: the page you opened without anything added to its address, the page you came from, your browser, operating system, device type, screen size and language, and, if you click one of the buttons on the start page that lead to the trainer, which one. Umami derives your country and region from your IP address; the IP address itself is not stored. So that a visit counts only once, Umami makes an identifier from your IP address, browser details and a secret value that changes every month; it does not reveal your IP address and cannot recognise you across months or on other websites. Umami sets no cookies and stores nothing on your device. We only see totals.</p>
+    <p>The legal basis is our legitimate interest in improving the website from anonymous visitor numbers (Art. 6(1)(f) GDPR). Umami processes the data as our processor under its data processing agreement; where processing in the USA is possible, it is covered by the EU Standard Contractual Clauses (Art. 46(2)(c) GDPR). The statistics are deleted after 12 months at the latest. See <a href="https://umami.is/privacy">Umami's privacy policy</a> for more.</p>
     <p>You can object: if your browser has "Do Not Track" turned on, Umami does not count you. You can also turn the statistics off for this browser here; to remember that, we store a note in your browser's local storage.</p>
     <p class="legal-optout"><button type="button" data-analytics-optout></button> <span data-analytics-state></span></p>` : '',
   },

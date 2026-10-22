@@ -1,6 +1,6 @@
 # Besucherstatistik mit Umami einschalten
 
-Umami zählt Besuche nur auf den Startseiten (`/`, `/de/`, `/es/`, …), nicht im Trainer und nicht auf den Rechtsseiten. Solange in `vite.config.ts` keine Website-ID steht, ist alles aus: kein Skript, die Startseite sagt weiter „0 Tracker“ und die Datenschutzerklärung hat keinen Abschnitt dazu.
+Umami zählt Besuche auf den Startseiten (`/`, `/de/`, `/es/`, …) und Aufrufe des Trainers (`/app/`), aber nicht, was im Trainer passiert, und nichts auf den Rechtsseiten. Solange in `vite.config.ts` keine Website-ID steht, ist alles aus: kein Skript, die Startseite sagt weiter „0 Tracker“ und die Datenschutzerklärung hat keinen Abschnitt dazu.
 
 ## 1. Konto und Website anlegen
 
@@ -18,12 +18,12 @@ In `vite.config.ts` bei `UMAMI` die ID für `production` eintragen (Staging blei
 const UMAMI = { production: 'deine-website-id', staging: '' };
 ```
 
-Mit dem nächsten Deploy von `main` laden die Startseiten das Skript, die Texte auf der Startseite wechseln von „0 Tracker“ zu „anonyme Statistik“ und die Datenschutzerklärung bekommt den Abschnitt *Reichweitenmessung auf der Startseite* samt Knopf zum Abschalten.
+Mit dem nächsten Deploy von `main` laden die Startseiten und der Trainer das Skript, die Texte auf der Startseite wechseln von „0 Tracker“ zu „anonyme Statistik“ und die Datenschutzerklärung bekommt den Abschnitt *Reichweitenmessung* samt Knopf zum Abschalten.
 
 Zum lokalen Ausprobieren statt dessen `VITE_UMAMI_WEBSITE_ID=…` in `.env.local` setzen.
 
 ## Was gezählt wird
 
-- Seitenaufrufe der Startseiten, ohne Adresszusätze (`?…`, `#…`), mit Herkunftsseite, Browser, Gerät und Land.
-- Klicks auf die drei Knöpfe zum Trainer als Ereignisse `open-app-nav`, `start-hero` und `start-final`.
+- Seitenaufrufe der Startseiten und des Trainers (`/app/`), ohne Adresszusätze (`?…`, `#…`), mit Herkunftsseite, Browser, Gerät und Land. Im Trainer bleibt es bei diesem einen Aufruf.
+- Klicks auf die drei Knöpfe der Startseite zum Trainer als Ereignisse `open-app-nav`, `start-hero` und `start-final`.
 - Wer „Do Not Track“ eingeschaltet oder in der Datenschutzerklärung die Messung abgeschaltet hat (`umami.disabled` im localStorage), wird nicht gezählt.

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { COPY, LANDING_LANGUAGES, landingPath } from './content';
-import { renderLanding, robotsTxt, sitemapXml, vignetteData } from './render';
+import { renderLanding, robotsTxt, sitemapXml, umamiTag, vignetteData } from './render';
 
 const SITE = 'https://example.test';
 
@@ -50,6 +50,10 @@ describe('landing pages', () => {
     expect(html).not.toContain(COPY[lang].privacy.items[0].title);
     expect(html).not.toContain(COPY[lang].privacy.items[0].chips[1]);
     expect(html).toContain(COPY[lang].analytics.fact);
+  });
+
+  it('the Umami tag sends nothing after the path', () => {
+    expect(umamiTag('abc-123')).toContain('data-exclude-search="true" data-exclude-hash="true"');
   });
 
   it('lists every page in the sitemap, and closes previews to search engines', () => {

@@ -146,7 +146,7 @@ GitHub Actions:
 
 ## Impressum and privacy policy
 
-`/impressum` and `/datenschutz` (`impressum.html`, `datenschutz.html`, texts in `src/legal/content.ts`) are written for a private, non-commercial site run from Austria, in German (binding) and English. The owner's name, town and e-mail are in `src/legal/owner.ts`. The privacy policy says the site sets no cookies, has no analytics, and stores practice data only in the browser unless the learner signs in (then in Supabase, Frankfurt); if that changes (Cloudflare Web Analytics, ads, a mail provider), update the texts first. A cookie banner is not needed while all browser storage is strictly necessary for the trainer (§ 165 Abs. 3 TKG 2021).
+`/impressum` and `/datenschutz` (`impressum.html`, `datenschutz.html`, texts in `src/legal/content.ts`) are written for a private, non-commercial site run from Austria, in German (binding) and English. The owner's name, town and e-mail are in `src/legal/owner.ts`. The privacy policy says the site sets no cookies and stores practice data only in the browser unless the learner signs in (then in Supabase, Frankfurt). Once an Umami website ID is set in `vite.config.ts`, the landing pages and the trainer's page count page views with Umami Cloud and the texts switch to match (`docs/umami-setup.md`); without it they say there are no analytics. If anything else changes (ads, another provider), update the texts first. A cookie banner is not needed while all browser storage is strictly necessary for the trainer (§ 165 Abs. 3 TKG 2021).
 
 ## Thanks
 

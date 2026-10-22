@@ -213,7 +213,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     },
     analytics: {
       fact: 'cookies and ads',
-      item: { title: 'No cookies, no ads', text: 'Keypacer sets no cookies and shows no ads. Only this page counts visits anonymously, without cookies.', chips: ['0 cookies', 'anonymous stats'] },
+      item: { title: 'No cookies, no ads', text: 'Keypacer sets no cookies and shows no ads. Visits are only counted anonymously, without cookies.', chips: ['0 cookies', 'anonymous stats'] },
     },
     faq: {
       title: 'Questions',
@@ -343,7 +343,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     },
     analytics: {
       fact: 'Cookies und Werbung',
-      item: { title: 'Keine Cookies, keine Werbung', text: 'Keypacer setzt keine Cookies und zeigt keine Werbung. Nur diese Seite zählt Besuche anonym, ohne Cookies.', chips: ['0 Cookies', 'anonyme Statistik'] },
+      item: { title: 'Keine Cookies, keine Werbung', text: 'Keypacer setzt keine Cookies und zeigt keine Werbung. Besuche zählen wir nur anonym, ohne Cookies.', chips: ['0 Cookies', 'anonyme Statistik'] },
     },
     faq: {
       title: 'Häufige Fragen',
@@ -473,7 +473,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     },
     analytics: {
       fact: 'cookies y anuncios',
-      item: { title: 'Sin cookies ni anuncios', text: 'Keypacer no usa cookies ni muestra anuncios. Solo esta página cuenta las visitas de forma anónima, sin cookies.', chips: ['0 cookies', 'estadística anónima'] },
+      item: { title: 'Sin cookies ni anuncios', text: 'Keypacer no usa cookies ni muestra anuncios. Las visitas solo se cuentan de forma anónima, sin cookies.', chips: ['0 cookies', 'estadística anónima'] },
     },
     faq: {
       title: 'Preguntas frecuentes',
@@ -603,7 +603,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     },
     analytics: {
       fact: 'cookie ou publicité',
-      item: { title: 'Ni cookies ni publicité', text: 'Keypacer ne dépose aucun cookie et n’affiche aucune publicité. Seule cette page compte les visites de façon anonyme, sans cookie.', chips: ['0 cookie', 'statistiques anonymes'] },
+      item: { title: 'Ni cookies ni publicité', text: 'Keypacer ne dépose aucun cookie et n’affiche aucune publicité. Les visites sont seulement comptées de façon anonyme, sans cookie.', chips: ['0 cookie', 'statistiques anonymes'] },
     },
     faq: {
       title: 'Questions fréquentes',
@@ -733,7 +733,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     },
     analytics: {
       fact: 'cookie e pubblicità',
-      item: { title: 'Niente cookie, niente pubblicità', text: 'Keypacer non usa cookie e non mostra pubblicità. Solo questa pagina conta le visite in forma anonima, senza cookie.', chips: ['0 cookie', 'statistiche anonime'] },
+      item: { title: 'Niente cookie, niente pubblicità', text: 'Keypacer non usa cookie e non mostra pubblicità. Le visite vengono contate solo in forma anonima, senza cookie.', chips: ['0 cookie', 'statistiche anonime'] },
     },
     faq: {
       title: 'Domande frequenti',
@@ -863,7 +863,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     },
     analytics: {
       fact: 'ciasteczek i reklam',
-      item: { title: 'Bez ciasteczek i reklam', text: 'Keypacer nie używa ciasteczek i nie wyświetla reklam. Tylko ta strona anonimowo liczy odwiedziny, bez ciasteczek.', chips: ['0 ciasteczek', 'anonimowe statystyki'] },
+      item: { title: 'Bez ciasteczek i reklam', text: 'Keypacer nie używa ciasteczek i nie wyświetla reklam. Odwiedziny liczymy tylko anonimowo, bez ciasteczek.', chips: ['0 ciasteczek', 'anonimowe statystyki'] },
     },
     faq: {
       title: 'Częste pytania',

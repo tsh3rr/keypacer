@@ -45,9 +45,9 @@ function render(): void {
 }
 
 /**
- * The opt-out for the landing pages' visitor statistics (only in the privacy
+ * The opt-out for the visitor statistics on the landing pages and the trainer (only in the privacy
  * policy, and only while they are on). Umami's script skips counting while
- * localStorage holds umami.disabled; this page and the landing pages share it.
+ * localStorage holds umami.disabled; every page of the site shares it.
  */
 const OPT_OUT_KEY = 'umami.disabled';
 

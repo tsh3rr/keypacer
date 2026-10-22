@@ -38,10 +38,47 @@ function render(): void {
   body.innerHTML = legalHtml(page, lang);
   switcher.querySelectorAll<HTMLButtonElement>('[data-lang]').forEach((b) =>
     b.setAttribute('aria-checked', String(b.dataset.lang === lang)));
+  renderOptOut();
   document.querySelectorAll<HTMLAnchorElement>('[data-legal-link]').forEach((a) => {
     a.textContent = ui[a.dataset.legalLink as LegalPage];
   });
 }
+
+/**
+ * The opt-out for the visitor statistics on the landing pages and the trainer (only in the privacy
+ * policy, and only while they are on). Umami's script skips counting while
+ * localStorage holds umami.disabled; every page of the site shares it.
+ */
+const OPT_OUT_KEY = 'umami.disabled';
+
+function optedOut(): boolean {
+  try {
+    return localStorage.getItem(OPT_OUT_KEY) !== null;
+  } catch {
+    return false;
+  }
+}
+
+function renderOptOut(): void {
+  const button = body.querySelector<HTMLButtonElement>('[data-analytics-optout]');
+  const state = body.querySelector<HTMLElement>('[data-analytics-state]');
+  if (!button || !state) return;
+  const ui = LEGAL_UI[lang];
+  const off = optedOut();
+  button.textContent = off ? ui.optIn : ui.optOut;
+  state.textContent = off ? ui.optedOut : ui.optedIn;
+}
+
+body.addEventListener('click', (e) => {
+  if (!(e.target as Element).closest('[data-analytics-optout]')) return;
+  try {
+    if (optedOut()) localStorage.removeItem(OPT_OUT_KEY);
+    else localStorage.setItem(OPT_OUT_KEY, '1');
+  } catch {
+    // Storage blocked: nothing to remember, and Umami cannot read it either.
+  }
+  renderOptOut();
+});
 
 switcher.querySelectorAll<HTMLButtonElement>('[data-lang]').forEach((b) => {
   b.addEventListener('click', () => {

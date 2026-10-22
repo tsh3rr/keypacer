@@ -4,12 +4,14 @@ import { LEGAL_UPDATED, OWNER } from './owner';
  * The Impressum, the privacy policy and the terms of use, in German and English.
  *
  * Written for a private, non-commercial site run from Austria: no ads, no
- * payment, no tracking. Practice data stays in the browser unless the
+ * payment, no tracking beyond anonymous page counts. Practice data stays in the browser unless the
  * learner signs in to the optional account, which syncs it through Supabase
  * (EU, Frankfurt). Cloudflare delivers the files and, once its site key is
  * set, Turnstile guards e-mail sign-in (the paragraph appears with it).
  * Where the account sends e-mail through Resend (EMAIL_LINKS), the policy
- * says so. If any of that changes (analytics, ads, a donation button,
+ * says so. Once an Umami website ID is set (UMAMI), the landing pages and the
+ * trainer's page count visits and the policy gets its analytics section and opt-out button
+ * (wired in page.ts). If any of that changes (analytics, ads, a donation button,
  * another processor), these texts have to change first.
  *
  * German is the binding version; the English text is a translation.
@@ -64,6 +66,41 @@ const captcha = {
   },
 };
 
+/** Whether the landing pages and the trainer count visits with Umami Cloud (vite.config.ts). */
+const ANALYTICS = __UMAMI_WEBSITE_ID__ !== '';
+
+/** What changes in the privacy policy once the site counts visits. */
+const analytics = {
+  short: {
+    de: ANALYTICS
+      ? 'Es gibt keine Werbung und keine eingebundenen Inhalte von Dritten, auch keine externen Schriftarten. Wir zählen nur anonym mit Umami, ohne Cookies, wie oft die Startseite und der Trainer aufgerufen werden (siehe <em>Reichweitenmessung</em>); was du im Trainer tust und tippst, wird dabei nicht erfasst.'
+      : 'Es gibt keine Werbung, keine Analyse- oder Tracking-Dienste und keine eingebundenen Inhalte von Dritten, auch keine externen Schriftarten.',
+    en: ANALYTICS
+      ? 'There are no ads and no embedded third-party content, not even external fonts. We only count anonymously with Umami, without cookies, how often the start page and the trainer are opened (see <em>Visitor statistics</em>); what you do and type in the trainer is not recorded.'
+      : 'There are no ads, no analytics or tracking services and no embedded third-party content, not even external fonts.',
+  },
+  stored: {
+    de: ANALYTICS ? '\n      <li><strong>Reichweitenmessung ausgeschaltet:</strong> nur wenn du sie unten unter <em>Reichweitenmessung</em> ausschaltest, ein Vermerk darüber (<code>umami.disabled</code>).</li>' : '',
+    en: ANALYTICS ? '\n      <li><strong>Visitor statistics turned off:</strong> only if you turn them off below under <em>Visitor statistics</em>, a note saying so (<code>umami.disabled</code>).</li>' : '',
+  },
+  section: {
+    de: ANALYTICS ? `
+
+    <h2>Reichweitenmessung</h2>
+    <p>Um zu sehen, wie viele Menschen die Startseite besuchen, woher sie kommen und ob sie den Trainer öffnen, zählen wir Aufrufe der Startseite und des Trainers mit Umami Cloud (Umami Software, Inc., USA). Im Trainer wird nur gezählt, dass die Seite geöffnet wurde; deine Übungen, dein Tastenprotokoll und dein Konto bleiben davon unberührt. Auf diesen Rechtsseiten läuft Umami nicht. Beim Aufruf lädt dein Browser ein Skript von Umami und schickt diese Angaben: die aufgerufene Seite ohne Zusätze in der Adresse, die Seite, von der du kommst, Browser, Betriebssystem, Gerätetyp, Bildschirmgröße und Sprache sowie, falls du auf der Startseite auf einen der Knöpfe zum Trainer klickst, welchen davon. Aus deiner IP-Adresse ermittelt Umami das Land und die Region; die IP-Adresse selbst wird nicht gespeichert. Damit ein Besuch nur einmal zählt, bildet Umami aus IP-Adresse, Browserangaben und einem Geheimwert, der jeden Monat wechselt, eine Kennung, aus der sich weder deine IP-Adresse ablesen lässt noch du über Monate oder andere Websites hinweg wiedererkannt wirst. Umami setzt keine Cookies und legt nichts auf deinem Gerät ab. Wir sehen nur zusammengefasste Zahlen.</p>
+    <p>Rechtsgrundlage ist unser berechtigtes Interesse, die Website anhand anonymer Besucherzahlen zu verbessern (Art. 6 Abs. 1 lit. f DSGVO). Umami verarbeitet die Daten als unser Auftragsverarbeiter auf Grundlage seines Auftragsverarbeitungsvertrags; soweit dabei eine Verarbeitung in den USA möglich ist, ist sie durch die EU-Standardvertragsklauseln abgesichert (Art. 46 Abs. 2 lit. c DSGVO). Die Statistik wird nach höchstens 12 Monaten gelöscht. Mehr dazu in der <a href="https://umami.is/privacy">Datenschutzerklärung von Umami</a>.</p>
+    <p>Du kannst widersprechen: Hast du in deinem Browser „Do Not Track“ eingeschaltet, zählt Umami dich nicht. Außerdem kannst du die Messung hier für diesen Browser ausschalten; dafür speichern wir einen Vermerk im lokalen Speicher deines Browsers.</p>
+    <p class="legal-optout"><button type="button" data-analytics-optout></button> <span data-analytics-state></span></p>` : '',
+    en: ANALYTICS ? `
+
+    <h2>Visitor statistics</h2>
+    <p>To see how many people visit the start page, where they come from and whether they open the trainer, we count visits to the start page and the trainer with Umami Cloud (Umami Software, Inc., USA). In the trainer, only the fact that the page was opened is counted; your drills, your keystroke log and your account are not touched by it. Umami does not run on these legal pages. When a page is opened, your browser loads a script from Umami and sends this: the page you opened without anything added to its address, the page you came from, your browser, operating system, device type, screen size and language, and, if you click one of the buttons on the start page that lead to the trainer, which one. Umami derives your country and region from your IP address; the IP address itself is not stored. So that a visit counts only once, Umami makes an identifier from your IP address, browser details and a secret value that changes every month; it does not reveal your IP address and cannot recognise you across months or on other websites. Umami sets no cookies and stores nothing on your device. We only see totals.</p>
+    <p>The legal basis is our legitimate interest in improving the website from anonymous visitor numbers (Art. 6(1)(f) GDPR). Umami processes the data as our processor under its data processing agreement; where processing in the USA is possible, it is covered by the EU Standard Contractual Clauses (Art. 46(2)(c) GDPR). The statistics are deleted after 12 months at the latest. See <a href="https://umami.is/privacy">Umami's privacy policy</a> for more.</p>
+    <p>You can object: if your browser has "Do Not Track" turned on, Umami does not count you. You can also turn the statistics off for this browser here; to remember that, we store a note in your browser's local storage.</p>
+    <p class="legal-optout"><button type="button" data-analytics-optout></button> <span data-analytics-state></span></p>` : '',
+  },
+};
+
 /** Page chrome: titles, the back link and the language switch. */
 export const LEGAL_UI = {
   de: {
@@ -74,6 +111,10 @@ export const LEGAL_UI = {
     language: 'Sprache',
     updated: `Stand: ${LEGAL_UPDATED.de}`,
     note: '',
+    optOut: 'Reichweitenmessung ausschalten',
+    optIn: 'Reichweitenmessung wieder einschalten',
+    optedOut: 'In diesem Browser ausgeschaltet.',
+    optedIn: 'In diesem Browser eingeschaltet.',
   },
   en: {
     imprint: 'Legal notice (Impressum)',
@@ -83,6 +124,10 @@ export const LEGAL_UI = {
     language: 'Language',
     updated: `Last updated: ${LEGAL_UPDATED.en}`,
     note: 'This is a translation. The German version is the binding one.',
+    optOut: 'Turn off visitor statistics',
+    optIn: 'Turn visitor statistics back on',
+    optedOut: 'Turned off in this browser.',
+    optedIn: 'Turned on in this browser.',
   },
 } satisfies Record<LegalLanguage, Record<string, string>>;
 
@@ -123,7 +168,7 @@ const imprint: Record<LegalLanguage, string> = {
 const privacy: Record<LegalLanguage, string> = {
   de: `
     <h2>Kurz gesagt</h2>
-    <p>Keypacer braucht kein Konto und setzt keine Cookies. Es gibt keine Werbung, keine Analyse- oder Tracking-Dienste und keine eingebundenen Inhalte von Dritten, auch keine externen Schriftarten.${captcha.short.de} Was du übst, bleibt in deinem Browser. Nur wenn du dich freiwillig anmeldest, um deinen Fortschritt zwischen Geräten abzugleichen, werden deine Übungsdaten auf einem Server in der EU gespeichert (siehe <em>Freiwilliges Konto</em>).</p>
+    <p>Keypacer braucht kein Konto und setzt keine Cookies. ${analytics.short.de}${captcha.short.de} Was du übst, bleibt in deinem Browser. Nur wenn du dich freiwillig anmeldest, um deinen Fortschritt zwischen Geräten abzugleichen, werden deine Übungsdaten auf einem Server in der EU gespeichert (siehe <em>Freiwilliges Konto</em>).</p>
 
     <h2>Verantwortlicher</h2>
     <p>${name}<br>${town}, Österreich<br>${mail}</p>
@@ -133,7 +178,7 @@ const privacy: Record<LegalLanguage, string> = {
     <ul>
       <li><strong>Einstellungen:</strong> Tastaturlayout, Übungs- und Oberflächensprache, Farbschema, Hilfen beim Tippen, ob die Einrichtung abgeschlossen ist und ob du einen Hinweis weggeklickt hast, dein Wochenziel; falls du mehrere Tastaturen nutzt, deren Namen und Layouts und welche gerade gewählt ist.</li>
       <li><strong>Lernstand:</strong> welche Tasten freigeschaltet sind und welche du schon beherrschst, und wie weit du im Lernpfad bist, je Sprache und Layout.</li>
-      <li><strong>Tastenprotokoll:</strong> für jeden Anschlag im Übungstext das erwartete und das getippte Zeichen, die Taste, die Zeit seit dem vorigen Anschlag, Datum und Uhrzeit sowie die Übungsrunde, und wenn du unter <em>Einstellungen → Tastaturen</em> mehrere Tastaturen angelegt hast, auf welcher davon. Daraus berechnet Keypacer deine schwachen Tasten und die nächsten Übungen. Erfasst wird nur, was du in das Übungsfeld tippst.</li>
+      <li><strong>Tastenprotokoll:</strong> für jeden Anschlag im Übungstext das erwartete und das getippte Zeichen, die Taste, die Zeit seit dem vorigen Anschlag, Datum und Uhrzeit sowie die Übungsrunde, und wenn du unter <em>Einstellungen → Tastaturen</em> mehrere Tastaturen angelegt hast, auf welcher davon. Daraus berechnet Keypacer deine schwachen Tasten und die nächsten Übungen. Erfasst wird nur, was du in das Übungsfeld tippst.</li>${analytics.stored.de}
     </ul>
     <p>Ohne Konto verlassen diese Daten dein Gerät nicht; wir erhalten sie nicht und können sie nicht einsehen. Wenn du angemeldet bist, liegen hier außerdem deine Anmeldung (ein Zugangsschlüssel, damit du angemeldet bleibst) und der Stand des letzten Abgleichs. Das Speichern ist technisch unbedingt erforderlich, um den Dienst bereitzustellen, den du ausdrücklich nutzt (§ 165 Abs. 3 TKG 2021); eine Einwilligung und ein Cookie-Banner sind dafür nicht nötig.</p>
     <p>Du behältst die Kontrolle: Unter <em>Einstellungen → Tastenprotokoll und Export</em> kannst du das Protokoll ansehen, als JSON oder CSV exportieren und löschen. Alles zusammen entfernst du, indem du in deinem Browser die Websitedaten für diese Seite löschst.</p>
@@ -149,7 +194,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>Konto und Daten werden bei Supabase gespeichert (Supabase, Inc., USA), auf Servern in Frankfurt am Main (EU). Supabase verarbeitet die Daten als unser Auftragsverarbeiter auf Grundlage seines Auftragsverarbeitungsvertrags${accountMail.de.supabase} Soweit dabei ein Zugriff aus Ländern außerhalb der EU möglich ist, etwa durch Supabase selbst oder dessen Unterauftragsverarbeiter, ist er durch die EU-Standardvertragsklauseln abgesichert (Art. 46 Abs. 2 lit. c DSGVO). Mehr dazu in der <a href="https://supabase.com/privacy">Datenschutzerklärung von Supabase</a>.</p>
     <p>Wir speichern deine Daten, solange du dein Konto hast. Unter <em>Einstellungen → Konto → Konto löschen</em> löschst du dein Konto samt allen dort gespeicherten Übungsdaten sofort; die Daten auf deinem Gerät bleiben, bis du sie selbst löschst. Löschst du unter <em>Tastenprotokoll und Export</em> das Protokoll, während du angemeldet bist, wird es auch im Konto gelöscht. Anmeldeprotokolle löscht Supabase automatisch nach kurzer Zeit.</p>
     <p><strong>Trainingspartner (freiwillig):</strong> Mit Konto kannst du eine kleine Gruppe gründen (bis zu 8 Personen) und Freunde per Einladungslink dazuholen. Die Mitglieder einer Gruppe sehen gegenseitig ihren Benutzernamen, ihr Wochenziel, an wie vielen Tagen sie in der laufenden Woche geübt haben, ihre Serie in Wochen und die Anfeuerungen (👏) der Woche; die durchschnittliche Tippgeschwindigkeit nur, wenn das jeweilige Mitglied sie freigibt. Dafür speichern wir die Gruppe, wer dazugehört, diese Wochenzahlen und die Anfeuerungen. Wer den Einladungslink hat, sieht vor dem Beitritt den Benutzernamen der Person, die die Gruppe gegründet hat, und wie viele Mitglieder sie hat. Dein Tastenprotokoll und deine E-Mail-Adresse sehen andere nie. Rechtsgrundlage ist die Erfüllung des Nutzungsverhältnisses, weil du diese Funktion ausdrücklich nutzt (Art. 6 Abs. 1 lit. b DSGVO). Wenn du die Gruppe verlässt, daraus entfernt wirst oder dein Konto löschst, werden deine Wochenzahlen und Anfeuerungen in dieser Gruppe sofort gelöscht.</p>
-    <p><strong>Anmeldung mit Google:</strong> Wählst du „Weiter mit Google“, wirst du zu Google weitergeleitet (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland) und meldest dich dort an. Google teilt uns danach deine E-Mail-Adresse, deinen Namen und die Adresse deines Profilbilds mit; wir verwenden nur die E-Mail-Adresse und speichern die übrigen Angaben nur, weil Supabase sie mit der Anmeldung ablegt. Für die Anmeldung bei Google ist Google selbst verantwortlich, siehe <a href="https://policies.google.com/privacy?hl=de">Datenschutzerklärung von Google</a>. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO.</p>${accountMail.de.section}${captcha.section.de}
+    <p><strong>Anmeldung mit Google:</strong> Wählst du „Weiter mit Google“, wirst du zu Google weitergeleitet (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland) und meldest dich dort an. Google teilt uns danach deine E-Mail-Adresse, deinen Namen und die Adresse deines Profilbilds mit; wir verwenden nur die E-Mail-Adresse und speichern die übrigen Angaben nur, weil Supabase sie mit der Anmeldung ablegt. Für die Anmeldung bei Google ist Google selbst verantwortlich, siehe <a href="https://policies.google.com/privacy?hl=de">Datenschutzerklärung von Google</a>. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO.</p>${accountMail.de.section}${captcha.section.de}${analytics.section.de}
 
     <h2>Hosting</h2>
     <p>Die Website wird über Cloudflare ausgeliefert (Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, USA). Beim Aufruf verarbeitet Cloudflare technisch notwendige Daten, damit die Seite bei dir ankommt und vor Angriffen geschützt ist: deine IP-Adresse, Datum und Uhrzeit, die aufgerufene Adresse sowie Angaben deines Browsers wie Browsertyp und Betriebssystem. Rechtsgrundlage ist unser berechtigtes Interesse an einer sicheren und funktionierenden Website (Art. 6 Abs. 1 lit. f DSGVO).</p>
@@ -165,7 +210,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>Wenn Keypacer neue Funktionen bekommt, die Daten verarbeiten, oder einen weiteren Dienstleister einsetzt, passen wir diese Erklärung vorher an.</p>`,
   en: `
     <h2>In short</h2>
-    <p>Keypacer needs no account and sets no cookies. There are no ads, no analytics or tracking services and no embedded third-party content, not even external fonts.${captcha.short.en} What you practise stays in your browser. Only if you choose to sign in, to keep your progress in sync between devices, is your practice data stored on a server in the EU (see <em>Optional account</em>).</p>
+    <p>Keypacer needs no account and sets no cookies. ${analytics.short.en}${captcha.short.en} What you practise stays in your browser. Only if you choose to sign in, to keep your progress in sync between devices, is your practice data stored on a server in the EU (see <em>Optional account</em>).</p>
 
     <h2>Controller</h2>
     <p>${name}<br>${town}, Austria<br>${mail}</p>
@@ -175,7 +220,7 @@ const privacy: Record<LegalLanguage, string> = {
     <ul>
       <li><strong>Settings:</strong> keyboard layout, practice and interface language, colour theme, typing aids, whether setup is finished or a notice was dismissed, your weekly goal, and, if you use several keyboards, their names and layouts and which one is selected.</li>
       <li><strong>Learning state:</strong> which keys are unlocked and which you have mastered, and how far along the learning path you are, per language and layout.</li>
-      <li><strong>Keystroke log:</strong> for each keystroke in the practice text, the expected and the typed character, the key, the time since the previous keystroke, the date and time, and the practice round, plus which keyboard you typed on if you set up several under <em>Settings → Keyboards</em>. Keypacer uses it to work out your weak keys and your next drills. Only what you type into the practice field is recorded.</li>
+      <li><strong>Keystroke log:</strong> for each keystroke in the practice text, the expected and the typed character, the key, the time since the previous keystroke, the date and time, and the practice round, plus which keyboard you typed on if you set up several under <em>Settings → Keyboards</em>. Keypacer uses it to work out your weak keys and your next drills. Only what you type into the practice field is recorded.</li>${analytics.stored.en}
     </ul>
     <p>Without an account this data does not leave your device; we do not receive it and cannot see it. When you are signed in, your sign-in (an access token, so you stay signed in) and the state of the last sync are stored here too. Storing it is strictly necessary to provide the service you explicitly use (§ 165(3) of the Austrian Telecommunications Act 2021, TKG 2021), so it needs no consent and no cookie banner.</p>
     <p>You stay in control: under <em>Settings → Keystroke log and export</em> you can view the log, export it as JSON or CSV, and delete it. To remove everything, clear this site's data in your browser.</p>
@@ -191,7 +236,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>Accounts and data are stored with Supabase (Supabase, Inc., USA), on servers in Frankfurt am Main (EU). Supabase processes the data as our processor under its data processing agreement${accountMail.en.supabase} Where access from outside the EU is possible, for example by Supabase itself or its sub-processors, it is covered by the EU Standard Contractual Clauses (Art. 46(2)(c) GDPR). See <a href="https://supabase.com/privacy">Supabase's privacy policy</a> for more.</p>
     <p>We keep your data for as long as you have your account. Under <em>Settings → Account → Delete account</em> you delete your account and all practice data stored with it at once; the data on your device stays until you delete it yourself. If you clear the log under <em>Keystroke log and export</em> while signed in, it is deleted from your account too. Supabase deletes sign-in logs automatically after a short time.</p>
     <p><strong>Training buddies (optional):</strong> with an account you can start a small group (up to 8 people) and bring friends in with an invite link. Members of a group see each other's username, weekly goal, how many days they practised in the current week, their streak in weeks, and the week's cheers (👏); average typing speed only if that member chooses to share it. For this we store the group, who is in it, these weekly numbers and the cheers. Anyone with the invite link can see, before joining, the username of the person who started the group and how many members it has. Others never see your keystroke log or your e-mail address. The legal basis is performing the service, since you use this feature explicitly (Art. 6(1)(b) GDPR). When you leave the group, are removed from it or delete your account, your weekly numbers and cheers in that group are deleted at once.</p>
-    <p><strong>Signing in with Google:</strong> if you choose "Continue with Google", you are sent to Google (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland) to sign in there. Google then gives us your e-mail address, your name and the address of your profile picture; we only use the e-mail address and keep the rest only because Supabase stores it with the sign-in. Google is responsible for signing you in on its side, see <a href="https://policies.google.com/privacy">Google's privacy policy</a>. The legal basis is Art. 6(1)(b) GDPR.</p>${accountMail.en.section}${captcha.section.en}
+    <p><strong>Signing in with Google:</strong> if you choose "Continue with Google", you are sent to Google (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland) to sign in there. Google then gives us your e-mail address, your name and the address of your profile picture; we only use the e-mail address and keep the rest only because Supabase stores it with the sign-in. Google is responsible for signing you in on its side, see <a href="https://policies.google.com/privacy">Google's privacy policy</a>. The legal basis is Art. 6(1)(b) GDPR.</p>${accountMail.en.section}${captcha.section.en}${analytics.section.en}
 
     <h2>Hosting</h2>
     <p>The website is delivered through Cloudflare (Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, USA). When you open it, Cloudflare processes the technical data needed to get the page to you and to protect it from attacks: your IP address, the date and time, the address requested, and details your browser sends such as browser type and operating system. The legal basis is our legitimate interest in a secure, working website (Art. 6(1)(f) GDPR).</p>

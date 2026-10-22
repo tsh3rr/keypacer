@@ -172,8 +172,29 @@ const PRIVACY_CHIP = ['error', 'focus', 'accent'] as const;
 /** Example rows of the weak-keys table: error share and time per key, weakest first. */
 const WEAK_EXAMPLE = [[11.2, 412, 4], [8.4, 365, 3], [6.1, 338, 3], [3.9, 301, 2], [2.2, 276, 1]] as const;
 
-export function renderLanding(lang: LandingLanguage, site: string): string {
-  const c = COPY[lang];
+/** Umami Cloud's script; it sends to api-gateway.umami.dev (both are allowed in public/_headers). */
+const UMAMI_SCRIPT = 'https://cloud.umami.is/script.js';
+
+/**
+ * The Umami tag for the landing pages and the trainer's page (vite.config.ts).
+ * No cookies, Do Not Track respected, and nothing after the path is sent, so
+ * sign-in and invite links stay out of the statistics.
+ */
+export const umamiTag = (id: string): string =>
+  `<script defer src="${UMAMI_SCRIPT}" data-website-id="${esc(id)}" data-do-not-track="true" data-exclude-search="true" data-exclude-hash="true"></script>`;
+
+/**
+ * The page for one language. With an Umami website ID, the page loads Umami
+ * (umamiTag) and swaps its
+ * "0 trackers" claims for the analytics copy.
+ */
+export function renderLanding(lang: LandingLanguage, site: string, umami = ''): string {
+  const base = COPY[lang];
+  const c = umami ? {
+    ...base,
+    facts: { ...base.facts, items: base.facts.items.map((f, i, all) => i === all.length - 1 ? { ...f, label: base.analytics.fact } : f) },
+    privacy: { ...base.privacy, items: base.privacy.items.map((p, i) => i === 0 ? base.analytics.item : p) },
+  } : base;
   const url = site + landingPath(lang);
   const app = appPath(lang);
   const vignettes = vignetteData(lang);
@@ -243,7 +264,8 @@ export function renderLanding(lang: LandingLanguage, site: string): string {
     <!-- Returning learners and sign-in or invite links go straight on to the trainer. -->
     <script src="/to-app.js"></script>
     <link rel="stylesheet" href="/src/style.css" />
-    <link rel="stylesheet" href="/src/landing/landing.css" />
+    <link rel="stylesheet" href="/src/landing/landing.css" />${umami ? `
+    ${umamiTag(umami)}` : ''}
     <script type="application/ld+json">${jsonBlock(structured)}</script>
   </head>
   <body class="lp">
@@ -261,7 +283,7 @@ export function renderLanding(lang: LandingLanguage, site: string): string {
         <nav class="menu lp-lang-menu" aria-label="${esc(c.nav.languages)}">${languageLinks}</nav>
       </details>
       <a class="lp-signin" href="/app/?signin&amp;lang=${lang}">${esc(c.nav.signIn)}</a>
-      <a class="lp-btn lp-btn-small" href="${app}">${esc(c.nav.open)}</a>
+      <a class="lp-btn lp-btn-small" href="${app}" data-umami-event="open-app-nav">${esc(c.nav.open)}</a>
     </header>
 
     <main id="inhalt" class="lp-main">
@@ -286,7 +308,7 @@ export function renderLanding(lang: LandingLanguage, site: string): string {
 
         <div id="lp-cta" class="lp-cta">
           <span class="lp-arrow" aria-hidden="true"></span>
-          <a id="lp-go" class="lp-btn lp-btn-big" href="${app}"><span data-cta>${esc(c.hero.cta)}</span> ${ARROW}</a>
+          <a id="lp-go" class="lp-btn lp-btn-big" href="${app}" data-umami-event="start-hero"><span data-cta>${esc(c.hero.cta)}</span> ${ARROW}</a>
           <p class="lp-note">${esc(c.hero.note)}</p>
         </div>
       </section>
@@ -354,7 +376,7 @@ export function renderLanding(lang: LandingLanguage, site: string): string {
         <div>
           <h2 id="lp-final">${esc(c.final.title)}</h2>
           <p>${esc(c.final.text)}</p>
-          <a class="lp-btn lp-btn-big" href="${app}"><span data-cta>${esc(c.final.cta)}</span> ${ARROW}</a>
+          <a class="lp-btn lp-btn-big" href="${app}" data-umami-event="start-final"><span data-cta>${esc(c.final.cta)}</span> ${ARROW}</a>
         </div>
         ${BRAND_MARK.replace(/ks-/g, 'ksf-').replace('class="brand-mark"', 'class="lp-final-mark"')}
       </section>

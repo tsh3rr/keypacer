@@ -384,9 +384,9 @@ export function renderLanding(lang: LandingLanguage, site: string, umami = ''): 
 
     <footer class="site-foot lp-foot">
       <nav class="lp-foot-langs" aria-label="${esc(c.nav.languages)}">${languageLinks}</nav>
-      <a href="/impressum">${esc(c.foot.imprint)}</a>
-      <a href="/datenschutz">${esc(c.foot.privacy)}</a>
-      <a href="/nutzungsbedingungen">${esc(c.foot.terms)}</a>
+      <a href="/impressum?lang=${lang}">${esc(c.foot.imprint)}</a>
+      <a href="/datenschutz?lang=${lang}">${esc(c.foot.privacy)}</a>
+      <a href="/nutzungsbedingungen?lang=${lang}">${esc(c.foot.terms)}</a>
     </footer>
 
     <script type="application/json" id="lp-data">${jsonBlock({

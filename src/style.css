@@ -464,6 +464,7 @@ main { max-width: 960px; margin: 0 auto; padding: 20px 16px 40px; }
 .pop-weak small { color: var(--muted); text-align: right; font-size: 0.8rem; }
 .pop-more { border: 0; padding: 0; color: var(--accent); background: none; text-align: left; justify-self: start; font-size: 0.85rem; }
 .pop-more::after { content: " →"; }
+.pop-test { justify-self: start; font-size: 0.85rem; border-color: var(--accent); color: var(--accent); background: var(--accent-soft); text-align: left; }
 .pop-fresh { display: flex; gap: 10px; align-items: flex-start; color: var(--muted); line-height: 1.45; }
 .pop-fresh .dot { margin-top: 6px; }
 .pop-fresh b { color: var(--fg); font-weight: 500; }
@@ -1056,6 +1057,13 @@ body.onboarding .tabs, body.onboarding .menu-wrap, body.onboarding .settings-btn
 .ob-progress { text-align: right; }
 .ob-nums { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .ob-result { margin: 0; line-height: 1.5; }
+.ob-extras { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.ob-extras li {
+  display: flex; justify-content: space-between; gap: 12px; padding: 9px 12px; border-radius: 10px;
+  border: 1px solid var(--border); font-variant-numeric: tabular-nums;
+}
+.ob-extras li b { font-weight: 500; }
+.ob-extras li.done { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
 .ob-method { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 .ob-method li { display: flex; gap: 12px; align-items: flex-start; }
 .ob-method b { display: block; margin-bottom: 2px; }

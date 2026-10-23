@@ -27,6 +27,7 @@ import {
 } from './goals';
 import { CoachBar, type CoachData } from './coachView';
 import { renderResult, type Tone } from './resultCard';
+import { extrasStage } from './extrasTest';
 import { Onboarding } from './onboarding';
 import { takeLandingTest } from './handoff';
 import {
@@ -464,6 +465,7 @@ const coach = new CoachBar(
   $('coach-pop'),
   (section) => showView('progress', section),
   () => inputEl.focus(),
+  () => openExtrasTest(),
 );
 /** The last path summary the coach showed; the Progress page repeats it in its path card. */
 let coachPath: CoachData['path'] | null = null;
@@ -536,6 +538,7 @@ function renderCoach(): void {
     next: path.next === null ? null : keyCap(path.next),
     stages: path.stages.map((st) => ({ name: stageName(st.id), done: st.done, total: st.total, state: st.state })),
     about: nextTip,
+    test: extrasLabel(),
   };
   // Name the drill's target keys above the text; a finished drill's next targets are not known yet.
   const leans = session.done || kind === 'warmup' || kind === 'sentence'
@@ -738,6 +741,17 @@ async function finishDrill(): Promise<void> {
     finishing = false;
   }
 }
+
+// Unlocks every letter, capital, mark and digit at once, keeping the level; the drills then work on whatever is weak.
+$('unlock-all').addEventListener('click', async () => {
+  if (!confirm(t('settings.unlockAllConfirm'))) return;
+  closeSettings(false);
+  const state = await currentCurriculum();
+  const unlocked = new Set(state.unlocked);
+  curriculum = { ...state, unlocked: [...state.unlocked, ...unlockSteps(corpus(), context.layout).filter((s) => !unlocked.has(s))], focusKey: null, blocker: null, blockedDrills: 0 };
+  saveCurriculum(curriculum);
+  startDrill('core').catch((err) => console.error('Failed to start drill', err));
+});
 
 $('reset-lessons').addEventListener('click', () => {
   if (!confirm(t('settings.resetConfirm'))) return;
@@ -1494,6 +1508,22 @@ const onboarding = new Onboarding($('onboarding-view'), {
     startDrill(lessons ? 'core' : undefined).catch((err) => console.error('Failed to start drill', err));
   },
 }, browserLocales);
+
+/** The extras test's button label for the stage the learner is in, or null while it cannot run (letters left, all done). */
+function extrasLabel(): string | null {
+  const stage = curriculum ? extrasStage(curriculum, corpus()) : null;
+  return stage ? t('extras.pathOffer', { stage: stageName(stage) }) : null;
+}
+
+/** The extras test from the learning path: capitals, punctuation or digits unlocked by a short test. */
+function openExtrasTest(): void {
+  if (!curriculum || !extrasLabel()) return;
+  showView('practice');
+  closeSettings(false);
+  practiceView.hidden = true;
+  document.body.classList.add('onboarding');
+  onboarding.openExtras(curriculum);
+}
 
 function openOnboarding(): void {
   showView('practice');

@@ -1,9 +1,11 @@
 import { availableLanguages, getCorpus } from './corpus';
 import { withFlag } from './flags';
 import { stairMark } from './stairMark';
-import { initialCurriculum, tierWpm, unlockSteps, type CurriculumState } from './drill';
+import { CAPITALS, initialCurriculum, tierWpm, unlockSteps, type CurriculumState } from './drill';
 import { PLACEMENT_WORDS, canSkipAhead, wordsTyped } from './handoff';
 import { KeyObserver, LAYOUTS, ROWS, charLabel, detectLayout, getLayout, keyLabel } from './layouts';
+import { extrasStage, extrasText, lockedExtras, placeExtras, type ExtrasPlacement } from './extrasTest';
+import { stageOf } from './path';
 import { DEFAULT_PLACEMENT_PARAMS, placeFromTest, placementResult, placementText, quickText, type Placement } from './placement';
 import { TypingSession } from './session';
 import type { LayoutSetting } from './settings';
@@ -31,6 +33,11 @@ import { benefits } from './sync/ui';
  * is fast enough to skip ahead types the rest of the placement test. The
  * layout is recognised from the keys pressed on the way, and "How it works"
  * comes after the first round instead (main.ts).
+ *
+ * After a placement that passed every letter, an optional second test
+ * (extrasTest.ts) checks capitals, punctuation and digits the same way. The
+ * learning path opens that test on its own (`openExtras`) for the stage the
+ * learner is in.
  *
  * The screen only talks to the rest of the app through `OnboardingHost`.
  * Its text comes from the translation files (`onboarding.*` keys) through `T` below.
@@ -103,6 +110,18 @@ const T = {
   get moreTitle() { return t('onboarding.moreTitle'); },
   moreIntro: (n: number) => t('onboarding.moreIntro', { n }),
   get quickSkip() { return t('onboarding.quickSkip'); },
+
+  get extrasOffer() { return t('extras.offer'); },
+  get extrasOfferText() { return t('extras.offerText'); },
+  get extrasStart() { return t('extras.start'); },
+  get extrasTitle() { return t('extras.title'); },
+  get extrasIntro() { return t('extras.intro'); },
+  get extrasResultTitle() { return t('extras.resultTitle'); },
+  extrasStop: (key: string) => t('extras.stop', { key }),
+  get extrasAll() { return t('extras.all'); },
+  get extrasCancel() { return t('extras.cancel'); },
+  get extrasContinue() { return t('extras.continue'); },
+  stage: (id: string) => t(`stage.${id}` as 'stage.letters'),
 };
 
 /** Words in the opening line of a first visit's placement (the landing page's line is about as long). */
@@ -168,6 +187,10 @@ export class Onboarding {
   private prior: KeystrokeEvent[] = [];
   /** Quick setup: whether a line was typed here, not only on the landing page. */
   private typedHere = false;
+  /** The extras test: the curriculum it adds to, the steps it tests, and its result once typed. */
+  private extras: { base: CurriculumState; steps: string[]; result: ExtrasPlacement | null } | null = null;
+  /** Opened from the learning path for the extras test only (`openExtras`). */
+  private extrasOnly = false;
 
   constructor(
     private readonly root: HTMLElement,
@@ -177,6 +200,8 @@ export class Onboarding {
 
   open(): void {
     this.quick = false;
+    this.extras = null;
+    this.extrasOnly = false;
     this.prior = [];
     this.step = 0;
     this.kbMode = 'confirm';
@@ -201,6 +226,19 @@ export class Onboarding {
     this.typedHere = false;
     if (this.prior.length) this.afterLine();
     else this.startTest();
+  }
+
+  /**
+   * The extras test on its own, for the capitals, punctuation or digits of
+   * the stage `state` is in. Closing keeps the lessons as they are; a result
+   * adds what passed to them.
+   */
+  openExtras(state: CurriculumState): void {
+    this.open();
+    this.extrasOnly = true;
+    const corpus = getCorpus(state.language);
+    const stage = extrasStage(state, corpus);
+    this.startExtras(state, stage ? lockedExtras(state, corpus, stage) : []);
   }
 
   /** Redraws in a new interface language, unless the placement test is being typed. */
@@ -242,6 +280,7 @@ export class Onboarding {
 
   private render(): void {
     const card = el('div', 'ob-card');
+    if (this.extrasOnly) return this.renderExtrasOnly(card);
     if (this.quick) return this.renderQuick(card);
     const head = el('div', 'ob-head');
     const dots = el('ol', 'ob-steps');
@@ -510,7 +549,8 @@ export class Onboarding {
   private renderTest(card: HTMLElement, beforeText?: () => void): void {
     const test = this.test!;
     const words = test.session.text.split(' ').length;
-    if (!this.quick) card.append(el('h2', '', T.testTitleRun), el('p', 'ob-intro', T.testIntro));
+    if (this.extras) card.append(el('h2', '', T.extrasTitle), el('p', 'ob-intro', T.extrasIntro));
+    else if (!this.quick) card.append(el('h2', '', T.testTitleRun), el('p', 'ob-intro', T.testIntro));
     else if (this.prior.length === 0) card.append(el('h2', '', T.quickTitle), el('p', 'ob-intro', T.quickIntro));
     else card.append(el('h2', '', T.moreTitle), el('p', 'ob-intro', T.moreIntro(words)));
     beforeText?.();
@@ -565,11 +605,14 @@ export class Onboarding {
     const wrap = el('div', 'ob-typing');
     wrap.append(textEl, input);
     card.append(wrap, hint, progress);
-    if (this.quick) return;
+    if (this.quick && !this.extras) return;
     const foot = el('div', 'ob-foot');
     foot.append(button(T.back, 'ob-back', () => {
       this.test = null;
-      this.render();
+      // Back from the extras test: to the placement result, or out when opened from the path.
+      this.extras = null;
+      if (this.extrasOnly) this.close(null);
+      else this.render();
     }));
     card.append(foot);
   }
@@ -578,9 +621,15 @@ export class Onboarding {
     const test = this.test;
     if (!test) return;
     const ctx = this.host.context();
-    Promise.all(test.writes).then(() => this.quick ? this.useObservedLayout() : undefined).finally(() => {
+    const extras = this.extras;
+    Promise.all(test.writes).then(() => this.quick && !extras ? this.useObservedLayout() : undefined).finally(() => {
       if (this.test !== test) return;
       this.test = null;
+      if (extras) {
+        extras.result = placeExtras(test.events, extras.base, extras.steps);
+        if (this.placement) this.placement = { ...this.placement, state: extras.result.state };
+        return this.render();
+      }
       if (this.quick) {
         this.prior.push(...test.events);
         this.typedHere = true;
@@ -603,6 +652,9 @@ export class Onboarding {
   private renderPlacement(card: HTMLElement): void {
     const p = this.placement!;
     const ctx = this.host.context();
+    if (this.extras?.result) return this.renderExtrasResult(card, this.extras.result, this.quick
+      ? button(T.start, '', () => this.close(p.state))
+      : button(T.next, '', () => this.go(2)));
     card.append(el('h2', '', T.resultTitle));
 
     const nums = el('div', 'rc-nums ob-nums');
@@ -626,13 +678,67 @@ export class Onboarding {
       text = p.accuracy < 0.9 ? T.placedSloppy : T.placedSlow;
     }
     card.append(el('p', 'ob-result', text.trim()));
+    // Every letter passed: capitals, punctuation and digits can be tested too, instead of unlocked one by one.
+    const extras = p.skipped ? lockedExtras(p.state, getCorpus(ctx.language)) : [];
+    if (extras.length > 0) {
+      const words = el('div');
+      words.append(el('b', '', T.extrasOffer), el('p', '', T.extrasOfferText));
+      card.append(this.accountBox(words, T.extrasStart, () => this.startExtras(p.state, extras)));
+    }
     const foot = this.quick
       ? this.footer(button(T.start, '', () => this.close(p.state)))
       : this.footer(button(T.next, '', () => this.go(2)));
     foot.prepend(button(T.retry, 'link-btn ob-retry', () => {
       this.prior = [];
+      this.extras = null;
       this.startTest();
     }));
+    card.append(foot);
+  }
+
+  // --- The extras test: capitals, punctuation and digits ---
+
+  private startExtras(base: CurriculumState, steps: string[]): void {
+    const ctx = this.host.context();
+    this.extras = { base, steps, result: null };
+    this.test = { session: new TypingSession(extrasText(getCorpus(ctx.language), base, steps), ctx), events: [], writes: [] };
+    this.render();
+  }
+
+  /** Opened from the learning path: the test, then its result. */
+  private renderExtrasOnly(card: HTMLElement): void {
+    const head = el('div', 'ob-head ob-head-quick');
+    head.append(button(T.extrasCancel, 'link-btn ob-skip', () => this.close(null)));
+    card.append(head);
+    const result = this.extras?.result;
+    if (this.test) this.renderTest(card);
+    else if (result) {
+      this.renderExtrasResult(card, result, button(T.extrasContinue, '', () => this.close(result.unlocked.length > 0 ? result.state : null)));
+    } else return this.close(null);
+    this.root.replaceChildren(card);
+    card.querySelector<HTMLElement>('[data-autofocus]')?.focus();
+  }
+
+  /** What the extras test unlocked, stage by stage, and what comes next. */
+  private renderExtrasResult(card: HTMLElement, r: ExtrasPlacement, next: HTMLButtonElement): void {
+    const ctx = this.host.context();
+    card.append(el('h2', '', T.extrasResultTitle));
+    const list = el('ul', 'ob-extras');
+    const tested = this.extras!.steps;
+    for (const id of ['capitals', 'punctuation', 'digits'] as const) {
+      const inStage = tested.filter((s) => stageOf(s) === id);
+      if (inStage.length === 0) continue;
+      const done = inStage.filter((s) => r.unlocked.includes(s)).length;
+      const li = el('li', done === inStage.length ? 'done' : '');
+      li.append(el('b', '', T.stage(id)), el('span', '', done === inStage.length ? '✓' : `${done}/${inStage.length}`));
+      list.append(li);
+    }
+    card.append(list);
+    const stop = r.stoppedAt;
+    const label = stop === null ? '' : stop === CAPITALS ? T.stage('capitals') : [...stop].map((c) => charLabel(ctx.layout, c)).join(' ');
+    card.append(el('p', 'ob-result', stop === null ? T.extrasAll : T.extrasStop(label)));
+    const foot = this.footer(next);
+    foot.prepend(button(T.retry, 'link-btn ob-retry', () => this.startExtras(this.extras!.base, tested)));
     card.append(foot);
   }
 

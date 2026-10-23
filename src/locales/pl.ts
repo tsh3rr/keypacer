@@ -154,6 +154,8 @@ export const pl: Messages = {
   'account.errorGeneric': 'Coś poszło nie tak: {message}',
   'settings.openLog': 'Dziennik naciśnięć i eksport',
   'settings.rerunSetup': 'Sprawdzenie klawiatury i test poziomu',
+  'settings.unlockAll': 'Odblokuj wszystkie klawisze',
+  'settings.unlockAllConfirm': 'Odblokować teraz wszystkie litery, wielkie litery, znaki interpunkcyjne i cyfry? Twój poziom zostaje; ćwiczenia skupią się potem na tym, co jeszcze słabe.',
   'settings.resetLessons': 'Zacznij lekcje od nowa',
   'settings.resetConfirm': 'Zacząć lekcje od nowa od pierwszych sześciu liter? Dziennik naciśnięć zostanie zachowany.',
 

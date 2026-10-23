@@ -153,6 +153,8 @@ export const it: Messages = {
   'account.errorGeneric': 'Qualcosa è andato storto: {message}',
   'settings.openLog': 'Registro dei tasti ed esportazione',
   'settings.rerunSetup': 'Verifica della tastiera e test di livello',
+  'settings.unlockAll': 'Sblocca tutti i tasti',
+  'settings.unlockAllConfirm': 'Sbloccare ora tutte le lettere, le maiuscole, la punteggiatura e i numeri? Il tuo livello resta; gli esercizi lavorano poi su ciò che è ancora debole.',
   'settings.resetLessons': 'Ricomincia le lezioni',
   'settings.resetConfirm': 'Ricominciare le lezioni dalle prime sei lettere? Il registro dei tasti viene conservato.',
 

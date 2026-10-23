@@ -158,6 +158,8 @@ export const en = {
   'account.errorGeneric': 'Something went wrong: {message}',
   'settings.openLog': 'Keystroke log and export',
   'settings.rerunSetup': 'Keyboard check and placement test',
+  'settings.unlockAll': 'Unlock all keys',
+  'settings.unlockAllConfirm': 'Unlock every letter, capital, punctuation mark and number now? Your level stays; the drills then work on whatever is still weak.',
   'settings.resetLessons': 'Restart lessons',
   'settings.resetConfirm': 'Start the lessons over from the first six letters? Your keystroke log is kept.',
 

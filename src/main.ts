@@ -742,6 +742,17 @@ async function finishDrill(): Promise<void> {
   }
 }
 
+// Unlocks every letter, capital, mark and digit at once, keeping the level; the drills then work on whatever is weak.
+$('unlock-all').addEventListener('click', async () => {
+  if (!confirm(t('settings.unlockAllConfirm'))) return;
+  closeSettings(false);
+  const state = await currentCurriculum();
+  const unlocked = new Set(state.unlocked);
+  curriculum = { ...state, unlocked: [...state.unlocked, ...unlockSteps(corpus(), context.layout).filter((s) => !unlocked.has(s))], focusKey: null, blocker: null, blockedDrills: 0 };
+  saveCurriculum(curriculum);
+  startDrill('core').catch((err) => console.error('Failed to start drill', err));
+});
+
 $('reset-lessons').addEventListener('click', () => {
   if (!confirm(t('settings.resetConfirm'))) return;
   closeSettings(false);

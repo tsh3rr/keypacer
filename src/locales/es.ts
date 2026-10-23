@@ -153,6 +153,8 @@ export const es: Messages = {
   'account.errorGeneric': 'Algo salió mal: {message}',
   'settings.openLog': 'Registro de pulsaciones y exportación',
   'settings.rerunSetup': 'Comprobación del teclado y prueba de nivel',
+  'settings.unlockAll': 'Desbloquear todas las teclas',
+  'settings.unlockAllConfirm': '¿Desbloquear ahora todas las letras, mayúsculas, signos de puntuación y números? Tu nivel se mantiene; los ejercicios trabajan luego lo que aún falle.',
   'settings.resetLessons': 'Reiniciar las lecciones',
   'settings.resetConfirm': '¿Empezar las lecciones de nuevo desde las seis primeras letras? Tu registro de pulsaciones se conserva.',
 

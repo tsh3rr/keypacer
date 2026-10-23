@@ -155,6 +155,8 @@ export const fr: Messages = {
   'account.errorGeneric': 'Une erreur s’est produite : {message}',
   'settings.openLog': 'Journal des frappes et export',
   'settings.rerunSetup': 'Vérification du clavier et test de niveau',
+  'settings.unlockAll': 'Débloquer toutes les touches',
+  'settings.unlockAllConfirm': 'Débloquer maintenant toutes les lettres, majuscules, signes de ponctuation et chiffres ? Ton niveau reste le même ; les exercices travaillent ensuite ce qui coince encore.',
   'settings.resetLessons': 'Recommencer les leçons',
   'settings.resetConfirm': 'Reprendre les leçons depuis les six premières lettres ? Ton journal des frappes est conservé.',
 

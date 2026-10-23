@@ -153,6 +153,8 @@ export const de: Messages = {
   'account.errorGeneric': 'Etwas ist schiefgegangen: {message}',
   'settings.openLog': 'Tastenprotokoll und Export',
   'settings.rerunSetup': 'Tastaturcheck und Einstufungstest',
+  'settings.unlockAll': 'Alle Tasten freischalten',
+  'settings.unlockAllConfirm': 'Jetzt alle Buchstaben, Großbuchstaben, Satzzeichen und Ziffern freischalten? Deine Stufe bleibt; die Übungen setzen dann auf das, was noch nicht sitzt.',
   'settings.resetLessons': 'Lektionen neu starten',
   'settings.resetConfirm': 'Die Lektionen mit den ersten sechs Buchstaben neu beginnen? Dein Tastenprotokoll bleibt erhalten.',
 

@@ -21,6 +21,8 @@ export interface CoachData {
     stages: { name: string; done: number; total: number; state: 'done' | 'current' | 'locked' }[];
     /** What the next unlock waits on. */
     about: string;
+    /** Label of the button that opens the extras test for the current stage, or null when it cannot. */
+    test: string | null;
   };
   round: {
     steps: { name: string; state: 'done' | 'current' | 'upcoming' | 'locked' }[];
@@ -68,13 +70,14 @@ export class CoachBar {
 
   /**
    * `onProgress` opens the Progress view at the given card; `onClose` runs when a bubble closes
-   * so the caller can put the focus back on the typing field.
+   * so the caller can put the focus back on the typing field; `onTest` opens the extras test.
    */
   constructor(
     bar: HTMLElement,
     private readonly pop: HTMLElement,
     private readonly onProgress: (target: ProgressTarget) => void,
     private readonly onClose: () => void,
+    private readonly onTest: () => void,
   ) {
     this.chips = new Map([...bar.querySelectorAll<HTMLButtonElement>('[data-pop]')].map((b) => [b.dataset.pop as ChipId, b]));
     for (const [id, chip] of this.chips) {
@@ -205,7 +208,16 @@ export class CoachBar {
           li.append(bar, s.total > 1 && s.state === 'current' ? `${s.name} ${s.done}/${s.total}` : s.name);
           list.append(li);
         }
-        sec.append(title(t('coach.pathTitle')), list, el('p', 'pop-note', d.path.about), this.more(t('coach.pathMore'), 'path'));
+        sec.append(title(t('coach.pathTitle')), list, el('p', 'pop-note', d.path.about));
+        if (d.path.test) {
+          const test = el('button', 'pop-test', d.path.test);
+          test.addEventListener('click', () => {
+            this.close(false);
+            this.onTest();
+          });
+          sec.append(test);
+        }
+        sec.append(this.more(t('coach.pathMore'), 'path'));
         break;
       }
       case 'round': {

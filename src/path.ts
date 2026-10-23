@@ -68,7 +68,8 @@ export function stepGaps(model: WeaknessModel, state: CurriculumState, blocking:
 const isLetter = (c: string) => /^\p{L}$/u.test(c);
 const isDigit = (c: string) => /^\p{Nd}$/u.test(c);
 
-function stageOf(step: string): StageId {
+/** The stage a step belongs to. */
+export function stageOf(step: string): StageId {
   if (step === CAPITALS) return 'capitals';
   if (isLetter(step)) return 'letters';
   if (isDigit(step)) return 'digits';

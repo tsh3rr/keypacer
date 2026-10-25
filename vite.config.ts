@@ -97,6 +97,11 @@ export default defineConfig(({ mode }) => {
     // own address (/impressum, /datenschutz, /nutzungsbedingungen). Any other
     // address gets 404.html (wrangler.jsonc).
     build: {
+      // The colours are written in oklch, which Chrome before 111 and Firefox
+      // before 113 ignore: on Windows 7 (Chrome 109 at most) the caret, typed
+      // text and errors were invisible. Building for these browsers adds rgb
+      // fallbacks.
+      cssTarget: ['chrome109', 'firefox102', 'safari15', 'edge109'],
       rolldownOptions: {
         input: {
           ...Object.fromEntries(LANDING_LANGUAGES.map((l) =>

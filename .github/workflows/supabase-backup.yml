@@ -1,0 +1,103 @@
+name: Database backup
+
+# The free Supabase plan keeps no backups we can download, so this dumps the
+# production database every night and keeps the copy in a Cloudflare R2
+# bucket in the EU. A lifecycle rule on the bucket deletes each copy after
+# 90 days, as the privacy policy says.
+#
+# The dump (roles, schema, and all data including the accounts in auth) is
+# encrypted with age before it leaves the runner. Only the public key is
+# stored here, so neither GitHub nor Cloudflare can read the backups; the
+# private key stays with the owner. Setup and restore: docs/backup.md.
+#
+# Skips cleanly until the secrets are added (Supabase ones are shared with
+# Database migrations in the production environment).
+
+on:
+  schedule:
+    - cron: "17 2 * * *"
+  workflow_dispatch:
+
+# The job only reads the repository.
+permissions:
+  contents: read
+
+concurrency:
+  group: supabase-backup
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+      BACKUP_AGE_RECIPIENT: ${{ vars.BACKUP_AGE_RECIPIENT }}
+      R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+      R2_BUCKET: ${{ secrets.R2_BUCKET }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: auto
+      # R2 rejects the checksums newer AWS CLIs send by default.
+      AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+      AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+    steps:
+      - name: Check secrets
+        id: secrets
+        run: |
+          missing=()
+          for v in SUPABASE_ACCESS_TOKEN SUPABASE_DB_PASSWORD SUPABASE_PROJECT_ID \
+                   BACKUP_AGE_RECIPIENT R2_ACCOUNT_ID R2_BUCKET AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY; do
+            [ -n "${!v}" ] || missing+=("$v")
+          done
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "Backup not set up yet (missing: ${missing[*]}); skipping. See docs/backup.md."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.secrets.outputs.ready == 'true'
+      - uses: supabase/setup-cli@v1
+        if: steps.secrets.outputs.ready == 'true'
+        with:
+          version: 2.119.0
+      - name: Dump the database
+        if: steps.secrets.outputs.ready == 'true'
+        run: |
+          set -euo pipefail
+          d="$RUNNER_TEMP/dump"
+          mkdir -p "$d"
+          supabase link --project-ref "$SUPABASE_PROJECT_ID"
+          supabase db dump --role-only -f "$d/roles.sql"
+          supabase db dump -f "$d/schema.sql"
+          # Only our tables and the accounts: the storage schema is unused and
+          # restoring its tables into a new project failed in a test.
+          supabase db dump --data-only --use-copy --schema auth,public -f "$d/data.sql"
+          cd "$d"
+          ls -l
+          # A dump that silently lost the accounts or the practice data is
+          # worse than a failed run, so check that they are in it.
+          for t in auth.users public.practice_sessions public.user_state; do
+            grep -Eq "^COPY \"?${t%%.*}\"?\.\"?${t#*.}\"? " data.sql || { echo "::error::$t missing from data.sql"; exit 1; }
+          done
+      - name: Encrypt
+        if: steps.secrets.outputs.ready == 'true'
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq && sudo apt-get install -y -qq age > /dev/null
+          name="keypacer-$(date -u +%F-%H%M).tar.gz.age"
+          tar -C "$RUNNER_TEMP/dump" -cz roles.sql schema.sql data.sql \
+            | age -r "$BACKUP_AGE_RECIPIENT" -o "$RUNNER_TEMP/$name"
+          # Nothing unencrypted is left behind on the runner.
+          rm -rf "$RUNNER_TEMP/dump"
+          ls -l "$RUNNER_TEMP/$name"
+          echo "BACKUP_FILE=$name" >> "$GITHUB_ENV"
+      - name: Upload to R2
+        if: steps.secrets.outputs.ready == 'true'
+        run: |
+          set -euo pipefail
+          # Buckets created with the EU jurisdiction have their own endpoint.
+          aws s3 cp --no-progress "$RUNNER_TEMP/$BACKUP_FILE" "s3://$R2_BUCKET/daily/$BACKUP_FILE" \
+            --endpoint-url "https://$R2_ACCOUNT_ID.eu.r2.cloudflarestorage.com"

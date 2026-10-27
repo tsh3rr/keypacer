@@ -12,10 +12,12 @@
   },
   "devDependencies": {
     "fake-indexeddb": "^6.2.5",
+    "marked": "^18.1.2",
     "typescript": "^7.0.2",
     "vite": "^8.3.2",
     "vitest": "^5.0.3",
-    "wrangler": "^4.146.0"
+    "wrangler": "^4.146.0",
+    "yaml": "^2.9.1"
   },
   "dependencies": {
     "@fontsource-variable/jetbrains-mono": "^5.3.0",

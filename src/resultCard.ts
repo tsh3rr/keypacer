@@ -1,5 +1,5 @@
 import { gateEmpty, gateParts, type GateData } from './gateView';
-import { num, pct, t, tNodes } from './i18n';
+import { num, pct, pctBar, t, tNodes } from './i18n';
 
 /**
  * The card that pops up when a drill is finished: the headline numbers,
@@ -145,7 +145,7 @@ function errorBox(d: ResultData): HTMLElement | null {
   if (tooMany) {
     const p = el('p', 'rc-precise');
     p.append(el('b', '', t('result.preciseLead')), ' ', t('result.precise', {
-      err: pct(1 - d.accuracy, 1), max: pct(d.maxError!), need: pct(1 - d.maxError!),
+      err: pct(1 - d.accuracy, 1), max: pctBar(d.maxError!), need: pctBar(1 - d.maxError!),
     }));
     box.append(p);
   }

@@ -9,6 +9,7 @@
     <meta name="robots" content="noindex, follow" />
     <!-- ?v= makes browsers drop the placeholder icon they cached before the logo changed. -->
     <link rel="icon" href="/favicon.ico?v=2" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/icon-192.png" sizes="192x192" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
     <link rel="manifest" href="/site.webmanifest" />
@@ -94,6 +95,7 @@
         <h3 data-i18n="settings.data">Data</h3>
         <button id="open-log" class="link-btn" data-i18n="settings.openLog">Keystroke log and export</button>
         <button id="rerun-setup" class="link-btn" data-i18n="settings.rerunSetup">Keyboard check and placement test</button>
+        <button id="unlock-all" class="link-btn" data-i18n="settings.unlockAll">Unlock all keys</button>
         <button id="reset-lessons" class="link-btn" data-i18n="settings.resetLessons">Restart lessons</button>
       </section>
     </aside>
@@ -318,9 +320,9 @@
     <div id="method-pop" class="method-pop" role="dialog" aria-modal="true" aria-labelledby="method-title" hidden></div>
 
     <footer class="site-foot">
-      <a href="/impressum" data-i18n="foot.imprint">Legal notice</a>
-      <a href="/datenschutz" data-i18n="foot.privacy">Privacy</a>
-      <a href="/nutzungsbedingungen" data-i18n="foot.terms">Terms</a>
+      <a href="/impressum" data-legal="/impressum" data-i18n="foot.imprint">Legal notice</a>
+      <a href="/datenschutz" data-legal="/datenschutz" data-i18n="foot.privacy">Privacy</a>
+      <a href="/nutzungsbedingungen" data-legal="/nutzungsbedingungen" data-i18n="foot.terms">Terms</a>
     </footer>
 
     <script type="module" src="/src/main.ts"></script>

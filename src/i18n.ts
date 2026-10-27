@@ -138,6 +138,11 @@ export function pct(x: number, digits = 0): string {
   return x.toLocaleString(current, { style: 'percent', minimumFractionDigits: digits, maximumFractionDigits: digits });
 }
 
+/** A bar like 4.5 % or 5 %: one decimal only when it has one. */
+export function pctBar(x: number): string {
+  return pct(x, Math.round(x * 1000) % 10 === 0 ? 0 : 1);
+}
+
 /** Fills every `data-i18n*` element under `root` with text in the current language. */
 export function applyTranslations(root: ParentNode = document): void {
   const attrs = [
@@ -156,6 +161,12 @@ export function applyTranslations(root: ParentNode = document): void {
       else replaceText(e, text);
     });
   }
+  root.querySelectorAll<HTMLAnchorElement>('a[data-legal]').forEach((a) => { a.href = legalHref(a.dataset.legal!); });
+}
+
+/** A link to a legal page (/impressum, /datenschutz, /nutzungsbedingungen) that opens it in the interface language. */
+export function legalHref(path: string): string {
+  return `${path}?lang=${current}`;
 }
 
 /** Sets an element's own text, keeping any child elements (icons, inputs) where they are. */

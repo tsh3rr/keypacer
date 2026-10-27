@@ -89,6 +89,11 @@ export interface LandingCopy {
     stored: string;
   };
   privacy: { eyebrow: string; title: string; intro: string; items: (Item & { chips: [string, string] })[] };
+  /**
+   * Replaces the "0 trackers" fact and the first privacy item while visitor
+   * statistics (Umami, vite.config.ts) are on.
+   */
+  analytics: { fact: string; item: Item & { chips: [string, string] } };
   faq: { title: string; items: { q: string; a: string }[] };
   final: { title: string; text: string; cta: string };
   foot: { imprint: string; privacy: string; terms: string };
@@ -206,6 +211,10 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { title: 'With an account, in the EU', text: 'The optional account syncs your rounds between your devices via servers in Frankfurt.', chips: ['Frankfurt', 'optional account'] },
       ],
     },
+    analytics: {
+      fact: 'cookies and ads',
+      item: { title: 'No cookies, no ads', text: 'Keypacer sets no cookies and shows no ads. Visits are only counted anonymously, without cookies.', chips: ['0 cookies', 'anonymous stats'] },
+    },
     faq: {
       title: 'Questions',
       items: [
@@ -213,7 +222,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { q: 'What makes Keypacer different from other typing trainers?', a: 'Most trainers give everyone the same lessons. Keypacer measures every keystroke and builds each drill from the keys and letter pairs that slow you down most right now.' },
         { q: 'Do I need an account?', a: 'No. You can start right away; without an account your browser keeps your progress. A free account keeps it safe even if your browser data is deleted, and lets you carry on on your other devices.' },
         { q: 'How long does it take to learn touch typing?', a: 'Most people can type without looking after a few weeks of 15 to 20 minutes a day. Short daily sessions work better than long, rare ones, and speed keeps growing after that.' },
-        { q: 'Which keyboard layouts are supported?', a: 'US and UK QWERTY, German and Swiss QWERTZ, French and Belgian AZERTY, Spanish, Italian, Swedish/Finnish and Polish layouts, Dvorak and Colemak. Keypacer detects your layout from the keys you press.' },
+        { q: 'Which keyboard layouts are supported?', a: 'US and UK QWERTY, German and Swiss QWERTZ, French and Belgian AZERTY, Spanish, Italian, Swedish/Finnish and Polish layouts, Dvorak, Colemak and Colemak-DH. Keypacer detects your layout from the keys you press.' },
         { q: 'Does it work on a phone or tablet?', a: 'Keypacer is made for a real keyboard. A tablet with a keyboard works well; on a phone you can look around, but touch typing needs a physical keyboard.' },
       ],
     },
@@ -332,6 +341,10 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { title: 'Mit Konto in der EU', text: 'Das freiwillige Konto gleicht deine Runden über Server in Frankfurt zwischen deinen Geräten ab.', chips: ['Frankfurt', 'freiwilliges Konto'] },
       ],
     },
+    analytics: {
+      fact: 'Cookies und Werbung',
+      item: { title: 'Keine Cookies, keine Werbung', text: 'Keypacer setzt keine Cookies und zeigt keine Werbung. Besuche zählen wir nur anonym, ohne Cookies.', chips: ['0 Cookies', 'anonyme Statistik'] },
+    },
     faq: {
       title: 'Häufige Fragen',
       items: [
@@ -339,7 +352,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { q: 'Was macht Keypacer anders als andere Tipptrainer?', a: 'Die meisten Trainer geben allen dieselben Lektionen. Keypacer misst jeden Tastendruck und stellt jede Übung aus den Tasten und Buchstabenpaaren zusammen, die dich gerade am meisten bremsen.' },
         { q: 'Brauche ich ein Konto?', a: 'Nein. Du kannst sofort loslegen, ohne Konto speichert der Browser deinen Fortschritt. Mit einem kostenlosen Konto ist er sicher, auch wenn die Browserdaten gelöscht werden, und du kannst auf weiteren Geräten weitermachen.' },
         { q: 'Wie lange dauert es, das Zehnfingersystem zu lernen?', a: 'Die meisten tippen nach einigen Wochen mit 15 bis 20 Minuten am Tag blind. Kurze tägliche Einheiten bringen mehr als lange, seltene, und das Tempo steigt danach weiter.' },
-        { q: 'Welche Tastaturlayouts gibt es?', a: 'Deutsches und Schweizer QWERTZ, US- und UK-QWERTY, französisches und belgisches AZERTY, spanisch, italienisch, schwedisch/finnisch und polnisch, Dvorak und Colemak. Keypacer erkennt dein Layout an den Tasten, die du drückst.' },
+        { q: 'Welche Tastaturlayouts gibt es?', a: 'Deutsches und Schweizer QWERTZ, US- und UK-QWERTY, französisches und belgisches AZERTY, spanisch, italienisch, schwedisch/finnisch und polnisch, Dvorak, Colemak und Colemak-DH. Keypacer erkennt dein Layout an den Tasten, die du drückst.' },
         { q: 'Geht das auch auf Handy oder Tablet?', a: 'Keypacer ist für eine echte Tastatur gemacht. Ein Tablet mit Tastatur funktioniert gut; auf dem Handy kannst du dich umsehen, aber blind tippen lernt man an einer richtigen Tastatur.' },
       ],
     },
@@ -458,6 +471,10 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { title: 'Con cuenta, en la UE', text: 'La cuenta opcional sincroniza tus rondas entre tus dispositivos a través de servidores en Fráncfort.', chips: ['Fráncfort', 'cuenta opcional'] },
       ],
     },
+    analytics: {
+      fact: 'cookies y anuncios',
+      item: { title: 'Sin cookies ni anuncios', text: 'Keypacer no usa cookies ni muestra anuncios. Las visitas solo se cuentan de forma anónima, sin cookies.', chips: ['0 cookies', 'estadística anónima'] },
+    },
     faq: {
       title: 'Preguntas frecuentes',
       items: [
@@ -465,7 +482,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { q: '¿Qué hace diferente a Keypacer de otros cursos de mecanografía?', a: 'La mayoría da a todos las mismas lecciones. Keypacer mide cada pulsación y crea cada ejercicio con las teclas y pares de letras que más te frenan en ese momento.' },
         { q: '¿Necesito una cuenta?', a: 'No. Puedes empezar ya; sin cuenta, el navegador guarda tu progreso. Con una cuenta gratuita está a salvo aunque se borren los datos del navegador, y puedes seguir en tus otros dispositivos.' },
         { q: '¿Cuánto se tarda en aprender mecanografía?', a: 'La mayoría escribe sin mirar tras unas semanas de 15 a 20 minutos al día. Sesiones cortas y diarias funcionan mejor que largas y esporádicas, y la velocidad sigue subiendo después.' },
-        { q: '¿Qué distribuciones de teclado hay?', a: 'Español, QWERTY de EE. UU. y Reino Unido, QWERTZ alemán y suizo, AZERTY francés y belga, italiano, sueco/finés y polaco, Dvorak y Colemak. Keypacer detecta tu distribución por las teclas que pulsas.' },
+        { q: '¿Qué distribuciones de teclado hay?', a: 'Español, QWERTY de EE. UU. y Reino Unido, QWERTZ alemán y suizo, AZERTY francés y belga, italiano, sueco/finés y polaco, Dvorak, Colemak y Colemak-DH. Keypacer detecta tu distribución por las teclas que pulsas.' },
         { q: '¿Funciona en el móvil o la tableta?', a: 'Keypacer está pensado para un teclado físico. Una tableta con teclado funciona bien; en el móvil puedes echar un vistazo, pero la mecanografía se aprende con un teclado de verdad.' },
       ],
     },
@@ -584,6 +601,10 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { title: 'Avec un compte, dans l’UE', text: 'Le compte facultatif synchronise vos séries entre vos appareils via des serveurs à Francfort.', chips: ['Francfort', 'compte facultatif'] },
       ],
     },
+    analytics: {
+      fact: 'cookie ou publicité',
+      item: { title: 'Ni cookies ni publicité', text: 'Keypacer ne dépose aucun cookie et n’affiche aucune publicité. Les visites sont seulement comptées de façon anonyme, sans cookie.', chips: ['0 cookie', 'statistiques anonymes'] },
+    },
     faq: {
       title: 'Questions fréquentes',
       items: [
@@ -591,7 +612,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { q: 'Qu’est-ce qui distingue Keypacer des autres logiciels de dactylographie ?', a: 'La plupart donnent à tout le monde les mêmes leçons. Keypacer mesure chaque frappe et compose chaque exercice avec les touches et paires de lettres qui vous freinent le plus en ce moment.' },
         { q: 'Faut-il un compte ?', a: 'Non. Vous pouvez commencer tout de suite ; sans compte, le navigateur garde vos progrès. Avec un compte gratuit, ils sont en sécurité même si les données du navigateur sont effacées, et vous pouvez continuer sur vos autres appareils.' },
         { q: 'Combien de temps faut-il pour apprendre à taper à dix doigts ?', a: 'La plupart des gens tapent sans regarder après quelques semaines à raison de 15 à 20 minutes par jour. Des séances courtes et quotidiennes valent mieux que de longues séances rares, et la vitesse continue ensuite de progresser.' },
-        { q: 'Quelles dispositions de clavier sont prises en charge ?', a: 'AZERTY français et belge, QWERTY américain et britannique, QWERTZ allemand et suisse, espagnol, italien, suédois/finnois et polonais, Dvorak et Colemak. Keypacer reconnaît votre disposition aux touches que vous tapez.' },
+        { q: 'Quelles dispositions de clavier sont prises en charge ?', a: 'AZERTY français et belge, QWERTY américain et britannique, QWERTZ allemand et suisse, espagnol, italien, suédois/finnois et polonais, Dvorak, Colemak et Colemak-DH. Keypacer reconnaît votre disposition aux touches que vous tapez.' },
         { q: 'Ça marche sur téléphone ou tablette ?', a: 'Keypacer est fait pour un vrai clavier. Une tablette avec clavier fonctionne bien ; sur téléphone vous pouvez jeter un œil, mais la frappe à dix doigts s’apprend sur un clavier physique.' },
       ],
     },
@@ -710,6 +731,10 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { title: 'Con account, nell’UE', text: 'L’account facoltativo sincronizza i tuoi round tra i dispositivi tramite server a Francoforte.', chips: ['Francoforte', 'account facoltativo'] },
       ],
     },
+    analytics: {
+      fact: 'cookie e pubblicità',
+      item: { title: 'Niente cookie, niente pubblicità', text: 'Keypacer non usa cookie e non mostra pubblicità. Le visite vengono contate solo in forma anonima, senza cookie.', chips: ['0 cookie', 'statistiche anonime'] },
+    },
     faq: {
       title: 'Domande frequenti',
       items: [
@@ -717,7 +742,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { q: 'Cosa rende Keypacer diverso dagli altri corsi di dattilografia?', a: 'La maggior parte dà a tutti le stesse lezioni. Keypacer misura ogni battuta e compone ogni esercizio con i tasti e le coppie di lettere che ti rallentano di più in quel momento.' },
         { q: 'Serve un account?', a: 'No. Puoi iniziare subito; senza account è il browser a salvare i tuoi progressi. Con un account gratuito sono al sicuro anche se i dati del browser vengono cancellati, e puoi continuare sugli altri tuoi dispositivi.' },
         { q: 'Quanto ci vuole per imparare a scrivere con dieci dita?', a: 'La maggior parte delle persone scrive senza guardare dopo qualche settimana di 15–20 minuti al giorno. Sessioni brevi e quotidiane funzionano meglio di sessioni lunghe e rare, e la velocità poi continua a crescere.' },
-        { q: 'Quali layout di tastiera sono supportati?', a: 'Italiano, QWERTY americano e britannico, QWERTZ tedesco e svizzero, AZERTY francese e belga, spagnolo, svedese/finlandese e polacco, Dvorak e Colemak. Keypacer riconosce il tuo layout dai tasti che premi.' },
+        { q: 'Quali layout di tastiera sono supportati?', a: 'Italiano, QWERTY americano e britannico, QWERTZ tedesco e svizzero, AZERTY francese e belga, spagnolo, svedese/finlandese e polacco, Dvorak, Colemak e Colemak-DH. Keypacer riconosce il tuo layout dai tasti che premi.' },
         { q: 'Funziona su telefono o tablet?', a: 'Keypacer è pensato per una tastiera vera. Un tablet con tastiera va bene; sul telefono puoi dare un’occhiata, ma a scrivere con dieci dita si impara su una tastiera fisica.' },
       ],
     },
@@ -836,6 +861,10 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { title: 'Z kontem w UE', text: 'Dobrowolne konto synchronizuje twoje rundy między urządzeniami przez serwery we Frankfurcie.', chips: ['Frankfurt', 'dobrowolne konto'] },
       ],
     },
+    analytics: {
+      fact: 'ciasteczek i reklam',
+      item: { title: 'Bez ciasteczek i reklam', text: 'Keypacer nie używa ciasteczek i nie wyświetla reklam. Odwiedziny liczymy tylko anonimowo, bez ciasteczek.', chips: ['0 ciasteczek', 'anonimowe statystyki'] },
+    },
     faq: {
       title: 'Częste pytania',
       items: [
@@ -843,7 +872,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { q: 'Czym Keypacer różni się od innych trenerów pisania?', a: 'Większość trenerów daje wszystkim te same lekcje. Keypacer mierzy każde uderzenie i układa każde ćwiczenie z klawiszy i par liter, które w tej chwili najbardziej cię spowalniają.' },
         { q: 'Czy potrzebuję konta?', a: 'Nie. Możesz zacząć od razu; bez konta postępy zapisuje przeglądarka. Z darmowym kontem są bezpieczne, nawet jeśli dane przeglądarki zostaną usunięte, i możesz kontynuować na innych urządzeniach.' },
         { q: 'Ile trwa nauka pisania bezwzrokowego?', a: 'Większość osób pisze bez patrzenia po kilku tygodniach ćwiczeń po 15–20 minut dziennie. Krótkie codzienne sesje działają lepiej niż długie i rzadkie, a tempo rośnie dalej.' },
-        { q: 'Jakie układy klawiatury są obsługiwane?', a: 'Polski (programisty), amerykański i brytyjski QWERTY, niemiecki i szwajcarski QWERTZ, francuski i belgijski AZERTY, hiszpański, włoski, szwedzki/fiński, Dvorak i Colemak. Keypacer rozpoznaje układ po klawiszach, które naciskasz.' },
+        { q: 'Jakie układy klawiatury są obsługiwane?', a: 'Polski (programisty), amerykański i brytyjski QWERTY, niemiecki i szwajcarski QWERTZ, francuski i belgijski AZERTY, hiszpański, włoski, szwedzki/fiński, Dvorak, Colemak i Colemak-DH. Keypacer rozpoznaje układ po klawiszach, które naciskasz.' },
         { q: 'Czy działa na telefonie lub tablecie?', a: 'Keypacer jest zrobiony dla prawdziwej klawiatury. Tablet z klawiaturą sprawdza się dobrze; na telefonie możesz się rozejrzeć, ale pisania bezwzrokowego uczy się na fizycznej klawiaturze.' },
       ],
     },

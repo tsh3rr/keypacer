@@ -1,4 +1,4 @@
-import { t, tNodes, uiLanguage } from '../i18n';
+import { legalHref, t, tNodes, uiLanguage } from '../i18n';
 import { EMAIL_LINKS, type AccountState } from './account';
 import { USERNAME_MAX, USERNAME_MIN, usernameProblem } from './username';
 
@@ -116,7 +116,7 @@ export function termsCheck(checked: boolean, onChange: (checked: boolean) => voi
   valid();
   box.addEventListener('change', () => { valid(); onChange(box.checked); });
   // A new tab, so what was typed into the form is still there afterwards.
-  const link = Object.assign(document.createElement('a'), { href: '/nutzungsbedingungen', target: '_blank', rel: 'noopener', textContent: t('account.termsLink') });
+  const link = Object.assign(document.createElement('a'), { href: legalHref('/nutzungsbedingungen'), target: '_blank', rel: 'noopener', textContent: t('account.termsLink') });
   const label = Object.assign(document.createElement('label'), { className: 'account-terms' });
   const text = document.createElement('span');
   text.append(...tNodes('account.termsCheck', { terms: link }));
@@ -124,8 +124,11 @@ export function termsCheck(checked: boolean, onChange: (checked: boolean) => voi
   return { label, box };
 }
 
+/** The privacy policy, in a new tab like the terms link, so a half-filled form survives a look at it. */
 export function privacyLink(): HTMLAnchorElement {
-  return Object.assign(document.createElement('a'), { href: '/datenschutz', textContent: t('account.privacy'), className: 'account-privacy' });
+  return Object.assign(document.createElement('a'), {
+    href: legalHref('/datenschutz'), target: '_blank', rel: 'noopener', textContent: t('account.privacy'), className: 'account-privacy',
+  });
 }
 
 export function syncStatus(state: SignedIn): string {

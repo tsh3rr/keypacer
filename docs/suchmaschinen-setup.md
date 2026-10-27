@@ -28,6 +28,9 @@ Technisch ist alles im Code: jede Sprache hat ihre eigene Startseite mit Titel, 
 
 ## 5. Danach
 
+- Nach jeder Änderung an Titel, Beschreibung, Logo oder Seitenname: in der Search Console oben `https://keypacer.com/` und `https://keypacer.com/de/` prüfen → **Indexierung beantragen**. Google übernimmt Seitenname und Favicon erst beim nächsten Besuch der Startseite; bis dahin steht dort `keypacer.com` und ein graues Weltkugel-Symbol, und das kann ein bis drei Wochen dauern.
+- Was Google über `/app/?lang=…` schon aufgenommen hat (englischer Titel „Keypacer: touch typing trainer“), verschwindet nach dem nächsten Besuch von selbst, weil der Trainer jetzt `noindex` ist. Schneller geht es in der Search Console unter **Entfernen** → **Neuer Antrag** → Präfix `https://keypacer.com/app/`.
+
 - Erste Treffer kommen meist nach ein paar Tagen, gute Plätze für „Zehnfingersystem lernen“ und ähnliche Suchen brauchen Wochen bis Monate. Mit `site:keypacer.com` in Google oder Bing siehst du, was schon drin ist.
 - In der Search Console zeigt **Seiten** (unter „Indexierung“), was aufgenommen ist und was nicht. `/app/` steht dort absichtlich unter „Durch noindex-Tag ausgeschlossen“, ebenso `keypacer.jeremiasz-kapek.workers.dev`-Adressen als „Duplikat“: beides ist richtig so.
 - **Verbesserungen** bzw. der [Test für Rich-Suchergebnisse](https://search.google.com/test/rich-results) zeigen, ob die strukturierten Daten gelesen werden. Die FAQ-Kästchen zeigt Google inzwischen fast nur noch bei Behörden- und Gesundheitsseiten an; die Daten schaden nicht und andere Suchmaschinen nutzen sie.

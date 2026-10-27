@@ -132,7 +132,7 @@ On macOS/Linux use `python3` and `scripts/build-corpus.py`. Another language nee
 
 ## Deployment
 
-Hosting is Cloudflare Workers (static assets only) and Supabase for the optional account (Google or e-mail and password; sign-in codes, password reset and address confirmation behind `EMAIL_LINKS` until there is a mail server, see [docs/email-setup.md](docs/email-setup.md); sync of practice rounds and curricula between devices; `src/sync/`). Builds of `main` use the production Supabase project, everything else the staging one (`vite.config.ts`). One-time dashboard setup: [docs/accounts-setup.md](docs/accounts-setup.md).
+Hosting is Cloudflare Workers (static assets only) and Supabase for the optional account (Google or e-mail and password; sign-in codes, password reset and address confirmation behind `EMAIL_LINKS` until there is a mail server, see [docs/email-setup.md](docs/email-setup.md); sync of practice rounds and curricula between devices; `src/sync/`). Builds of `main` use the production Supabase project, everything else the staging one (`vite.config.ts`). One-time dashboard setup: [docs/accounts-setup.md](docs/accounts-setup.md). The production database is dumped nightly, encrypted with age, to a Cloudflare R2 bucket in the EU (`.github/workflows/supabase-backup.yml`, setup and restore in [docs/backup.md](docs/backup.md)).
 
 - `wrangler.jsonc` tells Cloudflare to serve the built `dist` folder. Build command `npm run build`, deploy command `npx wrangler deploy`; other branches upload previews with `npx wrangler versions upload`.
 - Node version: 22 (pinned in `.nvmrc`).
@@ -146,7 +146,7 @@ GitHub Actions:
 
 ## Impressum and privacy policy
 
-`/impressum` and `/datenschutz` (`impressum.html`, `datenschutz.html`, texts in `src/legal/content.ts`) are written for a private, non-commercial site run from Austria, in German (binding) and English. The owner's name, town and e-mail are in `src/legal/owner.ts`. The privacy policy says the site sets no cookies and stores practice data only in the browser unless the learner signs in (then in Supabase, Frankfurt). Once an Umami website ID is set in `vite.config.ts`, the landing pages and the trainer's page count page views with Umami Cloud and the texts switch to match (`docs/umami-setup.md`); without it they say there are no analytics. If anything else changes (ads, another provider), update the texts first. A cookie banner is not needed while all browser storage is strictly necessary for the trainer (§ 165 Abs. 3 TKG 2021).
+`/impressum` and `/datenschutz` (`impressum.html`, `datenschutz.html`, texts in `src/legal/content.ts`) are written for a private, non-commercial site run from Austria, in German (binding) and English. The owner's name, town and e-mail are in `src/legal/owner.ts`. The privacy policy says the site sets no cookies and stores practice data only in the browser unless the learner signs in (then in Supabase, Frankfurt, with encrypted nightly backups kept 90 days in Cloudflare R2, EU). Once an Umami website ID is set in `vite.config.ts`, the landing pages and the trainer's page count page views with Umami Cloud and the texts switch to match (`docs/umami-setup.md`); without it they say there are no analytics. If anything else changes (ads, another provider), update the texts first. A cookie banner is not needed while all browser storage is strictly necessary for the trainer (§ 165 Abs. 3 TKG 2021).
 
 ## Thanks
 

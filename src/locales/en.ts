@@ -48,6 +48,7 @@ export const en = {
   'layout.qwerty-pl': 'Polish (Programmers)',
   'layout.dvorak-us': 'Dvorak (US)',
   'layout.colemak': 'Colemak',
+  'layout.colemak-dh': 'Colemak-DH',
 
   // --- Settings drawer ---
   'settings.button': 'Settings',

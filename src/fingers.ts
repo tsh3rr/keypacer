@@ -1,4 +1,4 @@
-import { howToType } from './layouts.ts';
+import { getLayout, howToType } from './layouts.ts';
 
 /**
  * Which finger presses which key, in standard touch typing.
@@ -42,9 +42,15 @@ export const HOME_KEYS: Readonly<Record<string, string>> = {
 };
 export const HOME_ROW: readonly string[] = Object.values(HOME_KEYS);
 
-export function fingerFor(code: string): Finger | null {
+/** The finger for a physical key; a layout can move keys to other fingers (Colemak-DH angle mod). */
+export function fingerFor(code: string, layoutId?: string): Finger | null {
   // AltGr, right of Space, is held with the right thumb.
   if (code === 'Space' || code === 'AltRight') return { hand: 'right', name: 'thumb' };
+  const moved = layoutId === undefined ? undefined : getLayout(layoutId)?.fingers.get(code);
+  if (moved) {
+    const [hand, name] = moved.split('-') as [Hand, FingerName];
+    return { hand, name };
+  }
   return FINGER_OF.get(code) ?? null;
 }
 
@@ -76,7 +82,7 @@ export function guideFor(layoutId: string, ch: string): KeyGuide | null {
   const how = howToType(layoutId, ch) ?? (ch !== ch.toLowerCase() ? howToType(layoutId, ch.toLowerCase()) : null);
   if (how === null) return null;
   const { code } = how;
-  const finger = fingerFor(code);
+  const finger = fingerFor(code, layoutId);
   if (!finger) return null;
   const homeKey = HOME_KEYS[fingerId(finger)];
   const home = homeKey && homeKey !== code ? homeKey : null;

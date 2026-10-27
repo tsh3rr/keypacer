@@ -18,4 +18,13 @@ describe('legal texts', () => {
       for (const { id } of LEGAL_LANGUAGES) expect(shape(legalHtml(page, id)), `${page} ${id}`).toEqual(de);
     }
   });
+
+  it('name the mailbox and, where the form is on, the feedback form', () => {
+    for (const { id } of LEGAL_LANGUAGES) {
+      const html = legalHtml('privacy', id);
+      expect(html, id).toContain('Gmail');
+      expect(html.includes('feedback@keypacer.com'), id).toBe(__FEEDBACK__);
+      expect(legalHtml('imprint', id), id).toContain('hi@keypacer.com');
+    }
+  });
 });

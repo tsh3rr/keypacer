@@ -184,13 +184,22 @@ const EMAIL_LINKS = { production: true, staging: true };
  * analytics section. Staging stays empty so previews are not counted.
  * VITE_UMAMI_WEBSITE_ID in .env.local overrides both.
  */
+/**
+ * The feedback form and the occasional "How do you like Keypacer?" card,
+ * per branch. It needs the worker secret RESEND_API_KEY and Cloudflare Email
+ * Routing for feedback@keypacer.com (docs/feedback-setup.md); turn production
+ * on only once both are set. Also switches the feedback paragraph in the
+ * privacy policy. VITE_FEEDBACK=true|false in .env.local overrides both.
+ */
+const FEEDBACK = { production: false, staging: true };
+
 const UMAMI = { production: 'eac528e1-2114-4fe9-b754-0a6b9d3acff0', staging: '' };
 
 export default defineConfig(({ mode }) => {
   // Cloudflare Workers Builds sets WORKERS_CI_BRANCH: main is production,
   // every other branch, local development and tests use staging.
   // VITE_SUPABASE_URL / VITE_SUPABASE_PUBLISHABLE_KEY in .env.local override both.
-  const env = loadEnv(mode, process.cwd(), ['VITE_SUPABASE_', 'VITE_TURNSTILE_', 'VITE_EMAIL_LINKS', 'VITE_UMAMI_']);
+  const env = loadEnv(mode, process.cwd(), ['VITE_SUPABASE_', 'VITE_TURNSTILE_', 'VITE_EMAIL_LINKS', 'VITE_UMAMI_', 'VITE_FEEDBACK']);
   const target = process.env.WORKERS_CI_BRANCH === 'main' ? 'production' : 'staging';
   const supabase = env.VITE_SUPABASE_URL && env.VITE_SUPABASE_PUBLISHABLE_KEY
     ? { url: env.VITE_SUPABASE_URL, key: env.VITE_SUPABASE_PUBLISHABLE_KEY }
@@ -207,6 +216,9 @@ export default defineConfig(({ mode }) => {
       __TURNSTILE_SITE_KEY__: JSON.stringify(env.VITE_TURNSTILE_SITE_KEY ?? TURNSTILE[target]),
       __UMAMI_WEBSITE_ID__: JSON.stringify(umami),
       __EMAIL_LINKS__: JSON.stringify(env.VITE_EMAIL_LINKS ? env.VITE_EMAIL_LINKS === 'true' : EMAIL_LINKS[target]),
+      __FEEDBACK__: JSON.stringify(env.VITE_FEEDBACK ? env.VITE_FEEDBACK === 'true' : FEEDBACK[target]),
+      // Sent along with feedback when the learner allows it; Workers Builds sets the commit.
+      __APP_VERSION__: JSON.stringify(process.env.WORKERS_CI_COMMIT_SHA?.slice(0, 7) ?? 'dev'),
     },
     // The landing pages (/ in English, /de/, /es/, …), the trainer at /app/, and the
     // Impressum, privacy policy and terms of use, which must be reachable by their

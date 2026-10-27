@@ -88,6 +88,11 @@
         <p id="account-summary" class="account-note"></p>
         <button id="open-account" class="link-btn" data-i18n="account.manage">Account and sync</button>
       </section>
+      <section id="feedback-group" class="drawer-group" hidden>
+        <h3 data-i18n="feedback.heading">Feedback</h3>
+        <p class="account-note" data-i18n="feedback.settingsNote">An idea, a bug or praise? We read everything.</p>
+        <button id="open-feedback" class="link-btn" data-i18n="feedback.open">Give feedback</button>
+      </section>
       <section class="drawer-group">
         <h3 data-i18n="settings.data">Data</h3>
         <button id="open-log" class="link-btn" data-i18n="settings.openLog">Keystroke log and export</button>
@@ -135,6 +140,7 @@
         <p id="type-hint" class="type-hint" data-i18n="practice.hint">A wrong key holds you on the same letter.</p>
         <div id="result" class="result" role="status" hidden></div>
         <div id="account-nudge" class="account-nudge" hidden></div>
+        <div id="feedback-prompt" class="fb-prompt" role="status" hidden></div>
         <div id="break-card" class="break-card" role="status" hidden>
           <p id="break-text"></p>
           <p id="break-timer" class="break-timer" hidden></p>
@@ -315,8 +321,11 @@
 
     <!-- "How it works" after a first visit's first round (main.ts). -->
     <div id="method-pop" class="method-pop" role="dialog" aria-modal="true" aria-labelledby="method-title" hidden></div>
+    <!-- The feedback form (feedbackView.ts). -->
+    <div id="feedback-pop" class="method-pop" role="dialog" aria-modal="true" aria-labelledby="feedback-title" hidden></div>
 
     <footer class="site-foot">
+      <button id="foot-feedback" class="link-btn foot-feedback" type="button" data-i18n="feedback.open" hidden>Give feedback</button>
       <a href="/impressum" data-legal="/impressum" data-i18n="foot.imprint">Legal notice</a>
       <a href="/datenschutz" data-legal="/datenschutz" data-i18n="foot.privacy">Privacy</a>
       <a href="/nutzungsbedingungen" data-legal="/nutzungsbedingungen" data-i18n="foot.terms">Terms</a>

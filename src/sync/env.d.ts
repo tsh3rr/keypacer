@@ -7,3 +7,7 @@ declare const __TURNSTILE_SITE_KEY__: string;
 declare const __EMAIL_LINKS__: boolean;
 /** Umami Cloud website ID for the landing pages, or '' when statistics are off (vite.config.ts). */
 declare const __UMAMI_WEBSITE_ID__: string;
+/** Whether the feedback form is on, picked per branch in vite.config.ts. */
+declare const __FEEDBACK__: boolean;
+/** Short commit of the build, or 'dev'. */
+declare const __APP_VERSION__: string;

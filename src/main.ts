@@ -46,6 +46,7 @@ import {
 import { Account } from './sync/account';
 import { AccountView, benefits } from './sync/accountView';
 import { ProfileView } from './sync/profileView';
+import { FEEDBACK_ON, createFeedback } from './feedbackView';
 import {
   UI_LANGUAGES, applyTranslations, guessUiLanguage, isUiLanguage, num, onUiLanguageChange, pct, pctBar, setUiLanguage, t, tMaybe, tNodes, uiLanguage,
 } from './i18n';
@@ -587,6 +588,7 @@ async function startDrill(kind?: Drill['kind']): Promise<void> {
   pendingWrites = [];
   resultEl.hidden = true;
   accountNudge.hidden = true;
+  $('feedback-prompt').hidden = true;
   redrawResult = null;
   practiceView.classList.remove('showing-result');
   renderDrillBar();
@@ -736,7 +738,8 @@ async function finishDrill(): Promise<void> {
     account.push().catch((err) => console.error('Sync failed', err));
     if (account.inBuddyGroup) buddyDeps.stats().then((st) => account.publishBuddyStats(st)).catch((err) => console.error('Failed to update buddies', err));
     if (methodPending()) showMethod();
-    else maybeNudge(state.coreDrills);
+    // At most one card under a result: the account offer first, feedback only on a quiet round.
+    else if (!maybeNudge(state.coreDrills) && breakCard.hidden && !changes.length && !extra.length) feedback.maybePrompt(state.coreDrills);
   } finally {
     finishing = false;
   }
@@ -1655,6 +1658,7 @@ onUiLanguageChange(() => {
   accountView.render();
   profileView.render();
   if (!accountNudge.hidden) renderNudge();
+  feedback.retranslate();
   renderFreshStart();
   buddiesView.render();
   invitePrompt.retranslate();
@@ -1773,10 +1777,12 @@ function nudgeDismissed(): boolean {
   try { return localStorage.getItem(NUDGE_KEY) === 'dismissed'; } catch { return true; }
 }
 
-function maybeNudge(rounds: number): void {
-  if (account.state.signedIn || rounds < NUDGE_AFTER || nudgeDismissed()) return;
+/** Shows the account offer if it is due; returns whether it did. */
+function maybeNudge(rounds: number): boolean {
+  if (account.state.signedIn || rounds < NUDGE_AFTER || nudgeDismissed()) return false;
   renderNudge();
   accountNudge.hidden = false;
+  return true;
 }
 
 function renderNudge(): void {
@@ -1800,6 +1806,38 @@ function dismissNudge(): void {
   accountNudge.hidden = true;
   try { localStorage.setItem(NUDGE_KEY, 'dismissed'); } catch { /* shown again next time, which is fine */ }
 }
+
+// --- Feedback ---
+//
+// A rare card under a quiet round's result, and "Give feedback" in the
+// settings and the footer; the form mails it to us (feedbackView.ts).
+
+const feedback = createFeedback({
+  promptEl: $('feedback-prompt'),
+  popEl: $('feedback-pop'),
+  tech: () => ({
+    version: __APP_VERSION__,
+    uiLanguage: uiLanguage(),
+    language: context.language,
+    layout: context.layout,
+    drills: String(curriculum?.coreDrills ?? 0),
+    browser: navigator.userAgent,
+    window: `${window.innerWidth}×${window.innerHeight}`,
+  }),
+  email: () => (account.state.signedIn ? account.state.email : null),
+  refocus: () => inputEl.focus({ preventScroll: true }),
+});
+$('feedback-group').hidden = !FEEDBACK_ON;
+$('foot-feedback').hidden = !FEEDBACK_ON;
+$('open-feedback').addEventListener('click', () => {
+  closeSettings(false);
+  feedback.open();
+});
+$('foot-feedback').addEventListener('click', (e) => {
+  e.stopPropagation();
+  feedback.open();
+});
+
 /** A full sync when the learner comes back to the tab, at most this often. */
 const RESYNC_MS = 5 * 60_000;
 document.addEventListener('visibilitychange', () => {

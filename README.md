@@ -133,9 +133,9 @@ On macOS/Linux use `python3` and `scripts/build-corpus.py`. Another language nee
 
 ## Deployment
 
-Hosting is Cloudflare Workers (static assets only) and Supabase for the optional account (Google or e-mail and password; sign-in codes, password reset and address confirmation behind `EMAIL_LINKS` until there is a mail server, see [docs/email-setup.md](docs/email-setup.md); sync of practice rounds and curricula between devices; `src/sync/`). Builds of `main` use the production Supabase project, everything else the staging one (`vite.config.ts`). One-time dashboard setup: [docs/accounts-setup.md](docs/accounts-setup.md).
+Hosting is Cloudflare Workers (static assets, plus one small worker route for the feedback form) and Supabase for the optional account (Google or e-mail and password; sign-in codes, password reset and address confirmation behind `EMAIL_LINKS` until there is a mail server, see [docs/email-setup.md](docs/email-setup.md); sync of practice rounds and curricula between devices; `src/sync/`). Builds of `main` use the production Supabase project, everything else the staging one (`vite.config.ts`). One-time dashboard setup: [docs/accounts-setup.md](docs/accounts-setup.md).
 
-- `wrangler.jsonc` tells Cloudflare to serve the built `dist` folder. Build command `npm run build`, deploy command `npx wrangler deploy`; other branches upload previews with `npx wrangler versions upload`.
+- `wrangler.jsonc` tells Cloudflare to serve the built `dist` folder; only `/api/*` runs code (`src/worker/index.ts`, the feedback form, mailed through Resend; setup in [docs/feedback-setup.md](docs/feedback-setup.md)). Build command `npm run build`, deploy command `npx wrangler deploy`; other branches upload previews with `npx wrangler versions upload`.
 - Node version: 22 (pinned in `.nvmrc`).
 - `supabase/` holds the Supabase CLI project. Database changes go in `supabase/migrations/` as SQL files.
 - `.env.example` lists the two Supabase values; copy it to `.env.local` only to point local development at another project.

@@ -137,6 +137,87 @@ const captcha = {
   },
 };
 
+/**
+ * Mail to addresses at keypacer.com arrives through Cloudflare Email Routing
+ * in a Gmail mailbox (docs/feedback-setup.md). The feedback form (FEEDBACK,
+ * vite.config.ts) sends through our worker and Resend; its paragraph appears
+ * with it.
+ */
+const FEEDBACK = __FEEDBACK__;
+
+const feedback = {
+  contact: {
+    de: ' E-Mails an Adressen unter keypacer.com (etwa hi@keypacer.com) nimmt Cloudflare entgegen und leitet sie an unser Postfach bei Gmail weiter (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland). Dabei ist eine Verarbeitung in den USA möglich; Cloudflare und Google sind nach dem EU-US Data Privacy Framework zertifiziert, für das ein Angemessenheitsbeschluss der EU-Kommission besteht (Art. 45 DSGVO).',
+    en: ' E-mails to addresses at keypacer.com (such as hi@keypacer.com) are received by Cloudflare and forwarded to our mailbox at Gmail (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland). Processing in the USA is possible; Cloudflare and Google are certified under the EU-US Data Privacy Framework, which is covered by an adequacy decision of the European Commission (Art. 45 GDPR).',
+    fr: ' Les e-mails envoyés à une adresse en keypacer.com (par exemple hi@keypacer.com) sont reçus par Cloudflare et transférés vers notre boîte Gmail (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlande). Un traitement aux États-Unis est possible ; Cloudflare et Google sont certifiés au titre du cadre de protection des données UE–États-Unis, qui fait l’objet d’une décision d’adéquation de la Commission européenne (art. 45 du RGPD).',
+    es: ' Los correos enviados a direcciones de keypacer.com (por ejemplo hi@keypacer.com) los recibe Cloudflare y los reenvía a nuestro buzón de Gmail (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlanda). Es posible un tratamiento en EE. UU.; Cloudflare y Google están certificados conforme al Marco de Privacidad de Datos UE-EE. UU., sobre el que existe una decisión de adecuación de la Comisión Europea (art. 45 del RGPD).',
+    it: ' Le e-mail inviate a indirizzi keypacer.com (ad esempio hi@keypacer.com) vengono ricevute da Cloudflare e inoltrate alla nostra casella Gmail (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlanda). È possibile un trattamento negli USA; Cloudflare e Google sono certificate nell’ambito del Data Privacy Framework UE-USA, per il quale esiste una decisione di adeguatezza della Commissione europea (art. 45 GDPR).',
+    pl: ' E-maile na adresy w domenie keypacer.com (np. hi@keypacer.com) odbiera Cloudflare i przekazuje do naszej skrzynki w Gmailu (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlandia). Możliwe jest przy tym przetwarzanie w USA; Cloudflare i Google mają certyfikat w ramach EU-US Data Privacy Framework, dla którego Komisja Europejska wydała decyzję stwierdzającą odpowiedni stopień ochrony (art. 45 RODO).',
+    'pt-BR': ' E-mails para endereços em keypacer.com (como hi@keypacer.com) são recebidos pela Cloudflare e encaminhados para a nossa caixa no Gmail (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlanda). É possível um tratamento nos EUA; a Cloudflare e a Google são certificadas no EU-US Data Privacy Framework, coberto por uma decisão de adequação da Comissão Europeia (art. 45 do RGPD).',
+    'pt-PT': ' Os e-mails para endereços em keypacer.com (como hi@keypacer.com) são recebidos pela Cloudflare e reencaminhados para a nossa caixa no Gmail (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlanda). É possível um tratamento nos EUA; a Cloudflare e a Google estão certificadas no EU-US Data Privacy Framework, coberto por uma decisão de adequação da Comissão Europeia (artigo 45.º do RGPD).',
+  },
+  short: {
+    de: FEEDBACK && CAPTCHA ? ' Dasselbe gilt, wenn du Feedback abschickst.' : '',
+    en: FEEDBACK && CAPTCHA ? ' The same applies when you send feedback.' : '',
+    fr: FEEDBACK && CAPTCHA ? ' Il en va de même quand tu envoies un avis.' : '',
+    es: FEEDBACK && CAPTCHA ? ' Lo mismo ocurre cuando envías tu opinión.' : '',
+    it: FEEDBACK && CAPTCHA ? ' Lo stesso vale quando invii un feedback.' : '',
+    pl: FEEDBACK && CAPTCHA ? ' To samo dotyczy wysyłania opinii.' : '',
+    'pt-BR': FEEDBACK && CAPTCHA ? ' O mesmo vale quando você envia feedback.' : '',
+    'pt-PT': FEEDBACK && CAPTCHA ? ' O mesmo acontece quando envias feedback.' : '',
+  },
+  section: {
+    de: FEEDBACK ? `
+
+    <h2>Feedback</h2>
+    <p>In der App kannst du uns über <em>Feedback geben</em> eine Nachricht schicken; ab und zu fragt Keypacer unter dem Ergebnis einer Übung danach. Dabei verarbeiten wir deinen Text und die gewählte Art (Idee, Fehler, Lob), freiwillig deine E-Mail-Adresse, wenn du eine Antwort möchtest, und freiwillig technische Angaben: Version der App, Oberflächen- und Übungssprache, Tastaturlayout, Zahl deiner Übungen, Browserkennung (Browser und Betriebssystem) und Fenstergröße. Dein Tastenprotokoll wird nicht mitgeschickt.</p>
+    <p>Die Nachricht geht an unseren Server bei Cloudflare, der sie über den Versanddienst Resend (Resend, Inc., USA; Versand über Server in der EU, Irland) als E-Mail an feedback@keypacer.com schickt; von dort landet sie wie unter <em>Kontakt per E-Mail</em> beschrieben in unserem Postfach. Cloudflare begrenzt anhand deiner IP-Adresse, wie oft gesendet werden kann${CAPTCHA ? ', und Cloudflare Turnstile prüft, dass ein Mensch das Formular abschickt' : ''}; die IP-Adresse speichern wir nicht. Cloudflare und Resend verarbeiten die Daten als unsere Auftragsverarbeiter auf Grundlage ihrer Auftragsverarbeitungsverträge; soweit dabei ein Zugriff aus den USA möglich ist, ist er durch die EU-Standardvertragsklauseln (Art. 46 Abs. 2 lit. c DSGVO) bzw. das EU-US Data Privacy Framework (Art. 45 DSGVO) abgesichert.</p>
+    <p>Rechtsgrundlage ist unser berechtigtes Interesse, Keypacer anhand von Rückmeldungen zu verbessern und dir auf Wunsch zu antworten (Art. 6 Abs. 1 lit. f DSGVO). Wir löschen Feedback spätestens nach 12 Monaten, außer wir sind dann noch mit dir im Austausch. Ob du die Frage nach Feedback weggeklickt oder schon Feedback geschickt hast, merkt sich dein Browser im lokalen Speicher, damit Keypacer nicht erneut fragt.</p>` : '',
+    en: FEEDBACK ? `
+
+    <h2>Feedback</h2>
+    <p>In the app you can send us a message with <em>Give feedback</em>; now and then Keypacer asks for it under a round’s result. For this we process your text and the kind you picked (idea, bug, praise), your e-mail address if you choose to give it for a reply, and, if you choose, technical details: the app version, interface and practice language, keyboard layout, how many rounds you have done, your browser’s user agent (browser and operating system) and window size. Your keystroke log is not sent.</p>
+    <p>The message goes to our server at Cloudflare, which sends it as an e-mail to feedback@keypacer.com through the mail service Resend (Resend, Inc., USA; sent from servers in the EU, Ireland); from there it reaches our mailbox as described under <em>Contact by e-mail</em>. Cloudflare uses your IP address to limit how often messages can be sent${CAPTCHA ? ', and Cloudflare Turnstile checks that a person is sending the form' : ''}; we do not store the IP address. Cloudflare and Resend process the data as our processors under their data processing agreements; where access from the USA is possible, it is covered by the EU Standard Contractual Clauses (Art. 46(2)(c) GDPR) or the EU-US Data Privacy Framework (Art. 45 GDPR).</p>
+    <p>The legal basis is our legitimate interest in improving Keypacer from feedback and in replying to you when you ask (Art. 6(1)(f) GDPR). We delete feedback after 12 months at the latest, unless we are still in touch with you about it. Whether you dismissed the question about feedback or have already sent some is remembered in your browser’s local storage, so Keypacer does not ask again.</p>` : '',
+    fr: FEEDBACK ? `
+
+    <h2>Avis</h2>
+    <p>Dans l’application, tu peux nous envoyer un message avec <em>Donner mon avis</em> ; de temps en temps, Keypacer te le propose sous le résultat d’un exercice. Nous traitons alors ton texte et le type choisi (idée, bug, compliment), ton adresse e-mail si tu la donnes pour recevoir une réponse et, si tu le souhaites, des informations techniques : version de l’application, langue de l’interface et d’entraînement, disposition du clavier, nombre d’exercices faits, identifiant du navigateur (navigateur et système d’exploitation) et taille de la fenêtre. Ton journal de frappe n’est pas envoyé.</p>
+    <p>Le message est transmis à notre serveur chez Cloudflare, qui l’envoie par e-mail à feedback@keypacer.com via le service d’envoi Resend (Resend, Inc., États-Unis ; envoi depuis des serveurs dans l’UE, Irlande) ; de là, il arrive dans notre boîte comme décrit sous <em>Contact par e-mail</em>. Cloudflare utilise ton adresse IP pour limiter la fréquence des envois${CAPTCHA ? ', et Cloudflare Turnstile vérifie que c’est bien une personne qui envoie le formulaire' : ''} ; nous ne conservons pas l’adresse IP. Cloudflare et Resend traitent les données en tant que nos sous-traitants sur la base de leurs accords de traitement des données ; dans la mesure où un accès depuis les États-Unis est possible, il est encadré par les clauses contractuelles types de l’UE (art. 46, par. 2, point c, du RGPD) ou par le cadre de protection des données UE–États-Unis (art. 45 du RGPD).</p>
+    <p>La base juridique est notre intérêt légitime à améliorer Keypacer grâce aux retours et à te répondre si tu le demandes (art. 6, par. 1, point f, du RGPD). Nous supprimons les avis au plus tard après 12 mois, sauf si nous sommes encore en échange avec toi. Ton navigateur garde en mémoire, dans son stockage local, si tu as refusé la question ou déjà envoyé un avis, pour que Keypacer ne redemande pas.</p>` : '',
+    es: FEEDBACK ? `
+
+    <h2>Opiniones</h2>
+    <p>En la aplicación puedes enviarnos un mensaje con <em>Dar mi opinión</em>; de vez en cuando Keypacer te lo pide bajo el resultado de un ejercicio. Para ello tratamos tu texto y el tipo elegido (idea, fallo, elogio), tu dirección de correo si la das para recibir respuesta y, si quieres, datos técnicos: versión de la aplicación, idioma de la interfaz y de práctica, distribución del teclado, número de ejercicios hechos, identificador del navegador (navegador y sistema operativo) y tamaño de la ventana. Tu registro de pulsaciones no se envía.</p>
+    <p>El mensaje va a nuestro servidor en Cloudflare, que lo envía como correo a feedback@keypacer.com a través del servicio de envío Resend (Resend, Inc., EE. UU.; envío desde servidores en la UE, Irlanda); desde allí llega a nuestro buzón como se describe en <em>Contacto por correo electrónico</em>. Cloudflare usa tu dirección IP para limitar la frecuencia de envío${CAPTCHA ? ', y Cloudflare Turnstile comprueba que es una persona quien envía el formulario' : ''}; no guardamos la dirección IP. Cloudflare y Resend tratan los datos como nuestros encargados del tratamiento conforme a sus acuerdos de tratamiento de datos; en la medida en que sea posible un acceso desde EE. UU., está cubierto por las cláusulas contractuales tipo de la UE (art. 46.2.c) del RGPD) o por el Marco de Privacidad de Datos UE-EE. UU. (art. 45 del RGPD).</p>
+    <p>La base jurídica es nuestro interés legítimo en mejorar Keypacer con las opiniones recibidas y en responderte si lo pides (art. 6.1.f) del RGPD). Borramos las opiniones como muy tarde a los 12 meses, salvo que sigamos en contacto contigo. Tu navegador recuerda en su almacenamiento local si has descartado la pregunta o ya has enviado tu opinión, para que Keypacer no vuelva a preguntar.</p>` : '',
+    it: FEEDBACK ? `
+
+    <h2>Feedback</h2>
+    <p>Nell’app puoi inviarci un messaggio con <em>Lascia un feedback</em>; ogni tanto Keypacer te lo chiede sotto il risultato di un esercizio. Trattiamo quindi il tuo testo e il tipo scelto (idea, errore, complimento), il tuo indirizzo e-mail se lo indichi per ricevere una risposta e, se lo desideri, dati tecnici: versione dell’app, lingua dell’interfaccia e di esercizio, layout della tastiera, numero di esercizi fatti, identificativo del browser (browser e sistema operativo) e dimensioni della finestra. Il tuo registro dei tasti non viene inviato.</p>
+    <p>Il messaggio arriva al nostro server presso Cloudflare, che lo invia come e-mail a feedback@keypacer.com tramite il servizio di spedizione Resend (Resend, Inc., USA; invio da server nell’UE, Irlanda); da lì arriva nella nostra casella come descritto in <em>Contatto via e-mail</em>. Cloudflare usa il tuo indirizzo IP per limitare la frequenza degli invii${CAPTCHA ? ', e Cloudflare Turnstile verifica che a inviare il modulo sia una persona' : ''}; non conserviamo l’indirizzo IP. Cloudflare e Resend trattano i dati come nostri responsabili del trattamento sulla base dei loro accordi sul trattamento dei dati; nella misura in cui è possibile un accesso dagli USA, questo è coperto dalle clausole contrattuali tipo dell’UE (art. 46, par. 2, lett. c) GDPR) o dal Data Privacy Framework UE-USA (art. 45 GDPR).</p>
+    <p>La base giuridica è il nostro legittimo interesse a migliorare Keypacer grazie ai riscontri e a risponderti se lo chiedi (art. 6, par. 1, lett. f) GDPR). Cancelliamo i feedback al più tardi dopo 12 mesi, a meno che non siamo ancora in contatto con te. Il tuo browser ricorda nella memoria locale se hai chiuso la domanda o hai già inviato un feedback, così Keypacer non chiede di nuovo.</p>` : '',
+    pl: FEEDBACK ? `
+
+    <h2>Opinie</h2>
+    <p>W aplikacji możesz wysłać nam wiadomość przez <em>Wyślij opinię</em>; od czasu do czasu Keypacer pyta o nią pod wynikiem ćwiczenia. Przetwarzamy wtedy Twój tekst i wybrany rodzaj (pomysł, błąd, pochwała), Twój adres e-mail, jeśli podasz go, by dostać odpowiedź, oraz, jeśli zechcesz, dane techniczne: wersję aplikacji, język interfejsu i ćwiczeń, układ klawiatury, liczbę wykonanych ćwiczeń, identyfikator przeglądarki (przeglądarka i system operacyjny) oraz rozmiar okna. Twój dziennik naciśnięć nie jest wysyłany.</p>
+    <p>Wiadomość trafia do naszego serwera w Cloudflare, który wysyła ją jako e-mail na feedback@keypacer.com przez usługę wysyłkową Resend (Resend, Inc., USA; wysyłka z serwerów w UE, Irlandia); stamtąd trafia do naszej skrzynki, jak opisano w sekcji <em>Kontakt e-mailowy</em>. Cloudflare na podstawie Twojego adresu IP ogranicza, jak często można wysyłać wiadomości${CAPTCHA ? ', a Cloudflare Turnstile sprawdza, czy formularz wysyła człowiek' : ''}; nie przechowujemy adresu IP. Cloudflare i Resend przetwarzają dane jako nasze podmioty przetwarzające na podstawie swoich umów powierzenia przetwarzania danych; o ile możliwy jest dostęp z USA, jest on zabezpieczony standardowymi klauzulami umownymi UE (art. 46 ust. 2 lit. c RODO) lub EU-US Data Privacy Framework (art. 45 RODO).</p>
+    <p>Podstawą prawną jest nasz prawnie uzasadniony interes w ulepszaniu Keypacera na podstawie opinii i w odpowiadaniu Ci, jeśli o to prosisz (art. 6 ust. 1 lit. f RODO). Opinie usuwamy najpóźniej po 12 miesiącach, chyba że wciąż jesteśmy z Tobą w kontakcie. Twoja przeglądarka zapamiętuje w pamięci lokalnej, czy zamknąłeś pytanie o opinię lub już ją wysłałeś, żeby Keypacer nie pytał ponownie.</p>` : '',
+    'pt-BR': FEEDBACK ? `
+
+    <h2>Feedback</h2>
+    <p>No app você pode nos mandar uma mensagem em <em>Enviar feedback</em>; de vez em quando o Keypacer pede isso abaixo do resultado de um exercício. Para isso tratamos o seu texto e o tipo escolhido (ideia, problema, elogio), o seu e-mail, se você o informar para receber resposta, e, se você quiser, dados técnicos: versão do app, idioma da interface e da prática, layout do teclado, número de exercícios feitos, identificação do navegador (navegador e sistema operacional) e tamanho da janela. O seu registro de teclas não é enviado.</p>
+    <p>A mensagem vai para o nosso servidor na Cloudflare, que a envia como e-mail para feedback@keypacer.com pelo serviço de envio Resend (Resend, Inc., EUA; envio a partir de servidores na UE, Irlanda); de lá ela chega à nossa caixa de e-mail, como descrito em <em>Contato por e-mail</em>. A Cloudflare usa o seu endereço IP para limitar a frequência de envio${CAPTCHA ? ', e a Cloudflare Turnstile verifica se é uma pessoa que está enviando o formulário' : ''}; não guardamos o endereço IP. A Cloudflare e a Resend tratam os dados como nossos operadores, com base nos seus acordos de tratamento de dados; na medida em que um acesso a partir dos EUA for possível, ele é coberto pelas cláusulas contratuais-tipo da UE (art. 46, n.º 2, alínea c, do RGPD) ou pelo EU-US Data Privacy Framework (art. 45 do RGPD).</p>
+    <p>A base legal é o nosso interesse legítimo em melhorar o Keypacer com base nos retornos e em responder a você quando você pedir (art. 6, n.º 1, alínea f, do RGPD). Apagamos o feedback no máximo após 12 meses, a menos que ainda estejamos em contato com você. O seu navegador guarda no armazenamento local se você dispensou a pergunta ou já enviou feedback, para que o Keypacer não pergunte de novo.</p>` : '',
+    'pt-PT': FEEDBACK ? `
+
+    <h2>Feedback</h2>
+    <p>Na aplicação podes enviar-nos uma mensagem em <em>Enviar feedback</em>; de vez em quando, o Keypacer pede-o por baixo do resultado de um exercício. Para isso tratamos o teu texto e o tipo escolhido (ideia, erro, elogio), o teu endereço de e-mail, se o indicares para receber resposta, e, se quiseres, dados técnicos: versão da aplicação, idioma da interface e da prática, esquema de teclado, número de exercícios feitos, identificação do navegador (navegador e sistema operativo) e tamanho da janela. O teu registo de teclas não é enviado.</p>
+    <p>A mensagem vai para o nosso servidor na Cloudflare, que a envia por e-mail para feedback@keypacer.com através do serviço de envio Resend (Resend, Inc., EUA; envio a partir de servidores na UE, Irlanda); daí chega à nossa caixa de correio, como descrito em <em>Contacto por e-mail</em>. A Cloudflare usa o teu endereço IP para limitar a frequência de envio${CAPTCHA ? ', e a Cloudflare Turnstile verifica se é uma pessoa a enviar o formulário' : ''}; não guardamos o endereço IP. A Cloudflare e a Resend tratam os dados como nossos subcontratantes, com base nos seus acordos de tratamento de dados; na medida em que seja possível um acesso a partir dos EUA, este está coberto pelas cláusulas contratuais-tipo da UE (artigo 46.º, n.º 2, alínea c), do RGPD) ou pelo EU-US Data Privacy Framework (artigo 45.º do RGPD).</p>
+    <p>A base jurídica é o nosso interesse legítimo em melhorar o Keypacer com base nos comentários e em responder-te quando o pedires (artigo 6.º, n.º 1, alínea f), do RGPD). Apagamos o feedback o mais tardar ao fim de 12 meses, a não ser que ainda estejamos em contacto contigo. O teu navegador guarda no armazenamento local se dispensaste a pergunta ou já enviaste feedback, para que o Keypacer não volte a perguntar.</p>` : '',
+  },
+};
+
 /** Whether the landing pages and the trainer count visits with Umami Cloud (vite.config.ts). */
 const ANALYTICS = __UMAMI_WEBSITE_ID__ !== '';
 
@@ -467,7 +548,7 @@ const imprint: Record<LegalLanguage, string> = {
 const privacy: Record<LegalLanguage, string> = {
   de: `
     <h2>Kurz gesagt</h2>
-    <p>Keypacer braucht kein Konto und setzt keine Cookies. ${analytics.short.de}${captcha.short.de} Was du übst, bleibt in deinem Browser. Nur wenn du dich freiwillig anmeldest, um deinen Fortschritt zwischen Geräten abzugleichen, werden deine Übungsdaten auf einem Server in der EU gespeichert (siehe <em>Freiwilliges Konto</em>).</p>
+    <p>Keypacer braucht kein Konto und setzt keine Cookies. ${analytics.short.de}${captcha.short.de}${feedback.short.de} Was du übst, bleibt in deinem Browser. Nur wenn du dich freiwillig anmeldest, um deinen Fortschritt zwischen Geräten abzugleichen, werden deine Übungsdaten auf einem Server in der EU gespeichert (siehe <em>Freiwilliges Konto</em>).</p>
 
     <h2>Verantwortlicher</h2>
     <p>${name}<br>${town}, Österreich<br>${mail}</p>
@@ -500,7 +581,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>Cloudflare handelt dabei als unser Auftragsverarbeiter auf Grundlage seines Auftragsverarbeitungsvertrags. Eine Verarbeitung in den USA ist möglich; Cloudflare ist nach dem EU-US Data Privacy Framework zertifiziert, für das ein Angemessenheitsbeschluss der EU-Kommission besteht (Art. 45 DSGVO). Wir selbst werten keine Zugriffsprotokolle aus. Mehr dazu in der <a href="https://www.cloudflare.com/de-de/privacypolicy/">Datenschutzerklärung von Cloudflare</a>.</p>
 
     <h2>Kontakt per E-Mail</h2>
-    <p>Wenn du uns schreibst, verwenden wir deine E-Mail-Adresse und deine Nachricht nur, um dir zu antworten (Art. 6 Abs. 1 lit. f DSGVO). Wir löschen sie, sobald die Anfrage erledigt ist und keine gesetzliche Pflicht zur Aufbewahrung besteht.</p>
+    <p>Wenn du uns schreibst, verwenden wir deine E-Mail-Adresse und deine Nachricht nur, um dir zu antworten (Art. 6 Abs. 1 lit. f DSGVO). Wir löschen sie, sobald die Anfrage erledigt ist und keine gesetzliche Pflicht zur Aufbewahrung besteht.${feedback.contact.de}</p>${feedback.section.de}
 
     <h2>Deine Rechte</h2>
     <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung, auf Datenübertragbarkeit und auf Widerspruch (Art. 15 bis 21 DSGVO). Schreib uns dazu einfach eine E-Mail. Wenn du meinst, dass wir deine Daten nicht rechtmäßig verarbeiten, kannst du dich bei der Österreichischen Datenschutzbehörde beschweren: Barichgasse 40–42, 1030 Wien, <a href="https://www.dsb.gv.at">www.dsb.gv.at</a>.</p>
@@ -509,7 +590,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>Wenn Keypacer neue Funktionen bekommt, die Daten verarbeiten, oder einen weiteren Dienstleister einsetzt, passen wir diese Erklärung vorher an.</p>`,
   en: `
     <h2>In short</h2>
-    <p>Keypacer needs no account and sets no cookies. ${analytics.short.en}${captcha.short.en} What you practise stays in your browser. Only if you choose to sign in, to keep your progress in sync between devices, is your practice data stored on a server in the EU (see <em>Optional account</em>).</p>
+    <p>Keypacer needs no account and sets no cookies. ${analytics.short.en}${captcha.short.en}${feedback.short.en} What you practise stays in your browser. Only if you choose to sign in, to keep your progress in sync between devices, is your practice data stored on a server in the EU (see <em>Optional account</em>).</p>
 
     <h2>Controller</h2>
     <p>${name}<br>${town}, Austria<br>${mail}</p>
@@ -542,7 +623,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>Cloudflare acts as our processor under its data processing agreement. Processing in the USA is possible; Cloudflare is certified under the EU-US Data Privacy Framework, which is covered by an adequacy decision of the European Commission (Art. 45 GDPR). We do not analyse access logs ourselves. See <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare's privacy policy</a> for more.</p>
 
     <h2>Contact by e-mail</h2>
-    <p>If you write to us, we use your e-mail address and message only to answer you (Art. 6(1)(f) GDPR). We delete them once the request is dealt with, unless the law requires us to keep them.</p>
+    <p>If you write to us, we use your e-mail address and message only to answer you (Art. 6(1)(f) GDPR). We delete them once the request is dealt with, unless the law requires us to keep them.${feedback.contact.en}</p>${feedback.section.en}
 
     <h2>Your rights</h2>
     <p>You have the right of access, rectification, erasure and restriction of processing, the right to data portability and the right to object (Art. 15 to 21 GDPR). Just send us an e-mail. If you believe we process your data unlawfully, you can complain to the Austrian Data Protection Authority (Datenschutzbehörde): Barichgasse 40–42, 1030 Vienna, <a href="https://www.dsb.gv.at">www.dsb.gv.at</a>.</p>
@@ -551,7 +632,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>If Keypacer gets new features that process data, or uses another service provider, we will update this policy first.</p>`,
   fr: `
     <h2>En bref</h2>
-    <p>Keypacer ne demande pas de compte et ne dépose pas de cookies. ${analytics.short.fr}${captcha.short.fr} Ce que tu pratiques reste dans ton navigateur. C’est seulement si tu choisis de te connecter, pour synchroniser ta progression entre tes appareils, que tes données d’entraînement sont stockées sur un serveur dans l’UE (voir <em>Compte facultatif</em>).</p>
+    <p>Keypacer ne demande pas de compte et ne dépose pas de cookies. ${analytics.short.fr}${captcha.short.fr}${feedback.short.fr} Ce que tu pratiques reste dans ton navigateur. C’est seulement si tu choisis de te connecter, pour synchroniser ta progression entre tes appareils, que tes données d’entraînement sont stockées sur un serveur dans l’UE (voir <em>Compte facultatif</em>).</p>
 
     <h2>Responsable du traitement</h2>
     <p>${name}<br>${town}, Autriche<br>${mail}</p>
@@ -584,7 +665,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>Cloudflare agit en tant que notre sous-traitant sur la base de son accord de traitement des données. Un traitement aux États-Unis est possible ; Cloudflare est certifié au titre du cadre de protection des données UE–États-Unis, qui fait l’objet d’une décision d’adéquation de la Commission européenne (art. 45 du RGPD). Nous n’analysons pas nous-mêmes les journaux d’accès. Plus d’informations dans la <a href="https://www.cloudflare.com/privacypolicy/">politique de confidentialité de Cloudflare</a>.</p>
 
     <h2>Contact par e-mail</h2>
-    <p>Si tu nous écris, nous utilisons ton adresse e-mail et ton message uniquement pour te répondre (art. 6, par. 1, point f, du RGPD). Nous les supprimons une fois la demande traitée, sauf obligation légale de conservation.</p>
+    <p>Si tu nous écris, nous utilisons ton adresse e-mail et ton message uniquement pour te répondre (art. 6, par. 1, point f, du RGPD). Nous les supprimons une fois la demande traitée, sauf obligation légale de conservation.${feedback.contact.fr}</p>${feedback.section.fr}
 
     <h2>Tes droits</h2>
     <p>Tu as le droit d’accès, de rectification, d’effacement et de limitation du traitement, le droit à la portabilité des données et le droit d’opposition (art. 15 à 21 du RGPD). Il te suffit de nous envoyer un e-mail. Si tu estimes que nous traitons tes données de manière illicite, tu peux déposer une plainte auprès de l’autorité autrichienne de protection des données (Datenschutzbehörde) : Barichgasse 40–42, 1030 Vienne, <a href="https://www.dsb.gv.at">www.dsb.gv.at</a>.</p>
@@ -593,7 +674,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>Si Keypacer reçoit de nouvelles fonctions qui traitent des données, ou fait appel à un autre prestataire, nous adapterons d’abord cette politique.</p>`,
   es: `
     <h2>En resumen</h2>
-    <p>Keypacer no necesita cuenta y no usa cookies. ${analytics.short.es}${captcha.short.es} Lo que practicas se queda en tu navegador. Solo si decides iniciar sesión para sincronizar tu progreso entre dispositivos, tus datos de práctica se guardan en un servidor de la UE (ver <em>Cuenta opcional</em>).</p>
+    <p>Keypacer no necesita cuenta y no usa cookies. ${analytics.short.es}${captcha.short.es}${feedback.short.es} Lo que practicas se queda en tu navegador. Solo si decides iniciar sesión para sincronizar tu progreso entre dispositivos, tus datos de práctica se guardan en un servidor de la UE (ver <em>Cuenta opcional</em>).</p>
 
     <h2>Responsable del tratamiento</h2>
     <p>${name}<br>${town}, Austria<br>${mail}</p>
@@ -626,7 +707,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>Cloudflare actúa como nuestro encargado del tratamiento conforme a su acuerdo de tratamiento de datos. Es posible un tratamiento en EE. UU.; Cloudflare está certificado conforme al Marco de Privacidad de Datos UE-EE. UU., sobre el que existe una decisión de adecuación de la Comisión Europea (art. 45 del RGPD). Nosotros no analizamos registros de acceso. Más información en la <a href="https://www.cloudflare.com/privacypolicy/">política de privacidad de Cloudflare</a>.</p>
 
     <h2>Contacto por correo electrónico</h2>
-    <p>Si nos escribes, usamos tu dirección de correo y tu mensaje solo para responderte (art. 6.1.f) del RGPD). Los borramos en cuanto la consulta está resuelta, salvo que la ley nos obligue a conservarlos.</p>
+    <p>Si nos escribes, usamos tu dirección de correo y tu mensaje solo para responderte (art. 6.1.f) del RGPD). Los borramos en cuanto la consulta está resuelta, salvo que la ley nos obligue a conservarlos.${feedback.contact.es}</p>${feedback.section.es}
 
     <h2>Tus derechos</h2>
     <p>Tienes derecho de acceso, rectificación, supresión y limitación del tratamiento, derecho a la portabilidad de los datos y derecho de oposición (arts. 15 a 21 del RGPD). Basta con que nos envíes un correo. Si crees que tratamos tus datos de forma ilícita, puedes presentar una reclamación ante la autoridad austriaca de protección de datos (Datenschutzbehörde): Barichgasse 40–42, 1030 Viena, <a href="https://www.dsb.gv.at">www.dsb.gv.at</a>.</p>
@@ -635,7 +716,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>Si Keypacer recibe nuevas funciones que traten datos o recurre a otro proveedor de servicios, adaptaremos antes esta política.</p>`,
   it: `
     <h2>In breve</h2>
-    <p>Keypacer non richiede un account e non usa cookie. ${analytics.short.it}${captcha.short.it} Ciò su cui ti eserciti resta nel tuo browser. Solo se scegli di accedere per sincronizzare i progressi tra i tuoi dispositivi, i tuoi dati di esercizio vengono salvati su un server nell’UE (vedi <em>Account facoltativo</em>).</p>
+    <p>Keypacer non richiede un account e non usa cookie. ${analytics.short.it}${captcha.short.it}${feedback.short.it} Ciò su cui ti eserciti resta nel tuo browser. Solo se scegli di accedere per sincronizzare i progressi tra i tuoi dispositivi, i tuoi dati di esercizio vengono salvati su un server nell’UE (vedi <em>Account facoltativo</em>).</p>
 
     <h2>Titolare del trattamento</h2>
     <p>${name}<br>${town}, Austria<br>${mail}</p>
@@ -668,7 +749,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>Cloudflare agisce come nostro responsabile del trattamento sulla base del suo accordo sul trattamento dei dati. È possibile un trattamento negli USA; Cloudflare è certificata nell’ambito del Data Privacy Framework UE-USA, per il quale esiste una decisione di adeguatezza della Commissione europea (art. 45 GDPR). Noi non analizziamo i registri di accesso. Maggiori informazioni nell’<a href="https://www.cloudflare.com/privacypolicy/">informativa sulla privacy di Cloudflare</a>.</p>
 
     <h2>Contatto via e-mail</h2>
-    <p>Se ci scrivi, usiamo il tuo indirizzo e-mail e il tuo messaggio solo per risponderti (art. 6, par. 1, lett. f) GDPR). Li cancelliamo una volta evasa la richiesta, salvo obblighi di legge di conservarli.</p>
+    <p>Se ci scrivi, usiamo il tuo indirizzo e-mail e il tuo messaggio solo per risponderti (art. 6, par. 1, lett. f) GDPR). Li cancelliamo una volta evasa la richiesta, salvo obblighi di legge di conservarli.${feedback.contact.it}</p>${feedback.section.it}
 
     <h2>I tuoi diritti</h2>
     <p>Hai diritto di accesso, rettifica, cancellazione e limitazione del trattamento, alla portabilità dei dati e di opposizione (artt. da 15 a 21 GDPR). Basta scriverci un’e-mail. Se ritieni che trattiamo i tuoi dati in modo illecito, puoi presentare reclamo all’autorità austriaca per la protezione dei dati (Datenschutzbehörde): Barichgasse 40–42, 1030 Vienna, <a href="https://www.dsb.gv.at">www.dsb.gv.at</a>.</p>
@@ -677,7 +758,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>Se Keypacer riceve nuove funzioni che trattano dati o si avvale di un altro fornitore di servizi, aggiorneremo prima questa informativa.</p>`,
   pl: `
     <h2>W skrócie</h2>
-    <p>Keypacer nie wymaga konta i nie używa plików cookie. ${analytics.short.pl}${captcha.short.pl} To, co ćwiczysz, zostaje w Twojej przeglądarce. Tylko jeśli dobrowolnie się zalogujesz, aby synchronizować postępy między urządzeniami, Twoje dane z ćwiczeń są przechowywane na serwerze w UE (zob. <em>Dobrowolne konto</em>).</p>
+    <p>Keypacer nie wymaga konta i nie używa plików cookie. ${analytics.short.pl}${captcha.short.pl}${feedback.short.pl} To, co ćwiczysz, zostaje w Twojej przeglądarce. Tylko jeśli dobrowolnie się zalogujesz, aby synchronizować postępy między urządzeniami, Twoje dane z ćwiczeń są przechowywane na serwerze w UE (zob. <em>Dobrowolne konto</em>).</p>
 
     <h2>Administrator danych</h2>
     <p>${name}<br>${town}, Austria<br>${mail}</p>
@@ -710,7 +791,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>Cloudflare działa jako nasz podmiot przetwarzający na podstawie swojej umowy powierzenia przetwarzania danych. Możliwe jest przetwarzanie w USA; Cloudflare ma certyfikat w ramach EU-US Data Privacy Framework, dla którego Komisja Europejska wydała decyzję stwierdzającą odpowiedni stopień ochrony (art. 45 RODO). Sami nie analizujemy dzienników dostępu. Więcej w <a href="https://www.cloudflare.com/privacypolicy/">polityce prywatności Cloudflare</a>.</p>
 
     <h2>Kontakt e-mailowy</h2>
-    <p>Jeśli do nas napiszesz, używamy Twojego adresu e-mail i wiadomości wyłącznie po to, by Ci odpowiedzieć (art. 6 ust. 1 lit. f RODO). Usuwamy je po załatwieniu sprawy, o ile przepisy nie wymagają ich przechowywania.</p>
+    <p>Jeśli do nas napiszesz, używamy Twojego adresu e-mail i wiadomości wyłącznie po to, by Ci odpowiedzieć (art. 6 ust. 1 lit. f RODO). Usuwamy je po załatwieniu sprawy, o ile przepisy nie wymagają ich przechowywania.${feedback.contact.pl}</p>${feedback.section.pl}
 
     <h2>Twoje prawa</h2>
     <p>Masz prawo dostępu do danych, ich sprostowania, usunięcia i ograniczenia przetwarzania, prawo do przenoszenia danych i prawo sprzeciwu (art. 15–21 RODO). Wystarczy napisać do nas e-mail. Jeśli uważasz, że przetwarzamy Twoje dane niezgodnie z prawem, możesz złożyć skargę do austriackiego organu ochrony danych (Datenschutzbehörde): Barichgasse 40–42, 1030 Wiedeń, <a href="https://www.dsb.gv.at">www.dsb.gv.at</a>.</p>
@@ -719,7 +800,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>Jeśli Keypacer otrzyma nowe funkcje przetwarzające dane lub zacznie korzystać z innego usługodawcy, najpierw zaktualizujemy tę politykę.</p>`,
   'pt-BR': `
     <h2>Em resumo</h2>
-    <p>O Keypacer não precisa de conta e não usa cookies. ${analytics.short['pt-BR']}${captcha.short['pt-BR']} O que você pratica fica no seu navegador. Só se você decidir entrar numa conta, para manter seu progresso sincronizado entre dispositivos, seus dados de prática são guardados num servidor na UE (veja <em>Conta opcional</em>).</p>
+    <p>O Keypacer não precisa de conta e não usa cookies. ${analytics.short['pt-BR']}${captcha.short['pt-BR']}${feedback.short['pt-BR']} O que você pratica fica no seu navegador. Só se você decidir entrar numa conta, para manter seu progresso sincronizado entre dispositivos, seus dados de prática são guardados num servidor na UE (veja <em>Conta opcional</em>).</p>
 
     <h2>Responsável pelo tratamento</h2>
     <p>${name}<br>${town}, Áustria<br>${mail}</p>
@@ -752,7 +833,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>A Cloudflare atua como nosso operador, com base no seu acordo de tratamento de dados. É possível um tratamento nos EUA; a Cloudflare é certificada no EU-US Data Privacy Framework, coberto por uma decisão de adequação da Comissão Europeia (art. 45 do RGPD). Nós mesmos não analisamos os registros de acesso. Mais informações na <a href="https://www.cloudflare.com/privacypolicy/">política de privacidade da Cloudflare</a>.</p>
 
     <h2>Contato por e-mail</h2>
-    <p>Se você nos escrever, usamos seu endereço de e-mail e sua mensagem só para responder (art. 6, n.º 1, alínea f, do RGPD). Apagamos tudo assim que o pedido for resolvido, a menos que a lei nos obrigue a guardar.</p>
+    <p>Se você nos escrever, usamos seu endereço de e-mail e sua mensagem só para responder (art. 6, n.º 1, alínea f, do RGPD). Apagamos tudo assim que o pedido for resolvido, a menos que a lei nos obrigue a guardar.${feedback.contact['pt-BR']}</p>${feedback.section['pt-BR']}
 
     <h2>Seus direitos</h2>
     <p>Você tem direito de acesso, retificação, apagamento e limitação do tratamento, direito à portabilidade dos dados e direito de oposição (arts. 15 a 21 do RGPD). Basta nos mandar um e-mail. Se achar que tratamos seus dados de forma ilegal, você pode reclamar à autoridade austríaca de proteção de dados (Datenschutzbehörde): Barichgasse 40–42, 1030 Viena, <a href="https://www.dsb.gv.at">www.dsb.gv.at</a>.</p>
@@ -761,7 +842,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>Se o Keypacer ganhar novos recursos que tratem dados, ou passar a usar outro prestador de serviços, atualizamos esta política antes.</p>`,
   'pt-PT': `
     <h2>Em resumo</h2>
-    <p>O Keypacer não precisa de conta e não usa cookies. ${analytics.short['pt-PT']}${captcha.short['pt-PT']} O que praticas fica no teu navegador. Só se decidires entrar numa conta, para manteres o teu progresso sincronizado entre dispositivos, os teus dados de prática são guardados num servidor na UE (ver <em>Conta opcional</em>).</p>
+    <p>O Keypacer não precisa de conta e não usa cookies. ${analytics.short['pt-PT']}${captcha.short['pt-PT']}${feedback.short['pt-PT']} O que praticas fica no teu navegador. Só se decidires entrar numa conta, para manteres o teu progresso sincronizado entre dispositivos, os teus dados de prática são guardados num servidor na UE (ver <em>Conta opcional</em>).</p>
 
     <h2>Responsável pelo tratamento</h2>
     <p>${name}<br>${town}, Áustria<br>${mail}</p>
@@ -794,7 +875,7 @@ const privacy: Record<LegalLanguage, string> = {
     <p>A Cloudflare atua como nosso subcontratante, com base no seu acordo de tratamento de dados. É possível um tratamento nos EUA; a Cloudflare está certificada no EU-US Data Privacy Framework, coberto por uma decisão de adequação da Comissão Europeia (artigo 45.º do RGPD). Nós próprios não analisamos os registos de acesso. Mais informações na <a href="https://www.cloudflare.com/privacypolicy/">política de privacidade da Cloudflare</a>.</p>
 
     <h2>Contacto por e-mail</h2>
-    <p>Se nos escreveres, usamos o teu endereço de e-mail e a tua mensagem apenas para responder (artigo 6.º, n.º 1, alínea f), do RGPD). Apagamos tudo assim que o pedido estiver resolvido, a não ser que a lei nos obrigue a guardar.</p>
+    <p>Se nos escreveres, usamos o teu endereço de e-mail e a tua mensagem apenas para responder (artigo 6.º, n.º 1, alínea f), do RGPD). Apagamos tudo assim que o pedido estiver resolvido, a não ser que a lei nos obrigue a guardar.${feedback.contact['pt-PT']}</p>${feedback.section['pt-PT']}
 
     <h2>Os teus direitos</h2>
     <p>Tens direito de acesso, retificação, apagamento e limitação do tratamento, direito de portabilidade dos dados e direito de oposição (artigos 15.º a 21.º do RGPD). Basta enviares-nos um e-mail. Se considerares que tratamos os teus dados de forma ilícita, podes apresentar reclamação à autoridade austríaca de proteção de dados (Datenschutzbehörde): Barichgasse 40–42, 1030 Viena, <a href="https://www.dsb.gv.at">www.dsb.gv.at</a>.</p>

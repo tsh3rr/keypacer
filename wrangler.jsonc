@@ -1,10 +1,18 @@
 // Cloudflare Workers config: serves the built `dist` folder as a static site.
 // Production deploys from `main`; other branches get preview URLs via Workers Builds.
+// Only /api/* runs code (src/worker/index.ts); everything else comes straight from `dist`.
 {
   "name": "keypacer",
   "compatibility_date": "2026-10-01",
+  "main": "./src/worker/index.ts",
   "assets": {
     "directory": "./dist/",
-    "not_found_handling": "404-page"
-  }
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+  // Feedback form: at most 3 messages a minute from one IP address.
+  "ratelimits": [
+    { "name": "FEEDBACK_LIMIT", "namespace_id": "1001", "simple": { "limit": 3, "period": 60 } }
+  ]
 }

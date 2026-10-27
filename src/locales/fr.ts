@@ -44,6 +44,7 @@ export const fr: Messages = {
   'layout.qwerty-pl': 'Polonais (programmeur)',
   'layout.dvorak-us': 'Dvorak (US)',
   'layout.colemak': 'Colemak',
+  'layout.colemak-dh': 'Colemak-DH',
 
   // --- Settings drawer ---
   'settings.button': 'Réglages',

@@ -27,6 +27,8 @@ export interface Layout {
   altGr: ReadonlyMap<string, string>;
   /** Symbols typed with AltGr, to their key and whether Shift is held too (German @ is AltGr + Q). */
   altGrSymbols: ReadonlyMap<string, { code: string; shift: boolean }>;
+  /** Keys pressed by another finger than in standard touch typing, as "left-ring" etc. (Colemak-DH angle mod). */
+  fingers: ReadonlyMap<string, string>;
 }
 
 /** Combining mark each dead-key accent adds. */
@@ -61,6 +63,8 @@ interface Extras {
   altGr?: Record<string, string>;
   /** AltGr symbol to the code of its key, e.g. { '@': 'KeyQ' }; a leading ⇧ adds Shift. */
   symbols?: Record<string, string>;
+  /** Key code to the finger that presses it instead of the usual one, e.g. { KeyZ: 'left-ring' }. */
+  fingers?: Record<string, string>;
 }
 
 /** Builds a layout from one string per row, base and Shift layer; a space marks a key the layout lacks. */
@@ -85,6 +89,7 @@ function layout(id: string, name: string, locales: string[], rows: Rows, shiftRo
       if (!ROWS.some((row) => row.includes(code))) throw new Error(`Layout ${id}: unknown key ${code} for ${ch}`);
       return [ch, { code, shift }];
     })),
+    fingers: new Map(Object.entries(extras.fingers ?? {})),
   };
 }
 
@@ -172,6 +177,14 @@ export const LAYOUTS: readonly Layout[] = [
   layout('colemak', 'Colemak', [], [
     '`1234567890-=', 'qwfpgjluy;[]', "arstdhneio'\\", ' zxcvbkm,./'], [
     '~!@#$%^&*()_+', 'QWFPGJLUY:{}', 'ARSTDHNEIO"|', ' ZXCVBKM<>?']),
+  // Colemak Mod-DH for ANSI keyboards, with the angle mod: the left hand's
+  // bottom row shifts one key, so the ring finger takes the Z key (x), the
+  // middle finger X (c) and the index finger C (d), V and B (z).
+  layout('colemak-dh', 'Colemak-DH', [], [
+    '`1234567890-=', 'qwfpbjluy;[]', "arstgmneio'\\", ' xcdvzkh,./'], [
+    '~!@#$%^&*()_+', 'QWFPBJLUY:{}', 'ARSTGMNEIO"|', ' XCDVZKH<>?'], {
+    fingers: { KeyZ: 'left-ring', KeyX: 'left-middle', KeyC: 'left-index', KeyV: 'left-index' },
+  }),
 ];
 
 export const DEFAULT_LAYOUT = 'qwerty-us';

@@ -255,7 +255,7 @@ export class FingerGuide {
   }
 
   private key(code: string, label: string, cls: string): HTMLElement {
-    const f = fingerFor(code);
+    const f = fingerFor(code, this.layout);
     const home = HOME_ROW.includes(code);
     const bump = code === 'KeyF' || code === 'KeyJ';
     const k = el('div', `kb-key fg-key ${f ? `fg-${fingerId(f)}` : ''} ${home ? 'fg-home-key' : ''} ${bump ? 'fg-bump' : ''} ${cls}`, label);

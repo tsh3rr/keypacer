@@ -33,6 +33,14 @@ describe('guideFor', () => {
     expect(guideFor('qwerty-us', 'z')).toMatchObject({ code: 'KeyZ', finger: { hand: 'left', name: 'pinky' } });
   });
 
+  it('uses the angle mod fingers on Colemak-DH', () => {
+    // x sits on the Z key, pressed by the ring finger; d on C, by the index finger.
+    expect(guideFor('colemak-dh', 'x')).toMatchObject({ code: 'KeyZ', finger: { hand: 'left', name: 'ring' }, home: 'KeyS' });
+    expect(guideFor('colemak-dh', 'd')).toMatchObject({ code: 'KeyC', finger: { hand: 'left', name: 'index' }, home: 'KeyF' });
+    // Plain Colemak keeps the standard fingers.
+    expect(guideFor('colemak', 'z')).toMatchObject({ code: 'KeyZ', finger: { hand: 'left', name: 'pinky' } });
+  });
+
   it('maps umlauts to their keys', () => {
     expect(guideFor('qwertz-de', 'ö')).toMatchObject({ code: 'Semicolon', home: null, finger: { name: 'pinky' } });
     expect(guideFor('qwertz-de', 'ü')).toMatchObject({ code: 'BracketLeft', home: 'Semicolon' });

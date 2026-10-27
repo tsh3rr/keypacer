@@ -142,6 +142,14 @@ describe('detectLayout', () => {
     expect(detectLayout(typed('dvorak-us', 'the quick brown fox'), []).layout).toBe('dvorak-us');
   });
 
+  it('tells Colemak and Colemak-DH apart', () => {
+    expect(detectLayout(typed('colemak', 'the quick brown fox'), []).layout).toBe('colemak');
+    expect(detectLayout(typed('colemak-dh', 'the quick brown fox'), []).layout).toBe('colemak-dh');
+    expect(keyLabel('colemak-dh', 'KeyG')).toBe('G');
+    expect(keyLabel('colemak-dh', 'KeyT')).toBe('B');
+    expect(howToType('colemak-dh', 'Z')).toEqual({ code: 'KeyB', shift: true });
+  });
+
   it('is not thrown off by Shift or AltGr output that no base layer has', () => {
     const pairs: [string, string][] = [...typed('qwertz-de', 'zoo yes'), ['Minus', '?'], ['KeyQ', '@']];
     expect(detectLayout(pairs, []).candidates).toContain('qwertz-de');

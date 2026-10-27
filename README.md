@@ -16,6 +16,7 @@ Static app (TypeScript + Vite). No backend: all data stays in the browser.
 ## Pages
 
 - **Landing pages** at `/` (English), `/de/`, `/es/`, `/fr/`, `/it/` and `/pl/`: what Keypacer is, with a one-line typing demo in the hero that shows speed, accuracy and the keys that held you up. They are static HTML built from `src/landing/content.ts` at build time (`index.html` and `<lang>/index.html` are placeholders the plugin in `vite.config.ts` fills), so search engines and link previews read the full text. The build also writes `sitemap.xml` and `robots.txt`; preview builds tell search engines to stay away. `SITE_URL` sets the public address used in canonical links and the sitemap.
+- **Blog** at `/blog/`, `/de/blog/`, …: articles written as Markdown in `content/blog/<lang>/<slug>/index.md` (German is the original, the other languages are machine translations marked as such). The blog plugin in `vite.config.ts` checks them and builds the overview, the article pages, an RSS feed per language and the blog's sitemap entries (`src/blog/`); the landing page shows up to three of them. No `to-app.js` there, so returning learners can read them. How to write one: [docs/blog.md](docs/blog.md).
 - **The trainer** at `/app/`. Landing links pass `?lang=<lang>` so a first visit starts in that language (`?signin` opens sign-in). Someone who has set up the trainer before, and sign-in or invite links that point at `/`, go straight on to `/app/` (`public/to-app.js`); `/?home` shows the landing page anyway.
 
 ## First visit
@@ -146,7 +147,7 @@ GitHub Actions:
 
 ## Impressum and privacy policy
 
-`/impressum` and `/datenschutz` (`impressum.html`, `datenschutz.html`, texts in `src/legal/content.ts`) are written for a private, non-commercial site run from Austria, in German (binding) and English. The owner's name, town and e-mail are in `src/legal/owner.ts`. The privacy policy says the site sets no cookies and stores practice data only in the browser unless the learner signs in (then in Supabase, Frankfurt). Once an Umami website ID is set in `vite.config.ts`, the landing pages and the trainer's page count page views with Umami Cloud and the texts switch to match (`docs/umami-setup.md`); without it they say there are no analytics. If anything else changes (ads, another provider), update the texts first. A cookie banner is not needed while all browser storage is strictly necessary for the trainer (§ 165 Abs. 3 TKG 2021).
+`/impressum` and `/datenschutz` (`impressum.html`, `datenschutz.html`, texts in `src/legal/content.ts`) are written for a private, non-commercial site run from Austria, in German (binding) and English. The owner's name, town and e-mail are in `src/legal/owner.ts`. The privacy policy says the site sets no cookies and stores practice data only in the browser unless the learner signs in (then in Supabase, Frankfurt). Once an Umami website ID is set in `vite.config.ts`, the landing pages, the blog and the trainer's page count page views with Umami Cloud and the texts switch to match (`docs/umami-setup.md`); without it they say there are no analytics. If anything else changes (ads, another provider), update the texts first. A cookie banner is not needed while all browser storage is strictly necessary for the trainer (§ 165 Abs. 3 TKG 2021).
 
 ## Thanks
 

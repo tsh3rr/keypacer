@@ -1,4 +1,7 @@
 import { BRAND_MARK } from './brand.ts';
+import { BLOG_COPY } from '../blog/copy.ts';
+import { blogPath, blogTeaser } from '../blog/render.ts';
+import type { Post } from '../blog/posts.ts';
 import { COPY, LANDING_LANGUAGES, landingPath, type LandingCopy, type LandingLanguage } from './content.ts';
 import { HEAT_LEVELS, PLACED, PLACE_CELLS, QWERTY_TOP, STEPS, WEEK_DONE, WEEK_GOAL, skippedText, tabAt, type FingerTint, type VignetteData } from './vignettes.ts';
 import { ROWS, getLayout, howToType } from '../layouts.ts';
@@ -18,11 +21,11 @@ import { pl } from '../locales/pl.ts';
  * typing itself and the moving feature pictures.
  */
 
-const esc = (s: string): string =>
+export const esc = (s: string): string =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 /** JSON inside a <script> block: "<" escaped so text cannot close the block. */
-const jsonBlock = (value: unknown): string => JSON.stringify(value).replace(/</g, '\\u003c');
+export const jsonBlock = (value: unknown): string => JSON.stringify(value).replace(/</g, '\\u003c');
 
 export const appPath = (lang: LandingLanguage): string => `/app/?lang=${lang}`;
 
@@ -183,12 +186,70 @@ const UMAMI_SCRIPT = 'https://cloud.umami.is/script.js';
 export const umamiTag = (id: string): string =>
   `<script defer src="${UMAMI_SCRIPT}" data-website-id="${esc(id)}" data-do-not-track="true" data-exclude-search="true" data-exclude-hash="true"></script>`;
 
+/** Icons, manifest and the shared stylesheet, in the <head> of every landing and blog page. */
+export function headLinks(umami: string, styles: string[]): string {
+  return `<link rel="icon" href="/favicon.ico?v=2" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="stylesheet" href="/src/style.css" />
+    ${styles.map((href) => `<link rel="stylesheet" href="${href}" />`).join('\n    ')}${umami ? `
+    ${umamiTag(umami)}` : ''}`;
+}
+
+export interface Chrome {
+  /** Where each entry of the language menu leads (the same page in that language, or the closest one). */
+  languageHref: (l: LandingLanguage) => string;
+  /** Whether this language has articles: then the navigation and the footer link to the blog. */
+  blog: boolean;
+  /** Set on blog pages: the in-page section links point back to the landing page. */
+  onBlog?: boolean;
+}
+
+const languageMenu = (lang: LandingLanguage, ch: Chrome): string => LANDING_LANGUAGES.map((l) =>
+  `<a href="${ch.languageHref(l)}" hreflang="${l}" lang="${l}"${l === lang ? ' aria-current="page"' : ''}>${esc(COPY[l].name)}</a>`).join('');
+
+/** The top bar of the landing and blog pages. */
+export function siteHeader(lang: LandingLanguage, ch: Chrome): string {
+  const c = COPY[lang];
+  const home = landingPath(lang);
+  const at = ch.onBlog ? home : '';
+  return `<header class="topbar lp-top">
+      <a class="brand" href="${home}">${BRAND_MARK}<span class="brand-word">key<b>pacer</b></span></a>
+      <nav class="lp-sections" aria-label="${esc(c.nav.sections)}">
+        <a href="${at}#methode">${esc(c.nav.method)}</a>
+        <a href="${at}#funktionen">${esc(c.nav.features)}</a>
+        <a href="${at}#fragen">${esc(c.nav.faq)}</a>${ch.blog ? `
+        <a href="${blogPath(lang)}"${ch.onBlog ? ' aria-current="page"' : ''}>${esc(BLOG_COPY[lang].name)}</a>` : ''}
+      </nav>
+      <span class="spacer"></span>
+      <details class="lp-lang">
+        <summary aria-label="${esc(c.nav.languages)}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18"/></svg><span class="lp-lang-name">${esc(c.name)}</span></summary>
+        <nav class="menu lp-lang-menu" aria-label="${esc(c.nav.languages)}">${languageMenu(lang, ch)}</nav>
+      </details>
+      <a class="lp-signin" href="/app/?signin&amp;lang=${lang}">${esc(c.nav.signIn)}</a>
+      <a class="lp-btn lp-btn-small" href="${appPath(lang)}" data-umami-event="open-app-nav">${esc(c.nav.open)}</a>
+    </header>`;
+}
+
+/** The footer of the landing and blog pages: languages, the blog and the legal pages. */
+export function siteFooter(lang: LandingLanguage, ch: Chrome): string {
+  const c = COPY[lang];
+  return `<footer class="site-foot lp-foot">
+      <nav class="lp-foot-langs" aria-label="${esc(c.nav.languages)}">${languageMenu(lang, ch)}</nav>${ch.blog ? `
+      <a href="${blogPath(lang)}">${esc(BLOG_COPY[lang].name)}</a>` : ''}
+      <a href="/impressum?lang=${lang}">${esc(c.foot.imprint)}</a>
+      <a href="/datenschutz?lang=${lang}">${esc(c.foot.privacy)}</a>
+      <a href="/nutzungsbedingungen?lang=${lang}">${esc(c.foot.terms)}</a>
+    </footer>`;
+}
+
 /**
  * The page for one language. With an Umami website ID, the page loads Umami
  * (umamiTag) and swaps its
  * "0 trackers" claims for the analytics copy.
  */
-export function renderLanding(lang: LandingLanguage, site: string, umami = ''): string {
+export function renderLanding(lang: LandingLanguage, site: string, umami = '', posts: Post[] = []): string {
   const base = COPY[lang];
   const c = umami ? {
     ...base,
@@ -224,8 +285,7 @@ export function renderLanding(lang: LandingLanguage, site: string, umami = ''): 
     },
   ];
 
-  const languageLinks = LANDING_LANGUAGES.map((l) =>
-    `<a href="${landingPath(l)}" hreflang="${l}" lang="${l}"${l === lang ? ' aria-current="page"' : ''}>${esc(COPY[l].name)}</a>`).join('');
+  const chrome: Chrome = { languageHref: landingPath, blog: posts.length > 0 };
 
   const percent = new Intl.NumberFormat(lang, { style: 'percent', minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const weakRows = c.analysis.example.keys.map((k, i) => {
@@ -257,34 +317,14 @@ export function renderLanding(lang: LandingLanguage, site: string, umami = ''): 
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="${c.ogLocale}" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" href="/favicon.ico?v=2" sizes="32x32" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
-    <link rel="manifest" href="/site.webmanifest" />
     <!-- Returning learners and sign-in or invite links go straight on to the trainer. -->
     <script src="/to-app.js"></script>
-    <link rel="stylesheet" href="/src/style.css" />
-    <link rel="stylesheet" href="/src/landing/landing.css" />${umami ? `
-    ${umamiTag(umami)}` : ''}
+    ${headLinks(umami, ['/src/landing/landing.css', ...(posts.length ? ['/src/blog/blog.css'] : [])])}
     <script type="application/ld+json">${jsonBlock(structured)}</script>
   </head>
   <body class="lp">
     <a class="lp-skip" href="#inhalt">${esc(c.nav.skip)}</a>
-    <header class="topbar lp-top">
-      <a class="brand" href="${landingPath(lang)}">${BRAND_MARK}<span class="brand-word">key<b>pacer</b></span></a>
-      <nav class="lp-sections" aria-label="${esc(c.nav.sections)}">
-        <a href="#methode">${esc(c.nav.method)}</a>
-        <a href="#funktionen">${esc(c.nav.features)}</a>
-        <a href="#fragen">${esc(c.nav.faq)}</a>
-      </nav>
-      <span class="spacer"></span>
-      <details class="lp-lang">
-        <summary aria-label="${esc(c.nav.languages)}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18"/></svg><span class="lp-lang-name">${esc(c.name)}</span></summary>
-        <nav class="menu lp-lang-menu" aria-label="${esc(c.nav.languages)}">${languageLinks}</nav>
-      </details>
-      <a class="lp-signin" href="/app/?signin&amp;lang=${lang}">${esc(c.nav.signIn)}</a>
-      <a class="lp-btn lp-btn-small" href="${app}" data-umami-event="open-app-nav">${esc(c.nav.open)}</a>
-    </header>
+    ${siteHeader(lang, chrome)}
 
     <main id="inhalt" class="lp-main">
       <section class="lp-hero" aria-labelledby="lp-title">
@@ -367,7 +407,7 @@ export function renderLanding(lang: LandingLanguage, site: string, umami = ''): 
         </ul>
       </section>
 
-      <section id="fragen" class="lp-section lp-faq" aria-labelledby="lp-faq">
+      ${posts.length ? blogTeaser(lang, posts) : ''}<section id="fragen" class="lp-section lp-faq" aria-labelledby="lp-faq">
         <h2 id="lp-faq">${esc(c.faq.title)}</h2>
         ${c.faq.items.map((f) => `<details><summary>${esc(f.q)}<span class="lp-plus" aria-hidden="true">+</span></summary><p>${esc(f.a)}</p></details>`).join('\n        ')}
       </section>
@@ -382,12 +422,7 @@ export function renderLanding(lang: LandingLanguage, site: string, umami = ''): 
       </section>
     </main>
 
-    <footer class="site-foot lp-foot">
-      <nav class="lp-foot-langs" aria-label="${esc(c.nav.languages)}">${languageLinks}</nav>
-      <a href="/impressum?lang=${lang}">${esc(c.foot.imprint)}</a>
-      <a href="/datenschutz?lang=${lang}">${esc(c.foot.privacy)}</a>
-      <a href="/nutzungsbedingungen?lang=${lang}">${esc(c.foot.terms)}</a>
-    </footer>
+    ${siteFooter(lang, chrome)}
 
     <script type="application/json" id="lp-data">${jsonBlock({
       ...c.demo, app, lang, continue: c.hero.continue, titles: [c.hero.title, ...c.hero.rotate],
@@ -399,8 +434,8 @@ export function renderLanding(lang: LandingLanguage, site: string, umami = ''): 
 `;
 }
 
-/** Every landing page, each listing its translations (hreflang) for search engines. */
-export function sitemapXml(site: string): string {
+/** Every landing page, each listing its translations (hreflang) for search engines, then the blog's addresses. */
+export function sitemapXml(site: string, blog = ''): string {
   const links = LANDING_LANGUAGES.map((l) =>
     `    <xhtml:link rel="alternate" hreflang="${l}" href="${site}${landingPath(l)}"/>`).join('\n');
   const urls = LANDING_LANGUAGES.map((l) => `  <url>
@@ -410,7 +445,7 @@ ${links}
   </url>`).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${urls}
+${urls}${blog ? `\n${blog}` : ''}
 </urlset>
 `;
 }

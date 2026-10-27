@@ -763,7 +763,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       rotate: [
         'Dziesięć palców. Dziesięć minut dziennie.',
         'Każde ćwiczenie celuje w twoje najwolniejsze klawisze',
-        'Najpierw czysto, potem szybko',
+        'Najpierw dokładnie, potem szybko',
       ],
       lead: 'Keypacer mierzy każde uderzenie, znajduje klawisze i pary liter, które cię spowalniają, i robi z nich twoje kolejne ćwiczenie. Nigdy nie ćwiczysz tego, co już umiesz.',
       cta: 'Zacznij za darmo',
@@ -778,7 +778,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       wpmLong: 'słów na minutę',
       accuracy: 'dokładność',
       slowTitle: 'Przy tych klawiszach się zawahałeś(-aś):',
-      slowNone: 'Czysto i równo. Zobaczmy, jak pójdzie z całą klawiaturą.',
+      slowNone: 'Bez błędów i równym tempem. Zobaczmy, jak pójdzie z całą klawiaturą.',
       nextBeginner: 'Twoja pierwsza lekcja: sześć najczęstszych liter, potem jeden nowy klawisz naraz.',
       ctaBeginner: 'Zacznij lekcję 1',
       nextFast: 'Piszesz już całkiem szybko. Jeszcze około {n} słów w trenerze, a potem pominiesz klawisze, które już znasz.',
@@ -804,8 +804,8 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       title: 'Jak przyspieszasz',
       intro: 'Żadnych lekcji dla wszystkich. Każde ćwiczenie powstaje z tego, jak piszesz, i z każdą rundą jest dokładniejsze.',
       items: [
-        { title: 'Klawisz po klawiszu', text: 'Zaczynasz od sześciu najczęstszych liter i szybko piszesz prawdziwe słowa. Kolejny klawisz dochodzi dopiero wtedy, gdy wszystkie dotychczasowe siedzą pewnie i płynnie.' },
-        { title: 'Najpierw czysto, potem szybko', text: 'Błędny klawisz zatrzymuje cię na literze. Gdy dokładność spada, licznik tempa znika, dopóki znów nie piszesz czysto.' },
+        { title: 'Klawisz po klawiszu', text: 'Zaczynasz od sześciu najczęstszych liter i szybko piszesz prawdziwe słowa. Kolejny klawisz dochodzi dopiero wtedy, gdy wszystkie dotychczasowe piszesz pewnie i płynnie.' },
+        { title: 'Najpierw dokładnie, potem szybko', text: 'Błędny klawisz zatrzymuje cię na literze. Gdy dokładność spada, licznik tempa znika, dopóki znów nie zaczniesz pisać bez błędów.' },
         { title: 'Celowo, nie po równo', text: 'Każde ćwiczenie stawia na klawisze i pary liter, które cię spowalniają, i wraca do tych, których dawno nie ćwiczyłeś(-aś), żeby zostały w pamięci.' },
         { title: 'Krótkie rundy, prawdziwe przerwy', text: 'Rozgrzewka, krótkie rundy skupienia, potem prawdziwe zdania. Gdy słabnie koncentracja, Keypacer proponuje przerwę, zamiast utrwalać błędy.' },
       ],
@@ -813,7 +813,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     analysis: {
       eyebrow: 'Co mierzy Keypacer',
       title: 'Keypacer zauważa, które klawisze cię spowalniają',
-      text: 'Wahasz się chwilę przed ą albo mylisz b i n? Ledwo to czujesz, ale za każdym razem kosztuje cię to tempo. Keypacer mierzy każde uderzenie co do milisekundy i układa kolejne ćwiczenie właśnie z tych klawiszy i par liter.',
+      text: 'Wahasz się chwilę przed ą albo mylisz b i n? Ledwo to zauważasz, ale za każdym razem kosztuje cię to tempo. Keypacer mierzy każde uderzenie co do milisekundy i układa kolejne ćwiczenie właśnie z tych klawiszy i par liter.',
       points: [
         { chip: '1×', strong: 'Liczy się pierwsza próba.', text: 'Błąd zostaje błędem, nawet jeśli od razu go poprawisz.' },
         { chip: '2s', strong: 'Przerwy na myślenie się nie liczą.', text: 'Przerwy dłuższe niż dwie sekundy nie zaniżają twojego tempa.' },
@@ -853,11 +853,11 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     },
     privacy: {
       eyebrow: 'Prywatność',
-      title: 'Twoje dane z pisania zostają przy tobie',
-      intro: 'Keypacer wie dokładnie, jak piszesz. Dlatego ta wiedza zostaje przy tobie.',
+      title: 'Twoje dane zostają z tobą',
+      intro: 'Keypacer wie dokładnie, jak piszesz. Dlatego ta wiedza zostaje z tobą.',
       items: [
         { title: 'Bez ciasteczek i śledzenia', text: 'Keypacer nie używa ciasteczek, nie wyświetla reklam i nie korzysta z usług analitycznych.', chips: ['0 ciasteczek', '0 trackerów'] },
-        { title: 'Bez konta wszystko zostaje w przeglądarce', text: 'Twoje uderzenia są zapisywane tylko lokalnie. W każdej chwili możesz je wyeksportować lub usunąć.', chips: ['.json', '.csv'] },
+        { title: 'Bez konta wszystko zostaje w przeglądarce', text: 'Twoje naciśnięcia klawiszy są zapisywane tylko lokalnie. W każdej chwili możesz je wyeksportować lub usunąć.', chips: ['.json', '.csv'] },
         { title: 'Z kontem w UE', text: 'Dobrowolne konto synchronizuje twoje rundy między urządzeniami przez serwery we Frankfurcie.', chips: ['Frankfurt', 'dobrowolne konto'] },
       ],
     },
@@ -873,7 +873,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { q: 'Czy potrzebuję konta?', a: 'Nie. Możesz zacząć od razu; bez konta postępy zapisuje przeglądarka. Z darmowym kontem są bezpieczne, nawet jeśli dane przeglądarki zostaną usunięte, i możesz kontynuować na innych urządzeniach.' },
         { q: 'Ile trwa nauka pisania bezwzrokowego?', a: 'Większość osób pisze bez patrzenia po kilku tygodniach ćwiczeń po 15–20 minut dziennie. Krótkie codzienne sesje działają lepiej niż długie i rzadkie, a tempo rośnie dalej.' },
         { q: 'Jakie układy klawiatury są obsługiwane?', a: 'Polski (programisty), amerykański i brytyjski QWERTY, niemiecki i szwajcarski QWERTZ, francuski i belgijski AZERTY, hiszpański, włoski, szwedzki/fiński, Dvorak, Colemak i Colemak-DH. Keypacer rozpoznaje układ po klawiszach, które naciskasz.' },
-        { q: 'Czy działa na telefonie lub tablecie?', a: 'Keypacer jest zrobiony dla prawdziwej klawiatury. Tablet z klawiaturą sprawdza się dobrze; na telefonie możesz się rozejrzeć, ale pisania bezwzrokowego uczy się na fizycznej klawiaturze.' },
+        { q: 'Czy działa na telefonie lub tablecie?', a: 'Keypacer jest stworzony z myślą o prawdziwej klawiaturze. Tablet z klawiaturą sprawdza się dobrze; na telefonie możesz się rozejrzeć, ale pisania bezwzrokowego uczy się na fizycznej klawiaturze.' },
       ],
     },
     final: { title: 'Pierwsze ćwiczenie zajmie dwie minuty', text: 'Przepisz jedną linijkę, a Keypacer będzie wiedział, od czego zacząć.', cta: 'Zacznij za darmo' },

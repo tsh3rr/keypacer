@@ -63,8 +63,12 @@
   display: flex; gap: 10px 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--muted);
   padding: 14px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin: 0 0 20px;
 }
+/* The other languages of an article, as a dropdown like the one in the top bar. */
 .bl-langs { margin-left: auto; }
-.bl-langs a { color: var(--accent); font-weight: 600; text-decoration: none; }
+.bl-langs summary { padding: 4px 8px; margin: -4px -8px; font-size: 13px; }
+.bl-langs summary b { color: var(--fg); font-weight: 600; }
+.bl-langs summary .icon { width: 14px; height: 14px; }
+.bl-langs[open] .icon { transform: rotate(180deg); }
 .bl-note { margin: -8px 0 20px; font-size: 13px; color: var(--muted); }
 .bl-note a { color: var(--accent); font-weight: 600; text-decoration: none; }
 .bl-cover { margin: 0 0 30px; }
@@ -112,6 +116,8 @@
 .lp-sections a[aria-current] { color: var(--fg); background: var(--surface-2); }
 
 @media (max-width: 720px) {
+  .bl-langs { margin-left: 0; }
+  .bl-langs .menu { left: 0; right: auto; }
   .bl-feature { grid-template-columns: 1fr; }
   .bl-feature .bl-thumb { border-right: 0; border-bottom: 3px solid var(--edge); }
   .bl-feature-body { padding: 22px 20px; }

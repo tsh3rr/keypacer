@@ -205,8 +205,12 @@ export function renderPost(post: Post, posts: Post[], site: string, umami = ''):
         <p class="lp-kicker">${esc(b.topics[post.topic])}</p>
         <h1>${esc(post.title)}</h1>
         <p class="bl-lead">${esc(post.description)}</p>
-        <div class="bl-meta"><span>${esc(minutes(post))}</span><span>${esc(updated)}</span>${translations.length ? `<span class="bl-langs">${esc(b.alsoIn)}: ${translations.map((t) =>
-          `<a href="${postPath(t)}" hreflang="${t.lang}" lang="${t.lang}">${esc(COPY[t.lang].name)}</a>`).join(' · ')}</span>` : ''}</div>${original ? `
+        <div class="bl-meta"><span>${esc(minutes(post))}</span><span>${esc(updated)}</span>${translations.length ? `
+          <details class="lp-lang bl-langs">
+            <summary>${esc(b.alsoIn)}: <b>${esc(COPY[lang].name)}</b><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+            <nav class="menu lp-lang-menu" aria-label="${esc(b.alsoIn)}">${[post, ...translations].sort((a, z) => LANDING_LANGUAGES.indexOf(a.lang) - LANDING_LANGUAGES.indexOf(z.lang)).map((t) =>
+              `<a href="${postPath(t)}" hreflang="${t.lang}" lang="${t.lang}"${t === post ? ' aria-current="page"' : ''}>${esc(COPY[t.lang].name)}</a>`).join('')}</nav>
+          </details>` : ''}</div>${original ? `
         <p class="bl-note">${esc(b.translated)} <a href="${postPath(original)}" hreflang="${original.lang}">${esc(b.original)} ${ARROW}</a></p>` : ''}${post.cover ? `
         <figure class="bl-cover"><img src="${post.cover.file}" width="${post.cover.width}" height="${post.cover.height}" alt="${esc(post.cover.alt)}" decoding="async" fetchpriority="high" /></figure>` : ''}
         <div class="bl-prose">

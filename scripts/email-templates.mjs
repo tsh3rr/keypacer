@@ -190,9 +190,10 @@ const TEXT = {
 const C = {
   bg: '#f5f6fa', panel: '#ffffff', ink: '#1c2232', muted: '#636877', border: '#e2e4ea', soft: '#e3ebfb',
   cobaltTop: '#3d6ddf', cobalt: '#214dba', cobaltEdge: '#173d9d', magenta: '#a22697',
-  // Each logo step: front, top face, side face.
-  steps: [['#dd5400', '#ffac72', '#a23a00'], ['#a22697', '#eb82dd', '#6e0d67'], ['#214dba', '#6d9bfd', '#0c2b7e']],
 };
+// The stair logo from the site (src/landing/brand.ts) as a PNG at three times its size: mail apps
+// show no SVG. A fixed address, since {{ .SiteURL }} can be a preview host; a changed logo gets a new name.
+const LOGO = 'https://keypacer.com/email/logo-v1.png';
 const MONO = "'JetBrains Mono',ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace";
 const SANS = "system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
 
@@ -219,9 +220,6 @@ export function subject(kind) {
 export function html(kind) {
   const k = (key) => byLanguage((l) => esc(TEXT[l][kind][key]));
   const common = (key) => byLanguage((l) => esc(TEXT[l][key]));
-  // The stair logo from table cells, no image: a lighter top and a darker side make each step a key.
-  const step = ([front, top, side], height) =>
-    `<td valign="bottom" style="padding:0 2px 0 0"><div style="width:8px;height:${height}px;background:${front};border-top:3px solid ${top};border-right:2px solid ${side};border-radius:2px 2px 1px 1px"></div></td>`;
   return `${LANGUAGE}<!doctype html>
 <html lang="{{ $l }}">
 <head>
@@ -237,8 +235,8 @@ export function html(kind) {
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px">
 <tr><td style="padding:0 4px 18px">
 <table role="presentation" cellpadding="0" cellspacing="0"><tr>
-${C.steps.map((c, i) => step(c, [7, 15, 23][i])).join('')}
-<td valign="bottom" style="padding-left:9px;font-family:${MONO};font-size:19px;line-height:1;letter-spacing:-0.01em;color:${C.ink}"><span style="font-weight:500">key</span><span style="font-weight:800">pacer</span></td>
+<td valign="middle"><img src="${LOGO}" width="32" height="32" alt="" style="display:block;width:32px;height:32px;border:0"></td>
+<td valign="middle" style="padding-left:9px;font-family:${MONO};font-size:19px;line-height:1;letter-spacing:-0.01em;color:${C.ink}"><span style="font-weight:500">key</span><span style="font-weight:800">pacer</span></td>
 </tr></table>
 </td></tr>
 <tr><td style="background:${C.panel};border:1px solid ${C.border};border-radius:16px;padding:32px 30px 28px;box-shadow:0 1px 2px rgba(28,34,50,0.08),0 3px 8px rgba(28,34,50,0.05)">

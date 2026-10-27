@@ -21,3 +21,9 @@
 # new address: browsers can keep them for a year without asking again.
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
+
+# The logo in the sign-in e-mails is loaded by mail apps from other sites;
+# without this, webmail in a browser would block it (same-origin above).
+/email/*
+  ! Cross-Origin-Resource-Policy
+  Cache-Control: public, max-age=31536000, immutable

@@ -124,8 +124,11 @@ export function termsCheck(checked: boolean, onChange: (checked: boolean) => voi
   return { label, box };
 }
 
+/** The privacy policy, in a new tab like the terms link, so a half-filled form survives a look at it. */
 export function privacyLink(): HTMLAnchorElement {
-  return Object.assign(document.createElement('a'), { href: legalHref('/datenschutz'), textContent: t('account.privacy'), className: 'account-privacy' });
+  return Object.assign(document.createElement('a'), {
+    href: legalHref('/datenschutz'), target: '_blank', rel: 'noopener', textContent: t('account.privacy'), className: 'account-privacy',
+  });
 }
 
 export function syncStatus(state: SignedIn): string {

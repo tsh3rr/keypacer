@@ -1,6 +1,6 @@
 import { BRAND_MARK } from '../landing/brand.ts';
 import { COPY, LANDING_LANGUAGES, landingPath, type LandingLanguage } from '../landing/content.ts';
-import { appPath, esc, headLinks, jsonBlock, siteFooter, siteHeader, type Chrome } from '../landing/render.ts';
+import { appPath, esc, headLinks, jsonBlock, organization, siteFooter, siteHeader, type Chrome } from '../landing/render.ts';
 import { BLOG_COPY } from './copy.ts';
 import { postsIn, translationsOf, type Post } from './posts.ts';
 
@@ -113,8 +113,6 @@ function page(h: Head, chrome: Chrome, main: string, umami: string): string {
 /** Languages that have articles, for the language menu and the alternates of the overviews. */
 const languagesWith = (posts: Post[]): LandingLanguage[] => LANDING_LANGUAGES.filter((l) => postsIn(posts, l).length > 0);
 
-const publisher = (site: string) => ({ '@type': 'Organization', name: 'Keypacer', url: `${site}/`, logo: `${site}/icon-512.png` });
-
 /** The overview of one language: the first article large, the others as cards. */
 export function renderBlogIndex(lang: LandingLanguage, posts: Post[], site: string, umami = ''): string {
   const b = BLOG_COPY[lang];
@@ -160,7 +158,7 @@ export function renderBlogIndex(lang: LandingLanguage, posts: Post[], site: stri
         name: `Keypacer ${b.name}`,
         url,
         inLanguage: lang,
-        publisher: publisher(site),
+        publisher: organization(site),
         blogPost: own.map((p) => ({ '@type': 'BlogPosting', headline: p.title, url: site + postPath(p) })),
       },
       breadcrumbs(lang, site, [[b.name, url]]),
@@ -248,11 +246,13 @@ ${post.html}
         url,
         mainEntityOfPage: url,
         inLanguage: lang,
+        // Articles carry one date, their last real revision; it is also the date they went out in this form.
+        datePublished: post.updated,
         dateModified: post.updated,
         articleSection: b.topics[post.topic],
         ...(image ? { image: image.url } : {}),
-        author: publisher(site),
-        publisher: publisher(site),
+        author: organization(site),
+        publisher: organization(site),
         ...(original ? { translationOfWork: { '@type': 'BlogPosting', url: site + postPath(original) } } : {}),
       },
       breadcrumbs(lang, site, [[b.name, site + blogPath(lang)], [post.title, url]]),

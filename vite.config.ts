@@ -16,7 +16,8 @@ const SITE_URL = (process.env.SITE_URL ?? 'https://keypacer.com').replace(/\/$/,
  * Landing pages: each /<lang>/index.html is a one-line placeholder that this
  * plugin replaces with the page built from src/landing/content.ts, in
  * development and in the build. It also writes sitemap.xml and robots.txt,
- * and adds the Umami tag to the trainer's page when statistics are on.
+ * adds the Umami tag to the trainer's page when statistics are on, and makes
+ * the site-relative canonical links of the other pages absolute.
  */
 function landing(production: boolean, umami: string, blog: Blog): Plugin {
   return {
@@ -28,7 +29,7 @@ function landing(production: boolean, umami: string, blog: Blog): Plugin {
         if (lang && LANDING_LANGUAGES.includes(lang)) return renderLanding(lang, SITE_URL, umami, featuredPosts(postsIn(blog.posts(), lang)));
         // The trainer counts only that its page was opened, never what happens in it.
         if (umami && ctx.path === '/app/index.html') return html.replace('</head>', `  ${umamiTag(umami)}\n  </head>`);
-        return html;
+        return html.replace(/(<link rel="canonical" href=")\//, `$1${SITE_URL}/`);
       },
     },
     generateBundle() {

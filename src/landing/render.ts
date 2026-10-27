@@ -186,9 +186,18 @@ const UMAMI_SCRIPT = 'https://cloud.umami.is/script.js';
 export const umamiTag = (id: string): string =>
   `<script defer src="${UMAMI_SCRIPT}" data-website-id="${esc(id)}" data-do-not-track="true" data-exclude-search="true" data-exclude-hash="true"></script>`;
 
-/** Icons, manifest and the shared stylesheet, in the <head> of every landing and blog page. */
+/** Who runs the site, with the logo search engines may show next to it. */
+export const organization = (site: string) => ({ '@type': 'Organization', name: 'Keypacer', url: `${site}/`, logo: `${site}/icon-512.png` });
+
+/**
+ * Icons, manifest and the shared stylesheet, in the <head> of every landing and
+ * blog page. Search engines want an icon of at least 48 px, hence the 192 px
+ * PNG; the robots line lets them show the large preview pictures in results.
+ */
 export function headLinks(umami: string, styles: string[]): string {
-  return `<link rel="icon" href="/favicon.ico?v=2" sizes="32x32" />
+  return `<meta name="robots" content="max-image-preview:large" />
+    <link rel="icon" href="/favicon.ico?v=2" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/icon-192.png" sizes="192x192" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
     <link rel="manifest" href="/site.webmanifest" />
@@ -265,6 +274,16 @@ export function renderLanding(lang: LandingLanguage, site: string, umami = '', p
 
   const structured = [
     {
+      // Lets search engines show "Keypacer" as the site name above the result.
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Keypacer',
+      url: `${site}/`,
+      inLanguage: LANDING_LANGUAGES,
+      publisher: organization(site),
+    },
+    { '@context': 'https://schema.org', ...organization(site) },
+    {
       '@context': 'https://schema.org',
       '@type': 'WebApplication',
       name: 'Keypacer',
@@ -273,6 +292,8 @@ export function renderLanding(lang: LandingLanguage, site: string, umami = '', p
       applicationCategory: 'EducationalApplication',
       operatingSystem: 'Any (web browser)',
       inLanguage: lang,
+      image: `${site}/og.png`,
+      isAccessibleForFree: true,
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
     },
     {
@@ -315,7 +336,10 @@ export function renderLanding(lang: LandingLanguage, site: string, umami = '', p
     <meta property="og:image" content="${site}/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="${esc(c.hero.title)}" />
     <meta property="og:locale" content="${c.ogLocale}" />
+    ${LANDING_LANGUAGES.filter((l) => l !== lang).map((l) =>
+    `<meta property="og:locale:alternate" content="${COPY[l].ogLocale}" />`).join('\n    ')}
     <meta name="twitter:card" content="summary_large_image" />
     <!-- Returning learners and sign-in or invite links go straight on to the trainer. -->
     <script src="/to-app.js"></script>
@@ -434,7 +458,10 @@ export function renderLanding(lang: LandingLanguage, site: string, umami = '', p
 `;
 }
 
-/** Every landing page, each listing its translations (hreflang) for search engines, then the blog's addresses. */
+/** The legal pages (datenschutz.html and the others at the project root), one address each. */
+const LEGAL_PATHS = ['/impressum', '/datenschutz', '/nutzungsbedingungen'];
+
+/** Every landing page, each listing its translations (hreflang) for search engines, then the legal pages and the blog's addresses. */
 export function sitemapXml(site: string, blog = ''): string {
   const links = LANDING_LANGUAGES.map((l) =>
     `    <xhtml:link rel="alternate" hreflang="${l}" href="${site}${landingPath(l)}"/>`).join('\n');
@@ -442,7 +469,9 @@ export function sitemapXml(site: string, blog = ''): string {
     <loc>${site}${landingPath(l)}</loc>
 ${links}
     <xhtml:link rel="alternate" hreflang="x-default" href="${site}/"/>
-  </url>`).join('\n');
+  </url>`).concat(LEGAL_PATHS.map((p) => `  <url>
+    <loc>${site}${p}</loc>
+  </url>`)).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls}${blog ? `\n${blog}` : ''}

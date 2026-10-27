@@ -25,7 +25,7 @@ describe('landing pages', () => {
   it.each(LANDING_LANGUAGES)('%s: every FAQ answer is in the structured data, and the pictures have their text', (lang) => {
     const html = renderLanding(lang, SITE);
     const ld = JSON.parse(/<script type="application\/ld\+json">([^<]*)<\/script>/.exec(html)![1].replace(/\\u003c/g, '<'));
-    expect(ld[1].mainEntity).toHaveLength(COPY[lang].faq.items.length);
+    expect(ld.find((b: { '@type': string }) => b['@type'] === 'FAQPage').mainEntity).toHaveLength(COPY[lang].faq.items.length);
     const v = vignetteData(lang);
     expect(v.tabs.every((t) => t.keys.length === 6 && t.keys.every(Boolean))).toBe(true);
     // The word is typed on the row the picture shows, each letter with its finger named.
@@ -59,6 +59,7 @@ describe('landing pages', () => {
   it('lists every page in the sitemap, and closes previews to search engines', () => {
     const xml = sitemapXml(SITE);
     for (const l of LANDING_LANGUAGES) expect(xml).toContain(`<loc>${SITE}${landingPath(l)}</loc>`);
+    expect(xml).toContain(`<loc>${SITE}/datenschutz</loc>`);
     expect(robotsTxt(SITE, true)).toContain(`Sitemap: ${SITE}/sitemap.xml`);
     expect(robotsTxt(SITE, false)).toContain('Disallow: /');
   });

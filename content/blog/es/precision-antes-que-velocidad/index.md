@@ -63,8 +63,8 @@ Escribir más despacio y limpio parece al principio un paso atrás. Pero es el c
 
 ## Cómo te ayuda Keypacer
 
-Si pulsas una tecla equivocada, te quedas en la letra hasta que aciertas. Lo que cuenta es el primer intento. Si tu precisión baja, Keypacer oculta la velocidad hasta que vuelvas a escribir limpio. El siguiente ejercicio se forma con las teclas y pares de letras en los que más fallas o dudas.
+Si pulsas una tecla equivocada, te quedas en la letra hasta que aciertas. Lo que cuenta es el primer intento. Si tu precisión baja, Keypacer oculta la velocidad hasta que vuelvas a escribir sin errores. El siguiente ejercicio se forma con las teclas y pares de letras en los que más fallas o dudas.
 
 ## Cuándo sube la velocidad
 
-La velocidad sube en cuanto los movimientos están asentados. Quien escribe limpio se vuelve más rápido con el tiempo por sí solo. Al revés rara vez funciona: quien escribe rápido y con errores tiene que desaprenderlos después con esfuerzo.
+La velocidad sube en cuanto los movimientos están asentados. Quien escribe sin errores se vuelve más rápido con el tiempo por sí solo. Al revés rara vez funciona: quien escribe rápido y con errores tiene que desaprenderlos después con esfuerzo.

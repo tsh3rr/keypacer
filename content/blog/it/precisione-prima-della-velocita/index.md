@@ -63,8 +63,8 @@ Scrivere più lentamente e in modo pulito all’inizio sembra un passo indietro.
 
 ## Come ti aiuta Keypacer
 
-Se premi un tasto sbagliato, resti sulla lettera finché non premi quello giusto. Conta il primo tentativo. Se la precisione cala, Keypacer nasconde la velocità finché non scrivi di nuovo in modo pulito. L’esercizio successivo è composto dai tasti e dalle coppie di lettere in cui sbagli o esiti più spesso.
+Se premi un tasto sbagliato, resti sulla lettera finché non premi quello giusto. Conta il primo tentativo. Se la precisione cala, Keypacer nasconde la velocità finché non torni a scrivere senza errori. L’esercizio successivo è composto dai tasti e dalle coppie di lettere in cui sbagli o esiti più spesso.
 
 ## Quando cresce la velocità
 
-La velocità cresce appena i movimenti sono acquisiti. Chi scrive in modo pulito diventa più veloce da solo, col tempo. Il contrario funziona di rado: chi scrive veloce e con errori deve poi disimpararli con fatica.
+La velocità cresce appena i movimenti sono acquisiti. Chi scrive senza errori diventa più veloce da solo, col tempo. Il contrario funziona di rado: chi scrive veloce e con errori deve poi disimpararli con fatica.

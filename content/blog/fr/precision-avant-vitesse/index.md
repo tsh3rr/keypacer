@@ -63,8 +63,8 @@ Taper plus lentement et proprement ressemble d’abord à un recul. C’est pour
 
 ## Comment Keypacer t’aide
 
-Si tu tapes une mauvaise touche, tu restes sur la lettre jusqu’à trouver la bonne. C’est le premier essai qui compte. Si ta précision baisse, Keypacer masque l’affichage de la vitesse jusqu’à ce que tu tapes de nouveau proprement. L’exercice suivant est construit à partir des touches et paires de lettres où tu te trompes ou hésites le plus.
+Si tu tapes une mauvaise touche, tu restes sur la lettre jusqu’à trouver la bonne. C’est le premier essai qui compte. Si ta précision baisse, Keypacer masque l’affichage de la vitesse jusqu’à ce que tu tapes de nouveau sans erreur. L’exercice suivant est construit à partir des touches et paires de lettres où tu te trompes ou hésites le plus.
 
 ## Quand la vitesse augmente
 
-La vitesse augmente dès que les mouvements sont acquis. Qui tape proprement devient plus rapide avec le temps, tout seul. L’inverse marche rarement : qui tape vite et avec des fautes doit ensuite s’en défaire avec peine.
+La vitesse augmente dès que les mouvements sont acquis. Qui tape sans erreur devient plus rapide avec le temps, tout seul. L’inverse marche rarement : qui tape vite et avec des fautes doit ensuite s’en défaire avec peine.

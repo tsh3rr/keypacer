@@ -63,7 +63,7 @@ Typing more slowly and cleanly feels like a step backwards at first. But it is t
 
 ## How Keypacer helps you
 
-When you hit a wrong key, you stay on the letter until you hit the right one. The first attempt is what counts. If your accuracy drops, Keypacer hides the speed display until you type cleanly again. The next exercise is built from the keys and letter pairs where you miss or hesitate most often.
+When you hit a wrong key, you stay on the letter until you hit the right one. The first attempt is what counts. If your accuracy drops, Keypacer hides the speed display until you type accurately again. The next exercise is built from the keys and letter pairs where you miss or hesitate most often.
 
 ## When speed rises
 

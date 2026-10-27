@@ -34,7 +34,7 @@ Meglio esercitarsi con costanza un quarto d’ora ogni giorno che tormentarsi pe
 
 ## Perché la precisione viene prima della velocità
 
-Ogni errore costa tre volte: il tasto sbagliato, la correzione e il nuovo tentativo. In più, ogni volta che succede ti eserciti anche sull’errore. Chi scrive di proposito un po’ più piano ma pulito, alla lunga diventa più veloce. Approfondisci in [Precisione prima della velocità](/it/blog/precisione-prima-della-velocita/).
+Ogni errore costa tre volte: il tasto sbagliato, la correzione e il nuovo tentativo. In più, ogni volta che succede ti eserciti anche sull’errore. Chi scrive di proposito un po’ più piano ma senza errori, alla lunga diventa più veloce. Approfondisci in [Precisione prima della velocità](/it/blog/precisione-prima-della-velocita/).
 
 Keypacer è pensato così: dopo un tasto sbagliato resti sulla stessa lettera, e un nuovo tasto arriva solo quando quelli che hai già sono precisi e rapidi.
 

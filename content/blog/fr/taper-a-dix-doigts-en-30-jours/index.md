@@ -34,7 +34,7 @@ Mieux vaut s’entraîner régulièrement un quart d’heure chaque jour que s�
 
 ## Pourquoi la précision passe avant la vitesse
 
-Chaque faute coûte trois fois : la mauvaise frappe, la correction et le nouvel essai. En plus, tu t’entraînes à la faute chaque fois qu’elle se produit. Taper volontairement un peu plus lentement mais proprement te rend plus rapide à long terme. Pour en savoir plus : [La précision avant la vitesse](/fr/blog/precision-avant-vitesse/).
+Chaque faute coûte trois fois : la mauvaise frappe, la correction et le nouvel essai. En plus, tu t’entraînes à la faute chaque fois qu’elle se produit. Taper volontairement un peu plus lentement mais sans erreur te rend plus rapide à long terme. Pour en savoir plus : [La précision avant la vitesse](/fr/blog/precision-avant-vitesse/).
 
 Keypacer est conçu pour cela : après une mauvaise touche, tu restes sur la même lettre, et une nouvelle touche n’arrive que lorsque les précédentes sont précises et rapides.
 

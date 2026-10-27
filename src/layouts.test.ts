@@ -99,6 +99,16 @@ describe('howToType', () => {
     expect(howToType('qwerty-us', 'ą')).toBeNull();
   });
 
+  it('types Portuguese tildes and cedillas on ABNT2 and the Portuguese layout', () => {
+    expect(howToType('abnt2-br', 'ç')).toEqual({ code: 'Semicolon', shift: false });
+    expect(howToType('abnt2-br', 'ã')).toEqual({ code: 'KeyA', shift: false, dead: { code: 'Quote', shift: false, accent: '~' } });
+    expect(howToType('abnt2-br', 'é')).toEqual({ code: 'KeyE', shift: false, dead: { code: 'BracketLeft', shift: false, accent: '´' } });
+    expect(howToType('abnt2-br', '/')).toEqual({ code: 'IntlRo', shift: false });
+    expect(howToType('qwerty-pt', 'ç')).toEqual({ code: 'Semicolon', shift: false });
+    expect(howToType('qwerty-pt', 'õ')).toEqual({ code: 'KeyO', shift: false, dead: { code: 'Backslash', shift: false, accent: '~' } });
+    expect(howToType('qwerty-pt', 'á')).toEqual({ code: 'KeyA', shift: false, dead: { code: 'BracketRight', shift: false, accent: '´' } });
+  });
+
   it('labels capitals with a Shift arrow and marks as themselves', () => {
     expect(charLabel('qwerty-us', 'e')).toBe('E');
     expect(charLabel('qwerty-us', 'E')).toBe('⇧E');
@@ -167,6 +177,8 @@ describe('guessFromLocale', () => {
     expect(guessFromLocale(['de-AT'])).toBe('qwertz-de');
     expect(guessFromLocale(['fr-CH'])).toBe('qwertz-ch');
     expect(guessFromLocale(['fr'])).toBe('azerty-fr');
+    expect(guessFromLocale(['pt-BR'])).toBe('abnt2-br');
+    expect(guessFromLocale(['pt-PT'])).toBe('qwerty-pt');
     expect(guessFromLocale(['ja'])).toBe('qwerty-us');
   });
 });

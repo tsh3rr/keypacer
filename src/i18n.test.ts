@@ -5,6 +5,8 @@ import { es } from './locales/es';
 import { fr } from './locales/fr';
 import { it as itLocale } from './locales/it';
 import { pl } from './locales/pl';
+import { ptBR } from './locales/pt-BR';
+import { ptPT } from './locales/pt-PT';
 import html from '../app/index.html?raw';
 import { guessUiLanguage, num, pct, setUiLanguage, t, tMaybe, tNodes } from './i18n';
 
@@ -60,11 +62,14 @@ describe('i18n', () => {
     expect(guessUiLanguage(['de-AT', 'en'])).toBe('de');
     expect(guessUiLanguage(['fr-FR', 'en-GB'])).toBe('fr');
     expect(guessUiLanguage(['pl'])).toBe('pl');
-    expect(guessUiLanguage(['pt-BR', 'es-MX'])).toBe('es');
+    expect(guessUiLanguage(['pt-BR', 'es-MX'])).toBe('pt-BR');
+    expect(guessUiLanguage(['pt'])).toBe('pt-BR');
+    expect(guessUiLanguage(['pt-PT'])).toBe('pt-PT');
+    expect(guessUiLanguage(['pt-MZ'])).toBe('pt-PT');
     expect(guessUiLanguage(['nl'])).toBe('en');
   });
 
-  it.each([['de', de], ['fr', fr], ['es', es], ['it', itLocale], ['pl', pl]] as const)('%s uses the same placeholders as English', (_, locale) => {
+  it.each([['de', de], ['fr', fr], ['es', es], ['it', itLocale], ['pl', pl], ['pt-BR', ptBR], ['pt-PT', ptPT]] as const)('%s uses the same placeholders as English', (_, locale) => {
     for (const key of Object.keys(en) as (keyof typeof en)[]) {
       expect(placeholders(locale[key]), key).toEqual(placeholders(en[key]));
       expect(typeof locale[key], key).toBe(typeof en[key]);

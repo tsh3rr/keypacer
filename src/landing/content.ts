@@ -1,6 +1,6 @@
 /**
  * Text of the landing pages, one per interface language. Each page is its own
- * address (/, /de/, /es/, …) so search engines can show it to people searching
+ * address (/, /de/, /es/, /pt-br/, …) so search engines can show it to people searching
  * in that language; render.ts turns this into static HTML at build time.
  *
  * Only claim what the app does: the method points mirror the "How it works"
@@ -8,11 +8,11 @@
  * the privacy cards the privacy policy (src/legal/content.ts).
  */
 
-export const LANDING_LANGUAGES = ['en', 'de', 'es', 'fr', 'it', 'pl'] as const;
+export const LANDING_LANGUAGES = ['en', 'de', 'es', 'fr', 'it', 'pl', 'pt-BR', 'pt-PT'] as const;
 export type LandingLanguage = (typeof LANDING_LANGUAGES)[number];
 
-/** Address of a landing page; English is the site's front page. */
-export const landingPath = (lang: LandingLanguage): string => (lang === 'en' ? '/' : `/${lang}/`);
+/** Address of a landing page; English is the site's front page. Paths are lowercase: /pt-br/. */
+export const landingPath = (lang: LandingLanguage): string => (lang === 'en' ? '/' : `/${lang.toLowerCase()}/`);
 
 interface Item { title: string; text: string }
 
@@ -180,7 +180,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Features',
       title: 'Everything you need, nothing you don’t',
       items: [
-        { title: 'Your language, your keyboard', text: 'English, German, French, Spanish, Italian or Polish, on QWERTY, QWERTZ, AZERTY, Dvorak, Colemak and more. Keypacer recognises your layout from the keys you press.' },
+        { title: 'Your language, your keyboard', text: 'English, German, French, Spanish, Italian, Polish or Portuguese (Brazil and Portugal), on QWERTY, QWERTZ, AZERTY, Dvorak, Colemak and more. Keypacer recognises your layout from the keys you press.' },
         { title: 'Finger guide', text: 'A keyboard under the text shows which finger is next. Keys you already know fade out bit by bit.' },
         { title: 'Placement test', text: 'Can already type a bit? Take a one-minute test and Keypacer skips every key you have already mastered.' },
         { title: 'Progress you can see', text: 'Speed and accuracy over time, an error heatmap and your slowest keys and letter pairs.' },
@@ -222,7 +222,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { q: 'What makes Keypacer different from other typing trainers?', a: 'Most trainers give everyone the same lessons. Keypacer measures every keystroke and builds each drill from the keys and letter pairs that slow you down most right now.' },
         { q: 'Do I need an account?', a: 'No. You can start right away; without an account your progress is saved in your browser. A free account keeps it safe even if your browser data is deleted, and lets you pick up where you left off on your other devices.' },
         { q: 'How long does it take to learn touch typing?', a: 'Most people can type without looking after a few weeks of 15 to 20 minutes a day. Short daily sessions work better than long, occasional ones, and speed keeps growing after that.' },
-        { q: 'Which keyboard layouts are supported?', a: 'US and UK QWERTY, German and Swiss QWERTZ, French and Belgian AZERTY, Spanish, Italian, Swedish/Finnish and Polish layouts, Dvorak, Colemak and Colemak-DH. Keypacer detects your layout from the keys you press.' },
+        { q: 'Which keyboard layouts are supported?', a: 'US and UK QWERTY, German and Swiss QWERTZ, French and Belgian AZERTY, Spanish, Italian, Swedish/Finnish, Polish, Brazilian ABNT2 and Portuguese layouts, Dvorak, Colemak and Colemak-DH. Keypacer detects your layout from the keys you press.' },
         { q: 'Does it work on a phone or tablet?', a: 'Keypacer is made for a real keyboard. A tablet with a keyboard works well; on a phone you can look around, but touch typing needs a physical keyboard.' },
       ],
     },
@@ -310,7 +310,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Funktionen',
       title: 'Alles, was du brauchst, und nicht mehr',
       items: [
-        { title: 'Deine Sprache, deine Tastatur', text: 'Deutsch, Englisch, Französisch, Spanisch, Italienisch oder Polnisch, auf QWERTZ, QWERTY, AZERTY, Dvorak, Colemak und mehr. Dein Layout erkennt Keypacer an den Tasten, die du drückst.' },
+        { title: 'Deine Sprache, deine Tastatur', text: 'Deutsch, Englisch, Französisch, Spanisch, Italienisch, Polnisch oder Portugiesisch (Brasilien und Portugal), auf QWERTZ, QWERTY, AZERTY, Dvorak, Colemak und mehr. Dein Layout erkennt Keypacer an den Tasten, die du drückst.' },
         { title: 'Fingerhilfe', text: 'Unter dem Text zeigt eine Tastatur, welcher Finger dran ist. Tasten, die du schon kannst, blendet sie nach und nach aus.' },
         { title: 'Einstufungstest', text: 'Du tippst schon ein bisschen? Eine Minute Test, und Keypacer überspringt alle Tasten, die du schon beherrschst.' },
         { title: 'Fortschritt, den du siehst', text: 'Tempo und Genauigkeit im Verlauf, eine Fehler-Heatmap und deine langsamsten Tasten und Buchstabenpaare.' },
@@ -352,7 +352,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { q: 'Was macht Keypacer anders als andere Tipptrainer?', a: 'Die meisten Trainer geben allen dieselben Lektionen. Keypacer misst jeden Tastendruck und stellt jede Übung aus den Tasten und Buchstabenpaaren zusammen, die dich gerade am meisten bremsen.' },
         { q: 'Brauche ich ein Konto?', a: 'Nein. Du kannst sofort loslegen, ohne Konto speichert der Browser deinen Fortschritt. Mit einem kostenlosen Konto ist er sicher, auch wenn die Browserdaten gelöscht werden, und du kannst auf weiteren Geräten weitermachen.' },
         { q: 'Wie lange dauert es, das Zehnfingersystem zu lernen?', a: 'Die meisten tippen nach einigen Wochen mit 15 bis 20 Minuten am Tag blind. Kurze tägliche Einheiten bringen mehr als lange, seltene, und das Tempo steigt danach weiter.' },
-        { q: 'Welche Tastaturlayouts gibt es?', a: 'Deutsches und Schweizer QWERTZ, US- und UK-QWERTY, französisches und belgisches AZERTY, spanisch, italienisch, schwedisch/finnisch und polnisch, Dvorak, Colemak und Colemak-DH. Keypacer erkennt dein Layout an den Tasten, die du drückst.' },
+        { q: 'Welche Tastaturlayouts gibt es?', a: 'Deutsches und Schweizer QWERTZ, US- und UK-QWERTY, französisches und belgisches AZERTY, spanisch, italienisch, schwedisch/finnisch, polnisch, brasilianisch (ABNT2) und portugiesisch, Dvorak, Colemak und Colemak-DH. Keypacer erkennt dein Layout an den Tasten, die du drückst.' },
         { q: 'Geht das auch auf Handy oder Tablet?', a: 'Keypacer ist für eine echte Tastatur gemacht. Ein Tablet mit Tastatur funktioniert gut; auf dem Handy kannst du dich umsehen, aber blind tippen lernt man an einer richtigen Tastatur.' },
       ],
     },
@@ -440,7 +440,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Funciones',
       title: 'Todo lo que necesitas, nada más',
       items: [
-        { title: 'Tu idioma, tu teclado', text: 'Español, inglés, alemán, francés, italiano o polaco, en QWERTY, QWERTZ, AZERTY, Dvorak, Colemak y más. Keypacer reconoce tu distribución por las teclas que pulsas.' },
+        { title: 'Tu idioma, tu teclado', text: 'Español, inglés, alemán, francés, italiano, polaco o portugués (Brasil y Portugal), en QWERTY, QWERTZ, AZERTY, Dvorak, Colemak y más. Keypacer reconoce tu distribución por las teclas que pulsas.' },
         { title: 'Guía de dedos', text: 'Bajo el texto, un teclado muestra qué dedo toca. Las teclas que ya dominas se van atenuando poco a poco.' },
         { title: 'Prueba de nivel', text: '¿Ya escribes algo? Un minuto de prueba y Keypacer se salta todas las teclas que ya dominas.' },
         { title: 'Progreso visible', text: 'Velocidad y precisión a lo largo del tiempo, un mapa de errores y tus teclas y pares de letras más lentos.' },
@@ -482,7 +482,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { q: '¿Qué hace diferente a Keypacer de otros cursos de mecanografía?', a: 'La mayoría da a todos las mismas lecciones. Keypacer mide cada pulsación y crea cada ejercicio con las teclas y pares de letras que más te frenan en ese momento.' },
         { q: '¿Necesito una cuenta?', a: 'No. Puedes empezar ya; sin cuenta, el navegador guarda tu progreso. Con una cuenta gratuita está a salvo aunque se borren los datos del navegador, y puedes seguir en tus otros dispositivos.' },
         { q: '¿Cuánto se tarda en aprender mecanografía?', a: 'La mayoría escribe sin mirar tras unas semanas de 15 a 20 minutos al día. Sesiones cortas y diarias funcionan mejor que largas y esporádicas, y la velocidad sigue subiendo después.' },
-        { q: '¿Qué distribuciones de teclado hay?', a: 'Español, QWERTY de EE. UU. y Reino Unido, QWERTZ alemán y suizo, AZERTY francés y belga, italiano, sueco/finés y polaco, Dvorak, Colemak y Colemak-DH. Keypacer detecta tu distribución por las teclas que pulsas.' },
+        { q: '¿Qué distribuciones de teclado hay?', a: 'Español, QWERTY de EE. UU. y Reino Unido, QWERTZ alemán y suizo, AZERTY francés y belga, italiano, sueco/finés, polaco, brasileño ABNT2 y portugués, Dvorak, Colemak y Colemak-DH. Keypacer detecta tu distribución por las teclas que pulsas.' },
         { q: '¿Funciona en el móvil o la tableta?', a: 'Keypacer está pensado para un teclado físico. Una tableta con teclado funciona bien; en el móvil puedes echar un vistazo, pero la mecanografía se aprende con un teclado de verdad.' },
       ],
     },
@@ -570,7 +570,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Fonctionnalités',
       title: 'L’essentiel, rien de plus',
       items: [
-        { title: 'Votre langue, votre clavier', text: 'Français, anglais, allemand, espagnol, italien ou polonais, sur AZERTY, QWERTY, QWERTZ, Dvorak, Colemak et d’autres. Keypacer reconnaît votre disposition aux touches que vous tapez.' },
+        { title: 'Votre langue, votre clavier', text: 'Français, anglais, allemand, espagnol, italien, polonais ou portugais (Brésil et Portugal), sur AZERTY, QWERTY, QWERTZ, Dvorak, Colemak et d’autres. Keypacer reconnaît votre disposition aux touches que vous tapez.' },
         { title: 'Guide des doigts', text: 'Sous le texte, un clavier montre quel doigt utiliser. Les touches que vous connaissez déjà s’estompent peu à peu.' },
         { title: 'Test de niveau', text: 'Vous tapez déjà un peu ? Une minute de test, et Keypacer saute toutes les touches que vous maîtrisez.' },
         { title: 'Des progrès visibles', text: 'Vitesse et précision dans le temps, une carte des erreurs et vos touches et paires de lettres les plus lentes.' },
@@ -612,7 +612,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { q: 'Qu’est-ce qui distingue Keypacer des autres logiciels de dactylographie ?', a: 'La plupart donnent à tout le monde les mêmes leçons. Keypacer mesure chaque frappe et compose chaque exercice avec les touches et paires de lettres qui vous freinent le plus en ce moment.' },
         { q: 'Faut-il un compte ?', a: 'Non. Vous pouvez commencer tout de suite ; sans compte, le navigateur garde vos progrès. Avec un compte gratuit, ils sont en sécurité même si les données du navigateur sont effacées, et vous pouvez continuer sur vos autres appareils.' },
         { q: 'Combien de temps faut-il pour apprendre à taper à dix doigts ?', a: 'La plupart des gens tapent sans regarder après quelques semaines à raison de 15 à 20 minutes par jour. Des séances courtes et quotidiennes valent mieux que de longues séances rares, et la vitesse continue ensuite de progresser.' },
-        { q: 'Quelles dispositions de clavier sont prises en charge ?', a: 'AZERTY français et belge, QWERTY américain et britannique, QWERTZ allemand et suisse, espagnol, italien, suédois/finnois et polonais, Dvorak, Colemak et Colemak-DH. Keypacer reconnaît votre disposition aux touches que vous tapez.' },
+        { q: 'Quelles dispositions de clavier sont prises en charge ?', a: 'AZERTY français et belge, QWERTY américain et britannique, QWERTZ allemand et suisse, espagnol, italien, suédois/finnois, polonais, brésilien ABNT2 et portugais, Dvorak, Colemak et Colemak-DH. Keypacer reconnaît votre disposition aux touches que vous tapez.' },
         { q: 'Ça marche sur téléphone ou tablette ?', a: 'Keypacer est fait pour un vrai clavier. Une tablette avec clavier fonctionne bien ; sur téléphone vous pouvez jeter un œil, mais la frappe à dix doigts s’apprend sur un clavier physique.' },
       ],
     },
@@ -700,7 +700,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Funzioni',
       title: 'Tutto quello che serve, niente di più',
       items: [
-        { title: 'La tua lingua, la tua tastiera', text: 'Italiano, inglese, tedesco, francese, spagnolo o polacco, su QWERTY, QWERTZ, AZERTY, Dvorak, Colemak e altre. Keypacer riconosce il tuo layout dai tasti che premi.' },
+        { title: 'La tua lingua, la tua tastiera', text: 'Italiano, inglese, tedesco, francese, spagnolo, polacco o portoghese (Brasile e Portogallo), su QWERTY, QWERTZ, AZERTY, Dvorak, Colemak e altre. Keypacer riconosce il tuo layout dai tasti che premi.' },
         { title: 'Guida per le dita', text: 'Sotto il testo una tastiera mostra quale dito tocca. I tasti che conosci già sbiadiscono a poco a poco.' },
         { title: 'Test di livello', text: 'Scrivi già un po’? Un minuto di test, e Keypacer salta tutti i tasti che padroneggi.' },
         { title: 'Progressi visibili', text: 'Velocità e precisione nel tempo, una mappa degli errori e i tuoi tasti e coppie di lettere più lenti.' },
@@ -742,7 +742,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { q: 'Cosa rende Keypacer diverso dagli altri corsi di dattilografia?', a: 'La maggior parte dà a tutti le stesse lezioni. Keypacer misura ogni battuta e compone ogni esercizio con i tasti e le coppie di lettere che ti rallentano di più in quel momento.' },
         { q: 'Serve un account?', a: 'No. Puoi iniziare subito; senza account è il browser a salvare i tuoi progressi. Con un account gratuito sono al sicuro anche se i dati del browser vengono cancellati, e puoi continuare sugli altri tuoi dispositivi.' },
         { q: 'Quanto ci vuole per imparare a scrivere con dieci dita?', a: 'La maggior parte delle persone scrive senza guardare dopo qualche settimana di 15–20 minuti al giorno. Sessioni brevi e quotidiane funzionano meglio di sessioni lunghe e rare, e la velocità poi continua a crescere.' },
-        { q: 'Quali layout di tastiera sono supportati?', a: 'Italiano, QWERTY americano e britannico, QWERTZ tedesco e svizzero, AZERTY francese e belga, spagnolo, svedese/finlandese e polacco, Dvorak, Colemak e Colemak-DH. Keypacer riconosce il tuo layout dai tasti che premi.' },
+        { q: 'Quali layout di tastiera sono supportati?', a: 'Italiano, QWERTY americano e britannico, QWERTZ tedesco e svizzero, AZERTY francese e belga, spagnolo, svedese/finlandese, polacco, brasiliano ABNT2 e portoghese, Dvorak, Colemak e Colemak-DH. Keypacer riconosce il tuo layout dai tasti che premi.' },
         { q: 'Funziona su telefono o tablet?', a: 'Keypacer è pensato per una tastiera vera. Un tablet con tastiera va bene; sul telefono puoi dare un’occhiata, ma a scrivere con dieci dita si impara su una tastiera fisica.' },
       ],
     },
@@ -830,7 +830,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Funkcje',
       title: 'Wszystko, czego trzeba, nic ponad to',
       items: [
-        { title: 'Twój język, twoja klawiatura', text: 'Polski, angielski, niemiecki, francuski, hiszpański lub włoski, na QWERTY, QWERTZ, AZERTY, Dvorak, Colemak i innych. Keypacer rozpoznaje układ po klawiszach, które naciskasz.' },
+        { title: 'Twój język, twoja klawiatura', text: 'Polski, angielski, niemiecki, francuski, hiszpański, włoski lub portugalski (Brazylia i Portugalia), na QWERTY, QWERTZ, AZERTY, Dvorak, Colemak i innych. Keypacer rozpoznaje układ po klawiszach, które naciskasz.' },
         { title: 'Podpowiedź palców', text: 'Pod tekstem klawiatura pokazuje, który palec jest teraz potrzebny. Klawisze, które już znasz, stopniowo przygasają.' },
         { title: 'Test poziomujący', text: 'Już trochę piszesz? Minuta testu i Keypacer pomija wszystkie klawisze, które już opanowałeś(-aś).' },
         { title: 'Widoczne postępy', text: 'Tempo i dokładność w czasie, mapa błędów oraz twoje najwolniejsze klawisze i pary liter.' },
@@ -872,11 +872,269 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
         { q: 'Czym Keypacer różni się od innych trenerów pisania?', a: 'Większość trenerów daje wszystkim te same lekcje. Keypacer mierzy każde uderzenie i układa każde ćwiczenie z klawiszy i par liter, które w tej chwili najbardziej cię spowalniają.' },
         { q: 'Czy potrzebuję konta?', a: 'Nie. Możesz zacząć od razu; bez konta postępy zapisuje przeglądarka. Z darmowym kontem są bezpieczne, nawet jeśli dane przeglądarki zostaną usunięte, i możesz kontynuować na innych urządzeniach.' },
         { q: 'Ile trwa nauka pisania bezwzrokowego?', a: 'Większość osób pisze bez patrzenia po kilku tygodniach ćwiczeń po 15–20 minut dziennie. Krótkie codzienne sesje działają lepiej niż długie i rzadkie, a tempo rośnie dalej.' },
-        { q: 'Jakie układy klawiatury są obsługiwane?', a: 'Polski (programisty), amerykański i brytyjski QWERTY, niemiecki i szwajcarski QWERTZ, francuski i belgijski AZERTY, hiszpański, włoski, szwedzki/fiński, Dvorak, Colemak i Colemak-DH. Keypacer rozpoznaje układ po klawiszach, które naciskasz.' },
+        { q: 'Jakie układy klawiatury są obsługiwane?', a: 'Polski (programisty), amerykański i brytyjski QWERTY, niemiecki i szwajcarski QWERTZ, francuski i belgijski AZERTY, hiszpański, włoski, szwedzki/fiński, brazylijski ABNT2 i portugalski, Dvorak, Colemak i Colemak-DH. Keypacer rozpoznaje układ po klawiszach, które naciskasz.' },
         { q: 'Czy działa na telefonie lub tablecie?', a: 'Keypacer jest stworzony z myślą o prawdziwej klawiaturze. Tablet z klawiaturą sprawdza się dobrze; na telefonie możesz się rozejrzeć, ale pisania bezwzrokowego uczy się na fizycznej klawiaturze.' },
       ],
     },
     final: { title: 'Pierwsze ćwiczenie zajmie dwie minuty', text: 'Przepisz jedną linijkę, a Keypacer będzie wiedział, od czego zacząć.', cta: 'Zacznij za darmo' },
     foot: { imprint: 'Nota prawna', privacy: 'Prywatność', terms: 'Regulamin' },
+  },
+  'pt-BR': {
+    name: 'Português (Brasil)',
+    ogLocale: 'pt_BR',
+    title: 'Curso de digitação grátis que se adapta a você | Keypacer',
+    description:
+      'Aprenda digitação com os dez dedos, grátis e online. O Keypacer mede cada tecla, encontra as que deixam você lento e treina justamente essas. Sem cadastro.',
+    nav: { languages: 'Idioma', signIn: 'Entrar', open: 'Abrir o treinador', sections: 'Seções da página', method: 'Método', features: 'Recursos', faq: 'Perguntas', skip: 'Pular para o conteúdo' },
+    hero: {
+      eyebrow: 'Grátis · sem cadastro · sem anúncios',
+      title: 'Aprenda a digitar com os dez dedos com um treinador que entende seus erros',
+      rotate: [
+        'Dez dedos. Dez minutos por dia.',
+        'Cada exercício mira suas teclas mais lentas',
+        'Primeiro sem erros, depois rápido',
+      ],
+      lead: 'O Keypacer mede cada tecla, encontra as teclas e os pares de letras que deixam você lento e monta com eles o seu próximo exercício. Assim você nunca treina o que já sabe.',
+      cta: 'Começar grátis',
+      continue: 'Continuar praticando',
+      note: 'Funciona no navegador. Sem anúncios e sem precisar de conta.',
+    },
+    demo: {
+      label: 'Experimente: digite a linha',
+      start: 'Clique aqui e comece a digitar',
+      result: 'Seu resultado',
+      wpm: 'PPM',
+      wpmLong: 'palavras por minuto',
+      accuracy: 'precisão',
+      slowTitle: 'Estas teclas seguraram você:',
+      slowNone: 'Limpo e regular. Vamos ver como você se sai com o teclado inteiro.',
+      nextBeginner: 'Sua primeira lição: as seis letras mais comuns e depois uma tecla nova de cada vez.',
+      ctaBeginner: 'Começar a lição 1',
+      nextFast: 'Você já digita bem rápido. Mais umas {n} palavras no treinador e você pula as teclas que já domina.',
+      ctaFast: 'Terminar o nivelamento',
+      again: 'Digitar outra linha',
+      lines: [
+        'a prática leva ao progresso quando os olhos ficam na tela',
+        'cada tecla que você aprende sem olhar facilita a próxima',
+        'quem digita sem olhar mantém os olhos no texto e não nas mãos',
+      ],
+    },
+    facts: {
+      label: 'O Keypacer em números',
+      items: [
+        { value: '∞', label: 'exercícios que se adaptam ao seu nível' },
+        { value: '1 min', label: 'até o primeiro exercício, sem cadastro' },
+        { value: '10.000', label: 'palavras mais comuns por idioma' },
+        { value: '0', label: 'cookies, rastreadores e anúncios' },
+      ],
+    },
+    method: {
+      eyebrow: 'O método',
+      title: 'Como você fica mais rápido',
+      intro: 'Nada de lições iguais para todo mundo. Cada exercício nasce do seu jeito de digitar e fica mais preciso a cada rodada.',
+      items: [
+        { title: 'Uma tecla de cada vez', text: 'Você começa com as seis letras mais comuns e logo digita palavras de verdade. A próxima tecla só entra quando todas as anteriores estão precisas e fluentes.' },
+        { title: 'Primeiro sem erros, depois rápido', text: 'Uma tecla errada mantém você na mesma letra. Quando a precisão cai, o contador de velocidade some até você voltar a digitar sem erros.' },
+        { title: 'Direcionado, não igual para todos', text: 'Cada exercício se apoia nas teclas e nos pares de letras que deixam você lento, e traz de volta teclas que você não pratica há algum tempo, para que fiquem.' },
+        { title: 'Rodadas curtas, pausas de verdade', text: 'Aquecimento, rodadas curtas de foco e depois frases de verdade. Quando a concentração cai, o Keypacer sugere uma pausa em vez de deixar você fixar erros.' },
+      ],
+    },
+    analysis: {
+      eyebrow: 'O que o Keypacer mede',
+      title: 'O Keypacer percebe quais teclas deixam você lento',
+      text: 'Você hesita um instante antes do ç ou troca o b pelo v? Você mal percebe, mas isso custa velocidade toda vez. O Keypacer mede cada tecla ao milissegundo e monta o próximo exercício exatamente com essas teclas e pares de letras.',
+      points: [
+        { chip: '1×', strong: 'Vale a primeira tentativa.', text: 'Um erro continua sendo um erro, mesmo que você o corrija na hora.' },
+        { chip: '2s', strong: 'Pausas para pensar não contam.', text: 'Pausas de mais de dois segundos não distorcem sua velocidade.' },
+        { chip: '↺', strong: 'Nada é esquecido.', text: 'Teclas que você não pratica há algum tempo voltam para revisão.' },
+      ],
+      tableTitle: 'Teclas mais fracas',
+      tableNote: 'Exemplo depois de três rodadas',
+      columns: ['Tecla', 'Erros', 'Tempo'],
+      nextPrefix: 'O próximo exercício foca em',
+      nextSuffix: 'e nos pares em volta.',
+      example: { keys: ['ç', 'ã', 'x', 'j', 'q'], focus: ['ç', 'ã', 'ção'] },
+    },
+    features: {
+      eyebrow: 'Recursos',
+      title: 'Tudo o que você precisa, nada que atrapalhe',
+      items: [
+        { title: 'Seu idioma, seu teclado', text: 'Português do Brasil ou de Portugal, inglês, alemão, francês, espanhol, italiano ou polonês, no ABNT2, QWERTY, QWERTZ, AZERTY, Dvorak, Colemak e outros. O Keypacer reconhece seu layout pelas teclas que você aperta.' },
+        { title: 'Guia de dedos', text: 'Um teclado abaixo do texto mostra qual dedo vem a seguir. As teclas que você já sabe vão sumindo aos poucos.' },
+        { title: 'Teste de nivelamento', text: 'Já digita um pouco? Um teste de um minuto, e o Keypacer pula todas as teclas que você já domina.' },
+        { title: 'Progresso visível', text: 'Velocidade e precisão ao longo do tempo, um mapa de calor dos erros e suas teclas e pares de letras mais lentos.' },
+        { title: 'Meta semanal e plano', text: 'Defina com que frequência quer praticar e coloque o plano na sua agenda. Rodadas curtas e regulares rendem mais do que sessões longas e raras.' },
+        { title: 'Continue em qualquer lugar', text: 'Com uma conta grátis suas lições ficam seguras mesmo se os dados do navegador forem apagados, e você continua de onde parou em qualquer dispositivo.' },
+      ],
+    },
+    vignettes: {
+      layouts: ['Deutsch · layout alemão', 'Français · layout francês', 'Português · ABNT2', 'English · Dvorak'],
+      fingerWord: 'sala',
+      letters: 'Letras',
+      placing: 'Nivelamento em andamento …',
+      skipped: { one: '{n} tecla pulada', other: '{n} teclas puladas' },
+      speed: 'Velocidade',
+      weekGoal: 'Meta semanal',
+      lesson: 'Lição',
+      laptop: 'Notebook',
+      tablet: 'Tablet',
+      stored: 'Guardado em Frankfurt, UE',
+    },
+    privacy: {
+      eyebrow: 'Privacidade',
+      title: 'Seus dados de digitação ficam com você',
+      intro: 'O Keypacer sabe exatamente como você digita. Por isso esse conhecimento fica com você.',
+      items: [
+        { title: 'Sem cookies, sem rastreamento', text: 'O Keypacer não usa cookies, não mostra anúncios e não usa serviços de análise.', chips: ['0 cookies', '0 rastreadores'] },
+        { title: 'Sem conta, tudo fica no navegador', text: 'Suas teclas só são guardadas no seu aparelho. Você pode exportá-las ou apagá-las quando quiser.', chips: ['.json', '.csv'] },
+        { title: 'Com conta, na UE', text: 'A conta opcional sincroniza suas rodadas entre seus dispositivos por servidores em Frankfurt.', chips: ['Frankfurt', 'conta opcional'] },
+      ],
+    },
+    analytics: {
+      fact: 'cookies e anúncios',
+      item: { title: 'Sem cookies, sem anúncios', text: 'O Keypacer não usa cookies e não mostra anúncios. As visitas são só contadas de forma anônima, sem cookies.', chips: ['0 cookies', 'estatísticas anônimas'] },
+    },
+    faq: {
+      title: 'Perguntas',
+      items: [
+        { q: 'O Keypacer é grátis?', a: 'Sim. A prática, o progresso e a conta opcional são grátis, sem anúncios.' },
+        { q: 'O que diferencia o Keypacer de outros cursos de digitação?', a: 'A maioria dos cursos dá as mesmas lições para todo mundo. O Keypacer mede cada tecla e monta cada exercício com as teclas e os pares de letras que mais deixam você lento agora.' },
+        { q: 'Preciso de uma conta?', a: 'Não. Você pode começar na hora; sem conta, o navegador guarda seu progresso. Uma conta grátis mantém tudo seguro mesmo se os dados do navegador forem apagados, e permite continuar nos seus outros dispositivos.' },
+        { q: 'Quanto tempo leva para aprender a digitar com os dez dedos?', a: 'A maioria das pessoas consegue digitar sem olhar depois de algumas semanas, com 15 a 20 minutos por dia. Sessões curtas e diárias funcionam melhor do que sessões longas e raras, e a velocidade continua crescendo depois disso.' },
+        { q: 'Quais layouts de teclado são suportados?', a: 'Português ABNT2 (Brasil) e português de Portugal, QWERTY dos EUA e do Reino Unido, QWERTZ alemão e suíço, AZERTY francês e belga, espanhol, italiano, sueco/finlandês e polonês, Dvorak, Colemak e Colemak-DH. O Keypacer detecta seu layout pelas teclas que você aperta.' },
+        { q: 'Funciona no celular ou no tablet?', a: 'O Keypacer foi feito para um teclado de verdade. Um tablet com teclado funciona bem; no celular dá para dar uma olhada, mas digitar com os dez dedos precisa de um teclado físico.' },
+      ],
+    },
+    final: { title: 'Seu primeiro exercício leva dois minutos', text: 'Digite uma linha e o Keypacer sabe por onde você começa.', cta: 'Começar grátis' },
+    foot: { imprint: 'Aviso legal', privacy: 'Privacidade', terms: 'Termos' },
+  },
+  'pt-PT': {
+    name: 'Português (Portugal)',
+    ogLocale: 'pt_PT',
+    title: 'Aprende a escrever com os dez dedos, grátis | Keypacer',
+    description:
+      'Curso de datilografia grátis e online. O Keypacer mede cada tecla, descobre as que te atrasam e treina precisamente essas. Sem registo.',
+    nav: { languages: 'Língua', signIn: 'Iniciar sessão', open: 'Abrir o treinador', sections: 'Secções da página', method: 'Método', features: 'Funcionalidades', faq: 'Perguntas', skip: 'Saltar para o conteúdo' },
+    hero: {
+      eyebrow: 'Grátis · sem registo · sem anúncios',
+      title: 'Aprende a escrever com os dez dedos com um treinador que percebe os teus erros',
+      rotate: [
+        'Dez dedos. Dez minutos por dia.',
+        'Cada exercício aponta às tuas teclas mais lentas',
+        'Primeiro sem erros, depois depressa',
+      ],
+      lead: 'O Keypacer mede cada tecla, descobre as teclas e os pares de letras que te atrasam e faz com eles o teu próximo exercício. Assim nunca treinas o que já sabes.',
+      cta: 'Começar grátis',
+      continue: 'Continuar a praticar',
+      note: 'Funciona no navegador. Sem anúncios e sem precisares de conta.',
+    },
+    demo: {
+      label: 'Experimenta: escreve a linha',
+      start: 'Clica aqui e começa a escrever',
+      result: 'O teu resultado',
+      wpm: 'PPM',
+      wpmLong: 'palavras por minuto',
+      accuracy: 'precisão',
+      slowTitle: 'Estas teclas atrasaram-te:',
+      slowNone: 'Limpo e regular. Vamos ver como te sais com o teclado todo.',
+      nextBeginner: 'A tua primeira lição: as seis letras mais comuns e depois uma tecla nova de cada vez.',
+      ctaBeginner: 'Começar a lição 1',
+      nextFast: 'Já escreves bastante depressa. Mais umas {n} palavras no treinador e saltas as teclas que já dominas.',
+      ctaFast: 'Terminar o teste de nível',
+      again: 'Escrever outra linha',
+      lines: [
+        'a prática traz progresso quando os olhos ficam no ecrã',
+        'cada tecla que aprendes sem olhar torna a seguinte mais fácil',
+        'quem escreve sem olhar mantém os olhos no texto e não nas mãos',
+      ],
+    },
+    facts: {
+      label: 'O Keypacer em números',
+      items: [
+        { value: '∞', label: 'exercícios que se adaptam ao teu nível' },
+        { value: '1 min', label: 'até ao primeiro exercício, sem registo' },
+        { value: '10 000', label: 'palavras mais comuns por língua' },
+        { value: '0', label: 'cookies, rastreadores e anúncios' },
+      ],
+    },
+    method: {
+      eyebrow: 'O método',
+      title: 'Como ficas mais rápido',
+      intro: 'Nada de lições iguais para todos. Cada exercício nasce da tua forma de escrever e fica mais preciso a cada ronda.',
+      items: [
+        { title: 'Uma tecla de cada vez', text: 'Começas com as seis letras mais comuns e cedo escreves palavras a sério. A tecla seguinte só entra quando todas as anteriores estão precisas e fluentes.' },
+        { title: 'Primeiro sem erros, depois depressa', text: 'Uma tecla errada mantém-te na mesma letra. Quando a precisão desce, o contador de velocidade desaparece até voltares a escrever sem erros.' },
+        { title: 'Direcionado, não igual para todos', text: 'Cada exercício aposta nas teclas e nos pares de letras que te atrasam, e traz de volta teclas que não praticas há algum tempo, para que fiquem.' },
+        { title: 'Rondas curtas, pausas a sério', text: 'Aquecimento, rondas curtas de foco e depois frases a sério. Quando a concentração baixa, o Keypacer sugere uma pausa em vez de te deixar treinar erros.' },
+      ],
+    },
+    analysis: {
+      eyebrow: 'O que o Keypacer mede',
+      title: 'O Keypacer repara nas teclas que te atrasam',
+      text: 'Hesitas um instante antes do ç ou trocas o b pelo v? Mal dás por isso, mas custa-te velocidade de cada vez. O Keypacer mede cada tecla ao milissegundo e faz o próximo exercício precisamente com essas teclas e pares de letras.',
+      points: [
+        { chip: '1×', strong: 'Conta a primeira tentativa.', text: 'Um erro continua a ser um erro, mesmo que o corrijas logo.' },
+        { chip: '2s', strong: 'As pausas para pensar não contam.', text: 'Pausas de mais de dois segundos não distorcem a tua velocidade.' },
+        { chip: '↺', strong: 'Nada fica esquecido.', text: 'As teclas que não praticas há algum tempo voltam para revisão.' },
+      ],
+      tableTitle: 'Teclas mais fracas',
+      tableNote: 'Exemplo depois de três rondas',
+      columns: ['Tecla', 'Erros', 'Tempo'],
+      nextPrefix: 'O próximo exercício foca-se em',
+      nextSuffix: 'e nos pares à volta.',
+      example: { keys: ['ç', 'ã', 'x', 'j', 'q'], focus: ['ç', 'ã', 'ção'] },
+    },
+    features: {
+      eyebrow: 'Funcionalidades',
+      title: 'Tudo o que precisas, nada que estorve',
+      items: [
+        { title: 'A tua língua, o teu teclado', text: 'Português de Portugal ou do Brasil, inglês, alemão, francês, espanhol, italiano ou polaco, em QWERTY, ABNT2, QWERTZ, AZERTY, Dvorak, Colemak e outros. O Keypacer reconhece a tua disposição pelas teclas em que carregas.' },
+        { title: 'Guia dos dedos', text: 'Um teclado por baixo do texto mostra que dedo vem a seguir. As teclas que já sabes vão desaparecendo aos poucos.' },
+        { title: 'Teste de nível', text: 'Já escreves um pouco? Um teste de um minuto, e o Keypacer salta todas as teclas que já dominas.' },
+        { title: 'Progresso à vista', text: 'Velocidade e precisão ao longo do tempo, um mapa de calor dos erros e as tuas teclas e pares de letras mais lentos.' },
+        { title: 'Meta semanal e plano', text: 'Define com que frequência queres praticar e põe o plano no teu calendário. Rondas curtas e regulares rendem mais do que sessões longas e raras.' },
+        { title: 'Continua em qualquer lado', text: 'Com uma conta gratuita as tuas lições ficam seguras mesmo que os dados do navegador sejam apagados, e continuas onde ficaste em qualquer dispositivo.' },
+      ],
+    },
+    vignettes: {
+      layouts: ['Deutsch · disposição alemã', 'Français · disposição francesa', 'Português · disposição portuguesa', 'English · Dvorak'],
+      fingerWord: 'sala',
+      letters: 'Letras',
+      placing: 'Teste de nível em curso …',
+      skipped: { one: '{n} tecla saltada', other: '{n} teclas saltadas' },
+      speed: 'Velocidade',
+      weekGoal: 'Meta semanal',
+      lesson: 'Lição',
+      laptop: 'Portátil',
+      tablet: 'Tablet',
+      stored: 'Guardado em Frankfurt, UE',
+    },
+    privacy: {
+      eyebrow: 'Privacidade',
+      title: 'Os teus dados de escrita ficam contigo',
+      intro: 'O Keypacer sabe exatamente como escreves. Por isso esse conhecimento fica contigo.',
+      items: [
+        { title: 'Sem cookies, sem rastreio', text: 'O Keypacer não usa cookies, não mostra anúncios e não usa serviços de análise.', chips: ['0 cookies', '0 rastreadores'] },
+        { title: 'Sem conta, fica tudo no navegador', text: 'As tuas teclas só são guardadas no teu equipamento. Podes exportá-las ou apagá-las quando quiseres.', chips: ['.json', '.csv'] },
+        { title: 'Com conta, na UE', text: 'A conta opcional sincroniza as tuas rondas entre os teus dispositivos através de servidores em Frankfurt.', chips: ['Frankfurt', 'conta opcional'] },
+      ],
+    },
+    analytics: {
+      fact: 'cookies e anúncios',
+      item: { title: 'Sem cookies, sem anúncios', text: 'O Keypacer não usa cookies e não mostra anúncios. As visitas só são contadas de forma anónima, sem cookies.', chips: ['0 cookies', 'estatísticas anónimas'] },
+    },
+    faq: {
+      title: 'Perguntas',
+      items: [
+        { q: 'O Keypacer é grátis?', a: 'Sim. A prática, o progresso e a conta opcional são gratuitos, sem anúncios.' },
+        { q: 'O que distingue o Keypacer de outros cursos de datilografia?', a: 'A maioria dos cursos dá as mesmas lições a toda a gente. O Keypacer mede cada tecla e faz cada exercício com as teclas e os pares de letras que mais te atrasam neste momento.' },
+        { q: 'Preciso de uma conta?', a: 'Não. Podes começar já; sem conta, o navegador guarda o teu progresso. Uma conta gratuita mantém tudo seguro mesmo que os dados do navegador sejam apagados, e permite-te continuar nos teus outros dispositivos.' },
+        { q: 'Quanto tempo demora a aprender a escrever com os dez dedos?', a: 'A maioria das pessoas consegue escrever sem olhar ao fim de algumas semanas, com 15 a 20 minutos por dia. Sessões curtas e diárias funcionam melhor do que sessões longas e raras, e a velocidade continua a crescer depois disso.' },
+        { q: 'Que disposições de teclado são suportadas?', a: 'Português de Portugal e português ABNT2 (Brasil), QWERTY dos EUA e do Reino Unido, QWERTZ alemão e suíço, AZERTY francês e belga, espanhol, italiano, sueco/finlandês e polaco, Dvorak, Colemak e Colemak-DH. O Keypacer deteta a tua disposição pelas teclas em que carregas.' },
+        { q: 'Funciona no telemóvel ou no tablet?', a: 'O Keypacer foi feito para um teclado a sério. Um tablet com teclado funciona bem; no telemóvel podes dar uma vista de olhos, mas escrever com os dez dedos precisa de um teclado físico.' },
+      ],
+    },
+    final: { title: 'O teu primeiro exercício demora dois minutos', text: 'Escreve uma linha e o Keypacer fica a saber por onde começas.', cta: 'Começar grátis' },
+    foot: { imprint: 'Informação legal', privacy: 'Privacidade', terms: 'Termos' },
   },
 };

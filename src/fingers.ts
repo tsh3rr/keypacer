@@ -25,7 +25,7 @@ const COLUMNS: Record<string, string[]> = {
   'right-ring': ['Digit9', 'KeyO', 'KeyL', 'Period'],
   'right-pinky': [
     'Digit0', 'Minus', 'Equal', 'KeyP', 'BracketLeft', 'BracketRight',
-    'Semicolon', 'Quote', 'Backslash', 'Slash', 'ShiftRight', 'Enter',
+    'Semicolon', 'Quote', 'Backslash', 'Slash', 'IntlRo', 'ShiftRight', 'Enter',
   ],
 };
 

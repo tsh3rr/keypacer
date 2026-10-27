@@ -19,7 +19,7 @@ import { LEGAL_UPDATED, OWNER } from './owner';
  */
 
 export type LegalPage = 'imprint' | 'privacy' | 'terms';
-export type LegalLanguage = 'de' | 'en' | 'fr' | 'es' | 'it' | 'pl';
+export type LegalLanguage = 'de' | 'en' | 'fr' | 'es' | 'it' | 'pl' | 'pt-BR' | 'pt-PT';
 
 /** The languages in the switch on the legal pages, each named in its own language. */
 export const LEGAL_LANGUAGES: readonly { id: LegalLanguage; name: string }[] = [
@@ -29,6 +29,8 @@ export const LEGAL_LANGUAGES: readonly { id: LegalLanguage; name: string }[] = [
   { id: 'es', name: 'Español' },
   { id: 'it', name: 'Italiano' },
   { id: 'pl', name: 'Polski' },
+  { id: 'pt-BR', name: 'Português (Brasil)' },
+  { id: 'pt-PT', name: 'Português (Portugal)' },
 ];
 
 export function isLegalLanguage(id: string | null | undefined): id is LegalLanguage {
@@ -87,6 +89,18 @@ const accountMail = {
     section: RESEND ? `
     <p><strong>Wysyłka e-maili:</strong> kody logowania, potwierdzenie adresu e-mail i kody do resetowania hasła wysyłamy Ci przez usługę wysyłkową Resend (Resend, Inc., USA). Resend otrzymuje w tym celu Twój adres e-mail i treść wiadomości (kod i link do logowania) oraz przechowuje dzienniki wysyłki (czas, odbiorca, status doręczenia), aby zapewnić doręczenie; przechowuje je tylko przez ograniczony czas. Śledzenie otwarć i kliknięć wyłączyliśmy. E-maile są wysyłane z serwerów w UE (Irlandia). Resend przetwarza dane jako nasz podmiot przetwarzający na podstawie swojej umowy powierzenia przetwarzania danych; o ile możliwy jest przy tym dostęp z USA, jest on zabezpieczony standardowymi klauzulami umownymi UE (art. 46 ust. 2 lit. c RODO). Podstawą prawną jest art. 6 ust. 1 lit. b RODO. Więcej w <a href="https://resend.com/legal/privacy-policy">polityce prywatności Resend</a>.</p>` : '',
   },
+  'pt-BR': {
+    methods: RESEND ? 'com sua conta do Google, com endereço de e-mail e senha, ou com um código que enviamos para você por e-mail' : 'com sua conta do Google ou com endereço de e-mail e senha',
+    supabase: RESEND ? '. Os e-mails sobre sua conta são enviados pelo Supabase através do Resend (veja abaixo).' : ' e também envia os e-mails sobre sua conta, por exemplo para redefinir a senha.',
+    section: RESEND ? `
+    <p><strong>Envio de e-mails:</strong> enviamos os códigos de acesso, a confirmação do seu endereço de e-mail e os códigos para redefinir a senha pelo serviço de envio Resend (Resend, Inc., EUA). Para isso, o Resend recebe seu endereço de e-mail e o conteúdo da mensagem (código e link de acesso) e guarda registros de envio (horário, destinatário, status da entrega) para garantir que o e-mail chegue; esses registros ficam guardados só por tempo limitado. Desativamos o rastreamento de aberturas e de cliques. Os e-mails são enviados a partir de servidores na UE (Irlanda). O Resend trata os dados como nosso operador, com base no seu acordo de tratamento de dados; quando é possível um acesso a partir dos EUA, ele é coberto pelas cláusulas contratuais-tipo da UE (art. 46, n.º 2, alínea c, do RGPD). A base legal é o art. 6, n.º 1, alínea b, do RGPD. Mais informações na <a href="https://resend.com/legal/privacy-policy">política de privacidade do Resend</a>.</p>` : '',
+  },
+  'pt-PT': {
+    methods: RESEND ? 'com a tua conta Google, com endereço de e-mail e palavra-passe, ou com um código que te enviamos por e-mail' : 'com a tua conta Google ou com endereço de e-mail e palavra-passe',
+    supabase: RESEND ? '. Os e-mails sobre a tua conta são enviados pelo Supabase através do Resend (ver abaixo).' : ' e também envia os e-mails sobre a tua conta, por exemplo para repor a palavra-passe.',
+    section: RESEND ? `
+    <p><strong>Envio de e-mails:</strong> enviamos os códigos de acesso, a confirmação do teu endereço de e-mail e os códigos para repor a palavra-passe através do serviço de envio Resend (Resend, Inc., EUA). Para isso, o Resend recebe o teu endereço de e-mail e o conteúdo da mensagem (código e ligação de acesso) e guarda registos de envio (hora, destinatário, estado da entrega) para garantir que o e-mail chega; estes registos são guardados apenas durante um período limitado. Desativámos o seguimento de aberturas e de cliques. Os e-mails são enviados a partir de servidores na UE (Irlanda). O Resend trata os dados como nosso subcontratante, com base no seu acordo de tratamento de dados; quando é possível um acesso a partir dos EUA, este está coberto pelas cláusulas contratuais-tipo da UE (artigo 46.º, n.º 2, alínea c), do RGPD). O fundamento jurídico é o artigo 6.º, n.º 1, alínea b), do RGPD. Mais informações na <a href="https://resend.com/legal/privacy-policy">política de privacidade do Resend</a>.</p>` : '',
+  },
 };
 
 /** Whether e-mail sign-in is behind Cloudflare Turnstile (see src/sync/captcha.ts). */
@@ -100,6 +114,8 @@ const captcha = {
     es: CAPTCHA ? ' La única excepción: cuando inicias sesión o te registras con correo electrónico, Cloudflare Turnstile comprueba que es una persona quien envía el formulario (ver <em>Protección contra registros automatizados</em>).' : '',
     it: CAPTCHA ? ' Unica eccezione: quando accedi o ti registri con l’e-mail, Cloudflare Turnstile verifica che sia una persona a inviare il modulo (vedi <em>Protezione dalle registrazioni automatiche</em>).' : '',
     pl: CAPTCHA ? ' Jedyny wyjątek: przy logowaniu i rejestracji przez e-mail Cloudflare Turnstile sprawdza, czy formularz wysyła człowiek (zob. <em>Ochrona przed automatyczną rejestracją</em>).' : '',
+    'pt-BR': CAPTCHA ? ' A única exceção: quando você entra ou se cadastra com e-mail, o Cloudflare Turnstile verifica se é uma pessoa que está enviando o formulário (veja <em>Proteção contra cadastros automatizados</em>).' : '',
+    'pt-PT': CAPTCHA ? ' A única exceção: quando entras ou te registas com e-mail, o Cloudflare Turnstile verifica se é uma pessoa a enviar o formulário (ver <em>Proteção contra registos automatizados</em>).' : '',
   },
   section: {
     de: CAPTCHA ? `
@@ -114,6 +130,10 @@ const captcha = {
     <p><strong>Protezione dalle registrazioni automatiche:</strong> quando invii il modulo per accedere, registrarti, ricevere un codice di accesso o una nuova password, Cloudflare Turnstile (Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, USA) verifica che a inviarlo sia una persona. Solo in quel momento il tuo browser carica uno script di Cloudflare, che analizza caratteristiche tecniche del tuo browser e del tuo dispositivo e il tuo indirizzo IP; di solito non noti nulla, a volte compare una casella da spuntare. Il risultato, un codice valido una sola volta, va a Supabase, che lo verifica presso Cloudflare. Secondo Cloudflare, questi dati non vengono usati per pubblicità né per riconoscerti tra siti diversi. La base giuridica è il nostro legittimo interesse a proteggere gli account e il database dagli abusi tramite account creati automaticamente (art. 6, par. 1, lett. f) GDPR). Cloudflare è certificata nell’ambito del Data Privacy Framework UE-USA (art. 45 GDPR). Maggiori informazioni nell’<a href="https://www.cloudflare.com/turnstile-privacy-policy/">informativa sulla privacy di Turnstile</a>. L’accesso con Google non usa questa verifica.</p>` : '',
     pl: CAPTCHA ? `
     <p><strong>Ochrona przed automatyczną rejestracją:</strong> gdy wysyłasz formularz logowania, rejestracji, prośby o kod logowania lub nowe hasło, Cloudflare Turnstile (Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, USA) sprawdza, czy wysyła go człowiek. Dopiero wtedy Twoja przeglądarka wczytuje skrypt Cloudflare. Analizuje on cechy techniczne Twojej przeglądarki i urządzenia oraz Twój adres IP; zwykle nic nie zauważasz, czasem pojawia się pole do zaznaczenia. Wynik, kod ważny tylko raz, trafia do Supabase, które sprawdza go w Cloudflare. Według Cloudflare dane te nie są wykorzystywane do reklam ani do rozpoznawania Cię na różnych stronach. Podstawą prawną jest nasz prawnie uzasadniony interes w ochronie kont i bazy danych przed nadużyciami przez automatycznie zakładane konta (art. 6 ust. 1 lit. f RODO). Cloudflare ma certyfikat w ramach EU-US Data Privacy Framework (art. 45 RODO). Więcej w <a href="https://www.cloudflare.com/turnstile-privacy-policy/">polityce prywatności Turnstile</a>. Przy logowaniu przez Google ta kontrola nie jest wykonywana.</p>` : '',
+    'pt-BR': CAPTCHA ? `
+    <p><strong>Proteção contra cadastros automatizados:</strong> quando você envia o formulário para entrar, se cadastrar, receber um código de acesso ou uma nova senha, o Cloudflare Turnstile (Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, EUA) verifica se quem envia é uma pessoa. Só nesse momento seu navegador carrega um script da Cloudflare. Ele analisa características técnicas do seu navegador e do seu dispositivo e o seu endereço IP; em geral você não percebe nada, às vezes aparece uma caixa para marcar. O resultado, um código válido uma única vez, vai para o Supabase, que o confere com a Cloudflare. Segundo a Cloudflare, esses dados não são usados para publicidade nem para reconhecer você em outros sites. A base legal é o nosso interesse legítimo em proteger as contas e o banco de dados contra o abuso por contas criadas automaticamente (art. 6, n.º 1, alínea f, do RGPD). A Cloudflare é certificada no EU-US Data Privacy Framework (art. 45 do RGPD). Mais informações na <a href="https://www.cloudflare.com/turnstile-privacy-policy/">política de privacidade do Turnstile</a>. Entrar com o Google não usa essa verificação.</p>` : '',
+    'pt-PT': CAPTCHA ? `
+    <p><strong>Proteção contra registos automatizados:</strong> quando envias o formulário para entrar, te registares, receberes um código de acesso ou uma nova palavra-passe, o Cloudflare Turnstile (Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, EUA) verifica se quem envia é uma pessoa. Só nesse momento o teu navegador carrega um script da Cloudflare. Este analisa características técnicas do teu navegador e do teu dispositivo e o teu endereço IP; em geral não notas nada, por vezes aparece uma caixa para assinalar. O resultado, um código válido uma única vez, vai para o Supabase, que o confirma junto da Cloudflare. Segundo a Cloudflare, estes dados não são usados para publicidade nem para te reconhecer noutros sites. O fundamento jurídico é o nosso interesse legítimo em proteger as contas e a base de dados contra o abuso por contas criadas automaticamente (artigo 6.º, n.º 1, alínea f), do RGPD). A Cloudflare está certificada no EU-US Data Privacy Framework (artigo 45.º do RGPD). Mais informações na <a href="https://www.cloudflare.com/turnstile-privacy-policy/">política de privacidade do Turnstile</a>. Entrar com a Google não usa esta verificação.</p>` : '',
   },
 };
 
@@ -141,6 +161,12 @@ const analytics = {
     pl: ANALYTICS
       ? 'Nie ma reklam ani osadzonych treści stron trzecich, nawet zewnętrznych czcionek. Liczymy tylko anonimowo, za pomocą Umami i bez plików cookie, jak często otwierana jest strona startowa, blog i trener (zob. <em>Statystyki odwiedzin</em>); to, co robisz i piszesz w trenerze, nie jest rejestrowane.'
       : 'Nie ma reklam, usług analitycznych ani śledzących, ani osadzonych treści stron trzecich, nawet zewnętrznych czcionek.',
+    'pt-BR': ANALYTICS
+      ? 'Não há publicidade nem conteúdo de terceiros incorporado, nem mesmo fontes externas. Só contamos de forma anônima, com o Umami e sem cookies, quantas vezes a página inicial, o blog e o treinador são abertos (veja <em>Estatísticas de visitas</em>); o que você faz e digita no treinador não é registrado.'
+      : 'Não há publicidade, nem serviços de análise ou rastreamento, nem conteúdo de terceiros incorporado, nem mesmo fontes externas.',
+    'pt-PT': ANALYTICS
+      ? 'Não há publicidade nem conteúdos de terceiros incorporados, nem sequer tipos de letra externos. Apenas contamos de forma anónima, com o Umami e sem cookies, quantas vezes a página inicial, o blogue e o treinador são abertos (ver <em>Estatísticas de visitas</em>); o que fazes e escreves no treinador não é registado.'
+      : 'Não há publicidade, nem serviços de análise ou de seguimento, nem conteúdos de terceiros incorporados, nem sequer tipos de letra externos.',
   },
   stored: {
     de: ANALYTICS ? '\n      <li><strong>Reichweitenmessung ausgeschaltet:</strong> nur wenn du sie unten unter <em>Reichweitenmessung</em> ausschaltest, ein Vermerk darüber (<code>umami.disabled</code>).</li>' : '',
@@ -149,6 +175,8 @@ const analytics = {
     es: ANALYTICS ? '\n      <li><strong>Estadísticas de visitas desactivadas:</strong> solo si las desactivas más abajo en <em>Estadísticas de visitas</em>, una nota que lo indica (<code>umami.disabled</code>).</li>' : '',
     it: ANALYTICS ? '\n      <li><strong>Statistiche delle visite disattivate:</strong> solo se le disattivi più sotto in <em>Statistiche delle visite</em>, una nota che lo indica (<code>umami.disabled</code>).</li>' : '',
     pl: ANALYTICS ? '\n      <li><strong>Wyłączone statystyki odwiedzin:</strong> tylko jeśli wyłączysz je niżej w sekcji <em>Statystyki odwiedzin</em>, adnotacja o tym (<code>umami.disabled</code>).</li>' : '',
+    'pt-BR': ANALYTICS ? '\n      <li><strong>Estatísticas de visitas desativadas:</strong> só se você as desativar mais abaixo, em <em>Estatísticas de visitas</em>, uma anotação dizendo isso (<code>umami.disabled</code>).</li>' : '',
+    'pt-PT': ANALYTICS ? '\n      <li><strong>Estatísticas de visitas desativadas:</strong> só se as desativares mais abaixo, em <em>Estatísticas de visitas</em>, uma nota a indicá-lo (<code>umami.disabled</code>).</li>' : '',
   },
   section: {
     de: ANALYTICS ? `
@@ -192,6 +220,20 @@ const analytics = {
     <p>Aby wiedzieć, ile osób odwiedza stronę startową, skąd przychodzą i czy otwierają trener, liczymy odwiedziny strony startowej, bloga i trenera za pomocą Umami Cloud (Umami Software, Inc., USA). W trenerze liczy się tylko to, że strona została otwarta; Twoje ćwiczenia, dziennik naciśnięć i konto pozostają nietknięte. Na tych stronach prawnych Umami nie działa. Przy otwarciu strony Twoja przeglądarka wczytuje skrypt Umami i wysyła następujące dane: otwartą stronę bez dodatków w adresie, stronę, z której przychodzisz, przeglądarkę, system operacyjny, typ urządzenia, rozmiar ekranu i język, a jeśli klikniesz jeden z przycisków na stronie startowej prowadzących do trenera, to który. Z adresu IP Umami ustala kraj i region; sam adres IP nie jest zapisywany. Aby wizyta liczyła się tylko raz, Umami tworzy z adresu IP, danych przeglądarki i tajnej wartości zmieniającej się co miesiąc identyfikator, z którego nie da się odczytać Twojego adresu IP ani rozpoznać Cię w kolejnych miesiącach czy na innych stronach. Umami nie używa plików cookie i niczego nie zapisuje na Twoim urządzeniu. Widzimy tylko łączne liczby.</p>
     <p>Podstawą prawną jest nasz prawnie uzasadniony interes w ulepszaniu strony na podstawie anonimowych liczb odwiedzin (art. 6 ust. 1 lit. f RODO). Umami przetwarza dane jako nasz podmiot przetwarzający na podstawie swojej umowy powierzenia przetwarzania danych; o ile możliwe jest przetwarzanie w USA, jest ono zabezpieczone standardowymi klauzulami umownymi UE (art. 46 ust. 2 lit. c RODO). Statystyki są usuwane najpóźniej po 12 miesiącach. Więcej w <a href="https://umami.is/privacy">polityce prywatności Umami</a>.</p>
     <p>Możesz się sprzeciwić: jeśli w przeglądarce masz włączone „Do Not Track”, Umami Cię nie liczy. Możesz też wyłączyć tutaj statystyki dla tej przeglądarki; aby to zapamiętać, zapisujemy adnotację w pamięci lokalnej Twojej przeglądarki.</p>
+    <p class="legal-optout"><button type="button" data-analytics-optout></button> <span data-analytics-state></span></p>` : '',
+    'pt-BR': ANALYTICS ? `
+
+    <h2>Estatísticas de visitas</h2>
+    <p>Para saber quantas pessoas visitam a página inicial, de onde vêm e se abrem o treinador, contamos as visitas à página inicial, ao blog e ao treinador com o Umami Cloud (Umami Software, Inc., EUA). No treinador, conta-se só o fato de a página ter sido aberta; seus exercícios, seu registro de teclas e sua conta não são afetados. O Umami não funciona nestas páginas legais. Quando uma página é aberta, seu navegador carrega um script do Umami e envia o seguinte: a página que você abriu, sem nada acrescentado ao endereço, a página de onde você veio, seu navegador, sistema operacional, tipo de dispositivo, tamanho de tela e idioma e, se você clicar em um dos botões da página inicial que levam ao treinador, qual deles. O Umami deduz seu país e sua região a partir do seu endereço IP; o próprio endereço IP não é guardado. Para que uma visita conte uma só vez, o Umami cria um identificador a partir do seu endereço IP, de dados do navegador e de um valor secreto que muda todo mês; ele não revela seu endereço IP e não consegue reconhecer você de um mês para outro nem em outros sites. O Umami não usa cookies e não guarda nada no seu dispositivo. Nós só vemos totais.</p>
+    <p>A base legal é o nosso interesse legítimo em melhorar o site com base em números anônimos de visitas (art. 6, n.º 1, alínea f, do RGPD). O Umami trata os dados como nosso operador, com base no seu acordo de tratamento de dados; quando é possível um tratamento nos EUA, ele é coberto pelas cláusulas contratuais-tipo da UE (art. 46, n.º 2, alínea c, do RGPD). As estatísticas são apagadas no máximo depois de 12 meses. Mais informações na <a href="https://umami.is/privacy">política de privacidade do Umami</a>.</p>
+    <p>Você pode se opor: se o seu navegador estiver com o "Do Not Track" ativado, o Umami não conta você. Você também pode desativar as estatísticas aqui para este navegador; para lembrar disso, guardamos uma anotação no armazenamento local do seu navegador.</p>
+    <p class="legal-optout"><button type="button" data-analytics-optout></button> <span data-analytics-state></span></p>` : '',
+    'pt-PT': ANALYTICS ? `
+
+    <h2>Estatísticas de visitas</h2>
+    <p>Para saber quantas pessoas visitam a página inicial, de onde vêm e se abrem o treinador, contamos as visitas à página inicial, ao blogue e ao treinador com o Umami Cloud (Umami Software, Inc., EUA). No treinador, conta-se apenas o facto de a página ter sido aberta; os teus exercícios, o teu registo de teclas e a tua conta não são afetados. O Umami não funciona nestas páginas legais. Quando uma página é aberta, o teu navegador carrega um script do Umami e envia o seguinte: a página que abriste, sem nada acrescentado ao endereço, a página de onde vieste, o teu navegador, sistema operativo, tipo de dispositivo, tamanho de ecrã e idioma e, se clicares num dos botões da página inicial que levam ao treinador, qual deles. O Umami deduz o teu país e a tua região a partir do teu endereço IP; o próprio endereço IP não é guardado. Para que uma visita conte uma só vez, o Umami cria um identificador a partir do teu endereço IP, de dados do navegador e de um valor secreto que muda todos os meses; este não revela o teu endereço IP e não consegue reconhecer-te de um mês para o outro nem noutros sites. O Umami não usa cookies e não guarda nada no teu dispositivo. Nós só vemos totais.</p>
+    <p>O fundamento jurídico é o nosso interesse legítimo em melhorar o site com base em números anónimos de visitas (artigo 6.º, n.º 1, alínea f), do RGPD). O Umami trata os dados como nosso subcontratante, com base no seu acordo de tratamento de dados; quando é possível um tratamento nos EUA, este está coberto pelas cláusulas contratuais-tipo da UE (artigo 46.º, n.º 2, alínea c), do RGPD). As estatísticas são apagadas, no máximo, ao fim de 12 meses. Mais informações na <a href="https://umami.is/privacy">política de privacidade do Umami</a>.</p>
+    <p>Podes opor-te: se o teu navegador tiver o "Do Not Track" ativado, o Umami não te conta. Também podes desativar aqui as estatísticas para este navegador; para nos lembrarmos disso, guardamos uma nota no armazenamento local do teu navegador.</p>
     <p class="legal-optout"><button type="button" data-analytics-optout></button> <span data-analytics-state></span></p>` : '',
   },
 };
@@ -276,13 +318,39 @@ export const LEGAL_UI = {
     optedOut: 'Wyłączone w tej przeglądarce.',
     optedIn: 'Włączone w tej przeglądarce.',
   },
+  'pt-BR': {
+    imprint: 'Aviso legal (Impressum)',
+    privacy: 'Política de privacidade',
+    terms: 'Termos de uso',
+    back: '← Voltar à prática',
+    language: 'Idioma',
+    updated: `Última atualização: ${LEGAL_UPDATED['pt-BR']}`,
+    note: 'Esta é uma tradução. A versão alemã é a que vale juridicamente.',
+    optOut: 'Desativar as estatísticas de visitas',
+    optIn: 'Reativar as estatísticas de visitas',
+    optedOut: 'Desativadas neste navegador.',
+    optedIn: 'Ativadas neste navegador.',
+  },
+  'pt-PT': {
+    imprint: 'Informação legal (Impressum)',
+    privacy: 'Política de privacidade',
+    terms: 'Termos de utilização',
+    back: '← Voltar à prática',
+    language: 'Idioma',
+    updated: `Última atualização: ${LEGAL_UPDATED['pt-PT']}`,
+    note: 'Esta é uma tradução. A versão alemã é a que vale juridicamente.',
+    optOut: 'Desativar as estatísticas de visitas',
+    optIn: 'Reativar as estatísticas de visitas',
+    optedOut: 'Desativadas neste navegador.',
+    optedIn: 'Ativadas neste navegador.',
+  },
 } satisfies Record<LegalLanguage, Record<string, string>>;
 
 const licenses = {
   de: `
     <h2>Quellen und Lizenzen</h2>
     <ul>
-      <li>Die Übungswörter stammen aus <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">CC BY-SA 4.0</a>. Die deutsche Rechtschreibung wurde mit den Worthäufigkeiten aus <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a> geprüft, die auf <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0) beruhen. Die daraus erstellten Wortlisten stehen ebenfalls unter CC BY-SA 4.0.</li>
+      <li>Die Übungswörter stammen aus <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">CC BY-SA 4.0</a>. Die deutsche Rechtschreibung wurde mit den Worthäufigkeiten aus <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a> geprüft, die auf <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0) beruhen. Die portugiesische Rechtschreibung (Brasilien und Portugal) wurde mit den <a href="https://github.com/LibreOffice/dictionaries">Rechtschreibwörterbüchern von LibreOffice</a> geprüft (VERO für Brasilien, LGPLv3/MPL; Universidade do Minho für Portugal, GPL/LGPL/MPL). Die daraus erstellten Wortlisten stehen ebenfalls unter CC BY-SA 4.0.</li>
       <li>Der Filter für anstößige Wörter nutzt die <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, Lizenz <a href="https://creativecommons.org/licenses/by/4.0/deed.de">CC BY 4.0</a>.</li>
     </ul>
     <h2>Danke</h2>
@@ -290,7 +358,7 @@ const licenses = {
   en: `
     <h2>Sources and licenses</h2>
     <ul>
-      <li>Practice words come from <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), licensed <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. German spelling was checked against the word frequencies in <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, which are based on <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). The resulting word lists are under CC BY-SA 4.0 as well.</li>
+      <li>Practice words come from <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), licensed <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. German spelling was checked against the word frequencies in <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, which are based on <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). Portuguese spelling (Brazil and Portugal) was checked against the <a href="https://github.com/LibreOffice/dictionaries">LibreOffice spelling dictionaries</a> (VERO for Brazil, LGPLv3/MPL; Universidade do Minho for Portugal, GPL/LGPL/MPL). The resulting word lists are under CC BY-SA 4.0 as well.</li>
       <li>The offensive-word filter uses the <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</li>
     </ul>
     <h2>Thanks</h2>
@@ -298,7 +366,7 @@ const licenses = {
   fr: `
     <h2>Sources et licences</h2>
     <ul>
-      <li>Les mots d’entraînement proviennent de <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr">CC BY-SA 4.0</a>. L’orthographe allemande a été vérifiée à l’aide des fréquences de mots de <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, fondées sur <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). Les listes de mots qui en résultent sont également sous CC BY-SA 4.0.</li>
+      <li>Les mots d’entraînement proviennent de <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr">CC BY-SA 4.0</a>. L’orthographe allemande a été vérifiée à l’aide des fréquences de mots de <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, fondées sur <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). L’orthographe portugaise (Brésil et Portugal) a été vérifiée à l’aide des <a href="https://github.com/LibreOffice/dictionaries">dictionnaires orthographiques de LibreOffice</a> (VERO pour le Brésil, LGPLv3/MPL ; Universidade do Minho pour le Portugal, GPL/LGPL/MPL). Les listes de mots qui en résultent sont également sous CC BY-SA 4.0.</li>
       <li>Le filtre de mots choquants utilise la <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, sous licence <a href="https://creativecommons.org/licenses/by/4.0/deed.fr">CC BY 4.0</a>.</li>
     </ul>
     <h2>Merci</h2>
@@ -306,7 +374,7 @@ const licenses = {
   es: `
     <h2>Fuentes y licencias</h2>
     <ul>
-      <li>Las palabras de práctica proceden de <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), con licencia <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es">CC BY-SA 4.0</a>. La ortografía alemana se comprobó con las frecuencias de palabras de <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, basadas en <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). Las listas de palabras resultantes también están bajo CC BY-SA 4.0.</li>
+      <li>Las palabras de práctica proceden de <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), con licencia <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es">CC BY-SA 4.0</a>. La ortografía alemana se comprobó con las frecuencias de palabras de <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, basadas en <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). La ortografía portuguesa (Brasil y Portugal) se comprobó con los <a href="https://github.com/LibreOffice/dictionaries">diccionarios ortográficos de LibreOffice</a> (VERO para Brasil, LGPLv3/MPL; Universidade do Minho para Portugal, GPL/LGPL/MPL). Las listas de palabras resultantes también están bajo CC BY-SA 4.0.</li>
       <li>El filtro de palabras ofensivas usa la <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, con licencia <a href="https://creativecommons.org/licenses/by/4.0/deed.es">CC BY 4.0</a>.</li>
     </ul>
     <h2>Gracias</h2>
@@ -314,7 +382,7 @@ const licenses = {
   it: `
     <h2>Fonti e licenze</h2>
     <ul>
-      <li>Le parole per l’esercizio provengono da <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), con licenza <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.it">CC BY-SA 4.0</a>. L’ortografia tedesca è stata verificata con le frequenze di parole di <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, basate su <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). Anche gli elenchi di parole risultanti sono sotto CC BY-SA 4.0.</li>
+      <li>Le parole per l’esercizio provengono da <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), con licenza <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.it">CC BY-SA 4.0</a>. L’ortografia tedesca è stata verificata con le frequenze di parole di <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, basate su <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). L’ortografia portoghese (Brasile e Portogallo) è stata verificata con i <a href="https://github.com/LibreOffice/dictionaries">dizionari ortografici di LibreOffice</a> (VERO per il Brasile, LGPLv3/MPL; Universidade do Minho per il Portogallo, GPL/LGPL/MPL). Anche gli elenchi di parole risultanti sono sotto CC BY-SA 4.0.</li>
       <li>Il filtro delle parole offensive usa la <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, con licenza <a href="https://creativecommons.org/licenses/by/4.0/deed.it">CC BY 4.0</a>.</li>
     </ul>
     <h2>Grazie</h2>
@@ -322,11 +390,27 @@ const licenses = {
   pl: `
     <h2>Źródła i licencje</h2>
     <ul>
-      <li>Słowa do ćwiczeń pochodzą z <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), licencja <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pl">CC BY-SA 4.0</a>. Pisownię niemiecką sprawdzono na podstawie częstości słów z <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, opartych na <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). Powstałe z nich listy słów również są dostępne na licencji CC BY-SA 4.0.</li>
+      <li>Słowa do ćwiczeń pochodzą z <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), licencja <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pl">CC BY-SA 4.0</a>. Pisownię niemiecką sprawdzono na podstawie częstości słów z <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, opartych na <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). Pisownię portugalską (Brazylia i Portugalia) sprawdzono za pomocą <a href="https://github.com/LibreOffice/dictionaries">słowników ortograficznych LibreOffice</a> (VERO dla Brazylii, LGPLv3/MPL; Universidade do Minho dla Portugalii, GPL/LGPL/MPL). Powstałe z nich listy słów również są dostępne na licencji CC BY-SA 4.0.</li>
       <li>Filtr obraźliwych słów korzysta z <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, licencja <a href="https://creativecommons.org/licenses/by/4.0/deed.pl">CC BY 4.0</a>.</li>
     </ul>
     <h2>Dziękujemy</h2>
     <p>Keypacer jest inspirowany <a href="https://monkeytype.com">Monkeytype</a>, otwartoźródłowym testem pisania autorstwa Miodeca i jego społeczności. Jego prosty, wolny od rozpraszaczy trening pokazał, jak przyjemne może być pisanie w przeglądarce. Keypacer nie używa kodu ani list słów z Monkeytype.</p>`,
+  'pt-BR': `
+    <h2>Fontes e licenças</h2>
+    <ul>
+      <li>As palavras de prática vêm do <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), licença <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt_BR">CC BY-SA 4.0</a>. A ortografia alemã foi conferida com as frequências de palavras do <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, baseadas no <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). A ortografia portuguesa do Brasil e de Portugal foi conferida com os <a href="https://github.com/LibreOffice/dictionaries">dicionários ortográficos do LibreOffice</a> (VERO para o Brasil, LGPLv3/MPL; Universidade do Minho para Portugal, GPL/LGPL/MPL). As listas de palavras resultantes também estão sob CC BY-SA 4.0.</li>
+      <li>O filtro de palavras ofensivas usa a <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, licença <a href="https://creativecommons.org/licenses/by/4.0/deed.pt_BR">CC BY 4.0</a>.</li>
+    </ul>
+    <h2>Agradecimentos</h2>
+    <p>O Keypacer se inspira no <a href="https://monkeytype.com">Monkeytype</a>, o teste de digitação de código aberto de Miodec e da sua comunidade. A prática limpa e sem distrações de lá mostrou como digitar no navegador pode ser gostoso. O Keypacer não usa código nem listas de palavras do Monkeytype.</p>`,
+  'pt-PT': `
+    <h2>Fontes e licenças</h2>
+    <ul>
+      <li>As palavras de prática vêm do <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), licença <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt">CC BY-SA 4.0</a>. A ortografia alemã foi verificada com as frequências de palavras do <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, baseadas no <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). A ortografia portuguesa do Brasil e de Portugal foi verificada com os <a href="https://github.com/LibreOffice/dictionaries">dicionários ortográficos do LibreOffice</a> (VERO para o Brasil, LGPLv3/MPL; Universidade do Minho para Portugal, GPL/LGPL/MPL). As listas de palavras resultantes estão também sob CC BY-SA 4.0.</li>
+      <li>O filtro de palavras ofensivas usa a <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, licença <a href="https://creativecommons.org/licenses/by/4.0/deed.pt">CC BY 4.0</a>.</li>
+    </ul>
+    <h2>Agradecimentos</h2>
+    <p>O Keypacer inspira-se no <a href="https://monkeytype.com">Monkeytype</a>, o teste de dactilografia de código aberto de Miodec e da sua comunidade. A prática simples e sem distrações que lá se encontra mostrou como escrever no navegador pode ser agradável. O Keypacer não usa código nem listas de palavras do Monkeytype.</p>`,
 };
 
 const imprint: Record<LegalLanguage, string> = {
@@ -366,6 +450,18 @@ const imprint: Record<LegalLanguage, string> = {
     <p>Kontakt: ${mail}</p>
     <p>Treść strony: Keypacer to darmowy trener pisania bezwzrokowego dziesięcioma palcami. Strona jest prywatnym, niekomercyjnym projektem bez reklam. Na blogu publikujemy artykuły o nauce pisania i o Keypacerze; powstają po niemiecku, a pozostałe wersje językowe są tłumaczone maszynowo.</p>
     ${licenses.pl}`,
+  'pt-BR': `
+    <h2>Informações nos termos do § 25 da Lei de Meios de Comunicação austríaca (MedienG)</h2>
+    <p>Proprietário do meio:<br>${name}<br>Local de residência: ${town}, Áustria</p>
+    <p>Contato: ${mail}</p>
+    <p>Sobre este site: o Keypacer é um treinador gratuito de digitação com os dez dedos. O site é um projeto privado, sem fins comerciais e sem publicidade. O blog publica artigos sobre aprender a digitar e sobre o Keypacer; eles são escritos em alemão, e as versões nos outros idiomas são traduzidas automaticamente.</p>
+    ${licenses['pt-BR']}`,
+  'pt-PT': `
+    <h2>Informações nos termos do § 25 da Lei dos Meios de Comunicação austríaca (MedienG)</h2>
+    <p>Proprietário do meio:<br>${name}<br>Local de residência: ${town}, Áustria</p>
+    <p>Contacto: ${mail}</p>
+    <p>Sobre este site: o Keypacer é um treinador gratuito de dactilografia com os dez dedos. O site é um projeto privado, sem fins comerciais e sem publicidade. O blogue publica artigos sobre aprender a dactilografar e sobre o Keypacer; são escritos em alemão, e as versões nos outros idiomas são traduzidas automaticamente.</p>
+    ${licenses['pt-PT']}`,
 };
 
 const privacy: Record<LegalLanguage, string> = {
@@ -621,6 +717,90 @@ const privacy: Record<LegalLanguage, string> = {
 
     <h2>Zmiany</h2>
     <p>Jeśli Keypacer otrzyma nowe funkcje przetwarzające dane lub zacznie korzystać z innego usługodawcy, najpierw zaktualizujemy tę politykę.</p>`,
+  'pt-BR': `
+    <h2>Em resumo</h2>
+    <p>O Keypacer não precisa de conta e não usa cookies. ${analytics.short['pt-BR']}${captcha.short['pt-BR']} O que você pratica fica no seu navegador. Só se você decidir entrar numa conta, para manter seu progresso sincronizado entre dispositivos, seus dados de prática são guardados num servidor na UE (veja <em>Conta opcional</em>).</p>
+
+    <h2>Responsável pelo tratamento</h2>
+    <p>${name}<br>${town}, Áustria<br>${mail}</p>
+
+    <h2>Dados no seu navegador</h2>
+    <p>Para que o treino funcione e seu progresso seja mantido, o Keypacer guarda o seguinte no seu dispositivo, no armazenamento local do navegador (localStorage e IndexedDB):</p>
+    <ul>
+      <li><strong>Configurações:</strong> layout do teclado, idioma de prática e da interface, tema de cores, ajudas de digitação, se a configuração inicial terminou ou se um aviso foi fechado, sua meta semanal e, se você usa vários teclados, os nomes e layouts deles e qual está selecionado.</li>
+      <li><strong>Estado de aprendizagem:</strong> quais teclas estão liberadas e quais você domina, e até onde você avançou no caminho de aprendizagem, por idioma e layout.</li>
+      <li><strong>Registro de teclas:</strong> para cada tecla do texto de prática, o caractere esperado e o digitado, a tecla, o tempo desde a tecla anterior, a data e a hora e a rodada de prática, além de em qual teclado você digitou, se tiver configurado vários em <em>Configurações → Teclados</em>. O Keypacer usa isso para calcular suas teclas fracas e seus próximos exercícios. Só é registrado o que você digita no campo de prática.</li>${analytics.stored['pt-BR']}
+    </ul>
+    <p>Sem conta, esses dados não saem do seu dispositivo; nós não os recebemos e não podemos vê-los. Quando você está conectado, também ficam guardados aqui seu acesso (um token, para você continuar conectado) e o estado da última sincronização. Guardar esses dados é estritamente necessário para prestar o serviço que você usa expressamente (§ 165, n.º 3, da Lei de Telecomunicações austríaca de 2021, TKG 2021), por isso não precisa de consentimento nem de aviso de cookies.</p>
+    <p>Você mantém o controle: em <em>Configurações → Registro de teclas e exportação</em> você pode ver o registro, exportá-lo como JSON ou CSV e apagá-lo. Para remover tudo, apague os dados deste site no seu navegador.</p>
+
+    <h2>Conta opcional e sincronização entre dispositivos</h2>
+    <p>Em <em>Configurações → Conta</em> você pode entrar ${accountMail['pt-BR'].methods}. O Keypacer então mantém seu progresso sincronizado entre seus dispositivos. Para isso tratamos:</p>
+    <ul>
+      <li><strong>Dados de acesso:</strong> seu endereço de e-mail, sua senha (guardada só como hash irreversível), um ID interno de usuário, quando você se cadastrou e entrou pela última vez, e registros técnicos de acesso (endereço IP, dados do navegador, horário), usados para proteger contra abusos.</li>
+      <li><strong>Nome de usuário:</strong> o que você escolhe ao se cadastrar. O aplicativo o mostra no lugar do seu endereço de e-mail. Outros usuários só o veem se você entrar num grupo de parceiros de treino (veja abaixo); no cadastro, só se revela se um nome já está em uso.</li>
+      <li><strong>Dados de prática:</strong> o registro de teclas de cada rodada concluída (como descrito acima em <em>Registro de teclas</em>) e seu estado de aprendizagem por idioma e layout, além dos nomes e layouts dos seus teclados, se tiver configurado vários. Suas outras configurações ficam em cada dispositivo.</li>
+    </ul>
+    <p>A base legal é a execução do serviço em que você se cadastra (art. 6, n.º 1, alínea b, do RGPD, veja os <a href="/nutzungsbedingungen">termos de uso</a>); os registros de acesso são tratados com base no nosso interesse legítimo em um serviço seguro (art. 6, n.º 1, alínea f, do RGPD).</p>
+    <p>As contas e os dados ficam guardados no Supabase (Supabase, Inc., EUA), em servidores em Frankfurt am Main (UE). O Supabase trata os dados como nosso operador, com base no seu acordo de tratamento de dados${accountMail['pt-BR'].supabase} Quando é possível um acesso de fora da UE, por exemplo pelo próprio Supabase ou pelos seus suboperadores, ele é coberto pelas cláusulas contratuais-tipo da UE (art. 46, n.º 2, alínea c, do RGPD). Mais informações na <a href="https://supabase.com/privacy">política de privacidade do Supabase</a>.</p>
+    <p>Guardamos seus dados enquanto você tiver sua conta. Em <em>Configurações → Conta → Excluir conta</em> você exclui de uma vez a conta e todos os dados de prática guardados com ela; os dados no seu dispositivo continuam lá até você mesmo apagá-los. Se você apagar o registro em <em>Registro de teclas e exportação</em> estando conectado, ele também é apagado da sua conta. O Supabase apaga os registros de acesso automaticamente depois de pouco tempo.</p>
+    <p><strong>Parceiros de treino (opcional):</strong> com uma conta você pode criar um grupo pequeno (até 8 pessoas) e trazer amigos com um link de convite. Os membros de um grupo veem o nome de usuário uns dos outros, a meta semanal, quantos dias praticaram na semana atual, a sequência em semanas e os incentivos da semana (👏); a velocidade média de digitação, só se aquele membro quiser compartilhá-la. Para isso guardamos o grupo, quem faz parte dele, esses números semanais e os incentivos. Quem tiver o link de convite pode ver, antes de entrar, o nome de usuário de quem criou o grupo e quantos membros ele tem. Os outros nunca veem seu registro de teclas nem seu endereço de e-mail. A base legal é a execução do serviço, já que você usa esse recurso expressamente (art. 6, n.º 1, alínea b, do RGPD). Quando você sai do grupo, é removido dele ou exclui sua conta, seus números semanais e incentivos nesse grupo são apagados na hora.</p>
+    <p><strong>Entrar com o Google:</strong> se você escolher "Continuar com o Google", é levado ao Google (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlanda) para entrar lá. O Google então nos passa seu endereço de e-mail, seu nome e o endereço da sua foto de perfil; usamos só o endereço de e-mail e guardamos o resto apenas porque o Supabase o armazena junto com o acesso. O Google é responsável pelo seu acesso do lado dele, veja a <a href="https://policies.google.com/privacy">política de privacidade do Google</a>. A base legal é o art. 6, n.º 1, alínea b, do RGPD.</p>${accountMail['pt-BR'].section}${captcha.section['pt-BR']}${analytics.section['pt-BR']}
+
+    <h2>Hospedagem</h2>
+    <p>O site é entregue pela Cloudflare (Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, EUA). Quando você o abre, a Cloudflare trata os dados técnicos necessários para levar a página até você e protegê-la contra ataques: seu endereço IP, a data e a hora, o endereço pedido e dados que seu navegador envia, como tipo de navegador e sistema operacional. A base legal é o nosso interesse legítimo em um site seguro e funcionando (art. 6, n.º 1, alínea f, do RGPD).</p>
+    <p>A Cloudflare atua como nosso operador, com base no seu acordo de tratamento de dados. É possível um tratamento nos EUA; a Cloudflare é certificada no EU-US Data Privacy Framework, coberto por uma decisão de adequação da Comissão Europeia (art. 45 do RGPD). Nós mesmos não analisamos os registros de acesso. Mais informações na <a href="https://www.cloudflare.com/privacypolicy/">política de privacidade da Cloudflare</a>.</p>
+
+    <h2>Contato por e-mail</h2>
+    <p>Se você nos escrever, usamos seu endereço de e-mail e sua mensagem só para responder (art. 6, n.º 1, alínea f, do RGPD). Apagamos tudo assim que o pedido for resolvido, a menos que a lei nos obrigue a guardar.</p>
+
+    <h2>Seus direitos</h2>
+    <p>Você tem direito de acesso, retificação, apagamento e limitação do tratamento, direito à portabilidade dos dados e direito de oposição (arts. 15 a 21 do RGPD). Basta nos mandar um e-mail. Se achar que tratamos seus dados de forma ilegal, você pode reclamar à autoridade austríaca de proteção de dados (Datenschutzbehörde): Barichgasse 40–42, 1030 Viena, <a href="https://www.dsb.gv.at">www.dsb.gv.at</a>.</p>
+
+    <h2>Alterações</h2>
+    <p>Se o Keypacer ganhar novos recursos que tratem dados, ou passar a usar outro prestador de serviços, atualizamos esta política antes.</p>`,
+  'pt-PT': `
+    <h2>Em resumo</h2>
+    <p>O Keypacer não precisa de conta e não usa cookies. ${analytics.short['pt-PT']}${captcha.short['pt-PT']} O que praticas fica no teu navegador. Só se decidires entrar numa conta, para manteres o teu progresso sincronizado entre dispositivos, os teus dados de prática são guardados num servidor na UE (ver <em>Conta opcional</em>).</p>
+
+    <h2>Responsável pelo tratamento</h2>
+    <p>${name}<br>${town}, Áustria<br>${mail}</p>
+
+    <h2>Dados no teu navegador</h2>
+    <p>Para que o treino funcione e o teu progresso seja mantido, o Keypacer guarda o seguinte no teu dispositivo, no armazenamento local do navegador (localStorage e IndexedDB):</p>
+    <ul>
+      <li><strong>Definições:</strong> esquema de teclado, idioma de prática e da interface, tema de cores, ajudas de escrita, se a configuração inicial terminou ou se um aviso foi fechado, a tua meta semanal e, se usares vários teclados, os nomes e esquemas deles e qual está selecionado.</li>
+      <li><strong>Estado de aprendizagem:</strong> que teclas estão desbloqueadas e quais dominas, e até onde avançaste no percurso de aprendizagem, por idioma e esquema.</li>
+      <li><strong>Registo de teclas:</strong> para cada tecla do texto de prática, o carácter esperado e o escrito, a tecla, o tempo desde a tecla anterior, a data e a hora e a ronda de prática, bem como o teclado em que escreveste, se tiveres configurado vários em <em>Definições → Teclados</em>. O Keypacer usa isto para calcular as tuas teclas fracas e os teus próximos exercícios. Só é registado o que escreves no campo de prática.</li>${analytics.stored['pt-PT']}
+    </ul>
+    <p>Sem conta, estes dados não saem do teu dispositivo; nós não os recebemos e não os podemos ver. Quando tens sessão iniciada, ficam também aqui guardados o teu acesso (um token, para continuares com sessão iniciada) e o estado da última sincronização. Guardar estes dados é estritamente necessário para prestar o serviço que usas expressamente (§ 165, n.º 3, da Lei das Telecomunicações austríaca de 2021, TKG 2021), por isso não é preciso consentimento nem aviso de cookies.</p>
+    <p>Manténs o controlo: em <em>Definições → Registo de teclas e exportação</em> podes ver o registo, exportá-lo como JSON ou CSV e apagá-lo. Para remover tudo, apaga os dados deste site no teu navegador.</p>
+
+    <h2>Conta opcional e sincronização entre dispositivos</h2>
+    <p>Em <em>Definições → Conta</em> podes entrar ${accountMail['pt-PT'].methods}. O Keypacer mantém então o teu progresso sincronizado entre os teus dispositivos. Para isso tratamos:</p>
+    <ul>
+      <li><strong>Dados de acesso:</strong> o teu endereço de e-mail, a tua palavra-passe (guardada apenas como hash irreversível), um ID interno de utilizador, quando te registaste e entraste pela última vez, e registos técnicos de acesso (endereço IP, dados do navegador, hora), usados para proteger contra abusos.</li>
+      <li><strong>Nome de utilizador:</strong> o que escolhes ao registar-te. A aplicação mostra-o em vez do teu endereço de e-mail. Os outros utilizadores só o veem se entrares num grupo de parceiros de treino (ver abaixo); no registo, só se revela se um nome já está a ser usado.</li>
+      <li><strong>Dados de prática:</strong> o registo de teclas de cada ronda concluída (como descrito acima em <em>Registo de teclas</em>) e o teu estado de aprendizagem por idioma e esquema, bem como os nomes e esquemas dos teus teclados, se tiveres configurado vários. As tuas outras definições ficam em cada dispositivo.</li>
+    </ul>
+    <p>O fundamento jurídico é a execução do serviço em que te registas (artigo 6.º, n.º 1, alínea b), do RGPD, ver os <a href="/nutzungsbedingungen">termos de utilização</a>); os registos de acesso são tratados com base no nosso interesse legítimo num serviço seguro (artigo 6.º, n.º 1, alínea f), do RGPD).</p>
+    <p>As contas e os dados ficam guardados no Supabase (Supabase, Inc., EUA), em servidores em Frankfurt am Main (UE). O Supabase trata os dados como nosso subcontratante, com base no seu acordo de tratamento de dados${accountMail['pt-PT'].supabase} Quando é possível um acesso a partir de fora da UE, por exemplo pelo próprio Supabase ou pelos seus subcontratantes, este está coberto pelas cláusulas contratuais-tipo da UE (artigo 46.º, n.º 2, alínea c), do RGPD). Mais informações na <a href="https://supabase.com/privacy">política de privacidade do Supabase</a>.</p>
+    <p>Guardamos os teus dados enquanto tiveres a tua conta. Em <em>Definições → Conta → Eliminar conta</em> eliminas de uma só vez a conta e todos os dados de prática guardados com ela; os dados no teu dispositivo continuam lá até seres tu a apagá-los. Se apagares o registo em <em>Registo de teclas e exportação</em> com a sessão iniciada, ele é também apagado da tua conta. O Supabase apaga os registos de acesso automaticamente pouco tempo depois.</p>
+    <p><strong>Parceiros de treino (opcional):</strong> com uma conta podes criar um grupo pequeno (até 8 pessoas) e trazer amigos com uma ligação de convite. Os membros de um grupo veem o nome de utilizador uns dos outros, a meta semanal, quantos dias praticaram na semana atual, a sequência em semanas e os incentivos da semana (👏); a velocidade média de escrita, apenas se esse membro a quiser partilhar. Para isso guardamos o grupo, quem faz parte dele, estes números semanais e os incentivos. Quem tiver a ligação de convite pode ver, antes de entrar, o nome de utilizador de quem criou o grupo e quantos membros este tem. Os outros nunca veem o teu registo de teclas nem o teu endereço de e-mail. O fundamento jurídico é a execução do serviço, uma vez que usas esta funcionalidade expressamente (artigo 6.º, n.º 1, alínea b), do RGPD). Quando sais do grupo, és removido dele ou eliminas a tua conta, os teus números semanais e incentivos nesse grupo são apagados de imediato.</p>
+    <p><strong>Entrar com a Google:</strong> se escolheres "Continuar com a Google", és levado para a Google (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlanda) para entrares lá. A Google passa-nos então o teu endereço de e-mail, o teu nome e o endereço da tua fotografia de perfil; usamos apenas o endereço de e-mail e guardamos o resto só porque o Supabase o armazena juntamente com o acesso. A Google é responsável pelo teu acesso do lado dela, ver a <a href="https://policies.google.com/privacy">política de privacidade da Google</a>. O fundamento jurídico é o artigo 6.º, n.º 1, alínea b), do RGPD.</p>${accountMail['pt-PT'].section}${captcha.section['pt-PT']}${analytics.section['pt-PT']}
+
+    <h2>Alojamento</h2>
+    <p>O site é entregue pela Cloudflare (Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, EUA). Quando o abres, a Cloudflare trata os dados técnicos necessários para te fazer chegar a página e a proteger contra ataques: o teu endereço IP, a data e a hora, o endereço pedido e dados que o teu navegador envia, como o tipo de navegador e o sistema operativo. O fundamento jurídico é o nosso interesse legítimo num site seguro e a funcionar (artigo 6.º, n.º 1, alínea f), do RGPD).</p>
+    <p>A Cloudflare atua como nosso subcontratante, com base no seu acordo de tratamento de dados. É possível um tratamento nos EUA; a Cloudflare está certificada no EU-US Data Privacy Framework, coberto por uma decisão de adequação da Comissão Europeia (artigo 45.º do RGPD). Nós próprios não analisamos os registos de acesso. Mais informações na <a href="https://www.cloudflare.com/privacypolicy/">política de privacidade da Cloudflare</a>.</p>
+
+    <h2>Contacto por e-mail</h2>
+    <p>Se nos escreveres, usamos o teu endereço de e-mail e a tua mensagem apenas para responder (artigo 6.º, n.º 1, alínea f), do RGPD). Apagamos tudo assim que o pedido estiver resolvido, a não ser que a lei nos obrigue a guardar.</p>
+
+    <h2>Os teus direitos</h2>
+    <p>Tens direito de acesso, retificação, apagamento e limitação do tratamento, direito de portabilidade dos dados e direito de oposição (artigos 15.º a 21.º do RGPD). Basta enviares-nos um e-mail. Se considerares que tratamos os teus dados de forma ilícita, podes apresentar reclamação à autoridade austríaca de proteção de dados (Datenschutzbehörde): Barichgasse 40–42, 1030 Viena, <a href="https://www.dsb.gv.at">www.dsb.gv.at</a>.</p>
+
+    <h2>Alterações</h2>
+    <p>Se o Keypacer ganhar novas funcionalidades que tratem dados, ou passar a usar outro prestador de serviços, atualizamos esta política antes.</p>`,
 };
 
 /**
@@ -869,6 +1049,86 @@ const terms: Record<LegalLanguage, string> = {
 
     <h2>10. Prawo właściwe</h2>
     <p>Obowiązuje prawo austriackie z wyłączeniem Konwencji Narodów Zjednoczonych o umowach międzynarodowej sprzedaży towarów oraz norm kolizyjnych. Jeśli jesteś konsumentem, zachowujesz ochronę wynikającą z bezwzględnie obowiązujących przepisów kraju, w którym mieszkasz.</p>`,
+  'pt-BR': `
+    <h2>Em resumo</h2>
+    <p>O Keypacer é gratuito e um projeto privado. Você pode praticar sem conta e sem ler estes termos. Se criar uma conta, eles também valem: escolha um nome de usuário decente, trate os outros com respeito e deixe o serviço fazer o seu trabalho. Quem quebrar essas regras pode ser suspenso.</p>
+
+    <h2>1. Responsável e âmbito</h2>
+    <p>O Keypacer é mantido por ${name}, ${town}, Áustria (contato: ${mail}). Estes termos valem para o uso do site e em especial para a conta opcional. Ao se cadastrar, você concorda com eles. Se tiver menos de 14 anos, precisa da autorização dos seus pais para ter uma conta.</p>
+
+    <h2>2. Um serviço gratuito sem garantias</h2>
+    <p>O Keypacer não custa nada e não tem anúncios. Fazemos o possível para que tudo funcione, mas não podemos prometer que o site esteja sempre disponível e sem erros, nem que seus dados nunca se percam. Recursos podem mudar ou ser removidos. Guarde uma cópia dos dados importantes em <em>Configurações → Registro de teclas e exportação</em>. O Keypacer é uma ferramenta de prática, não um serviço de saúde: se suas mãos, braços ou pescoço doerem ao digitar, faça uma pausa e procure um médico se a dor continuar.</p>
+
+    <h2>3. Sua conta</h2>
+    <p>Uma conta é para uma pessoa. Mantenha sua senha em segredo e não compartilhe sua conta. Você mesmo pode excluí-la a qualquer momento em <em>Configurações → Conta → Excluir conta</em>.</p>
+
+    <h2>4. Nomes de usuário</h2>
+    <p>Seus parceiros de treino podem ver seu nome de usuário. Ele não pode</p>
+    <ul>
+      <li>ser ofensivo, ameaçador, discriminatório, sexual, fazer apologia da violência ou ser inadequado de outra forma,</li>
+      <li>se passar por outra pessoa, pelo próprio Keypacer ou por uma organização,</li>
+      <li>violar o nome, a marca ou outros direitos de terceiros,</li>
+      <li>conter publicidade, links ou dados pessoais de outras pessoas.</li>
+    </ul>
+    <p>Um filtro automático bloqueia alguns nomes, mas não pega tudo. Em caso de dúvida, nós decidimos se um nome é aceitável.</p>
+
+    <h2>5. Jogo limpo</h2>
+    <p>Só convide para um grupo de parceiros de treino pessoas que queiram estar lá e não importune ninguém, nem com incentivos. Também não é permitido criar contas automaticamente, contornar proteções ou limites, acessar dados de outras pessoas, sobrecarregar o serviço ou usá-lo para o que ele não foi feito. Se notar algum abuso, escreva para ${mail}.</p>
+
+    <h2>6. Suspensão e exclusão</h2>
+    <p>Se alguém violar estes termos, conforme a gravidade, podemos redefinir o nome de usuário, remover a pessoa de grupos, suspender a conta por um tempo ou excluí-la. Normalmente entramos em contato por e-mail antes e damos a chance de responder; em violações graves ou quando outras pessoas ou o serviço correm risco, agimos na hora. Se achar que uma suspensão foi injusta, escreva para nós.</p>
+
+    <h2>7. Responsabilidade</h2>
+    <p>Como o Keypacer é gratuito, só respondemos por danos que causarmos com dolo ou culpa grave. A responsabilidade por danos à pessoa segue a lei. Os responsáveis por sites com link são responsáveis pelo conteúdo deles.</p>
+
+    <h2>8. Fim do serviço</h2>
+    <p>Podemos encerrar o Keypacer ou o serviço de contas. Nesse caso, só excluímos as contas pelo menos 30 dias depois de avisar por e-mail, para você poder exportar seus dados antes.</p>
+
+    <h2>9. Alterações destes termos</h2>
+    <p>Podemos alterar estes termos, por exemplo quando surgirem novos recursos. Avisamos os titulares de contas sobre mudanças importantes com antecedência, por e-mail ou no aplicativo. Se não concordar, você pode excluir sua conta.</p>
+
+    <h2>10. Lei aplicável</h2>
+    <p>Aplica-se a lei austríaca, com exclusão da Convenção das Nações Unidas sobre Contratos de Compra e Venda Internacional de Mercadorias e das normas de conflito de leis. Se você for consumidor, mantém a proteção das leis obrigatórias do país onde mora.</p>`,
+  'pt-PT': `
+    <h2>Em resumo</h2>
+    <p>O Keypacer é gratuito e um projeto privado. Podes praticar sem conta e sem ler estes termos. Se criares uma conta, eles passam também a valer: escolhe um nome de utilizador decente, trata os outros com respeito e deixa o serviço fazer o seu trabalho. Quem violar estas regras pode ser suspenso.</p>
+
+    <h2>1. Responsável e âmbito</h2>
+    <p>O Keypacer é mantido por ${name}, ${town}, Áustria (contacto: ${mail}). Estes termos aplicam-se à utilização do site e em especial à conta opcional. Ao registares-te, aceitas estes termos. Se tiveres menos de 14 anos, precisas da autorização dos teus pais para ter uma conta.</p>
+
+    <h2>2. Um serviço gratuito sem garantias</h2>
+    <p>O Keypacer não custa nada e não tem anúncios. Fazemos o possível para que tudo funcione, mas não podemos prometer que o site esteja sempre disponível e sem erros, nem que os teus dados nunca se percam. As funcionalidades podem mudar ou ser removidas. Guarda uma cópia dos dados importantes em <em>Definições → Registo de teclas e exportação</em>. O Keypacer é uma ferramenta de prática, não um serviço de saúde: se te doerem as mãos, os braços ou o pescoço ao escrever, faz uma pausa e consulta um médico se a dor continuar.</p>
+
+    <h2>3. A tua conta</h2>
+    <p>Uma conta é para uma pessoa. Mantém a tua palavra-passe em segredo e não partilhes a tua conta. Podes eliminá-la tu próprio a qualquer momento em <em>Definições → Conta → Eliminar conta</em>.</p>
+
+    <h2>4. Nomes de utilizador</h2>
+    <p>Os teus parceiros de treino podem ver o teu nome de utilizador. Este não pode</p>
+    <ul>
+      <li>ser ofensivo, ameaçador, discriminatório, sexual, fazer apologia da violência ou ser inadequado de outra forma,</li>
+      <li>fazer-se passar por outra pessoa, pelo próprio Keypacer ou por uma organização,</li>
+      <li>violar o nome, a marca ou outros direitos de terceiros,</li>
+      <li>conter publicidade, ligações ou dados pessoais de outras pessoas.</li>
+    </ul>
+    <p>Um filtro automático bloqueia alguns nomes, mas não apanha tudo. Em caso de dúvida, somos nós que decidimos se um nome é aceitável.</p>
+
+    <h2>5. Jogo limpo</h2>
+    <p>Convida para um grupo de parceiros de treino apenas pessoas que queiram lá estar e não incomodes ninguém, nem com incentivos. Também não é permitido criar contas automaticamente, contornar proteções ou limites, aceder a dados de outras pessoas, sobrecarregar o serviço ou usá-lo para aquilo para que não foi feito. Se notares algum abuso, escreve para ${mail}.</p>
+
+    <h2>6. Suspensão e eliminação</h2>
+    <p>Se alguém violar estes termos, consoante a gravidade, podemos repor o nome de utilizador, remover a pessoa de grupos, suspender a conta durante algum tempo ou eliminá-la. Normalmente contactamos-te antes por e-mail e damos-te a oportunidade de responder; em violações graves ou quando outras pessoas ou o serviço estão em risco, agimos de imediato. Se achares que uma suspensão foi injusta, escreve-nos.</p>
+
+    <h2>7. Responsabilidade</h2>
+    <p>Como o Keypacer é gratuito, só respondemos por danos que causarmos com dolo ou negligência grave. A responsabilidade por danos à pessoa rege-se pela lei. Os responsáveis por sites para os quais existam ligações são responsáveis pelos respetivos conteúdos.</p>
+
+    <h2>8. Fim do serviço</h2>
+    <p>Podemos encerrar o Keypacer ou o serviço de contas. Nesse caso, só eliminamos as contas pelo menos 30 dias depois de avisarmos por e-mail, para poderes exportar os teus dados antes.</p>
+
+    <h2>9. Alterações a estes termos</h2>
+    <p>Podemos alterar estes termos, por exemplo quando surgirem novas funcionalidades. Avisamos os titulares de contas sobre alterações importantes com antecedência, por e-mail ou na aplicação. Se não concordares, podes eliminar a tua conta.</p>
+
+    <h2>10. Lei aplicável</h2>
+    <p>Aplica-se a lei austríaca, com exclusão da Convenção das Nações Unidas sobre os Contratos de Compra e Venda Internacional de Mercadorias e das normas de conflitos de leis. Se fores consumidor, manténs a proteção das normas imperativas do país onde vives.</p>`,
 };
 
 /** The body of a legal page as HTML. Only OWNER values are interpolated, and they are escaped. */

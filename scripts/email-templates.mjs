@@ -15,7 +15,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
-export const LANGUAGES = ['en', 'de', 'fr', 'es', 'it', 'pl'];
+export const LANGUAGES = ['en', 'de', 'fr', 'es', 'it', 'pl', 'pt-BR', 'pt-PT'];
 
 /** The templates Keypacer uses, by their Supabase name. */
 export const KINDS = ['confirmation', 'magic_link', 'recovery'];
@@ -182,6 +182,60 @@ const TEXT = {
     expires: 'Kod i link są ważne przez godzinę.',
     tagline: 'Keypacer, darmowy trener pisania bezwzrokowego',
     privacy: 'Polityka prywatności',
+  },
+  'pt-BR': {
+    confirmation: {
+      subject: 'Confirme sua conta do Keypacer: {{ .Token }}',
+      heading: 'Boas-vindas ao Keypacer',
+      intro: 'Digite este código no Keypacer para confirmar seu endereço de e-mail e terminar de criar sua conta:',
+      button: 'Confirmar meu endereço',
+      ignore: 'Se você não criou uma conta, é só ignorar este e-mail. Sem o código, nenhuma conta é aberta.',
+    },
+    magic_link: {
+      subject: 'Seu código de acesso ao Keypacer: {{ .Token }}',
+      heading: 'Entrar no Keypacer',
+      intro: 'Digite este código no Keypacer para entrar:',
+      button: 'Entrar',
+      ignore: 'Se você não pediu para entrar, é só ignorar este e-mail. Ninguém consegue entrar sem o código.',
+    },
+    recovery: {
+      subject: 'Redefina sua senha do Keypacer: {{ .Token }}',
+      heading: 'Escolha uma nova senha',
+      intro: 'Digite este código no Keypacer para escolher uma nova senha para sua conta:',
+      button: 'Escolher uma nova senha',
+      ignore: 'Se você não pediu isso, é só ignorar este e-mail. Sua senha continua a mesma.',
+    },
+    or: 'Ou abra este link no dispositivo em que você pediu o código:',
+    expires: 'O código e o link valem por uma hora.',
+    tagline: 'Keypacer, o treinador gratuito de digitação com os dez dedos',
+    privacy: 'Política de privacidade',
+  },
+  'pt-PT': {
+    confirmation: {
+      subject: 'Confirma a tua conta Keypacer: {{ .Token }}',
+      heading: 'Boas-vindas ao Keypacer',
+      intro: 'Introduz este código no Keypacer para confirmares o teu endereço de e-mail e terminares de criar a tua conta:',
+      button: 'Confirmar o meu endereço',
+      ignore: 'Se não criaste uma conta, ignora simplesmente este e-mail. Sem o código, nenhuma conta é aberta.',
+    },
+    magic_link: {
+      subject: 'O teu código de acesso ao Keypacer: {{ .Token }}',
+      heading: 'Entrar no Keypacer',
+      intro: 'Introduz este código no Keypacer para entrares:',
+      button: 'Entrar',
+      ignore: 'Se não pediste para entrar, ignora simplesmente este e-mail. Ninguém consegue entrar sem o código.',
+    },
+    recovery: {
+      subject: 'Repõe a tua palavra-passe do Keypacer: {{ .Token }}',
+      heading: 'Escolhe uma nova palavra-passe',
+      intro: 'Introduz este código no Keypacer para escolheres uma nova palavra-passe para a tua conta:',
+      button: 'Escolher uma nova palavra-passe',
+      ignore: 'Se não pediste isto, ignora simplesmente este e-mail. A tua palavra-passe continua igual.',
+    },
+    or: 'Ou abre esta ligação no dispositivo em que pediste o código:',
+    expires: 'O código e a ligação são válidos durante uma hora.',
+    tagline: 'Keypacer, o treinador gratuito de dactilografia com os dez dedos',
+    privacy: 'Política de privacidade',
   },
 };
 

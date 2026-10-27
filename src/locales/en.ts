@@ -2,7 +2,7 @@
  * English interface text, the source every other locale translates.
  * Keys are grouped by screen area (`settings.`, `coach.`, `result.` …);
  * add new strings to the group they belong to, then to every other locale
- * (de, fr, es, it, pl).
+ * (de, fr, es, it, pl, pt-BR, pt-PT).
  * `{name}` is a placeholder; `{ one, other }` are plural forms picked by `{n}`,
  * plus `few` and `many` for languages that have them (Polish: 2 minuty, 5 minut).
  */
@@ -44,6 +44,8 @@ export const en = {
   'layout.azerty-be': 'Belgian AZERTY',
   'layout.qwerty-es': 'Spanish QWERTY',
   'layout.qwerty-it': 'Italian QWERTY',
+  'layout.abnt2-br': 'Portuguese (Brazil) ABNT2',
+  'layout.qwerty-pt': 'Portuguese (Portugal) QWERTY',
   'layout.qwerty-se': 'Swedish / Finnish QWERTY',
   'layout.qwerty-pl': 'Polish (Programmers)',
   'layout.dvorak-us': 'Dvorak (US)',

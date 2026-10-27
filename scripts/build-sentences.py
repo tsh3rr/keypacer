@@ -35,6 +35,10 @@ TATOEBA_CODES = {
     "it": "ita",
     "nl": "nld",
     "pt": "por",
+    # Tatoeba does not tell Brazilian and European Portuguese apart; check the
+    # result for the other variant's spelling (ô/ó, ê/é) and words.
+    "pt-BR": "por",
+    "pt-PT": "por",
 }
 
 # Letters a language's sentences may use (lowercase; capitals are allowed too).
@@ -45,6 +49,8 @@ LETTERS = {
     "es": "abcdefghijklmnopqrstuvwxyzáéíóúüñ",
     "it": "abcdefghijklmnopqrstuvwxyzàèéìòù",
     "pl": "abcdefghijklmnopqrstuvwxyząćęłńóśźż",
+    "pt-BR": "abcdefghijklmnopqrstuvwxyzáàâãçéêíóôõú",
+    "pt-PT": "abcdefghijklmnopqrstuvwxyzáàâãçéêíóôõú",
 }
 
 # Languages that capitalise nouns, so a capital mid-sentence is not a name.

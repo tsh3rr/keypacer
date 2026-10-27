@@ -24,7 +24,7 @@ function landing(production: boolean, umami: string, blog: Blog): Plugin {
     transformIndexHtml: {
       order: 'pre',
       handler(html, ctx) {
-        const lang = /keypacer-landing:(\w+)/.exec(html)?.[1] as LandingLanguage | undefined;
+        const lang = /keypacer-landing:([\w-]+)/.exec(html)?.[1] as LandingLanguage | undefined;
         if (lang && LANDING_LANGUAGES.includes(lang)) return renderLanding(lang, SITE_URL, umami, featuredPosts(postsIn(blog.posts(), lang)));
         // The trainer counts only that its page was opened, never what happens in it.
         if (umami && ctx.path === '/app/index.html') return html.replace('</head>', `  ${umamiTag(umami)}\n  </head>`);
@@ -106,7 +106,7 @@ function prepareBlog(production: boolean, dev: boolean): Blog {
  */
 function blog(production: boolean, umami: string, b: Blog): Plugin {
   const page = (html: string): string | undefined => {
-    const m = /keypacer-blog:(\w+)(?::([\w-]+))?/.exec(html);
+    const m = /keypacer-blog:([\w-]+?)(?::([\w-]+))?\s/.exec(html);
     if (!m) return undefined;
     const posts = b.posts();
     const lang = m[1] as LandingLanguage;
@@ -222,7 +222,7 @@ export default defineConfig(({ mode }) => {
       rolldownOptions: {
         input: {
           ...Object.fromEntries(LANDING_LANGUAGES.map((l) =>
-            [`landing-${l}`, resolve(import.meta.dirname, l === 'en' ? 'index.html' : `${l}/index.html`)])),
+            [`landing-${l}`, resolve(import.meta.dirname, l === 'en' ? 'index.html' : `${l.toLowerCase()}/index.html`)])),
           main: resolve(import.meta.dirname, 'app/index.html'),
           notFound: resolve(import.meta.dirname, '404.html'),
           impressum: resolve(import.meta.dirname, 'impressum.html'),

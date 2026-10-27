@@ -23,4 +23,6 @@ export const LEGAL_UPDATED = {
   es: 'octubre de 2026',
   it: 'ottobre 2026',
   pl: 'październik 2026',
+  'pt-BR': 'outubro de 2026',
+  'pt-PT': 'outubro de 2026',
 };

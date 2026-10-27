@@ -22,7 +22,7 @@ Nella vita di tutti i giorni, inoltre, devi prima accorgerti dell’errore. A vo
 
 ## Quanto costa un errore
 
-Un singolo errore di battitura è fatto di più passaggi:
+Un singolo errore di battitura è fatto di più piccoli passaggi:
 
 1. il tasto sbagliato,
 2. accorgersene,
@@ -30,7 +30,7 @@ Un singolo errore di battitura è fatto di più passaggi:
 4. la nuova battuta,
 5. ritrovare il ritmo.
 
-Contiamo a grandi linee un secondo per tutto questo. È piuttosto poco.
+Contiamo a grandi linee un secondo per tutto questo. Un secondo per errore non sembra molto. Ma la stima è prudente, e quasi mai si resta a un solo errore.
 
 ## Un esempio con i numeri
 
@@ -50,21 +50,21 @@ I numeri sono ipotesi, non misurazioni. Mostrano però il principio: oltre un ce
 
 ## Perché gli errori si fissano
 
-Le dita imparano ogni movimento che ripetono, anche quello sbagliato. Se sbagli spesso tra <kbd>e</kbd> e <kbd>r</kbd>, stai allenando proprio quell’errore. Più scrivi veloce, più spesso succede.
+Le dita imparano ogni movimento che ripetono, anche quello sbagliato. Se, per esempio, sbagli spesso tra <kbd>e</kbd> e <kbd>r</kbd>, stai allenando proprio quell’errore. Più scrivi veloce, più spesso succede.
 
 Scrivere più lentamente e in modo pulito all’inizio sembra un passo indietro. Ma è la strada più breve, perché alleni solo il movimento giusto.
 
 ## Come allenare la precisione
 
-- **Rallenta appena gli errori aumentano.** L’obiettivo è un ritmo in cui quasi ogni battuta va a segno.
+- **Scrivi di proposito più piano appena gli errori aumentano.** L’obiettivo è un ritmo in cui quasi ogni battuta va a segno.
 - **Conta il primo tentativo.** Un errore corretto subito resta un errore.
 - **Allena in modo mirato i tasti deboli.** Di solito pochi tasti o coppie di lettere causano la maggior parte degli errori.
 - **Fermati quando sei stanco.** Quando la concentrazione cala, il tasso di errore sale, e alleni soprattutto errori.
 
-## Che cosa fa Keypacer
+## Come ti aiuta Keypacer
 
 Se premi un tasto sbagliato, resti sulla lettera finché non premi quello giusto. Conta il primo tentativo. Se la precisione cala, Keypacer nasconde la velocità finché non scrivi di nuovo in modo pulito. L’esercizio successivo è composto dai tasti e dalle coppie di lettere in cui sbagli o esiti più spesso.
 
-## Quando arriva la velocità
+## Quando cresce la velocità
 
 La velocità cresce appena i movimenti sono acquisiti. Chi scrive in modo pulito diventa più veloce da solo, col tempo. Il contrario funziona di rado: chi scrive veloce e con errori deve poi disimpararli con fatica.

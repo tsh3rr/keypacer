@@ -13,11 +13,11 @@ featured: true
 
 Les outils de dictée se sont nettement améliorés ces dernières années. Des programmes comme Wispr Flow écrivent ce que tu dis, suppriment les mots de remplissage et ajoutent la ponctuation, dans presque toutes les applications. On peut donc se demander s’il vaut encore la peine d’apprendre à taper.
 
-La réponse courte : oui. La dictée remplace une partie de la frappe, mais pas tout.
+**La réponse courte :** oui. La dictée remplace une partie de la frappe, mais pas tout.
 
 ## Parler est plus rapide
 
-C’est incontesté. Une étude de l’université Stanford de 2016 a montré que la saisie vocale sur smartphone est environ trois fois plus rapide que la frappe sur le clavier tactile. Sur un vrai clavier, l’écart est plus faible, mais parler reste plus rapide que presque toute frappe.
+C’est incontesté. Une [étude de l’université Stanford de 2016](https://arxiv.org/abs/1608.07323) a montré que la saisie vocale sur smartphone est environ trois fois plus rapide que la frappe sur le clavier tactile. Sur un vrai clavier, l’écart est plus faible, mais parler reste plus rapide que presque toute frappe.
 
 ## Où la dictée fonctionne bien
 

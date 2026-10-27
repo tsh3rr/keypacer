@@ -13,11 +13,11 @@ featured: true
 
 Las herramientas de dictado han mejorado mucho en los últimos años. Programas como Wispr Flow escriben lo que dices, quitan muletillas y ponen signos de puntuación, en casi cualquier aplicación. Es lógico preguntarse si todavía merece la pena aprender mecanografía.
 
-La respuesta corta: sí. El dictado sustituye una parte de lo que escribes, pero no todo.
+**La respuesta corta:** sí. Dictar sustituye una parte de lo que escribes, pero no todo.
 
 ## Hablar es más rápido
 
-Eso no se discute. Un estudio de la Universidad de Stanford de 2016 mostró que la entrada por voz en el móvil es unas tres veces más rápida que escribir en el teclado de pantalla. En un teclado de verdad la diferencia es menor, pero hablar sigue siendo más rápido que casi cualquier forma de escribir.
+Eso no se discute. Un [estudio de la Universidad de Stanford de 2016](https://arxiv.org/abs/1608.07323) mostró que la entrada por voz en el móvil es unas tres veces más rápida que escribir en el teclado de pantalla. En un teclado de verdad la diferencia es menor, pero hablar sigue siendo más rápido que casi cualquier forma de escribir.
 
 ## Dónde funciona bien el dictado
 

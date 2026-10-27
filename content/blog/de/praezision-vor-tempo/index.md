@@ -21,7 +21,7 @@ Im Alltag kommt dazu, dass du den Fehler erst bemerken musst. Manchmal sofort, m
 
 ## Was ein Fehler kostet
 
-Ein einzelner Tippfehler besteht aus mehreren Schritten:
+Ein einzelner Tippfehler besteht aus mehreren kleinen Schritten:
 
 1. der falsche Anschlag,
 2. das Bemerken,
@@ -29,7 +29,7 @@ Ein einzelner Tippfehler besteht aus mehreren Schritten:
 4. der neue Anschlag,
 5. der Weg zurück in den Rhythmus.
 
-Rechnen wir grob mit einer Sekunde für all das. Das ist eher knapp bemessen.
+Rechnen wir grob mit einer Sekunde für all das. Eine Sekunde pro Fehler, das klingt erst mal nicht viel. Die Einschätzung ist aber konservativ, und es bleibt meistens nicht bei einem Fehler.
 
 ## Eine Beispielrechnung
 
@@ -49,21 +49,21 @@ Die Zahlen sind Annahmen, keine Messung. Sie zeigen aber das Prinzip: Ab einer g
 
 ## Warum sich Fehler festsetzen
 
-Deine Finger lernen jede Bewegung, die sie wiederholen, auch die falsche. Wer bei <kbd>e</kbd> und <kbd>r</kbd> regelmäßig daneben greift, übt genau diesen Fehler mit. Je schneller du dabei tippst, desto öfter passiert er.
+Deine Finger lernen jede Bewegung, die sie wiederholen, auch die falsche. Wer beispielsweise bei <kbd>e</kbd> und <kbd>r</kbd> regelmäßig daneben greift, übt genau diesen Fehler mit. Je schneller du dabei tippst, desto öfter passiert er.
 
 Langsamer und sauber zu tippen fühlt sich am Anfang wie ein Rückschritt an. Es ist aber der kürzere Weg, weil du nur die richtige Bewegung einübst.
 
 ## So übst du Präzision
 
-- **Geh langsamer, sobald die Fehler zunehmen.** Ziel ist ein Tempo, bei dem fast jeder Anschlag sitzt.
+- **Tippe bewusst langsamer, sobald die Fehler zunehmen.** Ziel ist ein Tempo, bei dem fast jeder Anschlag sitzt.
 - **Zähl den ersten Versuch.** Ein sofort korrigierter Fehler ist trotzdem ein Fehler.
 - **Übe die schwachen Tasten gezielt.** Meist sind es wenige Tasten oder Buchstabenpaare, die die meisten Fehler verursachen.
 - **Hör auf, wenn du müde wirst.** Mit nachlassender Konzentration steigt die Fehlerquote, und dann übst du vor allem Fehler.
 
-## Was Keypacer dabei macht
+## Wie Keypacer dich dabei unterstützt
 
-Bei einer falschen Taste bleibst du auf dem Buchstaben, bis du die richtige triffst. Gewertet wird der erste Versuch. Sinkt deine Genauigkeit, blendet Keypacer die Tempoanzeige aus, bis du wieder sauber tippst. Die nächste Übung setzt sich aus den Tasten und Buchstabenpaaren zusammen, bei denen du am häufigsten danebenliegst oder zögerst.
+Bei einer falschen Taste bleibst du auf dem Buchstaben, bis du den richtigen triffst. Gewertet wird der erste Versuch. Sinkt deine Genauigkeit, blendet Keypacer die Tempoanzeige aus, bis du wieder sauber tippst. Die nächste Übung setzt sich aus den Tasten und Buchstabenpaaren zusammen, bei denen du am häufigsten danebenliegst oder zögerst.
 
-## Wann das Tempo kommt
+## Wann das Tempo steigt
 
 Das Tempo steigt, sobald die Bewegungen sitzen. Wer sauber tippt, wird mit der Zeit von selbst schneller. Umgekehrt klappt das selten: Wer schnell und fehlerhaft tippt, muss die Fehler später mühsam wieder abtrainieren.

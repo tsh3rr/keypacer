@@ -13,11 +13,11 @@ featured: true
 
 Narzędzia do dyktowania bardzo się w ostatnich latach poprawiły. Programy takie jak Wispr Flow zapisują to, co mówisz, usuwają wtrącenia i dodają interpunkcję, w niemal każdej aplikacji. Nic dziwnego, że pojawia się pytanie, czy nauka pisania na klawiaturze jeszcze ma sens.
 
-Krótka odpowiedź: tak. Dyktowanie zastępuje część pisania, ale nie całość.
+**Krótka odpowiedź:** tak. Dyktowanie zastępuje część pisania, ale nie całość.
 
 ## Mówienie jest szybsze
 
-To nie podlega dyskusji. Badanie Uniwersytetu Stanforda z 2016 roku wykazało, że wprowadzanie głosowe na smartfonie jest około trzy razy szybsze niż pisanie na klawiaturze ekranowej. Na prawdziwej klawiaturze różnica jest mniejsza, ale mówienie wciąż jest szybsze niż niemal każde pisanie.
+To nie podlega dyskusji. [Badanie Uniwersytetu Stanforda z 2016 roku](https://arxiv.org/abs/1608.07323) wykazało, że wprowadzanie głosowe na smartfonie jest około trzy razy szybsze niż pisanie na klawiaturze ekranowej. Na prawdziwej klawiaturze różnica jest mniejsza, ale mówienie wciąż jest szybsze niż niemal każde pisanie.
 
 ## Gdzie dyktowanie sprawdza się dobrze
 

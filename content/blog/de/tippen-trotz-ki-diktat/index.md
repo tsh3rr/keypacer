@@ -12,13 +12,13 @@ featured: true
 
 Diktier-Tools sind in den letzten Jahren deutlich besser geworden. Programme wie Wispr Flow schreiben mit, was du sagst, entfernen Füllwörter und setzen Satzzeichen, und das in fast jeder App. Da liegt die Frage nahe, ob sich Tippen lernen noch lohnt.
 
-Die kurze Antwort: ja. Diktat ersetzt einen Teil des Tippens, aber nicht alles.
+**Die kurze Antwort:** ja. Diktieren ersetzt einen Teil des Tippens, aber nicht alles.
 
 ## Sprechen ist schneller
 
-Das ist unbestritten. Eine Studie der Stanford University von 2016 hat gezeigt, dass Spracheingabe am Smartphone etwa dreimal so schnell ist wie Tippen auf der Bildschirmtastatur. An einer echten Tastatur ist der Abstand kleiner, aber Sprechen bleibt schneller als fast jedes Tippen.
+Das ist unbestritten. Eine [Studie der Stanford University von 2016](https://arxiv.org/abs/1608.07323) hat gezeigt, dass Spracheingabe am Smartphone etwa dreimal so schnell ist wie Tippen auf der Bildschirmtastatur. An einer echten Tastatur ist der Abstand kleiner, aber Sprechen bleibt schneller als fast jedes Tippen.
 
-## Wo Diktat gut funktioniert
+## Wo Diktieren gut funktioniert
 
 - lange Nachrichten und Mails, bei denen es auf den Inhalt ankommt
 - Notizen und erste Entwürfe

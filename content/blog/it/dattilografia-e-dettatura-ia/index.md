@@ -13,11 +13,11 @@ featured: true
 
 Negli ultimi anni gli strumenti di dettatura sono migliorati molto. Programmi come Wispr Flow trascrivono quello che dici, tolgono le parole di riempimento e mettono la punteggiatura, in quasi ogni app. Viene spontaneo chiedersi se valga ancora la pena imparare a scrivere a dieci dita.
 
-La risposta breve: sì. La dettatura sostituisce una parte della scrittura, ma non tutta.
+**La risposta breve:** sì. La dettatura sostituisce una parte della scrittura, ma non tutta.
 
 ## Parlare è più veloce
 
-Su questo non ci sono dubbi. Uno studio della Stanford University del 2016 ha mostrato che l’input vocale sullo smartphone è circa tre volte più veloce della digitazione sulla tastiera a schermo. Su una tastiera vera la distanza è minore, ma parlare resta più veloce di quasi ogni modo di scrivere.
+Su questo non ci sono dubbi. Uno [studio della Stanford University del 2016](https://arxiv.org/abs/1608.07323) ha mostrato che l’input vocale sullo smartphone è circa tre volte più veloce della digitazione sulla tastiera a schermo. Su una tastiera vera la distanza è minore, ma parlare resta più veloce di quasi ogni modo di scrivere.
 
 ## Dove la dettatura funziona bene
 

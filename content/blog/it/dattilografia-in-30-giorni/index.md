@@ -1,6 +1,6 @@
 ---
 title: Imparare a scrivere con dieci dita in 30 giorni
-description: Un piano realistico con 15 minuti al giorno, e perché la precisione prima della velocità ti porta prima al traguardo.
+description: Un piano realistico con 15 minuti al giorno, e perché la precisione è più veloce della velocità pura.
 updated: 2026-10-27
 topic: start
 cover: cover.jpg
@@ -11,7 +11,7 @@ order: 1
 featured: true
 ---
 
-Non si impara a scrivere senza guardare in un fine settimana, ma non servono nemmeno sei mesi. Con un quarto d’ora al giorno, la posizione di base e le lettere più frequenti si fissano in circa un mese. Conta non quanto ti eserciti, ma come.
+Non si impara a scrivere senza guardare in un fine settimana, ma di sicuro ci arrivi prima di sei mesi. Con un quarto d’ora al giorno, la posizione di base e le lettere più frequenti si fissano in circa un mese. Conta non quanto ti eserciti, ma come.
 
 ## Prima la posizione di base
 
@@ -19,9 +19,9 @@ I tuoi indici poggiano su <kbd>F</kbd> e <kbd>J</kbd>. I piccoli rilievi di ques
 
 > Non guardare la tastiera, anche se all’inizio vai più piano.
 
-All’inizio sembra strano, soprattutto se scrivi da anni con due o quattro dita. È normale: i vecchi movimenti sono veloci, quelli nuovi non ancora. Dopo qualche giorno le cose si invertono.
+All’inizio sembra strano, soprattutto se scrivi da anni con due o quattro dita. È normale: i vecchi movimenti sono veloci, quelli nuovi non ancora. Dopo qualche giorno le abitudini cominciano a cambiare.
 
-## Il piano per quattro settimane
+## Ecco come potrebbe essere un piano per le prossime quattro settimane
 
 | Settimana | Obiettivo | Al giorno |
 | --- | --- | --- |
@@ -30,11 +30,11 @@ All’inizio sembra strano, soprattutto se scrivi da anni con due o quattro dita
 | 3 | Maiuscole e punteggiatura | 15 minuti |
 | 4 | Frasi intere, aumentare la velocità poco a poco | 15 minuti |
 
-Meglio un quarto d’ora ogni giorno che due ore una volta alla settimana. La memoria dei movimenti si consolida tra un esercizio e l’altro, soprattutto durante il sonno. Per questo molti giri brevi rendono più di uno lungo.
+Meglio esercitarsi con costanza un quarto d’ora ogni giorno che tormentarsi per due ore una volta alla settimana. La memoria dei movimenti si consolida tra un esercizio e l’altro. Per questo molti giri brevi rendono più di uno lungo. Curiosamente, il cosiddetto consolidamento, e con esso il vero progresso, avviene per la maggior parte durante il sonno!
 
 ## Perché la precisione viene prima della velocità
 
-Ogni errore costa tre volte: il tasto sbagliato, la correzione e il nuovo tentativo. In più, ogni volta che succede ti eserciti anche sull’errore. Chi scrive di proposito un po’ più piano ma pulito, alla lunga diventa più veloce.
+Ogni errore costa tre volte: il tasto sbagliato, la correzione e il nuovo tentativo. In più, ogni volta che succede ti eserciti anche sull’errore. Chi scrive di proposito un po’ più piano ma pulito, alla lunga diventa più veloce. Approfondisci in [Precisione prima della velocità](/it/blog/precisione-prima-della-velocita/).
 
 Keypacer è pensato così: dopo un tasto sbagliato resti sulla stessa lettera, e un nuovo tasto arriva solo quando quelli che hai già sono precisi e rapidi.
 

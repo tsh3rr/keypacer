@@ -22,7 +22,7 @@ Na co dzień musisz jeszcze najpierw zauważyć błąd. Czasem od razu, czasem t
 
 ## Ile kosztuje błąd
 
-Pojedyncza literówka składa się z kilku kroków:
+Pojedyncza literówka składa się z kilku małych kroków:
 
 1. złe uderzenie,
 2. zauważenie go,
@@ -30,7 +30,7 @@ Pojedyncza literówka składa się z kilku kroków:
 4. nowe uderzenie,
 5. powrót do rytmu.
 
-Przyjmijmy w przybliżeniu jedną sekundę na to wszystko. To raczej mało.
+Przyjmijmy w przybliżeniu jedną sekundę na to wszystko. Sekunda na błąd nie brzmi jak dużo. To jednak ostrożne założenie, a rzadko kończy się na jednym błędzie.
 
 ## Przykładowe wyliczenie
 
@@ -50,21 +50,21 @@ Liczby są założeniami, nie pomiarami. Pokazują jednak zasadę: powyżej pewn
 
 ## Dlaczego błędy się utrwalają
 
-Palce uczą się każdego ruchu, który powtarzają, także złego. Jeśli regularnie mylisz <kbd>e</kbd> i <kbd>r</kbd>, ćwiczysz właśnie ten błąd. Im szybciej przy tym piszesz, tym częściej się zdarza.
+Palce uczą się każdego ruchu, który powtarzają, także złego. Jeśli na przykład regularnie mylisz <kbd>e</kbd> i <kbd>r</kbd>, ćwiczysz właśnie ten błąd. Im szybciej przy tym piszesz, tym częściej się zdarza.
 
 Pisanie wolniej i czysto na początku wydaje się krokiem wstecz. To jednak krótsza droga, bo ćwiczysz tylko właściwy ruch.
 
 ## Jak ćwiczyć precyzję
 
-- **Zwolnij, gdy tylko przybywa błędów.** Celem jest tempo, przy którym prawie każde uderzenie trafia.
+- **Pisz świadomie wolniej, gdy tylko przybywa błędów.** Celem jest tempo, przy którym prawie każde uderzenie trafia.
 - **Licz pierwszą próbę.** Błąd poprawiony od razu nadal jest błędem.
 - **Ćwicz celowo słabe klawisze.** Zwykle kilka klawiszy lub par liter odpowiada za większość błędów.
 - **Przestań, gdy się męczysz.** Gdy spada koncentracja, rośnie odsetek błędów, a wtedy ćwiczysz głównie błędy.
 
-## Co robi Keypacer
+## Jak pomaga ci Keypacer
 
 Przy złym klawiszu zostajesz na literze, aż trafisz właściwy. Liczy się pierwsza próba. Gdy spada twoja dokładność, Keypacer ukrywa wskaźnik tempa, aż znów piszesz czysto. Następne ćwiczenie powstaje z klawiszy i par liter, przy których najczęściej się mylisz lub wahasz.
 
-## Kiedy przychodzi tempo
+## Kiedy rośnie tempo
 
 Tempo rośnie, gdy ruchy są utrwalone. Kto pisze czysto, z czasem sam staje się szybszy. Odwrotnie rzadko się udaje: kto pisze szybko i z błędami, musi potem z trudem się ich oduczać.

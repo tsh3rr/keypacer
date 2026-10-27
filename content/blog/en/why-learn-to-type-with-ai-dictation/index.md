@@ -13,11 +13,11 @@ featured: true
 
 Dictation tools have become much better in recent years. Programs like Wispr Flow write down what you say, remove filler words and add punctuation, in almost any app. So it is natural to ask whether learning to type is still worth it.
 
-The short answer: yes. Dictation replaces part of your typing, but not all of it.
+**The short answer:** yes. Dictating replaces part of your typing, but not all of it.
 
 ## Speaking is faster
 
-That is not in dispute. A 2016 study at Stanford University showed that speech input on a smartphone is about three times as fast as typing on the on-screen keyboard. On a real keyboard the gap is smaller, but speaking remains faster than almost any typing.
+That is not in dispute. A [2016 study at Stanford University](https://arxiv.org/abs/1608.07323) showed that speech input on a smartphone is about three times as fast as typing on the on-screen keyboard. On a real keyboard the gap is smaller, but speaking remains faster than almost any typing.
 
 ## Where dictation works well
 

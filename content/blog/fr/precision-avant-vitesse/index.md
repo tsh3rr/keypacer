@@ -22,7 +22,7 @@ Au quotidien, il faut en plus remarquer la faute. Parfois tout de suite, parfois
 
 ## Ce que coûte une faute
 
-Une seule faute de frappe comprend plusieurs étapes :
+Une seule faute de frappe comprend plusieurs petites étapes :
 
 1. la mauvaise frappe,
 2. le moment où tu la remarques,
@@ -30,7 +30,7 @@ Une seule faute de frappe comprend plusieurs étapes :
 4. la nouvelle frappe,
 5. le retour dans le rythme.
 
-Comptons grossièrement une seconde pour tout cela. C’est plutôt peu.
+Comptons grossièrement une seconde pour tout cela. Une seconde par faute, cela ne paraît pas beaucoup. Mais l’estimation est prudente, et on en reste rarement à une seule faute.
 
 ## Un exemple chiffré
 
@@ -50,21 +50,21 @@ Les chiffres sont des hypothèses, pas des mesures. Mais ils montrent le princip
 
 ## Pourquoi les fautes s’installent
 
-Tes doigts apprennent chaque mouvement qu’ils répètent, y compris le mauvais. Si tu te trompes souvent entre <kbd>e</kbd> et <kbd>r</kbd>, tu t’entraînes précisément à cette faute. Plus tu tapes vite, plus elle se produit souvent.
+Tes doigts apprennent chaque mouvement qu’ils répètent, y compris le mauvais. Si, par exemple, tu te trompes souvent entre <kbd>e</kbd> et <kbd>r</kbd>, tu t’entraînes précisément à cette faute. Plus tu tapes vite, plus elle se produit souvent.
 
 Taper plus lentement et proprement ressemble d’abord à un recul. C’est pourtant le chemin le plus court, parce que tu n’apprends que le bon mouvement.
 
 ## Comment travailler la précision
 
-- **Ralentis dès que les fautes augmentent.** Le but est un rythme où presque chaque frappe tombe juste.
+- **Tape volontairement plus lentement dès que les fautes augmentent.** Le but est un rythme où presque chaque frappe tombe juste.
 - **Compte le premier essai.** Une faute corrigée aussitôt reste une faute.
 - **Travaille tes touches faibles de façon ciblée.** En général, quelques touches ou paires de lettres causent la plupart des fautes.
 - **Arrête quand tu fatigues.** Quand la concentration baisse, le taux d’erreur monte, et tu t’entraînes surtout à faire des fautes.
 
-## Ce que fait Keypacer
+## Comment Keypacer t’aide
 
 Si tu tapes une mauvaise touche, tu restes sur la lettre jusqu’à trouver la bonne. C’est le premier essai qui compte. Si ta précision baisse, Keypacer masque l’affichage de la vitesse jusqu’à ce que tu tapes de nouveau proprement. L’exercice suivant est construit à partir des touches et paires de lettres où tu te trompes ou hésites le plus.
 
-## Quand vient la vitesse
+## Quand la vitesse augmente
 
 La vitesse augmente dès que les mouvements sont acquis. Qui tape proprement devient plus rapide avec le temps, tout seul. L’inverse marche rarement : qui tape vite et avec des fautes doit ensuite s’en défaire avec peine.

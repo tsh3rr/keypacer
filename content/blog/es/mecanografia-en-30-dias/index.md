@@ -1,6 +1,6 @@
 ---
 title: Aprende mecanografía en 30 días
-description: Un plan realista con 15 minutos al día, y por qué la precisión antes que la velocidad te lleva antes a la meta.
+description: Un plan realista con 15 minutos al día, y por qué la precisión es más rápida que la velocidad bruta.
 updated: 2026-10-27
 topic: start
 cover: cover.jpg
@@ -11,7 +11,7 @@ order: 1
 featured: true
 ---
 
-La mecanografía no se aprende en un fin de semana, pero tampoco hace falta medio año. Con un cuarto de hora al día, la posición básica y las letras más frecuentes están asentadas en aproximadamente un mes. Lo decisivo no es cuánto tiempo practicas, sino cómo.
+La mecanografía no se aprende en un fin de semana, pero sin duda lo consigues antes de medio año. Con un cuarto de hora al día, la posición básica y las letras más frecuentes están asentadas en aproximadamente un mes. Lo decisivo no es cuánto tiempo practicas, sino cómo.
 
 ## Primero, la posición básica
 
@@ -19,9 +19,9 @@ Tus dedos índices descansan sobre <kbd>F</kbd> y <kbd>J</kbd>. Las pequeñas ma
 
 > No mires el teclado, aunque al principio vayas más despacio.
 
-Al principio resulta extraño, sobre todo si llevas años escribiendo con dos o cuatro dedos. Es normal: los movimientos de siempre son rápidos y los nuevos todavía no. Después de unos días, eso cambia.
+Al principio resulta extraño, sobre todo si llevas años escribiendo con dos o cuatro dedos. Es normal: los movimientos de siempre son rápidos y los nuevos todavía no. Después de unos días, los hábitos empiezan a cambiar.
 
-## El plan para cuatro semanas
+## Así podría ser un plan para las próximas cuatro semanas
 
 | Semana | Enfoque | Al día |
 | --- | --- | --- |
@@ -30,11 +30,11 @@ Al principio resulta extraño, sobre todo si llevas años escribiendo con dos o 
 | 3 | Mayúsculas y signos de puntuación | 15 minutos |
 | 4 | Frases completas, aumentar la velocidad poco a poco | 15 minutos |
 
-Mejor un cuarto de hora cada día que dos horas una vez a la semana. La memoria de los movimientos se consolida entre las sesiones, sobre todo mientras duermes. Por eso, muchas rondas cortas dan más resultado que una larga.
+Mejor practicar con constancia un cuarto de hora cada día que sufrir dos horas una vez a la semana. La memoria de los movimientos se consolida entre las sesiones. Por eso, muchas rondas cortas dan más resultado que una larga. Curiosamente, la llamada consolidación, y con ella el progreso real, ocurre en su mayor parte mientras duermes.
 
 ## Por qué la precisión va antes que la velocidad
 
-Cada error cuesta tres veces: la pulsación equivocada, la corrección y el nuevo intento. Además, practicas el error cada vez que ocurre. Quien escribe a propósito un poco más despacio pero sin errores acaba siendo más rápido.
+Cada error cuesta tres veces: la pulsación equivocada, la corrección y el nuevo intento. Además, practicas el error cada vez que ocurre. Quien escribe a propósito un poco más despacio pero sin errores acaba siendo más rápido. Más sobre esto en [Precisión antes que velocidad](/es/blog/precision-antes-que-velocidad/).
 
 Keypacer está pensado para eso: si pulsas una tecla equivocada, te quedas en la misma letra, y solo se añade una tecla nueva cuando las que ya tienes salen precisas y con soltura.
 

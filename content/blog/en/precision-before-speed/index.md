@@ -22,7 +22,7 @@ In everyday use you also have to notice the mistake first. Sometimes right away,
 
 ## What a mistake costs
 
-A single typo consists of several steps:
+A single typo consists of several small steps:
 
 1. the wrong keystroke,
 2. noticing it,
@@ -30,7 +30,7 @@ A single typo consists of several steps:
 4. the new keystroke,
 5. getting back into the rhythm.
 
-Let's roughly assume one second for all of that. That is on the low side.
+Let's roughly assume one second for all of that. One second per mistake doesn't sound like much. But the estimate is conservative, and it rarely stays at one mistake.
 
 ## A worked example
 
@@ -50,21 +50,21 @@ The numbers are assumptions, not measurements. But they show the principle: abov
 
 ## Why mistakes stick
 
-Your fingers learn every movement they repeat, including the wrong one. If you regularly miss between <kbd>e</kbd> and <kbd>r</kbd>, you are practising exactly that mistake. The faster you type, the more often it happens.
+Your fingers learn every movement they repeat, including the wrong one. If, for example, you regularly miss between <kbd>e</kbd> and <kbd>r</kbd>, you are practising exactly that mistake. The faster you type, the more often it happens.
 
 Typing more slowly and cleanly feels like a step backwards at first. But it is the shorter route, because you only practise the right movement.
 
 ## How to practise accuracy
 
-- **Slow down as soon as mistakes increase.** The goal is a pace at which almost every keystroke lands.
+- **Type deliberately slower as soon as mistakes increase.** The goal is a pace at which almost every keystroke lands.
 - **Count the first attempt.** A mistake you correct immediately is still a mistake.
 - **Practise your weak keys on purpose.** Usually a few keys or letter pairs cause most of the mistakes.
 - **Stop when you get tired.** As concentration drops, the error rate rises, and then you mostly practise mistakes.
 
-## What Keypacer does
+## How Keypacer helps you
 
 When you hit a wrong key, you stay on the letter until you hit the right one. The first attempt is what counts. If your accuracy drops, Keypacer hides the speed display until you type cleanly again. The next exercise is built from the keys and letter pairs where you miss or hesitate most often.
 
-## When speed comes
+## When speed rises
 
 Speed rises once the movements are in place. If you type cleanly, you get faster on your own over time. The other way round rarely works: if you type fast and with mistakes, you later have to unlearn them with effort.

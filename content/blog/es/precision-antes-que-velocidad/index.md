@@ -22,7 +22,7 @@ En el día a día, además, primero tienes que darte cuenta del error. A veces e
 
 ## Lo que cuesta un error
 
-Un solo error tipográfico tiene varios pasos:
+Un solo error tipográfico tiene varios pasos pequeños:
 
 1. la pulsación equivocada,
 2. darte cuenta,
@@ -30,7 +30,7 @@ Un solo error tipográfico tiene varios pasos:
 4. la nueva pulsación,
 5. volver al ritmo.
 
-Calculemos a grandes rasgos un segundo para todo eso. Es más bien poco.
+Calculemos a grandes rasgos un segundo para todo eso. Un segundo por error no parece mucho. Pero la estimación es conservadora, y casi nunca se queda en un solo error.
 
 ## Un ejemplo con números
 
@@ -50,21 +50,21 @@ Los números son supuestos, no mediciones. Pero muestran el principio: a partir 
 
 ## Por qué los errores se fijan
 
-Tus dedos aprenden cada movimiento que repiten, también el equivocado. Si fallas a menudo entre <kbd>e</kbd> y <kbd>r</kbd>, estás practicando justo ese error. Cuanto más rápido escribes, más a menudo ocurre.
+Tus dedos aprenden cada movimiento que repiten, también el equivocado. Si, por ejemplo, fallas a menudo entre <kbd>e</kbd> y <kbd>r</kbd>, estás practicando justo ese error. Cuanto más rápido escribes, más a menudo ocurre.
 
 Escribir más despacio y limpio parece al principio un paso atrás. Pero es el camino más corto, porque solo practicas el movimiento correcto.
 
 ## Cómo practicar la precisión
 
-- **Ve más despacio en cuanto aumenten los errores.** El objetivo es un ritmo en el que casi cada pulsación acierte.
+- **Escribe más despacio a propósito en cuanto aumenten los errores.** El objetivo es un ritmo en el que casi cada pulsación acierte.
 - **Cuenta el primer intento.** Un error corregido al momento sigue siendo un error.
 - **Practica tus teclas débiles a propósito.** Normalmente unas pocas teclas o pares de letras causan la mayoría de los errores.
 - **Para cuando estés cansado.** Cuando baja la concentración sube la tasa de errores, y entonces practicas sobre todo errores.
 
-## Qué hace Keypacer
+## Cómo te ayuda Keypacer
 
 Si pulsas una tecla equivocada, te quedas en la letra hasta que aciertas. Lo que cuenta es el primer intento. Si tu precisión baja, Keypacer oculta la velocidad hasta que vuelvas a escribir limpio. El siguiente ejercicio se forma con las teclas y pares de letras en los que más fallas o dudas.
 
-## Cuándo llega la velocidad
+## Cuándo sube la velocidad
 
 La velocidad sube en cuanto los movimientos están asentados. Quien escribe limpio se vuelve más rápido con el tiempo por sí solo. Al revés rara vez funciona: quien escribe rápido y con errores tiene que desaprenderlos después con esfuerzo.

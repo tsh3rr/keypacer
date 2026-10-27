@@ -239,6 +239,21 @@ describe('afterDrill', () => {
     expect(afterDrill(m, s, en, drill, slow).state.unlocked).toContain('t');
   });
 
+  it('loosens the error-rate bar for a key stuck even longer', () => {
+    const m = fakeModel(base.unlocked.map((c) => key(c, c === 'l' ? { errorRate: 0.048 } : {})));
+    const slow = { wpm: 10, accuracy: 0.98 };
+    let s = base;
+    for (let i = 0; i < DEFAULT_DRILL_PARAMS.stuckErrorDrills - 1; i++) s = afterDrill(m, s, en, drill, slow).state;
+    // Past the first stuck rule, but 4.8 % is still above the 4.5 % bar.
+    expect(s.relaxedKeys).toEqual(['l']);
+    expect(s.errorRelaxedKeys ?? []).toEqual([]);
+    expect(s.unlocked).toEqual(base.unlocked);
+    s = afterDrill(m, s, en, drill, slow).state;
+    expect(s.errorRelaxedKeys).toEqual(['l']);
+    // 4.8 % is within the 5 % bar, so the next drill unlocks.
+    expect(afterDrill(m, s, en, drill, slow).state.unlocked).toContain('t');
+  });
+
   it('only unlocks on core drills', () => {
     expect(afterDrill(ready, base, en, { ...drill, kind: 'focus' }, good).state.unlocked).toEqual(base.unlocked);
   });

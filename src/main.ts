@@ -47,7 +47,7 @@ import { Account } from './sync/account';
 import { AccountView, benefits } from './sync/accountView';
 import { ProfileView } from './sync/profileView';
 import {
-  UI_LANGUAGES, applyTranslations, guessUiLanguage, isUiLanguage, num, onUiLanguageChange, pct, setUiLanguage, t, tMaybe, tNodes, uiLanguage,
+  UI_LANGUAGES, applyTranslations, guessUiLanguage, isUiLanguage, num, onUiLanguageChange, pct, pctBar, setUiLanguage, t, tMaybe, tNodes, uiLanguage,
 } from './i18n';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -477,7 +477,7 @@ function gateData(path: PathSummary): GateData | null {
   const of = (reason: PathSummary['gaps'][number]['reason']) => path.gaps.filter((g) => g.reason === reason);
   return {
     next: path.next === CAPITALS ? stageName('capitals') : keyCap(path.next),
-    maxError: DEFAULT_DRILL_PARAMS.unlockMaxErrorRate,
+    maxError: Math.max(DEFAULT_DRILL_PARAMS.unlockMaxErrorRate, ...of('errors').map((g) => g.maxErrorRate)),
     errors: of('errors').map((g) => ({ label: keyCap(g.step), errorRate: g.errorRate })),
     slow: of('slow').map((g) => ({ label: keyCap(g.step), ms: g.latencyMs, targetMs: g.targetMs })),
     few: of('few').map((g) => keyCap(g.step)),
@@ -501,7 +501,7 @@ function renderCoach(): void {
     nextTip = t('path.allUnlocked', { next: curriculum.tier + 1, wpm: tierWpm(curriculum.tier), acc: pct(0.96) });
   } else {
     const bar = {
-      err: pct(DEFAULT_DRILL_PARAMS.unlockMaxErrorRate),
+      err: pctBar(DEFAULT_DRILL_PARAMS.unlockMaxErrorRate),
       ms: Math.round(tierTargetMs(curriculum.tier)),
       ready: path.ready,
       unlocked: path.unlocked,

@@ -1,4 +1,4 @@
-import { pct, t, tNodes } from './i18n';
+import { pct, pctBar, t, tNodes } from './i18n';
 
 /**
  * What holds up the next unlock, in plain numbers: which keys need fewer
@@ -62,7 +62,7 @@ export function gateParts(g: GateData, limit = Infinity): HTMLElement[] {
   if (g.errors.length) {
     part('errors', tNodes('gate.errors', {
       keys: cut(g.errors, (k) => chip(k.label, rate(k.errorRate))),
-      max: pct(g.maxError),
+      max: pctBar(g.maxError),
     }));
   }
   if (g.slow.length) {

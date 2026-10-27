@@ -37,10 +37,14 @@ export interface DrillParams {
   unlockMaxErrorRate: number;
   /** Latency bar multiplier for a key that kept blocking (stuck rule). */
   stuckLatencySlack: number;
+  /** Error-rate bar for a key that kept blocking even longer (second stuck rule). */
+  stuckMaxErrorRate: number;
   /** Latency bar multiplier for capitals and other characters typed with Shift on the layout. */
   shiftLatencySlack: number;
-  /** Core drills in a row with the same single blocking key before the stuck rule applies (~3 sessions). */
+  /** Core drills in a row with the same single blocking key before the stuck rule applies (~2–3 sessions). */
   stuckDrills: number;
+  /** Core drills in a row before the stuck key also gets the looser error-rate bar. */
+  stuckErrorDrills: number;
   /** Need added to the focus key and its bigrams. */
   focusBoost: number;
   /** Targets per drill and the softmax temperature used to pick them and words. */
@@ -103,11 +107,13 @@ export interface DrillParams {
 
 export const DEFAULT_DRILL_PARAMS: Readonly<DrillParams> = Object.freeze({
   startKeys: 6,
-  unlockMinWeight: 30,
-  unlockMaxErrorRate: 0.04,
+  unlockMinWeight: 25,
+  unlockMaxErrorRate: 0.045,
   stuckLatencySlack: 1.15,
+  stuckMaxErrorRate: 0.05,
   shiftLatencySlack: 1.3,
-  stuckDrills: 20,
+  stuckDrills: 15,
+  stuckErrorDrills: 20,
   focusBoost: 0.5,
   targets: 5,
   temperature: 0.3,
@@ -171,6 +177,8 @@ export interface CurriculumState {
   focusKey: string | null;
   /** Steps the stuck rule gave a looser latency bar. */
   relaxedKeys: string[];
+  /** Steps the second stuck rule also gave a looser error-rate bar. Missing in states saved before it existed. */
+  errorRelaxedKeys?: string[];
   /** The single step blocking the next unlock, and for how many core drills in a row. */
   blocker: string | null;
   blockedDrills: number;
@@ -339,30 +347,34 @@ export interface BarGap {
   slow: boolean;
   /** The step's latency target in ms, with its slack. */
   targetMs: number;
+  /** The step's highest allowed error rate. */
+  maxErrorRate: number;
 }
 
 /** How a key (or a step's pooled stats) compares with the unlock bar at the given tier. */
 export function barGap(
   key: StepStats | undefined,
-  state: Pick<CurriculumState, 'tier' | 'relaxedKeys'> & Partial<Pick<CurriculumState, 'layout'>>,
+  state: Pick<CurriculumState, 'tier' | 'relaxedKeys'> & Partial<Pick<CurriculumState, 'layout' | 'errorRelaxedKeys'>>,
   p: DrillParams = DEFAULT_DRILL_PARAMS,
 ): BarGap {
   let slack = key && state.relaxedKeys.includes(key.item) ? p.stuckLatencySlack : 1;
   if (key && state.layout !== undefined && needsShift(key.item, state.layout)) slack *= p.shiftLatencySlack;
   const targetMs = tierTargetMs(state.tier) * slack;
-  if (!key) return { few: true, errors: false, slow: false, targetMs };
+  const maxErrorRate = key && state.errorRelaxedKeys?.includes(key.item) ? p.stuckMaxErrorRate : p.unlockMaxErrorRate;
+  if (!key) return { few: true, errors: false, slow: false, targetMs, maxErrorRate };
   return {
     few: key.weight < p.unlockMinWeight,
-    errors: key.errorRate > p.unlockMaxErrorRate,
+    errors: key.errorRate > maxErrorRate,
     slow: key.latencyMs > targetMs,
     targetMs,
+    maxErrorRate,
   };
 }
 
 /** Whether a key (or a step's pooled stats) meets the unlock bar at the given tier. */
 export function meetsBar(
   key: StepStats | undefined,
-  state: Pick<CurriculumState, 'tier' | 'relaxedKeys'> & Partial<Pick<CurriculumState, 'layout'>>,
+  state: Pick<CurriculumState, 'tier' | 'relaxedKeys'> & Partial<Pick<CurriculumState, 'layout' | 'errorRelaxedKeys'>>,
   p: DrillParams = DEFAULT_DRILL_PARAMS,
 ): boolean {
   const gap = barGap(key, state, p);
@@ -393,6 +405,7 @@ export function initialCurriculum(
     unlocked: order.slice(0, p.startKeys),
     focusKey: null,
     relaxedKeys: [],
+    errorRelaxedKeys: [],
     blocker: null,
     blockedDrills: 0,
     tier: 1,
@@ -960,13 +973,19 @@ export function afterDrill(
     s.blockedDrills = 0;
     changes.push({ type: 'unlock', key: next });
   } else if (blocking.length === 1) {
-    // Stuck rule: one key holding everything up for long gets a looser latency bar and the focus.
+    // Stuck rule: one key holding everything up for long gets a looser latency bar and the focus;
+    // still stuck a while later, it also gets a looser error-rate bar.
     s.blockedDrills = s.blocker === blocking[0] ? s.blockedDrills + 1 : 1;
     s.blocker = blocking[0];
     if (s.blockedDrills >= p.stuckDrills && !s.relaxedKeys.includes(s.blocker)) {
       s.relaxedKeys.push(s.blocker);
       s.focusKey = s.blocker;
       changes.push({ type: 'stuck', key: s.blocker });
+    }
+    const errorRelaxed = s.errorRelaxedKeys ?? [];
+    if (s.blockedDrills >= p.stuckErrorDrills && !errorRelaxed.includes(s.blocker)) {
+      s.errorRelaxedKeys = [...errorRelaxed, s.blocker];
+      s.focusKey = s.blocker;
     }
   } else {
     s.blocker = null;

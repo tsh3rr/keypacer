@@ -48,6 +48,8 @@ export interface StepGap {
   errorRate: number;
   latencyMs: number;
   targetMs: number;
+  /** The step's highest allowed error rate (looser for a long-stuck step). */
+  maxErrorRate: number;
 }
 
 /** The blocking steps with their reason, errors first (most errors first), then slowest, then least practised. */
@@ -58,7 +60,7 @@ export function stepGaps(model: WeaknessModel, state: CurriculumState, blocking:
       const stats = stepStats(model, step, state);
       const gap = barGap(stats, state, p);
       const reason = gap.errors ? 'errors' : gap.slow ? 'slow' : 'few';
-      return { step, reason, errorRate: stats?.errorRate ?? 0, latencyMs: stats?.latencyMs ?? 0, targetMs: gap.targetMs };
+      return { step, reason, errorRate: stats?.errorRate ?? 0, latencyMs: stats?.latencyMs ?? 0, targetMs: gap.targetMs, maxErrorRate: gap.maxErrorRate };
     })
     .sort((a, b) =>
       order[a.reason] - order[b.reason]

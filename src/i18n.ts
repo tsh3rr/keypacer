@@ -1,3 +1,4 @@
+import { matchLanguage } from './languageTags';
 import { en, type Message } from './locales/en';
 
 /**
@@ -18,7 +19,7 @@ import { en, type Message } from './locales/en';
  * practise English with German menus.
  *
  * Only English ships with the app; the other languages are loaded when they
- * are picked (`setUiLanguage` waits for that), so nobody downloads five sets
+ * are picked (`setUiLanguage` waits for that), so nobody downloads seven sets
  * of menus they never see.
  */
 
@@ -33,6 +34,8 @@ const LOADERS = {
   es: async () => (await import('./locales/es')).es,
   it: async () => (await import('./locales/it')).it,
   pl: async () => (await import('./locales/pl')).pl,
+  'pt-BR': async () => (await import('./locales/pt-BR')).ptBR,
+  'pt-PT': async () => (await import('./locales/pt-PT')).ptPT,
 } satisfies Record<string, () => Promise<Messages>>;
 export type UiLanguage = keyof typeof LOADERS;
 
@@ -46,6 +49,8 @@ export const UI_LANGUAGES: readonly { id: UiLanguage; name: string }[] = [
   { id: 'es', name: 'Español' },
   { id: 'it', name: 'Italiano' },
   { id: 'pl', name: 'Polski' },
+  { id: 'pt-BR', name: 'Português (Brasil)' },
+  { id: 'pt-PT', name: 'Português (Portugal)' },
 ];
 
 let current: UiLanguage = 'en';
@@ -57,11 +62,12 @@ export function isUiLanguage(id: string | null | undefined): id is UiLanguage {
   return id != null && Object.hasOwn(LOADERS, id);
 }
 
-/** The first browser language we have a translation for, else English. */
+/** The first browser language we have a translation for ("pt" is Brazilian), else English. */
 export function guessUiLanguage(locales: readonly string[]): UiLanguage {
+  const ids = Object.keys(LOADERS) as UiLanguage[];
   for (const l of locales) {
-    const base = l.toLowerCase().split('-')[0];
-    if (isUiLanguage(base)) return base;
+    const match = matchLanguage(l, ids);
+    if (match) return match;
   }
   return 'en';
 }

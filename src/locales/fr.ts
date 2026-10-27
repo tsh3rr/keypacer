@@ -40,6 +40,8 @@ export const fr: Messages = {
   'layout.azerty-be': 'Belge AZERTY',
   'layout.qwerty-es': 'Espagnol QWERTY',
   'layout.qwerty-it': 'Italien QWERTY',
+  'layout.abnt2-br': 'Portugais (Brésil) ABNT2',
+  'layout.qwerty-pt': 'Portugais (Portugal) QWERTY',
   'layout.qwerty-se': 'Suédois / finnois QWERTY',
   'layout.qwerty-pl': 'Polonais (programmeur)',
   'layout.dvorak-us': 'Dvorak (US)',

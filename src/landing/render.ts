@@ -12,6 +12,8 @@ import { es } from '../locales/es.ts';
 import { fr } from '../locales/fr.ts';
 import { it } from '../locales/it.ts';
 import { pl } from '../locales/pl.ts';
+import { ptBR } from '../locales/pt-BR.ts';
+import { ptPT } from '../locales/pt-PT.ts';
 
 /**
  * Builds the landing pages, the sitemap and robots.txt at build time (see the
@@ -32,10 +34,11 @@ export const appPath = (lang: LandingLanguage): string => `/app/?lang=${lang}`;
 /** The keyboard each page assumes until the keys pressed say otherwise, and its pictures show. */
 const PAGE_LAYOUT: Record<LandingLanguage, string> = {
   en: 'qwerty-us', de: 'qwertz-de', es: 'qwerty-es', fr: 'azerty-fr', it: 'qwerty-it', pl: 'qwerty-pl',
+  'pt-BR': 'abnt2-br', 'pt-PT': 'qwerty-pt',
 };
 
 /** Finger names come from the trainer's own interface text, so both say the same. */
-const APP_TEXT: Record<LandingLanguage, Record<string, Message>> = { en, de, es, fr, it, pl };
+const APP_TEXT: Record<LandingLanguage, Record<string, Message>> = { en, de, es, fr, it, pl, 'pt-BR': ptBR, 'pt-PT': ptPT };
 
 export function fingerNames(lang: LandingLanguage): Record<string, string> {
   const names: Record<string, string> = {};

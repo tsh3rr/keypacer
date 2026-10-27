@@ -47,11 +47,12 @@ export interface KeyPress {
 const DIGITS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'].map((d) => `Digit${d}`);
 const letters = (s: string) => [...s].map((c) => `Key${c}`);
 // The four rows of an ISO keyboard, left to right, as KeyboardEvent.code values.
+// IntlRo is the extra key right of Slash that only Brazilian ABNT2 keyboards have.
 export const ROWS: readonly (readonly string[])[] = [
   ['Backquote', ...DIGITS, 'Minus', 'Equal'],
   [...letters('QWERTYUIOP'), 'BracketLeft', 'BracketRight'],
   [...letters('ASDFGHJKL'), 'Semicolon', 'Quote', 'Backslash'],
-  ['IntlBackslash', ...letters('ZXCVBNM'), 'Comma', 'Period', 'Slash'],
+  ['IntlBackslash', ...letters('ZXCVBNM'), 'Comma', 'Period', 'Slash', 'IntlRo'],
 ];
 
 type Rows = [string, string, string, string];
@@ -67,13 +68,18 @@ interface Extras {
   fingers?: Record<string, string>;
 }
 
-/** Builds a layout from one string per row, base and Shift layer; a space marks a key the layout lacks. */
+/**
+ * Builds a layout from one string per row, base and Shift layer; a space marks
+ * a key the layout lacks. The bottom row may stop before IntlRo, which only
+ * ABNT2 has.
+ */
 function layout(id: string, name: string, locales: string[], rows: Rows, shiftRows: Rows, extras: Extras = {}): Layout {
   const map = (rs: Rows) => {
     const keys = new Map<string, string>();
     rs.forEach((row, r) => {
       const chars = [...row];
-      if (chars.length !== ROWS[r].length) throw new Error(`Layout ${id}: row ${r} has ${chars.length} keys`);
+      const full = ROWS[r].length;
+      if (chars.length !== full && !(r === 3 && chars.length === full - 1)) throw new Error(`Layout ${id}: row ${r} has ${chars.length} keys`);
       chars.forEach((ch, i) => {
         if (ch !== ' ') keys.set(ROWS[r][i], ch);
       });
@@ -162,6 +168,26 @@ export const LAYOUTS: readonly Layout[] = [
     symbols: {
       '@': 'Digit2', '£': 'Digit3', '$': 'Digit4', '€': 'KeyE', '{': 'Digit7', '[': 'Digit8', ']': 'Digit9', '}': 'Digit0',
       '\\': 'Minus', '|': 'IntlBackslash', 'µ': 'KeyM',
+    },
+  }),
+  // Brazilian ABNT2: ç has its own key, accents are dead keys (~ and ^ share
+  // one, ´ and ` another), and / ? sit on the extra key right of ;. Laptops
+  // without that key type them with AltGr + Q and W.
+  layout('abnt2-br', 'Portuguese (Brazil) ABNT2', ['pt-BR', 'pt'], [
+    "'1234567890-=", 'qwertyuiop´[', 'asdfghjklç~]', '\\zxcvbnm,.;/'], [
+    '"!@#$%¨&*()_+', 'QWERTYUIOP`{', 'ASDFGHJKLÇ^}', '|ZXCVBNM<>:?'], {
+    dead: '´`~^¨',
+    symbols: {
+      '¹': 'Digit1', '²': 'Digit2', '³': 'Digit3', '£': 'Digit4', '¢': 'Digit5', '¬': 'Digit6', '§': 'Equal',
+      '°': 'KeyE', 'ª': 'BracketRight', 'º': 'Backslash', '₢': 'KeyC',
+    },
+  }),
+  layout('qwerty-pt', 'Portuguese (Portugal) QWERTY', ['pt-PT', 'pt-AO', 'pt-MZ'], [
+    "\\1234567890'«", 'qwertyuiop+´', 'asdfghjklçº~', '<zxcvbnm,.-'], [
+    '|!"#$%&/()=?»', 'QWERTYUIOP*`', 'ASDFGHJKLÇª^', '>ZXCVBNM;:_'], {
+    dead: '´`~^',
+    symbols: {
+      '@': 'Digit2', '£': 'Digit3', '§': 'Digit4', '€': 'KeyE', '{': 'Digit7', '[': 'Digit8', ']': 'Digit9', '}': 'Digit0',
     },
   }),
   // Same base layer as US; Polish letters come from AltGr.

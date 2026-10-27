@@ -6,6 +6,8 @@ import { es } from './corpora/es';
 import { fr } from './corpora/fr';
 import { it as itCorpus } from './corpora/it';
 import { pl } from './corpora/pl';
+import { ptBR } from './corpora/pt-BR';
+import { ptPT } from './corpora/pt-PT';
 import { practiceForm } from './sentences';
 import { CAPITALS, stepChars, unlockSteps } from './drill';
 
@@ -62,6 +64,8 @@ describe.each([
   { corpus: es, layout: 'qwerty-es', letters: /^[a-záéíóúüñ]+$/, special: 'áéíóúñ', common: 'que' },
   { corpus: itCorpus, layout: 'qwerty-it', letters: /^[a-zàèéìòù]+$/, special: 'àèéìòù', common: 'che' },
   { corpus: pl, layout: 'qwerty-pl', letters: /^[a-ząćęłńóśźż]+$/, special: 'ąćęłńóśźż', common: 'nie' },
+  { corpus: ptBR, layout: 'abnt2-br', letters: /^[a-záàâãçéêíóôõú]+$/, special: 'áàâãçéêíóôõú', common: 'que' },
+  { corpus: ptPT, layout: 'qwerty-pt', letters: /^[a-záàâãçéêíóôõú]+$/, special: 'áàâãçéêíóôõú', common: 'que' },
 ])('$corpus.name corpus', ({ corpus, layout, letters, special, common }) => {
   it('has thousands of distinct lowercase words with its accented letters', () => {
     expect(corpus.words.length).toBeGreaterThanOrEqual(5000);
@@ -104,13 +108,27 @@ describe('guessLanguage', () => {
     expect(guessLanguage(['pl-PL'])).toBe('pl');
   });
 
+  it('tells Brazilian and European Portuguese apart, with bare pt as Brazilian', () => {
+    expect(guessLanguage(['pt-BR'])).toBe('pt-BR');
+    expect(guessLanguage(['pt'])).toBe('pt-BR');
+    expect(guessLanguage(['pt-PT', 'en'])).toBe('pt-PT');
+    expect(guessLanguage(['pt-AO'])).toBe('pt-PT');
+  });
+
+  it('spells each Portuguese variant its own way', () => {
+    expect(ptBR.words).toContain('econômico');
+    expect(ptBR.words).not.toContain('económico');
+    expect(ptPT.words).toContain('económico');
+    expect(ptPT.words).not.toContain('econômico');
+  });
+
   it('falls back to English', () => {
     expect(guessLanguage(['xx'])).toBe('en');
     expect(guessLanguage([])).toBe('en');
   });
 
   it('only guesses languages that exist', () => {
-    expect(availableLanguages().map((c) => c.language)).toEqual(expect.arrayContaining(['en', 'de', 'fr', 'es', 'it', 'pl']));
+    expect(availableLanguages().map((c) => c.language)).toEqual(expect.arrayContaining(['en', 'de', 'fr', 'es', 'it', 'pl', 'pt-BR', 'pt-PT']));
   });
 
   it('lists each language under its corpus name', async () => {

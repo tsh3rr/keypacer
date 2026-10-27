@@ -2,10 +2,10 @@
 """Regenerate a frequency-ranked word list for one language.
 
 Usage (from the repo root):
-    python -m pip install "wordfreq==3.1.1" "pyspellchecker==0.9.0"
+    python -m pip install "wordfreq==3.1.1" "pyspellchecker==0.9.0" "spylls==0.1.7"
     python scripts/build-corpus.py en 10000
     python scripts/build-corpus.py de 10000
-    (likewise fr, es, it, pl)
+    (likewise fr, es, it, pl, pt-BR, pt-PT)
 
 Writes src/corpora/<lang>-words.ts. The word data comes from wordfreq
 (https://github.com/rspeer/wordfreq), whose word lists are licensed under
@@ -21,6 +21,16 @@ way (spelling unchanged), which drops names and stray English. Its Spanish list
 misses common words, so Spanish and Polish (which it lacks) instead drop words
 wordfreq finds more often in English than in the language itself.
 pyspellchecker is only needed for German, French and Italian.
+
+wordfreq has one Portuguese list for Brazil and Portugal, so each variant
+keeps the words its LibreOffice Hunspell dictionary accepts (checked with
+spylls, https://github.com/zverok/spylls): "econômico" and "ônibus" for
+Brazil, "económico" for Portugal. The Brazilian dictionary also takes names
+and English in lowercase, so a word Portugal's rejects must be neither a name
+nor a common English word, and a short hand-picked list (EXCLUDE) catches the
+rest. Words wordfreq finds more often in English are left out either way.
+spylls is only needed for Portuguese; the dictionaries are downloaded once
+into ~/.cache/keypacer-dictionaries.
 """
 
 import itertools
@@ -41,7 +51,34 @@ LETTERS = {
     # í, ó and ú only turn up in loanwords and names.
     "it": "abcdefghijklmnopqrstuvwxyzàèéìòù",
     "pl": "abcdefghijklmnopqrstuvwxyząćęłńóśźż",
+    # ü left Brazilian spelling in 2009; k, w and y only turn up in loanwords.
+    "pt-BR": "abcdefghijklmnopqrstuvwxyzáàâãçéêíóôõú",
+    "pt-PT": "abcdefghijklmnopqrstuvwxyzáàâãçéêíóôõú",
 }
+
+# wordfreq's code for languages whose variants share one list.
+WORDFREQ_LANG = {"pt-BR": "pt", "pt-PT": "pt"}
+
+# Variants whose words are checked against a LibreOffice Hunspell dictionary
+# (https://github.com/LibreOffice/dictionaries, pinned to one commit).
+HUNSPELL = {"pt-BR": "pt_BR", "pt-PT": "pt_PT"}
+HUNSPELL_COMMIT = "4f1df64b2e8e14751aa7c2205d170ca016071315"
+
+# Names, acronyms and misspellings that get past the checks above, picked by hand
+# from the words only one variant's list has.
+EXCLUDE = {
+    "pt-BR": set("""
+        antônio souza moscou botafogo amazônia camila irã maracanã caribe noel renata beto lana iguaçu
+        lu bianca melissa tijuca luna maceió mara luana enrique marcela fabiano juazeiro val silas caracas
+        mari roberta ava ibope estadão sus vip qui mai var ão sera politica porno pornô playboy manaus
+        alagoas vargas armênia mônica polônia macedônia guarulhos sic objectivo excepto excepção ceará
+    """.split()),
+    "pt-PT": {"jean", "prof", "sra", "dra", "ceará"},
+}
+
+# wordfreq splits "fazê-lo" into "fazê" and "lo". The pronouns that only come
+# after a hyphen, and "tê" (from "tê-lo"), are no words on their own.
+CLITIC_PARTS = {"lo", "la", "los", "las", "ta", "tê"}
 
 # Languages whose words are checked against pyspellchecker (see the docstring).
 SPELLCHECK = {"de", "fr", "it"}
@@ -58,6 +95,8 @@ SINGLE_LETTER_WORDS = {
     "es": {"a", "e", "o", "u", "y"},
     "it": {"a", "e", "è", "i", "o"},
     "pl": {"a", "i", "o", "u", "w", "z"},
+    "pt-BR": {"a", "à", "e", "é", "o"},
+    "pt-PT": {"a", "à", "e", "é", "o"},
 }
 
 LINE_WIDTH = 100
@@ -68,8 +107,74 @@ SPELLCHECK_NOTE = """
 // by Hermit Dave (https://github.com/hermitdave/FrequencyWords, CC BY-SA 4.0)."""
 
 
+HUNSPELL_NOTE = """
+// Only words the {name} Hunspell dictionary of LibreOffice accepts are kept
+// (https://github.com/LibreOffice/dictionaries/tree/{commit}/{name}, {license}),
+// which keeps this variant's spelling. Names, common English words and a few
+// hand-picked names and misspellings are left out."""
+
+HUNSPELL_LICENSE = {"pt_BR": "VERO, LGPLv3 / MPL", "pt_PT": "Universidade do Minho, GPL / LGPL / MPL"}
+
+
+def hunspell(name: str):
+    """The LibreOffice dictionary `name` (e.g. "pt_BR"), downloaded once and cached."""
+    import urllib.request
+    from spylls.hunspell import Dictionary
+
+    cache = Path.home() / ".cache" / "keypacer-dictionaries" / HUNSPELL_COMMIT[:12]
+    cache.mkdir(parents=True, exist_ok=True)
+    for ext in ("aff", "dic"):
+        f = cache / f"{name}.{ext}"
+        if not f.exists():
+            url = f"https://raw.githubusercontent.com/LibreOffice/dictionaries/{HUNSPELL_COMMIT}/{name}/{name}.{ext}"
+            urllib.request.urlretrieve(url, f)
+    return Dictionary.from_files(str(cache / name))
+
+
+def capitalized_entries(name: str) -> set[str]:
+    """Lowercased stems the dictionary lists only with a capital: names of people and places."""
+    hunspell(name)  # makes sure the files are there
+    dic = Path.home() / ".cache" / "keypacer-dictionaries" / HUNSPELL_COMMIT[:12] / f"{name}.dic"
+    stems = [line.split("/")[0].split("\t")[0].strip() for line in dic.read_text(encoding="utf-8-sig").splitlines()[1:]]
+    lower = {s for s in stems if s[:1].islower()}
+    # Places come with their state, "Souza-BA".
+    return {re.sub("-[A-Z]{2}$", "", s).lower() for s in stems if s[:1].isupper()} - lower
+
+
 def spelling_fixer(lang: str):
     """Maps a wordfreq word to its usual spelling, or None to drop it; identity if not needed."""
+    if lang in HUNSPELL:
+        own = hunspell(HUNSPELL[lang])
+        # The Brazilian dictionary also takes names, brands and English in
+        # lowercase ("souza", "twitter"). Portugal's is stricter, so a word it
+        # rejects must pass two more checks: it is no name, and it is not a
+        # common English word.
+        strict = hunspell("pt_PT")
+        names = capitalized_entries("pt_BR") | capitalized_entries("pt_PT")
+        base = WORDFREQ_LANG[lang]
+
+        def is_name(w: str) -> bool:
+            # Portugal's dictionary knows it only with a capital ("Paulo"), or a
+            # dictionary lists it with a capital and it is no form of a
+            # lowercase word ("Souza-BA", but "registro" from "registrar").
+            if strict.lookup(w.capitalize()):
+                return True
+            return w in names and not any(f.stem[:1].islower() for f in own.lookuper.good_forms(w))
+
+        def keep(w: str) -> str | None:
+            if w in EXCLUDE[lang] or w in CLITIC_PARTS or not own.lookup(w) or not re.search("[aeiouáàâãéêíóôõú]", w):
+                return None
+            # The verb before such a pronoun ("ajudá", "protegê"): Brazil's dictionary
+            # takes it, Portugal's does not, and the infinitive is a word.
+            if w[-1] in "áê" and not strict.lookup(w) and w != "bebê" and own.lookup(w[:-1] + {"á": "ar", "ê": "er"}[w[-1]]):
+                return None
+            if re.fullmatch("[ivxl]+", w) and len(w) > 1:  # Roman numerals
+                return None
+            if not strict.lookup(w) and (is_name(w) or wordfreq.zipf_frequency(w, "en") >= 3.9):
+                return None
+            return w if wordfreq.zipf_frequency(w, "en") <= wordfreq.zipf_frequency(w, base) else None
+
+        return keep
     if lang in NOT_ENGLISH:
         return lambda w: w if wordfreq.zipf_frequency(w, "en") <= wordfreq.zipf_frequency(w, lang) else None
     if lang not in SPELLCHECK:
@@ -101,7 +206,7 @@ def build(lang: str, count: int) -> list[str]:
     words: list[str] = []
     seen: set[str] = set()
     # Ask for extra so filtering still leaves `count` words.
-    for raw in wordfreq.top_n_list(lang, count * 3, wordlist="best"):
+    for raw in wordfreq.top_n_list(WORDFREQ_LANG.get(lang, lang), count * 3, wordlist="best"):
         w = fix(raw) if allowed.match(raw) else None
         if w is None or (len(w) == 1 and w not in singles) or w in seen:
             continue
@@ -113,6 +218,9 @@ def build(lang: str, count: int) -> list[str]:
 
 
 def note(lang: str) -> str:
+    if lang in HUNSPELL:
+        name = HUNSPELL[lang]
+        return HUNSPELL_NOTE.format(name=name, commit=HUNSPELL_COMMIT, license=HUNSPELL_LICENSE[name])
     if lang == "de":
         return SPELLCHECK_NOTE.replace("The choice of words", '"ss"/"ß" spelling and the choice of words')
     if lang in SPELLCHECK:

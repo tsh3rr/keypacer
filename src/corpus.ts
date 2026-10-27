@@ -1,3 +1,5 @@
+import { matchLanguage } from './languageTags';
+
 /**
  * Practice text source for one language. Drill generation reads words from
  * here rather than from a hard-coded list, so adding a language means adding
@@ -46,6 +48,8 @@ const LOADERS = new Map<string, { name: string; load: () => Promise<Corpus> }>([
   ['es', { name: 'Español', load: () => import('./corpora/es').then((m) => m.es) }],
   ['it', { name: 'Italiano', load: () => import('./corpora/it').then((m) => m.it) }],
   ['pl', { name: 'Polski', load: () => import('./corpora/pl').then((m) => m.pl) }],
+  ['pt-BR', { name: 'Português (Brasil)', load: () => import('./corpora/pt-BR').then((m) => m.ptBR) }],
+  ['pt-PT', { name: 'Português (Portugal)', load: () => import('./corpora/pt-PT').then((m) => m.ptPT) }],
 ]);
 
 const LANGUAGES: readonly Language[] = [...LOADERS].map(([language, { name }]) => ({ language, name }));
@@ -98,11 +102,12 @@ export function availableLanguages(): readonly Language[] {
  */
 export function guessLanguage(locales: readonly string[]): string {
   for (const tag of locales) {
-    const primary = tag.toLowerCase().split('-')[0];
-    if (LOADERS.has(primary)) return primary;
+    const match = matchLanguage(tag, [...LOADERS.keys()]);
+    if (match) return match;
   }
   return DEFAULT_LANGUAGE;
 }
+
 
 export function randomText(corpus: Corpus, wordCount = 30, rand: () => number = Math.random): string {
   const out: string[] = [];

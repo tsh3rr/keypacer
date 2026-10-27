@@ -34,7 +34,7 @@ Lepiej konsekwentnie ćwiczyć kwadrans codziennie niż męczyć się dwie godzi
 
 ## Dlaczego dokładność jest ważniejsza od szybkości
 
-Każdy błąd kosztuje trzy razy: zły klawisz, poprawkę i nową próbę. Do tego za każdym razem utrwalasz też sam błąd. Kto świadomie pisze trochę wolniej, ale czysto, z czasem pisze szybciej. Więcej o tym w artykule [Precyzja przed szybkością](/pl/blog/precyzja-przed-szybkoscia/).
+Każdy błąd kosztuje trzy razy: zły klawisz, poprawkę i nową próbę. Do tego za każdym razem utrwalasz też sam błąd. Kto świadomie pisze trochę wolniej, ale bezbłędnie, z czasem pisze szybciej. Więcej o tym w artykule [Precyzja przed szybkością](/pl/blog/precyzja-przed-szybkoscia/).
 
 Keypacer jest na tym oparty: po złym klawiszu zostajesz na tej samej literze, a nowy klawisz pojawia się dopiero wtedy, gdy dotychczasowe są dokładne i szybkie.
 

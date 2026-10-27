@@ -92,10 +92,13 @@ Einmal in **beiden** Projekten prüfen (die Datenbank selbst ist über `supabase
 
 Anmelden, Registrieren, Anmeldecode und Passwort-Link mit E-Mail laufen dann über eine meist unsichtbare Prüfung. Google-Anmeldung ist nicht betroffen. Solange in `vite.config.ts` kein Site Key steht, ist alles aus. Die Reihenfolge ist wichtig, sonst kann sich niemand mehr mit E-Mail anmelden:
 
-1. Cloudflare-Dashboard → **Turnstile** → **Add widget**: Name `keypacer`, **Hostname** `jeremiasz-kapek.workers.dev` (deckt auch die Vorschau-Adressen ab), später zusätzlich deine Domain. Für lokale Tests zusätzlich `localhost`. **Widget Mode**: *Managed*. **Pre-clearance**: *No*. **Create**.
-2. Den **Site Key** in `vite.config.ts` bei `TURNSTILE` für `production` und `staging` eintragen (oder Claude schicken). Er ist öffentlich. Mergen und warten, bis Cloudflare neu gebaut hat. Erst dann erscheint auch der Turnstile-Absatz in der Datenschutzerklärung.
-3. Den **Secret Key** in Supabase eintragen, zuerst Staging, nach einem Test Produktion: Projekt → **Authentication** → **Attack Protection** → **Enable Captcha protection** an → Provider **Turnstile by Cloudflare** → Secret Key → **Save**. Der Secret Key ist geheim: nicht in Code, Chat oder Screenshots.
-4. Testen: abmelden, mit E-Mail und Passwort anmelden. Klappt es nicht, Schritt 3 wieder ausschalten.
+1. Cloudflare-Dashboard → **Turnstile** → **Add widget**: Name `keypacer`. Unter **Hostnames** drei Einträge: `keypacer.com` (die Seite), `jeremiasz-kapek.workers.dev` (deckt auch die Vorschau-Builds ab, die gegen Staging laufen) und `localhost` (für lokale Tests). **Widget Mode**: *Managed*. **Pre-clearance**: *No*. **Create**. Danach zeigt Cloudflare **Site Key** und **Secret Key**.
+2. Den **Site Key** in `vite.config.ts` bei `TURNSTILE` für `production` und `staging` eintragen (oder Claude schicken). Er ist öffentlich. Mergen und warten, bis Cloudflare neu gebaut hat. Erst dann erscheint auch der Turnstile-Absatz in der Datenschutzerklärung. Ab jetzt schicken die Formulare ein Token mit, Supabase ignoriert es aber noch.
+3. Den **Secret Key** zuerst im **Staging**-Projekt eintragen: Supabase → Projekt → **Authentication** → **Attack Protection** → **Enable Captcha protection** an → Provider **Turnstile by Cloudflare** → Secret Key → **Save**. Der Secret Key ist geheim: nicht in Code, Chat oder Screenshots.
+4. Auf einer Vorschau-Adresse testen: abmelden, mit E-Mail und Passwort anmelden, ein neues Konto anlegen, „Passwort vergessen“ ausprobieren. Klappt etwas nicht, Schritt 3 wieder ausschalten.
+5. Dann dasselbe im **Produktions**-Projekt (gleicher Secret Key) und auf keypacer.com noch einmal kurz anmelden.
+
+Meldet die App „Die Prüfung, dass du kein Bot bist, hat nicht geklappt“, fehlt meist ein Hostname im Widget (Schritt 1) oder in Supabase steht ein anderer Secret Key als der zum Site Key gehörende.
 
 Die Sicherheits-Header der Seite (Content-Security-Policy usw.) stehen in `public/_headers`. Kommt ein neuer Dienst dazu (z. B. Analytics oder Captcha), muss er dort und in der Datenschutzerklärung ergänzt werden.
 

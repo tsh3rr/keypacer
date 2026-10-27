@@ -34,7 +34,7 @@ Practising consistently for a quarter of an hour every day beats struggling thro
 
 ## Why accuracy comes before speed
 
-Every mistake costs you three times: the wrong keystroke, the correction and the new attempt. On top of that, you practise the mistake every time it happens. If you deliberately type a little slower but cleanly, you'll get faster in the long run. More on this in [Accuracy before speed](/blog/precision-before-speed/).
+Every mistake costs you three times: the wrong keystroke, the correction and the new attempt. On top of that, you practise the mistake every time it happens. If you deliberately type a little slower but accurately, you'll get faster in the long run. More on this in [Accuracy before speed](/blog/precision-before-speed/).
 
 Keypacer is built around this: after a wrong key you stay on the same letter, and a new key is only added once the ones you have are accurate and quick.
 

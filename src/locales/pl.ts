@@ -146,7 +146,7 @@ export const pl: Messages = {
   'account.delete': 'Usuń konto',
   'account.deleteConfirm': 'Usunąć konto i wszystkie zapisane w nim dane z ćwiczeń? Dane na tym urządzeniu zostaną zachowane.',
   'account.deleted': 'Twoje konto zostało usunięte.',
-  'account.privacy': 'Jak przetwarzamy Twoje dane',
+  'account.privacy': 'Jak przetwarzamy twoje dane',
   'account.termsCheck': 'Akceptuję {terms}.',
   'account.termsRequired': 'Zaakceptuj regulamin, aby założyć konto.',
   'account.termsLink': 'regulamin',
@@ -264,7 +264,7 @@ export const pl: Messages = {
 
   // --- Results card ---
   'result.done': '{name} gotowe',
-  'verdict.clean': 'Czyste ćwiczenie',
+  'verdict.clean': 'Bez błędów',
   'verdict.solid': 'Solidnie',
   'verdict.slow': 'Zwolnij trochę',
   'result.wpm': 'sł./min',
@@ -440,13 +440,13 @@ export const pl: Messages = {
   'goal.dayDone': 'Cel na dziś osiągnięty: {min} min pisania. {n} z {goal} dni w tym tygodniu.',
   'goal.weekDone': 'Cel tygodniowy osiągnięty!',
   'goal.streak': { one: 'Seria: {n} tydzień.', few: 'Seria: {n} tygodnie z rzędu.', many: 'Seria: {n} tygodni z rzędu.', other: 'Seria: {n} tygodnia z rzędu.' },
-  'best.new': 'Nowy rekord osobisty: {wpm} WPM (wcześniej: {previous}).',
+  'best.new': 'Nowy rekord osobisty: {wpm} sł./min (wcześniej: {previous}).',
   'milestone.mastered': { one: 'Opanowany: {keys}. Teraz szybko i dokładnie, oznaczony ★ w Postępach.', few: 'Opanowane: {keys}. Teraz szybko i dokładnie, oznaczone ★ w Postępach.', many: 'Opanowane: {keys}. Teraz szybko i dokładnie, oznaczone ★ w Postępach.', other: 'Opanowane: {keys}. Teraz szybko i dokładnie, oznaczone ★ w Postępach.' },
   'restart.back': 'Witaj z powrotem! Umiejętności dobrze znoszą przerwę, a kilka ćwiczeń przywróci tempo.',
   'restart.month': 'Nowy miesiąc: dobry moment na nowy początek.',
   'restart.week': 'Nowy tydzień, nowy początek.',
   'restart.goal': { one: 'Twój cel: {n} dzień w tygodniu, {min} min dziennie.', few: 'Twój cel: {n} dni w tygodniu, {min} min dziennie.', many: 'Twój cel: {n} dni w tygodniu, {min} min dziennie.', other: 'Twój cel: {n} dnia w tygodniu, {min} min dziennie.' },
-  'phone.note': 'Keypacer jest stworzony do prawdziwej klawiatury i nie jest zoptymalizowany pod telefony. Mimo to możesz go tu używać.',
+  'phone.note': 'Keypacer jest stworzony z myślą o prawdziwej klawiaturze i nie jest dostosowany do telefonów. Mimo to możesz go tu używać.',
   'phone.ok': 'Rozumiem',
   'restart.close': 'Zamknij',
   // --- Practice plan (src/progressView.ts) ---
@@ -570,7 +570,7 @@ export const pl: Messages = {
   'onboarding.placedSlow':
     'Zaczynasz od początku: sześć liter, potem po jednym nowym klawiszu. Nawyk niepatrzenia na klawiaturę opłaca się najszybciej.',
   'onboarding.placedSloppy':
-    'Zaczynasz od początku, z dokładnością na pierwszym miejscu. Czyste pisanie w wolniejszym tempie szybciej buduje szybkość niż pośpiech.',
+    'Zaczynasz od początku, z dokładnością na pierwszym miejscu. Bezbłędne pisanie w wolniejszym tempie szybciej buduje szybkość niż pośpiech.',
   'onboarding.method1Title': 'Jeden nowy klawisz naraz',
   'onboarding.method1':
     'Najczęstsze litery są pierwsze, więc ćwiczenia szybko przypominają prawdziwe słowa. Nowy klawisz odblokowuje się, gdy wszystkie twoje klawisze są dokładne i szybkie.',

@@ -52,7 +52,7 @@ const SUPABASE = {
  * Protection) only after the key is here and deployed, or e-mail sign-ins
  * fail. VITE_TURNSTILE_SITE_KEY in .env.local overrides both.
  */
-const TURNSTILE = { production: '', staging: '' };
+const TURNSTILE = { production: '0x4AAAAAAFoFvDLSp3FUL7N2', staging: '0x4AAAAAAFoFvDLSp3FUL7N2' };
 
 /**
  * Sign-in by e-mail code, password reset and the address check at sign-up,

@@ -265,6 +265,22 @@ describe('afterDrill', () => {
     expect(afterDrill(ready, s, en, drill, { wpm: 20, accuracy: 0.85 }).state.paceWpm).toBe(19);
   });
 
+  it('holds pace after a clean drill that did not reach it', () => {
+    const s = { ...base, paceWpm: 20, speedWpm: 19.5 };
+    expect(afterDrill(ready, s, en, drill, { wpm: 19, accuracy: 1 }).state.paceWpm).toBe(20);
+  });
+
+  it('keeps pace near the usual speed however many clean drills come in', () => {
+    let s: CurriculumState = { ...base, paceWpm: 30 };
+    for (let i = 0; i < 100; i++) s = afterDrill(ready, s, en, drill, { wpm: 30, accuracy: 1 }).state;
+    expect(s.paceWpm).toBeLessThanOrEqual(30 * (1 + DEFAULT_DRILL_PARAMS.paceHeadroom));
+  });
+
+  it('pulls a runaway pace back toward the usual speed', () => {
+    const s = { ...base, paceWpm: 200 };
+    expect(afterDrill(ready, s, en, drill, { wpm: 30, accuracy: 1 }).state.paceWpm).toBe(32.4);
+  });
+
   it('enters recovery after two sloppy drills and leaves after three clean ones', () => {
     const sloppy = { wpm: 20, accuracy: 0.85 };
     let s = afterDrill(ready, base, en, drill, sloppy).state;

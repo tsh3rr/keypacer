@@ -272,7 +272,7 @@ export const en = {
   'result.wpm': 'WPM',
   'result.speedRecovery': 'speed does not count right now',
   'result.over': '▲ {d} over your target of {pace}',
-  'result.under': '▼ {d} under your target of {pace}',
+  'result.under': '{d} to go to your target of {pace}',
   'result.firstTry': 'right on the first try',
   'result.slips': { one: 'slip', other: 'slips' },
   'result.noSlips': 'not a single wrong key',

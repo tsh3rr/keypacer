@@ -75,6 +75,9 @@ export interface DrillParams {
   paceUpAccuracy: number;
   paceDownAccuracy: number;
   minPaceWpm: number;
+  /** Pace stays at most this share above the learner's usual speed, a moving average with this weight per drill. */
+  paceHeadroom: number;
+  speedSmoothing: number;
   /** Recovery: drills under `paceDownAccuracy` to enter, drills at `paceUpAccuracy` to leave. */
   recoveryEnter: number;
   recoveryExit: number;
@@ -135,6 +138,8 @@ export const DEFAULT_DRILL_PARAMS: Readonly<DrillParams> = Object.freeze({
   paceUpAccuracy: 0.96,
   paceDownAccuracy: 0.92,
   minPaceWpm: 8,
+  paceHeadroom: 0.08,
+  speedSmoothing: 0.3,
   recoveryEnter: 2,
   recoveryExit: 3,
   tierWindow: 5,
@@ -184,6 +189,8 @@ export interface CurriculumState {
   blockedDrills: number;
   tier: number;
   paceWpm: number;
+  /** Usual speed: moving average of drill WPM, warm-ups aside. Missing in states saved before it existed. */
+  speedWpm?: number;
   recovery: boolean;
   /** Consecutive drills under the low accuracy mark, and at or above the high one. */
   lowStreak: number;
@@ -937,9 +944,13 @@ export function afterDrill(
   // A warm-up is typed cold, so it moves neither pace nor recovery.
   if (drill.kind === 'warmup') return { state: s, changes };
 
-  // Pace: up 5% after a clean drill, down after a sloppy one.
-  if (result.accuracy >= p.paceUpAccuracy) s.paceWpm *= 1 + p.paceStep;
-  else if (result.accuracy < p.paceDownAccuracy) s.paceWpm = Math.max(p.minPaceWpm, s.paceWpm * (1 - p.paceStep));
+  // Pace: up 5% after a clean drill that reached it, down after a sloppy one, and never far above
+  // the usual speed, so accuracy alone cannot compound it out of reach.
+  const speed = s.speedWpm === undefined ? result.wpm : s.speedWpm + p.speedSmoothing * (result.wpm - s.speedWpm);
+  s.speedWpm = Math.round(speed * 10) / 10;
+  if (result.accuracy >= p.paceUpAccuracy && result.wpm >= s.paceWpm) s.paceWpm *= 1 + p.paceStep;
+  else if (result.accuracy < p.paceDownAccuracy) s.paceWpm *= 1 - p.paceStep;
+  s.paceWpm = Math.max(p.minPaceWpm, Math.min(s.paceWpm, speed * (1 + p.paceHeadroom)));
   s.paceWpm = Math.round(s.paceWpm * 10) / 10;
 
   // Recovery: enter after two sloppy drills in a row, leave after three clean ones.

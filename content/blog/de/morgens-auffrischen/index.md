@@ -1,6 +1,6 @@
 ---
 title: Morgens kurz auffrischen
-description: Warum ein paar Minuten Tipptraining am Morgen helfen, das Zehnfingersystem den ganzen Tag über zu halten.
+description: Warum ein paar Minuten Tipptraining am Morgen helfen, das Zehnfingersystem den ganzen Tag über besser zu halten.
 updated: 2026-10-28
 topic: method
 cover: cover.jpg
@@ -18,13 +18,13 @@ Eine einfache Gewohnheit hilft dagegen: morgens, bevor der Arbeitstag losgeht, e
 
 Bewegungen, die du übst, festigen sich zwischen den Übungen, zu einem großen Teil im Schlaf. In einer bekannten Studie von Matthew Walker und Kollegen (2002) tippten die Teilnehmer eine Zahlenfolge auf einer Tastatur. Nach einer Nacht Schlaf waren sie deutlich schneller als am Abend zuvor, ohne zusätzliches Üben. Wer morgens übte und abends ohne Schlaf dazwischen getestet wurde, verbesserte sich kaum.
 
-Was du gestern geübt hast, ist am Morgen also gefestigt. Es ist aber noch nicht so automatisch wie die alten Bewegungen, die du seit Jahren nutzt.
+Was du gestern geübt hast, ist am Morgen also gefestigt. Es ist aber noch nicht so automatisch wie die alten Bewegungen, die du seit Jahren nutzt. Entscheidend sind hier Regelmäßigkeit und Erholung.
 
 ## Warum die ersten Minuten zählen
 
 Nach einer Pause sind die ersten Anschläge langsamer und unsicherer. In der Bewegungsforschung heißt das Aufwärmdefizit (englisch warm-up decrement). Nach ein paar Minuten ist es verschwunden, und die Bewegungen laufen wieder so gut wie am Vortag.
 
-Ohne Auffrischen fällt diese wackelige Phase mitten in den Arbeitstag. Dann bist du unter Zeitdruck langsamer als mit deiner alten Methode, und die Versuchung ist groß, zurückzufallen. Wenn du dich morgens kurz aufwärmst, hast du die wackelige Phase schon hinter dir, bevor es darauf ankommt.
+Ohne Auffrischen fällt diese wackelige Phase mitten in den Arbeitstag. Dann bist du unter Zeitdruck langsamer als mit deiner alten Methode, und die Versuchung ist groß, zurückzufallen. Oder du bist ruckzuck zehn E-Mails und zwanzig Teams-Nachrichten weiter und hast die neue Gewohnheit, die sich gerade erst bildet, vergessen. Wenn du dich morgens kurz aufwärmst, hast du die wackelige Phase schon hinter dir, bevor es darauf ankommt, und Haltung und Körpergefühl sind präsenter.
 
 ## Der Tag als Übung
 

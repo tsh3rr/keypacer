@@ -7,6 +7,7 @@ cover: cover.jpg
 coverAlt: Tasten mit den Buchstaben f, l, o und w auf einer geschwungenen Linie
 translation: flow-erlebnis
 order: 5
+draft: true
 ---
 
 Flow nennt man den Zustand, in dem du ganz in einer Tätigkeit aufgehst. Du denkst nicht mehr darüber nach, was du tust, und die Zeit vergeht schneller als sonst. Beschrieben hat ihn der Psychologe Mihály Csíkszentmihályi, der Musiker, Sportler und Handwerker bei ihrer Arbeit beobachtet hat.

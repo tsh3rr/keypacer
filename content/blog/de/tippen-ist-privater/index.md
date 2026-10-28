@@ -7,6 +7,7 @@ cover: cover.jpg
 coverAlt: Laptop, dessen Bildschirm zur Seite hin abgedunkelt ist, daneben ein durchgestrichenes Auge
 translation: privatsphaere
 order: 6
+draft: true
 ---
 
 Im Artikel [Warum tippen lernen, wenn KI diktieren kann?](/de/blog/tippen-trotz-ki-diktat/) ging es darum, wann Diktieren hilft und wann die Tastatur besser ist. Ein Punkt verdient einen eigenen Artikel: die Privatsphäre.

@@ -8,6 +8,7 @@ coverAlt: Des touches portant les lettres f, l, o et w le long d’une ligne cou
 translation: flow-erlebnis
 translatedFrom: de
 order: 5
+draft: true
 ---
 
 On appelle flow, ou expérience optimale, l’état dans lequel on est complètement absorbé par ce qu’on fait. On ne pense plus à la manière de le faire, et le temps passe plus vite que d’habitude. Le psychologue Mihály Csíkszentmihályi l’a décrit après avoir observé des musiciens, des sportifs et des artisans au travail.

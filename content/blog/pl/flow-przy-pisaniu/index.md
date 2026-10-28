@@ -8,6 +8,7 @@ coverAlt: Klawisze z literami f, l, o i w wzdłuż falistej linii
 translation: flow-erlebnis
 translatedFrom: de
 order: 5
+draft: true
 ---
 
 Flow, czyli stan przepływu, to chwila, w której całkowicie pochłania cię to, co robisz. Przestajesz myśleć o tym, jak to robisz, a czas mija szybciej niż zwykle. Opisał go psycholog Mihály Csíkszentmihályi, obserwując przy pracy muzyków, sportowców i rzemieślników.

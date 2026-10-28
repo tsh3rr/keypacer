@@ -8,6 +8,7 @@ coverAlt: Un ordinateur portable dont l’écran s’assombrit sur le côté, à
 translation: privatsphaere
 translatedFrom: de
 order: 6
+draft: true
 ---
 
 Dans [Pourquoi apprendre à taper quand l’IA peut dicter ?](/fr/blog/taper-au-clavier-et-dictee-ia/), nous avons vu quand la dictée aide et quand le clavier fait mieux. Un point mérite son propre article : la confidentialité.

@@ -8,6 +8,7 @@ coverAlt: Tasti con le lettere f, l, o e w lungo una linea curva
 translation: flow-erlebnis
 translatedFrom: de
 order: 5
+draft: true
 ---
 
 Si chiama flow, o stato di flusso, il momento in cui sei completamente assorbito da quello che fai. Smetti di pensare a come lo fai e il tempo passa più in fretta del solito. Lo ha descritto lo psicologo Mihály Csíkszentmihályi, osservando musicisti, sportivi e artigiani al lavoro.

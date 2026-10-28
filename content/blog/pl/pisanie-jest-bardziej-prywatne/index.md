@@ -8,6 +8,7 @@ coverAlt: Laptop, którego ekran ciemnieje z jednej strony, obok przekreślone o
 translation: privatsphaere
 translatedFrom: de
 order: 6
+draft: true
 ---
 
 W artykule [Po co uczyć się pisać, skoro AI potrafi dyktować?](/pl/blog/pisanie-na-klawiaturze-a-dyktowanie-ai/) pisaliśmy o tym, kiedy dyktowanie pomaga, a kiedy lepsza jest klawiatura. Jedna sprawa zasługuje na osobny tekst: prywatność.

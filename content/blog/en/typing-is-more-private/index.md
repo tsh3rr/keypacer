@@ -8,6 +8,7 @@ coverAlt: A laptop whose screen darkens towards one side, next to a crossed-out 
 translation: privatsphaere
 translatedFrom: de
 order: 6
+draft: true
 ---
 
 In [Why learn to type when AI can take dictation?](/blog/why-learn-to-type-with-ai-dictation/) we looked at when dictation helps and when the keyboard is better. One point deserves its own article: privacy.

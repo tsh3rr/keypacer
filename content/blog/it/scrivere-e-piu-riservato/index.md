@@ -8,6 +8,7 @@ coverAlt: Un portatile il cui schermo si scurisce verso un lato, accanto a un oc
 translation: privatsphaere
 translatedFrom: de
 order: 6
+draft: true
 ---
 
 In [Perché imparare a scrivere a macchina se l’IA può dettare?](/it/blog/dattilografia-e-dettatura-ia/) abbiamo visto quando la dettatura aiuta e quando la tastiera è meglio. Un punto merita un articolo a sé: la riservatezza.

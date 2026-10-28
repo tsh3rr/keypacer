@@ -8,6 +8,7 @@ coverAlt: Keys with the letters f, l, o and w along a curved line
 translation: flow-erlebnis
 translatedFrom: de
 order: 5
+draft: true
 ---
 
 Flow is the state of being completely absorbed in what you are doing. You stop thinking about the doing, and time passes faster than usual. The psychologist Mihaly Csikszentmihalyi described it after studying musicians, athletes and craftspeople at work.

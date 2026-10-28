@@ -8,6 +8,7 @@ coverAlt: Notebook cuja tela escurece para um lado, ao lado de um olho riscado
 translation: privatsphaere
 translatedFrom: de
 order: 6
+draft: true
 ---
 
 Em [Por que aprender a digitar se a IA pode ditar?](/pt-br/blog/digitar-ou-ditar-com-ia/) vimos quando ditar ajuda e quando o teclado é melhor. Um ponto merece um artigo próprio: a privacidade.

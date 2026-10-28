@@ -269,7 +269,7 @@ export const fr: Messages = {
   'result.wpm': 'MPM',
   'result.speedRecovery': 'la vitesse ne compte pas pour l’instant',
   'result.over': '▲ {d} au-dessus de ton objectif de {pace}',
-  'result.under': '▼ {d} en dessous de ton objectif de {pace}',
+  'result.under': 'encore {d} avant ton objectif de {pace}',
   'result.firstTry': 'juste du premier coup',
   'result.slips': { one: 'faute', other: 'fautes' },
   'result.noSlips': 'pas une seule mauvaise touche',

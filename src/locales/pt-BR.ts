@@ -269,7 +269,7 @@ export const ptBR: Messages = {
   'result.wpm': 'PPM',
   'result.speedRecovery': 'a velocidade não conta agora',
   'result.over': '▲ {d} acima da sua meta de {pace}',
-  'result.under': '▼ {d} abaixo da sua meta de {pace}',
+  'result.under': 'faltam {d} para a sua meta de {pace}',
   'result.firstTry': 'certas na primeira tentativa',
   'result.slips': { one: 'deslize', other: 'deslizes' },
   'result.noSlips': 'nenhuma tecla errada',

@@ -267,7 +267,7 @@ export const it: Messages = {
   'result.wpm': 'PPM',
   'result.speedRecovery': 'la velocità per ora non conta',
   'result.over': '▲ {d} sopra il tuo obiettivo di {pace}',
-  'result.under': '▼ {d} sotto il tuo obiettivo di {pace}',
+  'result.under': 'ti mancano {d} per il tuo obiettivo di {pace}',
   'result.firstTry': 'giusti al primo colpo',
   'result.slips': { one: 'errore', other: 'errori' },
   'result.noSlips': 'nemmeno un tasto sbagliato',

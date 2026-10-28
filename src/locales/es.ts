@@ -267,7 +267,7 @@ export const es: Messages = {
   'result.wpm': 'PPM',
   'result.speedRecovery': 'la velocidad no cuenta por ahora',
   'result.over': '▲ {d} por encima de tu objetivo de {pace}',
-  'result.under': '▼ {d} por debajo de tu objetivo de {pace}',
+  'result.under': 'te faltan {d} para tu objetivo de {pace}',
   'result.firstTry': 'bien al primer intento',
   'result.slips': { one: 'fallo', other: 'fallos' },
   'result.noSlips': 'ni una sola tecla equivocada',

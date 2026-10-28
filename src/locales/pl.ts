@@ -270,7 +270,7 @@ export const pl: Messages = {
   'result.wpm': 'sł./min',
   'result.speedRecovery': 'szybkość na razie się nie liczy',
   'result.over': '▲ {d} powyżej twojego celu {pace}',
-  'result.under': '▼ {d} poniżej twojego celu {pace}',
+  'result.under': 'brakuje {d} do twojego celu {pace}',
   'result.firstTry': 'dobrze za pierwszym razem',
   'result.slips': { one: 'pomyłka', few: 'pomyłki', many: 'pomyłek', other: 'pomyłki' },
   'result.noSlips': 'ani jednego złego klawisza',

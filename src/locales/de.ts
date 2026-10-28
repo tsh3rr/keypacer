@@ -266,7 +266,7 @@ export const de: Messages = {
   'result.wpm': 'WpM',
   'result.speedRecovery': 'Tempo zählt gerade nicht',
   'result.over': '▲ {d} über deinem Ziel von {pace}',
-  'result.under': '▼ {d} unter deinem Ziel von {pace}',
+  'result.under': 'noch {d} bis zu deinem Ziel von {pace}',
   'result.firstTry': 'beim ersten Versuch richtig',
   'result.slips': { one: 'Fehler', other: 'Fehler' },
   'result.noSlips': 'keine einzige falsche Taste',

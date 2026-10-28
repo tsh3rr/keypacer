@@ -20,7 +20,7 @@ Dieser Artikel kommt von Keypacer selbst. Wir haben versucht, die anderen Traine
 | Trainer | Ansatz | Passt sich an deine Fehler an | Gut für |
 | --- | --- | --- | --- |
 | Keypacer | Kurs, der Taste für Taste aufbaut und jede Übung aus deinen langsamsten Tasten und Buchstabenpaaren erzeugt | ja, nach Fehlern und Zeit pro Anschlag | Zehnfingersystem lernen und gezielt schneller werden |
-| keybr | Neue Buchstaben kommen dazu, sobald die bisherigen schnell genug sind, geübt wird mit erfundenen Wörtern | ja, nach Tempo pro Buchstabe | Einstieg mit wenigen Tasten, viel Wiederholung |
+| keybr | Neue Buchstaben kommen dazu, sobald die bisherigen schnell genug sind, im Standardmodus mit erfundenen Wörtern | ja, nach Tempo pro Buchstabe | Einstieg mit wenigen Tasten, viel Wiederholung |
 | TIPP10 | Lektionen in fester Reihenfolge, Zeichen mit vielen Fehlern kommen öfter dran | ja, nach Fehlern | Schule und Büro, auch als Programm zum Installieren |
 | Monkeytype | Tipptest mit vielen Einstellungen, kein Kurs | nein | Tempo messen und mit anderen vergleichen, wenn du schon blind tippst |
 | TypingClub | Geführter Kurs mit vielen kurzen Lektionen und Spielelementen | kaum, der Weg ist im Grundsatz für alle gleich | Kinder und Schulklassen |
@@ -36,7 +36,7 @@ Fast jeder Trainer zählt Fehler. Spannend ist, was er daraus macht.
 
 ## Echte Wörter oder erfundene?
 
-keybr baut Übungen aus erfundenen Wörtern, die nur die schon gelernten Buchstaben enthalten. Dadurch kannst du schon mit wenigen Tasten viel üben. Keypacer macht das am Anfang ähnlich: Solange erst wenige Buchstaben freigeschaltet sind, mischt es erfundene Wörter unter die echten, und mit jedem neuen Buchstaben werden es mehr echte Wörter. TIPP10 setzt von Anfang an auf echte Wörter und Sätze. Echte Wörter fühlen sich näher am Alltag an, weil sich deine Finger die häufigen Wortbausteine deiner Sprache merken.
+keybr baut seine Übungen im Standardmodus aus erfundenen Wörtern, die nur die schon gelernten Buchstaben enthalten. Dadurch kannst du schon mit wenigen Tasten viel üben. Wer möchte, kann dort auch mit echten Wörtern oder eigenen Texten üben. Keypacer macht das am Anfang ähnlich: Solange erst wenige Buchstaben freigeschaltet sind, mischt es erfundene Wörter unter die echten, und mit jedem neuen Buchstaben werden es mehr echte Wörter. TIPP10 setzt von Anfang an auf echte Wörter und Sätze. Echte Wörter fühlen sich näher am Alltag an, weil sich deine Finger die häufigen Wortbausteine deiner Sprache merken.
 
 ## Sprache und Tastaturlayout
 

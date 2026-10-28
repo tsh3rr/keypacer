@@ -21,7 +21,7 @@ This article comes from Keypacer itself. We have tried to describe the other tra
 | Trainer | Approach | Adapts to your mistakes | Good for |
 | --- | --- | --- | --- |
 | Keypacer | A course that builds up key by key and creates every drill from your slowest keys and letter pairs | yes, by errors and time per keystroke | learning to touch type and getting faster in a targeted way |
-| keybr | New letters join once the previous ones are fast enough, practice uses made-up words | yes, by speed per letter | starting with a few keys and lots of repetition |
+| keybr | New letters join once the previous ones are fast enough, by default with made-up words | yes, by speed per letter | starting with a few keys and lots of repetition |
 | TIPP10 | Lessons in a fixed order, characters with many errors come up more often | yes, by errors | school and office, also as a program to install |
 | Monkeytype | A typing test with many settings, not a course | no | measuring speed and comparing with others once you already touch type |
 | TypingClub | A guided course with many short lessons and game elements | hardly, the path is basically the same for everyone | children and school classes |
@@ -37,7 +37,7 @@ Almost every trainer counts errors. What matters is what it does with them.
 
 ## Real words or made-up ones?
 
-keybr builds drills from made-up words that only contain the letters you have already learned. That lets you practise a lot even with just a few keys. Keypacer starts out similarly: while only a few letters are unlocked, it mixes made-up words in with real ones, and each new letter brings in more real words. TIPP10 uses real words and sentences from the start. Real words feel closer to everyday typing, because your fingers learn the common building blocks of your language.
+By default, keybr builds drills from made-up words that only contain the letters you have already learned. That lets you practise a lot even with just a few keys. You can also switch it to real words or your own texts. Keypacer starts out similarly: while only a few letters are unlocked, it mixes made-up words in with real ones, and each new letter brings in more real words. TIPP10 uses real words and sentences from the start. Real words feel closer to everyday typing, because your fingers learn the common building blocks of your language.
 
 ## Language and keyboard layout
 

@@ -1,6 +1,5 @@
 import { blogPath, postPath } from '../blog/render.ts';
 import { postsIn, type Post } from '../blog/posts.ts';
-import { SOURCE_URL } from './brand.ts';
 import { COPY, LANDING_LANGUAGES, landingPath } from './content.ts';
 
 /**
@@ -30,7 +29,6 @@ export function llmsTxt(site: string, posts: Post[] = []): string {
   const de = articles('de');
   sections.push(`## Optional\n\n${[
     ...de,
-    line('Source code', SOURCE_URL, 'Keypacer on GitHub'),
     line('Privacy policy', `${site}/datenschutz`, 'in German'),
   ].join('\n')}`);
   return `${sections.join('\n\n')}\n`;

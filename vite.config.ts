@@ -4,6 +4,7 @@ import { defineConfig, loadEnv, type Plugin } from 'vite';
 import { checkPosts, featuredPosts, parsePost, postsIn, publishedPosts, type Post } from './src/blog/posts.ts';
 import { blogFeed, blogPath, blogSitemapUrls, postPath, renderBlogIndex, renderPost } from './src/blog/render.ts';
 import { LANDING_LANGUAGES, type LandingLanguage } from './src/landing/content.ts';
+import { llmsTxt } from './src/landing/llms.ts';
 import { renderLanding, robotsTxt, sitemapXml, umamiTag } from './src/landing/render.ts';
 
 /**
@@ -34,6 +35,8 @@ function landing(production: boolean, umami: string, blog: Blog): Plugin {
     generateBundle() {
       this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemapXml(SITE_URL, blogSitemapUrls(blog.posts(), SITE_URL)) });
       this.emitFile({ type: 'asset', fileName: 'robots.txt', source: robotsTxt(SITE_URL, production) });
+      // A plain summary of the site for AI assistants and AI search (src/landing/llms.ts).
+      this.emitFile({ type: 'asset', fileName: 'llms.txt', source: llmsTxt(SITE_URL, blog.posts()) });
     },
   };
 }

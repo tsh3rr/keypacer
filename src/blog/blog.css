@@ -128,3 +128,28 @@
   .bl-prose table { display: block; overflow-x: auto; font-size: 0.9rem; }
   .bl-prose th, .bl-prose td { padding: 8px; }
 }
+
+/* A YouTube video (posts.ts, video.ts): our own box until the reader clicks it. */
+.bl-video { margin: 1.6em 0; }
+.bl-video-box, .bl-video-frame {
+  display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--card-lift);
+}
+.bl-video-box {
+  position: relative; display: grid; place-content: center; justify-items: center; gap: 10px; padding: 20px; text-align: center;
+  background: linear-gradient(160deg, #2b3350, #161b2e); color: #fff; text-decoration: none;
+}
+.bl-video-box:hover .bl-video-play, .bl-video-box:focus-visible .bl-video-play { transform: scale(1.06); }
+.bl-video-play {
+  width: 68px; height: 48px; border-radius: 14px; background: #e62117; transition: transform 0.12s ease-out;
+  position: relative;
+}
+.bl-video-play::after {
+  content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-35%, -50%);
+  border-style: solid; border-width: 10px 0 10px 17px; border-color: transparent transparent transparent #fff;
+}
+.bl-prose .bl-video-box { color: #fff; text-decoration: none; }
+.bl-video-label { font-weight: 700; font-size: 1rem; }
+.bl-video-title { font-size: 0.9rem; color: rgb(255 255 255 / 0.75); max-width: 30rem; text-wrap: balance; }
+.bl-video-frame { border: 0; background: #000; }
+.bl-video figcaption { margin-top: 8px; font-size: 13px; line-height: 1.5; color: var(--muted); }
+.bl-video figcaption a { color: var(--accent); }

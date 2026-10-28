@@ -57,6 +57,22 @@ describe('reading an article', () => {
     expect(() => parsePost(source({}, '[klick](javascript:alert(1))'))).toThrow('not allowed');
   });
 
+  it('turns a youtube block into a box that loads nothing from YouTube until clicked', () => {
+    const p = parsePost(source({}, '```youtube\n1ArVtCQqQRE\nHow I Type REALLY Fast · Ali Abdaal\n```'));
+    expect(p.video).toBe(true);
+    expect(p.html).toContain('data-youtube="1ArVtCQqQRE"');
+    expect(p.html).toContain('href="https://www.youtube.com/watch?v=1ArVtCQqQRE"');
+    expect(p.html).toContain('Video laden');
+    expect(p.html).not.toMatch(/<iframe|<img|ytimg|youtube-nocookie/);
+    expect(parsePost(source()).video).toBe(false);
+    expect(parsePost(source({}, '```js\nlet x\n```')).html).toContain('<code class="language-js">');
+  });
+
+  it('refuses a youtube block without a valid id or a title', () => {
+    expect(() => parsePost(source({}, '```youtube\nhttps://youtu.be/1ArVtCQqQRE\nTitel\n```'))).toThrow('id');
+    expect(() => parsePost(source({}, '```youtube\n1ArVtCQqQRE\n```'))).toThrow('title');
+  });
+
   it('gives headings ids, and keeps the title the only top heading', () => {
     expect(parsePost(source({}, '## Warum Genauigkeit vor Tempo kommt')).html).toContain('<h2 id="warum-genauigkeit-vor-tempo-kommt">');
     expect(() => parsePost(source({}, '# Noch ein Titel'))).toThrow('##');

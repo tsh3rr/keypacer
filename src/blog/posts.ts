@@ -1,7 +1,7 @@
 import { Marked, type Tokens } from 'marked';
 import { parse as parseYaml } from 'yaml';
 import { LANDING_LANGUAGES, type LandingLanguage } from '../landing/content.ts';
-import { TOPICS, type Topic } from './copy.ts';
+import { BLOG_COPY, TOPICS, type Topic } from './copy.ts';
 import { imageSize } from './imageSize.ts';
 
 /**
@@ -45,6 +45,8 @@ export interface Post {
   minutes: number;
   /** Every picture the article uses, the cover included. */
   pictures: Picture[];
+  /** Whether the article embeds a video, so its page loads src/blog/video.ts. */
+  video: boolean;
 }
 
 export interface PostSource {
@@ -83,8 +85,36 @@ function picture(src: PostSource, file: string, where: string): Picture {
   return { file, ...size };
 }
 
-function renderMarkdown(src: PostSource, where: string): { html: string; pictures: Picture[] } {
+const YOUTUBE_ID = /^[\w-]{11}$/;
+
+/**
+ * A YouTube video, written as a code block:
+ *
+ *     ```youtube
+ *     1ArVtCQqQRE
+ *     Title of the video · Channel
+ *     ```
+ *
+ * The page shows only a box with our own text; nothing is loaded from YouTube
+ * until the reader clicks it (src/blog/video.ts swaps in the player from
+ * youtube-nocookie.com). Without the script the box is a plain link to the video.
+ */
+function youtube(lang: LandingLanguage, text: string, where: string): string {
+  const [id = '', caption = ''] = text.split('\n').map((l) => l.trim());
+  if (!YOUTUBE_ID.test(id)) throw new PostError(`${where}: a youtube block starts with the video's id (the 11 characters after watch?v=), not "${id}"`);
+  if (!caption) throw new PostError(`${where}: the youtube block ${id} needs a second line with the video's title`);
+  const v = BLOG_COPY[lang].video;
+  const watch = `https://www.youtube.com/watch?v=${id}`;
+  return `<figure class="bl-video" data-youtube="${id}" data-title="${esc(caption)}">
+<a class="bl-video-box" href="${watch}" rel="noopener"><span class="bl-video-play" aria-hidden="true"></span><span class="bl-video-label">${esc(v.play)}</span><span class="bl-video-title">${esc(caption)}</span></a>
+<figcaption>${esc(v.note)} <a href="/datenschutz?lang=${lang}">${esc(v.privacy)}</a> · <a href="${watch}" rel="noopener">${esc(v.watch)}</a></figcaption>
+</figure>
+`;
+}
+
+function renderMarkdown(src: PostSource, where: string): { html: string; pictures: Picture[]; video: boolean } {
   const pictures: Picture[] = [];
+  let video = false;
   const marked = new Marked({ gfm: true });
   marked.use({
     renderer: {
@@ -103,6 +133,11 @@ function renderMarkdown(src: PostSource, where: string): { html: string; picture
         pictures.push(p);
         return `<img src="${esc(p.file)}" width="${p.width}" height="${p.height}" alt="${esc(text)}"${title ? ` title="${esc(title)}"` : ''} loading="lazy" decoding="async" />`;
       },
+      code({ text, lang }: Tokens.Code) {
+        if (lang?.trim() !== 'youtube') return false;
+        video = true;
+        return youtube(src.lang, text, where);
+      },
       link({ href, title, tokens }: Tokens.Link) {
         if (!safeLink(href)) throw new PostError(`${where}: the link "${href}" is not allowed`);
         const external = /^https?:\/\//i.test(href);
@@ -111,7 +146,7 @@ function renderMarkdown(src: PostSource, where: string): { html: string; picture
     },
   });
   const html = marked.parse(src.markdown, { async: false });
-  return { html, pictures };
+  return { html, pictures, video };
 }
 
 /** Splits index.md into its front matter (between --- lines) and the text. */
@@ -173,7 +208,7 @@ export function parsePost(src: PostSource): Post {
   if (coverFile && !coverAlt) throw fail('"coverAlt" must describe the cover picture');
   const cover = coverFile ? { ...picture(src, coverFile, where), alt: coverAlt! } : undefined;
 
-  const { html, pictures } = renderMarkdown({ ...src, markdown: body }, where);
+  const { html, pictures, video } = renderMarkdown({ ...src, markdown: body }, where);
   const words = body.replace(/[#*_`>|[\]()!-]/g, ' ').split(/\s+/).filter(Boolean).length;
 
   return {
@@ -193,6 +228,7 @@ export function parsePost(src: PostSource): Post {
     html,
     minutes: Math.max(1, Math.round(words / 200)),
     pictures: cover ? [cover, ...pictures.filter((p) => p.file !== cover.file)] : pictures,
+    video,
   };
 }
 

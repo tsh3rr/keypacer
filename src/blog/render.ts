@@ -8,8 +8,9 @@ import { postsIn, translationsOf, type Post } from './posts.ts';
  * Builds the blog's pages at build time (the blog plugin in vite.config.ts):
  * an overview per language, one page per article, an RSS feed per language,
  * and the blog's part of the sitemap. Like the landing pages they are plain
- * HTML with no script of their own; to-app.js is left out on purpose, so
- * people who already use the trainer can read the articles.
+ * HTML with no script of their own (except video.ts on an article with a
+ * video); to-app.js is left out on purpose, so people who already use the
+ * trainer can read the articles.
  */
 
 /** Address of a language's overview: /blog/, /de/blog/, … */
@@ -65,6 +66,8 @@ interface Head {
   type: 'website' | 'article';
   extra?: string;
   noindex?: boolean;
+  /** Scripts the page needs (an article with a video loads src/blog/video.ts). */
+  scripts?: string[];
   structured: unknown[];
 }
 
@@ -94,7 +97,8 @@ function page(h: Head, chrome: Chrome, main: string, umami: string): string {
     <meta property="og:image:height" content="${image.height}" />
     <meta property="og:locale" content="${c.ogLocale}" />${h.extra ?? ''}
     <meta name="twitter:card" content="summary_large_image" />
-    ${headLinks(umami, ['/src/landing/landing.css', '/src/blog/blog.css'])}
+    ${headLinks(umami, ['/src/landing/landing.css', '/src/blog/blog.css'])}${(h.scripts ?? []).map((src) => `
+    <script type="module" src="${src}"></script>`).join('')}
     <script type="application/ld+json">${jsonBlock(h.structured)}</script>
   </head>
   <body class="lp">
@@ -236,6 +240,7 @@ ${post.html}
     image,
     type: 'article',
     noindex: post.draft,
+    scripts: post.video ? ['/src/blog/video.ts'] : [],
     extra: `
     <meta property="article:modified_time" content="${post.updated}" />
     <meta property="article:section" content="${esc(b.topics[post.topic])}" />`,

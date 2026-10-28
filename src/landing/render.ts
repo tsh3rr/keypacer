@@ -1,4 +1,4 @@
-import { BRAND_MARK } from './brand.ts';
+import { BRAND_MARK, SOURCE_URL } from './brand.ts';
 import { BLOG_COPY } from '../blog/copy.ts';
 import { blogPath, blogTeaser } from '../blog/render.ts';
 import type { Post } from '../blog/posts.ts';
@@ -277,6 +277,9 @@ export function renderLanding(lang: LandingLanguage, site: string, umami = '', p
       operatingSystem: 'Any (web browser)',
       inLanguage: lang,
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+      // What AI assistants and search engines can quote when they compare trainers.
+      featureList: [...c.method.items, ...c.features.items].map((f) => f.title),
+      sameAs: [SOURCE_URL],
     },
     {
       '@context': 'https://schema.org',

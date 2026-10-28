@@ -93,23 +93,34 @@ const YOUTUBE_ID = /^[\w-]{11}$/;
  *     ```youtube
  *     1ArVtCQqQRE
  *     Title of the video · Channel
+ *     poster.jpg
  *     ```
+ *
+ * The third line is optional: a picture in the article's folder shown in the
+ * box, so it looks like the video before it plays. It is served from this
+ * site like any other picture of the article.
  *
  * The page shows only a box with our own text; nothing is loaded from YouTube
  * until the reader clicks it (src/blog/video.ts swaps in the player from
  * youtube-nocookie.com). Without the script the box is a plain link to the video.
  */
-function youtube(lang: LandingLanguage, text: string, where: string): string {
-  const [id = '', caption = ''] = text.split('\n').map((l) => l.trim());
+function youtube(src: PostSource, text: string, where: string): { html: string; poster?: Picture } {
+  const [id = '', caption = '', file = ''] = text.split('\n').map((l) => l.trim());
   if (!YOUTUBE_ID.test(id)) throw new PostError(`${where}: a youtube block starts with the video's id (the 11 characters after watch?v=), not "${id}"`);
   if (!caption) throw new PostError(`${where}: the youtube block ${id} needs a second line with the video's title`);
+  const poster = file ? picture(src, file, where) : undefined;
+  const lang = src.lang;
   const v = BLOG_COPY[lang].video;
   const watch = `https://www.youtube.com/watch?v=${id}`;
-  return `<figure class="bl-video" data-youtube="${id}" data-title="${esc(caption)}">
-<a class="bl-video-box" href="${watch}" rel="noopener"><span class="bl-video-play" aria-hidden="true"></span><span class="bl-video-label">${esc(v.play)}</span><span class="bl-video-title">${esc(caption)}</span></a>
+  const img = poster
+    ? `<img class="bl-video-poster" src="${esc(poster.file)}" width="${poster.width}" height="${poster.height}" alt="" loading="lazy" decoding="async" />`
+    : '';
+  const html = `<figure class="bl-video" data-youtube="${id}" data-title="${esc(caption)}">
+<a class="bl-video-box${poster ? ' bl-video-has-poster' : ''}" href="${watch}" rel="noopener">${img}<span class="bl-video-play" aria-hidden="true"></span><span class="bl-video-label">${esc(v.play)}</span><span class="bl-video-title">${esc(caption)}</span></a>
 <figcaption>${esc(v.note)} <a href="/datenschutz?lang=${lang}">${esc(v.privacy)}</a> · <a href="${watch}" rel="noopener">${esc(v.watch)}</a></figcaption>
 </figure>
 `;
+  return { html, poster };
 }
 
 function renderMarkdown(src: PostSource, where: string): { html: string; pictures: Picture[]; video: boolean } {
@@ -136,7 +147,9 @@ function renderMarkdown(src: PostSource, where: string): { html: string; picture
       code({ text, lang }: Tokens.Code) {
         if (lang?.trim() !== 'youtube') return false;
         video = true;
-        return youtube(src.lang, text, where);
+        const { html, poster } = youtube(src, text, where);
+        if (poster) pictures.push(poster);
+        return html;
       },
       link({ href, title, tokens }: Tokens.Link) {
         if (!safeLink(href)) throw new PostError(`${where}: the link "${href}" is not allowed`);

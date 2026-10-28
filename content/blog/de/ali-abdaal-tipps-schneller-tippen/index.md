@@ -15,6 +15,7 @@ Ali Abdaal war Arzt, bevor er zu einem der bekanntesten YouTuber für Produktivi
 ```youtube
 1ArVtCQqQRE
 How I Type REALLY Fast (156 Words per Minute) · Ali Abdaal
+video.jpg
 ```
 
 Hier sind seine Tipps, jeweils mit unserer Einordnung. Bei sieben sind wir ganz bei ihm, bei einem sehen wir es anders.
@@ -29,7 +30,7 @@ Statt die Rücktaste zehnmal zu drücken, löschst du ein ganzes Wort auf einmal
 
 Ali misst sein Tempo regelmäßig mit kurzen Tests von einer Minute. So sieht er, ob er vorankommt.
 
-**Unsere Einordnung:** Messen motiviert. Achte aber nicht nur auf die Wörter pro Minute, sondern auch auf die Fehler. Ein Test, der sofort korrigierte Fehler nicht zählt, zeigt ein schöneres Bild als der Alltag. Warum das so ist, steht in [Präzision vor Tempo](/de/blog/praezision-vor-tempo/).
+**Unsere Einordnung:** Messen motiviert. Achte aber nicht nur auf die Wörter pro Minute, sondern auch auf die Fehler. Warum das so ist, steht in [Präzision vor Tempo](/de/blog/praezision-vor-tempo/).
 
 ## 3. Schwache Tasten gezielt üben
 

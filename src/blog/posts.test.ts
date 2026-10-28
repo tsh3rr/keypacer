@@ -68,6 +68,14 @@ describe('reading an article', () => {
     expect(parsePost(source({}, '```js\nlet x\n```')).html).toContain('<code class="language-js">');
   });
 
+  it('shows a poster from the article folder in the youtube box', () => {
+    const p = parsePost(source({}, '```youtube\n1ArVtCQqQRE\nHow I Type REALLY Fast · Ali Abdaal\nvideo.png\n```', { files: { 'video.png': png() } }));
+    expect(p.html).toContain('<img class="bl-video-poster" src="video.png" width="1200" height="675" alt=""');
+    expect(p.html).not.toMatch(/ytimg|youtube-nocookie/);
+    expect(p.pictures.map((x) => x.file)).toContain('video.png');
+    expect(() => parsePost(source({}, '```youtube\n1ArVtCQqQRE\nTitel\nfehlt.png\n```'))).toThrow('not in the folder');
+  });
+
   it('refuses a youtube block without a valid id or a title', () => {
     expect(() => parsePost(source({}, '```youtube\nhttps://youtu.be/1ArVtCQqQRE\nTitel\n```'))).toThrow('id');
     expect(() => parsePost(source({}, '```youtube\n1ArVtCQqQRE\n```'))).toThrow('title');

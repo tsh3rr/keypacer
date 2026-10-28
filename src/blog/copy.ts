@@ -36,7 +36,10 @@ export interface BlogCopy {
   /** The box at the end of every article. */
   cta: { title: string; text: string; button: string };
   related: string;
-  /** A YouTube video in an article: nothing loads from YouTube until the reader clicks (see src/blog/video.ts). */
+  /**
+   * A YouTube video in an article: nothing loads from YouTube until the reader clicks (see src/blog/video.ts).
+   * The note runs on into the link to the privacy policy: "… Mehr dazu in der" + "Datenschutzerklärung".
+   */
   video: { play: string; note: string; privacy: string; watch: string };
   topics: Record<Topic, string>;
 }
@@ -68,7 +71,7 @@ export const BLOG_COPY: Record<LandingLanguage, BlogCopy> = {
       button: 'Practise in the trainer',
     },
     related: 'Keep reading',
-    video: { play: 'Load video', note: 'Clicking loads the video from YouTube (Google), which then receives your IP address and usage data.', privacy: 'Privacy policy', watch: 'Watch on YouTube' },
+    video: { play: 'Load video', note: 'The video loads from YouTube only once you click. More in our', privacy: 'privacy policy', watch: 'Watch on YouTube' },
     topics: { start: 'Getting started', method: 'Method', keyboard: 'Keyboard', knowledge: 'Background', tips: 'Tips', health: 'Health' },
   },
   de: {
@@ -97,7 +100,7 @@ export const BLOG_COPY: Record<LandingLanguage, BlogCopy> = {
       button: 'Jetzt im Trainer üben',
     },
     related: 'Weiterlesen',
-    video: { play: 'Video laden', note: 'Mit dem Klick wird das Video von YouTube (Google) geladen. Dabei erhält YouTube deine IP-Adresse und Nutzungsdaten.', privacy: 'Datenschutzerklärung', watch: 'Auf YouTube ansehen' },
+    video: { play: 'Video laden', note: 'Das Video lädt erst, wenn du klickst, und kommt dann von YouTube. Mehr dazu in der', privacy: 'Datenschutzerklärung', watch: 'Auf YouTube ansehen' },
     topics: { start: 'Einstieg', method: 'Methode', keyboard: 'Tastatur', knowledge: 'Wissen', tips: 'Tipps', health: 'Gesundheit' },
   },
   es: {
@@ -126,7 +129,7 @@ export const BLOG_COPY: Record<LandingLanguage, BlogCopy> = {
       button: 'Practicar en el entrenador',
     },
     related: 'Sigue leyendo',
-    video: { play: 'Cargar el vídeo', note: 'Al hacer clic, el vídeo se carga desde YouTube (Google), que recibe tu dirección IP y datos de uso.', privacy: 'Política de privacidad', watch: 'Ver en YouTube' },
+    video: { play: 'Cargar el vídeo', note: 'El vídeo se carga desde YouTube solo cuando haces clic. Más información en la', privacy: 'política de privacidad', watch: 'Ver en YouTube' },
     topics: { start: 'Primeros pasos', method: 'Método', keyboard: 'Teclado', knowledge: 'Saber', tips: 'Consejos', health: 'Salud' },
   },
   fr: {
@@ -155,7 +158,7 @@ export const BLOG_COPY: Record<LandingLanguage, BlogCopy> = {
       button: 'S’entraîner maintenant',
     },
     related: 'À lire aussi',
-    video: { play: 'Charger la vidéo', note: 'En cliquant, la vidéo est chargée depuis YouTube (Google), qui reçoit alors ton adresse IP et des données d’utilisation.', privacy: 'Politique de confidentialité', watch: 'Voir sur YouTube' },
+    video: { play: 'Charger la vidéo', note: 'La vidéo se charge depuis YouTube seulement quand tu cliques. Plus d’infos dans la', privacy: 'politique de confidentialité', watch: 'Voir sur YouTube' },
     topics: { start: 'Premiers pas', method: 'Méthode', keyboard: 'Clavier', knowledge: 'Savoir', tips: 'Astuces', health: 'Santé' },
   },
   it: {
@@ -184,7 +187,7 @@ export const BLOG_COPY: Record<LandingLanguage, BlogCopy> = {
       button: 'Esercitati ora',
     },
     related: 'Continua a leggere',
-    video: { play: 'Carica il video', note: 'Con il clic il video viene caricato da YouTube (Google), che riceve il tuo indirizzo IP e dati di utilizzo.', privacy: 'Informativa sulla privacy', watch: 'Guarda su YouTube' },
+    video: { play: 'Carica il video', note: 'Il video si carica da YouTube solo quando fai clic. Maggiori dettagli nella nostra', privacy: 'informativa sulla privacy', watch: 'Guarda su YouTube' },
     topics: { start: 'Primi passi', method: 'Metodo', keyboard: 'Tastiera', knowledge: 'Approfondimenti', tips: 'Consigli', health: 'Salute' },
   },
   pl: {
@@ -213,7 +216,7 @@ export const BLOG_COPY: Record<LandingLanguage, BlogCopy> = {
       button: 'Ćwicz w trenerze',
     },
     related: 'Czytaj dalej',
-    video: { play: 'Wczytaj film', note: 'Po kliknięciu film wczyta się z YouTube (Google), który otrzyma wtedy Twój adres IP i dane o korzystaniu.', privacy: 'Polityka prywatności', watch: 'Obejrzyj na YouTube' },
+    video: { play: 'Wczytaj film', note: 'Film wczyta się z YouTube dopiero po kliknięciu. Więcej w', privacy: 'polityce prywatności', watch: 'Obejrzyj na YouTube' },
     topics: { start: 'Na początek', method: 'Metoda', keyboard: 'Klawiatura', knowledge: 'Wiedza', tips: 'Porady', health: 'Zdrowie' },
   },
   'pt-BR': {
@@ -242,7 +245,7 @@ export const BLOG_COPY: Record<LandingLanguage, BlogCopy> = {
       button: 'Praticar no treinador',
     },
     related: 'Continue lendo',
-    video: { play: 'Carregar o vídeo', note: 'Ao clicar, o vídeo é carregado do YouTube (Google), que recebe seu endereço IP e dados de uso.', privacy: 'Política de privacidade', watch: 'Assistir no YouTube' },
+    video: { play: 'Carregar o vídeo', note: 'O vídeo só carrega do YouTube quando você clica. Saiba mais na', privacy: 'política de privacidade', watch: 'Assistir no YouTube' },
     topics: { start: 'Primeiros passos', method: 'Método', keyboard: 'Teclado', knowledge: 'Conhecimento', tips: 'Dicas', health: 'Saúde' },
   },
   'pt-PT': {
@@ -271,7 +274,7 @@ export const BLOG_COPY: Record<LandingLanguage, BlogCopy> = {
       button: 'Praticar no treinador',
     },
     related: 'Continua a ler',
-    video: { play: 'Carregar o vídeo', note: 'Ao clicar, o vídeo é carregado a partir do YouTube (Google), que recebe o teu endereço IP e dados de utilização.', privacy: 'Política de privacidade', watch: 'Ver no YouTube' },
+    video: { play: 'Carregar o vídeo', note: 'O vídeo só é carregado a partir do YouTube quando clicas. Sabe mais na', privacy: 'política de privacidade', watch: 'Ver no YouTube' },
     topics: { start: 'Primeiros passos', method: 'Método', keyboard: 'Teclado', knowledge: 'Conhecimento', tips: 'Dicas', health: 'Saúde' },
   },
 };

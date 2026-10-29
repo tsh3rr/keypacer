@@ -34,7 +34,7 @@ Una seconda fonte, più rara, è il tasto speculare sull'altra mano. Ai principi
 
 Gli errori del tasto vicino mostrano che un dito non ha ancora un percorso fisso verso il tasto. Stima la posizione invece di conoscerla.
 
-## Inversioni: quando una mano sorpassa l'altra
+## Inversioni: quando le dita si sorpassano
 
 "dle" invece di "del", "ceh" invece di "che": le inversioni sembrano distrazioni, ma seguono una regola chiara. Nei dattilografi esperti, secondo Grudin, circa l'80 % avviene tra le due mani. Le due lettere stanno cioè su lati diversi della tastiera.
 

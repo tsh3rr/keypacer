@@ -34,7 +34,7 @@ A second, rarer source is the mirror key on the other hand. Beginners sometimes 
 
 Neighbouring-key errors show that a finger doesn't yet have a fixed path to the key. It estimates the position instead of knowing it.
 
-## Transpositions: when your hands overtake each other
+## Transpositions: when your fingers overtake each other
 
 "teh" instead of "the", "adn" instead of "and": transpositions look like careless mistakes, but they follow a clear rule. For skilled typists, about 80 percent of them happen between the hands, according to Grudin. So the two letters are on different sides of the keyboard.
 

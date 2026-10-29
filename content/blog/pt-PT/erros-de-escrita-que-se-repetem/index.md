@@ -34,7 +34,7 @@ Uma segunda fonte, mais rara, é a tecla simétrica na outra mão. Aos principia
 
 Os erros de tecla vizinha mostram que o dedo ainda não tem um caminho fixo até à tecla. Estima a posição em vez de a conhecer.
 
-## Inversões: quando uma mão ultrapassa a outra
+## Inversões: quando os dedos se ultrapassam
 
 "qeu" em vez de "que", "ocm" em vez de "com": as inversões parecem distrações, mas seguem uma regra clara. Nos dactilógrafos experientes, segundo Grudin, cerca de 80 % acontecem entre as duas mãos. Ou seja, as duas letras ficam em lados diferentes do teclado.
 

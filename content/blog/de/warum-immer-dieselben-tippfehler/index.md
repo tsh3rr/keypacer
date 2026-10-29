@@ -33,7 +33,7 @@ Eine zweite, seltenere Quelle sind die Gegenstücke auf der anderen Hand. Bei An
 
 Nachbartasten-Fehler zeigen, dass ein Finger noch keinen festen Weg zur Taste hat. Er schätzt die Position, statt sie zu kennen.
 
-## Vertauschungen: wenn die Hände sich überholen
+## Vertauschungen: wenn die Finger sich überholen
 
 „dei“ statt „die“, „udn“ statt „und“: Vertauschungen wirken wie Flüchtigkeitsfehler, folgen aber einer klaren Regel. Bei geübten Schreibkräften passieren laut Grudin rund 80 Prozent davon zwischen den Händen. Die beiden Buchstaben liegen also auf verschiedenen Seiten der Tastatur.
 

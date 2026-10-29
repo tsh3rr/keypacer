@@ -34,7 +34,7 @@ Drugie, rzadsze źródło to lustrzany klawisz drugiej ręki. Początkującym zd
 
 Błędy sąsiedniego klawisza pokazują, że palec nie ma jeszcze stałej drogi do klawisza. Szacuje położenie, zamiast je znać.
 
-## Przestawienia: kiedy jedna ręka wyprzedza drugą
+## Przestawienia: kiedy palce się wyprzedzają
 
 „nei” zamiast „nie”, „pdo” zamiast „pod”: przestawienia wyglądają na nieuwagę, ale rządzi nimi jasna reguła. U wprawionych maszynistek według Grudina około 80 procent z nich zachodzi między rękami. Obie litery leżą więc po różnych stronach klawiatury.
 

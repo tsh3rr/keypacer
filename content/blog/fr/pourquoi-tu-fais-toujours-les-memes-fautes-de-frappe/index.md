@@ -34,7 +34,7 @@ Une deuxième source, plus rare, est la touche symétrique sur l'autre main. Che
 
 Les fautes de touche voisine montrent qu'un doigt n'a pas encore de trajet fixe vers la touche. Il estime la position au lieu de la connaître.
 
-## Inversions : quand une main double l'autre
+## Inversions : quand les doigts se doublent
 
 « els » au lieu de « les », « ocmme » au lieu de « comme » : les inversions ressemblent à des étourderies, mais elles suivent une règle claire. Chez les dactylos expérimentés, environ 80 % d'entre elles se produisent entre les deux mains, selon Grudin. Les deux lettres sont donc de chaque côté du clavier.
 

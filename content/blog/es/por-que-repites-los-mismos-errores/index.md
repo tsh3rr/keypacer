@@ -34,7 +34,7 @@ Una segunda fuente, más rara, es la tecla simétrica de la otra mano. A los pri
 
 Los errores de tecla vecina muestran que un dedo todavía no tiene un camino fijo hacia la tecla. Calcula la posición en lugar de conocerla.
 
-## Transposiciones: cuando una mano adelanta a la otra
+## Transposiciones: cuando los dedos se adelantan
 
 «qeu» en lugar de «que», «pro» en lugar de «por»: las transposiciones parecen despistes, pero siguen una regla clara. Según Grudin, en los mecanógrafos con experiencia cerca del 80 % ocurren entre las dos manos. Es decir, las dos letras están en lados distintos del teclado.
 

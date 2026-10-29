@@ -258,6 +258,7 @@ export const ptPT: Messages = {
   'change.focusMet': '{key} já ganhou ritmo.',
   'change.stuck': '{key} estava a travar-te, por isso a meta de velocidade dela ficou um pouco mais baixa e tem prática extra.',
   'change.tier': 'Subiste de nível: nível {tier}, com meta de {wpm} PPM.',
+  'change.tierDown': 'Várias teclas ainda não estavam rápidas o suficiente para este nível, por isso a meta recua um passo: nível {tier}, com meta de {wpm} PPM.',
   'change.recoveryOn': 'Dois exercícios seguidos abaixo de {acc} de precisão: abranda até voltares a escrever sem erros.',
   'change.recoveryOff': 'A precisão voltou. A velocidade volta a aparecer.',
 

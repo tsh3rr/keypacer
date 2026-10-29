@@ -602,6 +602,7 @@ function describeChange(c: CurriculumChange): string {
     case 'focus-met': return t('change.focusMet', { key: keyCap(c.key) });
     case 'stuck': return t('change.stuck', { key: keyCap(c.key) });
     case 'tier': return t('change.tier', { tier: c.tier, wpm: tierWpm(c.tier) });
+    case 'tier-down': return t('change.tierDown', { tier: c.tier, wpm: tierWpm(c.tier) });
     case 'recovery': return c.on ? t('change.recoveryOn', { acc: pct(0.92) }) : t('change.recoveryOff');
   }
 }
@@ -610,7 +611,7 @@ function changeTone(c: CurriculumChange): Tone {
   switch (c.type) {
     case 'unlock': case 'tier': return 'win';
     case 'focus-met': return 'good';
-    case 'stuck': return 'info';
+    case 'stuck': case 'tier-down': return 'info';
     case 'recovery': return c.on ? 'warn' : 'good';
   }
 }

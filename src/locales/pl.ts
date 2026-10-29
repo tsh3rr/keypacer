@@ -259,7 +259,7 @@ export const pl: Messages = {
   'change.focusMet': '{key} ma już dobre tempo.',
   'change.stuck': '{key} cię hamował, więc jego próg szybkości jest nieco niższy i dostaje dodatkowe ćwiczenia.',
   'change.tier': 'Awans: poziom {tier}, cel {wpm} sł./min.',
-  'change.tierDown': 'Kilka klawiszy było jeszcze za wolnych na ten poziom, więc cel cofa się o krok: poziom {tier}, cel {wpm} sł./min.',
+  'change.tierDown': 'Kilka klawiszy było jeszcze za wolnych na ten poziom, więc cel się obniża: poziom {tier}, cel {wpm} sł./min.',
   'change.recoveryOn': 'Dwa ćwiczenia z rzędu poniżej {acc} dokładności: zwolnij, aż znów będziesz pisać bez błędów.',
   'change.recoveryOff': 'Dokładność wróciła. Szybkość znów jest widoczna.',
 

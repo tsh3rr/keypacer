@@ -1,6 +1,6 @@
 import type { Corpus } from './corpus';
 import {
-  CAPITALS, DEFAULT_DRILL_PARAMS, eligibleWords, needsShift, openChars, stepChars, tierTargetMs, unlockSteps,
+  CAPITALS, DEFAULT_DRILL_PARAMS, eligibleWords, needsShift, openChars, stepChars, unlockSteps, unlockTargetMs,
   type CurriculumState, type DrillParams,
 } from './drill';
 import { stageOf, type StageId } from './path';
@@ -201,7 +201,7 @@ export function placeExtras(
     const logs = all.flatMap((s) => s.logs).sort((a, b) => a - b);
     if (logs.length === 0) return true;
     const slack = p.latencySlack * (needsShift(step, state.layout) ? dp.shiftLatencySlack : 1);
-    return Math.exp(logs[Math.floor(logs.length / 2)]) <= tierTargetMs(state.tier) * slack;
+    return Math.exp(logs[Math.floor(logs.length / 2)]) <= unlockTargetMs(state.tier, dp) * slack;
   };
 
   const unlocked: string[] = [];

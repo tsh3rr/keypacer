@@ -4,7 +4,7 @@ import { de } from './corpora/de';
 import { en } from './corpora/en';
 import { es } from './corpora/es';
 import {
-  CAPITALS, DEFAULT_DRILL_PARAMS, DEFAULT_PUNCTUATION, DIGIT_ORDER, afterDrill, decorate, drillFeedback, drillResult,
+  CAPITALS, DEFAULT_DRILL_PARAMS, DEFAULT_PUNCTUATION, DIGIT_ORDER, afterDrill, barGap, decorate, drillFeedback, drillResult,
   eligibleWords, initialCurriculum, isNewSession, modelOptions, needsShift, nextDrill, nextKind, openChars, pseudoShare,
   reviewItems, seededRandom, sentencePool, sentencesReady, spaceOut, stepChars, stepStats, tierTargetMs, unlockOrder, unlockSteps,
   type CurriculumState,
@@ -335,6 +335,23 @@ describe('afterDrill', () => {
     expect(afterDrill(slowKeys, s, en, drill, { wpm: 22, accuracy: 0.98 }).state.unlocked).toContain('t');
   });
 
+  it('caps the unlock bar\'s speed at 30 WPM, however high the tier', () => {
+    // Tier 7 is 50 WPM (240 ms), but the bar asks at most 30 WPM: 400 ms.
+    const s: CurriculumState = { ...base, tier: 7 };
+    expect(barGap(key('e', { latencyMs: 390 }), s).slow).toBe(false);
+    expect(barGap(key('e', { latencyMs: 410 }), s).slow).toBe(true);
+    const at400 = fakeModel(base.unlocked.map((c) => key(c, { latencyMs: 390 })));
+    expect(afterDrill(at400, s, en, drill, good).state.unlocked).toContain('t');
+  });
+
+  it('steps down past the capped tiers to the first one with a looser bar', () => {
+    const slowKeys = fakeModel(base.unlocked.map((c) => key(c, { latencyMs: 450 })));
+    let s: CurriculumState = { ...base, tier: 7 };
+    for (let i = 0; i < DEFAULT_DRILL_PARAMS.slowTierDrills; i++) s = afterDrill(slowKeys, s, en, drill, { wpm: 22, accuracy: 0.98 }).state;
+    // Tiers 4 to 7 all ask 30 WPM; tier 3 asks 25 WPM (480 ms), which 450 ms meets.
+    expect(s.tier).toBe(3);
+  });
+
   it('never steps below tier 1', () => {
     const slowKeys = fakeModel(base.unlocked.map((c) => key(c, { latencyMs: 900 })));
     let s = base;
@@ -576,9 +593,9 @@ describe('capitals, punctuation and digits', () => {
   });
 
   it('gives keys typed with Shift a looser speed bar', () => {
-    // Tier 7 (50 WPM) wants 240 ms per key; 280 ms passes only with the Shift allowance.
-    const s: CurriculumState = { ...lettersDone, tier: 7, unlocked: [...allLetters, CAPITALS, '.', '?'] };
-    const slow = (c: string) => key(c, { latencyMs: 280 });
+    // Tier 4 (30 WPM) wants 400 ms per key; 480 ms passes only with the Shift allowance.
+    const s: CurriculumState = { ...lettersDone, tier: 4, unlocked: [...allLetters, CAPITALS, '.', '?'] };
+    const slow = (c: string) => key(c, { latencyMs: 480 });
     const base = [...allLetters.map((c) => key(c, { latencyMs: 200 })), ...allLetters.map((c) => key(c.toUpperCase(), { latencyMs: 200 }))];
     const qSlow = fakeModel([...base, key('.', { latencyMs: 200 }), slow('?')]);
     expect(afterDrill(qSlow, s, en, drill, good).changes).toContainEqual({ type: 'unlock', key: ',' });

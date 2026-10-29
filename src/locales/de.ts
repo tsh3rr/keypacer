@@ -255,7 +255,7 @@ export const de: Messages = {
   'change.focusMet': '{key} sitzt jetzt.',
   'change.stuck': '{key} hat dich aufgehalten. Die Tempo-Hürde dafür liegt jetzt etwas niedriger, und die Taste bekommt Extra-Übung.',
   'change.tier': 'Aufgestiegen: Stufe {tier}, Ziel {wpm} WpM.',
-  'change.tierDown': 'Mehrere Tasten waren für diese Stufe noch zu langsam. Das Ziel geht einen Schritt zurück: Stufe {tier}, Ziel {wpm} WpM.',
+  'change.tierDown': 'Mehrere Tasten waren für diese Stufe noch zu langsam. Das Ziel geht zurück: Stufe {tier}, Ziel {wpm} WpM.',
   'change.recoveryOn': 'Zwei Übungen in Folge unter {acc} Genauigkeit: Tippe langsamer, bis du wieder sauber tippst.',
   'change.recoveryOff': 'Die Genauigkeit stimmt wieder. Das Tempo wird wieder angezeigt.',
 

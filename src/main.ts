@@ -6,7 +6,7 @@ import { DEFAULT_LANGUAGE, availableLanguages, getCorpus, guessLanguage, loadCor
 import { clearCurriculum, hasAnyCurriculum, loadCurriculum, saveCurriculum } from './curriculum-store';
 import {
   CAPITALS, DEFAULT_DRILL_PARAMS, afterDrill, blockingKeys, drillFeedback, drillResult, initialCurriculum, isNewSession, meetsBar, modelOptions, needsShift,
-  nextDrill, nextKind, sentencesReady, tierTargetMs, tierWpm, unlockSteps,
+  nextDrill, nextKind, sentencesReady, tierWpm, unlockSteps, unlockTargetMs,
   type CurriculumChange, type CurriculumState, type Drill, type ItemChange,
 } from './drill';
 import { firstAttempts, loadWeaknessModel, type WeaknessModel } from './weakness';
@@ -498,11 +498,11 @@ function renderCoach(): void {
   // What the next unlock waits on.
   let nextTip: string;
   if (path.next === null) {
-    nextTip = t('path.allUnlocked', { next: curriculum.tier + 1, wpm: tierWpm(curriculum.tier), acc: pct(0.96) });
+    nextTip = t('path.allUnlocked', { next: curriculum.tier + 1, wpm: tierWpm(curriculum.tier + 1), acc: pct(0.96) });
   } else {
     const bar = {
       err: pctBar(DEFAULT_DRILL_PARAMS.unlockMaxErrorRate),
-      ms: Math.round(tierTargetMs(curriculum.tier)),
+      ms: Math.round(unlockTargetMs(curriculum.tier)),
       ready: path.ready,
       unlocked: path.unlocked,
     };

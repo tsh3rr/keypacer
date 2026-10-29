@@ -24,7 +24,7 @@ La investigación distingue cuatro tipos básicos:
 | Omisión | «csa» | Falta una pulsación, a menudo en letras dobles. |
 | Transposición | «csaa» | Dos letras en el orden equivocado. |
 
-Qué errores cometes depende de tu nivel. En 1983, el psicólogo Jonathan Grudin [comparó a principiantes con mecanógrafos con experiencia](https://gwern.net/doc/design/typography/1983-grudin.pdf). En los principiantes, tres cuartas partes de todos los errores eran sustituciones: los dedos aún no saben con seguridad dónde están las teclas. Los expertos cometían muchas más inserciones, y el panorama variaba mucho de una persona a otra. Cada cual tiene sus propios errores típicos.
+Qué errores cometes depende de tu nivel. Ya en 1983, el psicólogo Jonathan Grudin [comparó a principiantes con mecanógrafos con experiencia](https://gwern.net/doc/design/typography/1983-grudin.pdf). En los principiantes, tres cuartas partes de todos los errores eran sustituciones: los dedos aún no saben con seguridad dónde están las teclas. Los expertos cometían muchas más inserciones, y el panorama variaba mucho de una persona a otra. Cada cual tiene sus propios errores típicos.
 
 ## Sustituciones: casi siempre la tecla vecina
 

@@ -24,7 +24,7 @@ La ricerca distingue quattro tipi di base:
 | Omissione | "csa" | Manca una battuta, spesso nelle doppie. |
 | Inversione | "csaa" | Due lettere nell'ordine sbagliato. |
 
-Quali errori fai dipende dal tuo livello. Nel 1983 lo psicologo Jonathan Grudin [ha confrontato principianti e dattilografi esperti](https://gwern.net/doc/design/typography/1983-grudin.pdf). Nei principianti tre quarti di tutti gli errori erano sostituzioni: le dita non sanno ancora con sicurezza dove sono i tasti. Gli esperti facevano molti più inserimenti, e il quadro cambiava molto da persona a persona. Ognuno ha quindi i propri errori tipici.
+Quali errori fai dipende dal tuo livello. Già nel 1983 lo psicologo Jonathan Grudin [ha confrontato principianti e dattilografi esperti](https://gwern.net/doc/design/typography/1983-grudin.pdf). Nei principianti tre quarti di tutti gli errori erano sostituzioni: le dita non sanno ancora con sicurezza dove sono i tasti. Gli esperti facevano molti più inserimenti, e il quadro cambiava molto da persona a persona. Ognuno ha quindi i propri errori tipici.
 
 ## Sostituzioni: quasi sempre il tasto vicino
 

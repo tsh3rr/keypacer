@@ -24,7 +24,7 @@ Badacze rozróżniają cztery podstawowe typy:
 | Pominięcie | „dm” | Brakuje naciśnięcia, często przy podwójnych literach. |
 | Przestawienie | „dmo” | Dwie litery w złej kolejności. |
 
-To, jakie błędy robisz, zależy od twojego poziomu. W 1983 roku psycholog Jonathan Grudin [porównał początkujących z wprawionymi maszynistkami](https://gwern.net/doc/design/typography/1983-grudin.pdf). U początkujących trzy czwarte wszystkich błędów stanowiły zamiany liter: palce jeszcze nie wiedzą na pewno, gdzie są klawisze. Wprawieni robili dużo więcej wstawień, a obraz bardzo różnił się między osobami. Każdy ma więc swoje typowe błędy.
+To, jakie błędy robisz, zależy od twojego poziomu. Już w 1983 roku psycholog Jonathan Grudin [porównał początkujących z wprawionymi maszynistkami](https://gwern.net/doc/design/typography/1983-grudin.pdf). U początkujących trzy czwarte wszystkich błędów stanowiły zamiany liter: palce jeszcze nie wiedzą na pewno, gdzie są klawisze. Wprawieni robili dużo więcej wstawień, a obraz bardzo różnił się między osobami. Każdy ma więc swoje typowe błędy.
 
 ## Zamiany: zwykle sąsiedni klawisz
 

@@ -24,7 +24,7 @@ Research distinguishes four basic types:
 | Omission | "hose" | A keystroke is missing, often with double letters. |
 | Transposition | "huose" | Two letters in the wrong order. |
 
-Which errors you make depends on your skill. In 1983 the psychologist Jonathan Grudin [compared beginners with skilled typists](https://gwern.net/doc/design/typography/1983-grudin.pdf). For beginners, three quarters of all errors were substitutions: the fingers don't yet know for sure where the keys are. The skilled typists made many more insertions, and the picture varied a lot from person to person. So everyone has their own typical mistakes.
+Which errors you make depends on your skill. As early as 1983, the psychologist Jonathan Grudin [compared beginners with skilled typists](https://gwern.net/doc/design/typography/1983-grudin.pdf). For beginners, three quarters of all errors were substitutions: the fingers don't yet know for sure where the keys are. The skilled typists made many more insertions, and the picture varied a lot from person to person. So everyone has their own typical mistakes.
 
 ## Substitutions: usually the neighbouring key
 

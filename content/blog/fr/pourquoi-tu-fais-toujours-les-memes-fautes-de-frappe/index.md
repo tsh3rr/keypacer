@@ -24,7 +24,7 @@ La recherche distingue quatre types de base :
 | Omission | « mison » | Une frappe manque, souvent dans les lettres doubles. |
 | Inversion | « miason » | Deux lettres dans le mauvais ordre. |
 
-Les fautes que tu fais dépendent de ton niveau. En 1983, le psychologue Jonathan Grudin a [comparé des débutants à des dactylos expérimentés](https://gwern.net/doc/design/typography/1983-grudin.pdf). Chez les débutants, les trois quarts des fautes étaient des substitutions : les doigts ne savent pas encore avec certitude où sont les touches. Les expérimentés faisaient beaucoup plus d'insertions, et le tableau variait beaucoup d'une personne à l'autre. Chacun a donc ses propres fautes typiques.
+Les fautes que tu fais dépendent de ton niveau. Dès 1983, le psychologue Jonathan Grudin a [comparé des débutants à des dactylos expérimentés](https://gwern.net/doc/design/typography/1983-grudin.pdf). Chez les débutants, les trois quarts des fautes étaient des substitutions : les doigts ne savent pas encore avec certitude où sont les touches. Les expérimentés faisaient beaucoup plus d'insertions, et le tableau variait beaucoup d'une personne à l'autre. Chacun a donc ses propres fautes typiques.
 
 ## Substitutions : le plus souvent la touche voisine
 

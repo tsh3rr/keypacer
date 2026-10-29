@@ -23,7 +23,7 @@ Die Forschung unterscheidet vier Grundtypen:
 | Auslassung | „Hus“ | Ein Anschlag fehlt, oft bei Doppelbuchstaben. |
 | Vertauschung | „Huas“ | Zwei Buchstaben in falscher Reihenfolge. |
 
-Welche Fehler du machst, hängt von deinem Können ab. Der Psychologe Jonathan Grudin hat 1983 [Anfänger und geübte Schreibkräfte verglichen](https://gwern.net/doc/design/typography/1983-grudin.pdf). Bei Anfängern waren drei Viertel aller Fehler Ersetzungen: Die Finger wissen noch nicht sicher, wo die Tasten liegen. Bei den Geübten gab es viel mehr Einfügungen, und das Bild war von Person zu Person sehr unterschiedlich. Jeder hat also seine eigenen typischen Fehler.
+Welche Fehler du machst, hängt von deinem Können ab. Der Psychologe Jonathan Grudin hat schon 1983 [Anfänger und geübte Schreibkräfte verglichen](https://gwern.net/doc/design/typography/1983-grudin.pdf). Bei Anfängern waren drei Viertel aller Fehler Ersetzungen: Die Finger wissen noch nicht sicher, wo die Tasten liegen. Bei den Geübten gab es viel mehr Einfügungen, und das Bild war von Person zu Person sehr unterschiedlich. Jeder hat also seine eigenen typischen Fehler.
 
 ## Ersetzungen: meist die Nachbartaste
 

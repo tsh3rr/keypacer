@@ -24,7 +24,7 @@ A investigação distingue quatro tipos básicos:
 | Omissão | "csa" | Falta um toque, muitas vezes em letras dobradas. |
 | Inversão | "csaa" | Duas letras pela ordem errada. |
 
-Os erros que dás dependem do teu nível. Em 1983, o psicólogo Jonathan Grudin [comparou principiantes com dactilógrafos experientes](https://gwern.net/doc/design/typography/1983-grudin.pdf). Nos principiantes, três quartos de todos os erros eram substituições: os dedos ainda não sabem com segurança onde estão as teclas. Os experientes faziam muito mais inserções, e o quadro variava muito de pessoa para pessoa. Cada um tem, portanto, os seus próprios erros típicos.
+Os erros que dás dependem do teu nível. Já em 1983, o psicólogo Jonathan Grudin [comparou principiantes com dactilógrafos experientes](https://gwern.net/doc/design/typography/1983-grudin.pdf). Nos principiantes, três quartos de todos os erros eram substituições: os dedos ainda não sabem com segurança onde estão as teclas. Os experientes faziam muito mais inserções, e o quadro variava muito de pessoa para pessoa. Cada um tem, portanto, os seus próprios erros típicos.
 
 ## Substituições: quase sempre a tecla vizinha
 

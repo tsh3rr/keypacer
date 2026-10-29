@@ -150,22 +150,14 @@
 .bl-prose .bl-video-box { color: #fff; text-decoration: none; }
 .bl-video-label { font-weight: 700; font-size: 1rem; }
 .bl-video-title { font-size: 0.9rem; color: rgb(255 255 255 / 0.75); max-width: 30rem; text-wrap: balance; }
-/* With a poster the picture fills the box, the play button sits in the middle and the text on a shade at the bottom. */
-.bl-video-has-poster { overflow: hidden; align-content: end; gap: 2px; padding: 0 18px 14px; }
+/* With a poster the picture fills the box and only the play button sits on it; label and title stay for screen readers. */
+.bl-video-has-poster { overflow: hidden; padding: 0; }
 .bl-video .bl-video-poster {
   position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; margin: 0; border: 0; border-radius: 0; box-shadow: none;
 }
-.bl-video-has-poster::before {
-  content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgb(10 12 22 / 0.8), rgb(10 12 22 / 0) 30%);
-}
-.bl-video-has-poster > span { position: relative; z-index: 2; }
-.bl-video-has-poster .bl-video-play { position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%); }
-.bl-video-has-poster:hover .bl-video-play, .bl-video-has-poster:focus-visible .bl-video-play { transform: translate(-50%, -50%) scale(1.06); }
-.bl-video-has-poster .bl-video-label { font-size: 0.95rem; }
-.bl-video-has-poster .bl-video-title { color: rgb(255 255 255 / 0.85); font-size: 0.85rem; }
-@media (max-width: 560px) {
-  .bl-video-has-poster { padding-bottom: 10px; }
-  .bl-video-has-poster .bl-video-title { display: none; }
+.bl-video-has-poster .bl-video-play { z-index: 1; }
+.bl-video-has-poster .bl-video-label, .bl-video-has-poster .bl-video-title {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
 }
 .bl-video-frame { border: 0; background: #000; }
 .bl-video figcaption { margin-top: 8px; font-size: 13px; line-height: 1.5; color: var(--muted); }

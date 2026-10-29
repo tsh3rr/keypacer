@@ -244,8 +244,8 @@ describe('afterDrill', () => {
     const slow = { wpm: 10, accuracy: 0.98 };
     let s = base;
     for (let i = 0; i < DEFAULT_DRILL_PARAMS.stuckErrorDrills - 1; i++) s = afterDrill(m, s, en, drill, slow).state;
-    // Past the first stuck rule, but 4.8 % is still above the 4.5 % bar.
-    expect(s.relaxedKeys).toEqual(['l']);
+    // Past the first stuck rule, which only loosens speed; 4.8 % is still above the 4.5 % bar.
+    expect(s.relaxedKeys).toEqual([]);
     expect(s.errorRelaxedKeys ?? []).toEqual([]);
     expect(s.unlocked).toEqual(base.unlocked);
     s = afterDrill(m, s, en, drill, slow).state;
@@ -318,9 +318,26 @@ describe('afterDrill', () => {
     expect(s.tier).toBe(1);
   });
 
-  it('steps the tier down when several keys stay too slow for it', () => {
-    // Tier 3 asks 480 ms a key; at 500 ms every key falls short, so the stuck rule never singles one out.
-    const slowKeys = fakeModel(base.unlocked.map((c) => key(c, { latencyMs: 500 })));
+  it('loosens the bar for a key that keeps blocking while others slip now and then', () => {
+    // Tier 4 asks 400 ms; 'l' is a little slow throughout, and every other drill 'e' makes too many errors too.
+    const lSlow = base.unlocked.map((c) => key(c, c === 'l' ? { latencyMs: 420 } : {}));
+    const alone = fakeModel(lSlow);
+    const withE = fakeModel(lSlow.map((k) => (k.item === 'e' ? { ...k, errorRate: 0.06 } : k)));
+    let s: CurriculumState = { ...base, tier: 4 };
+    const changes = [];
+    for (let i = 0; i < DEFAULT_DRILL_PARAMS.stuckDrills; i++) {
+      const r = afterDrill(i % 2 ? withE : alone, s, en, drill, { wpm: 22, accuracy: 0.98 });
+      s = r.state;
+      changes.push(...r.changes);
+    }
+    expect(changes).toContainEqual({ type: 'stuck', key: 'l' });
+    expect(s.relaxedKeys).toEqual(['l']);
+    expect(afterDrill(alone, s, en, drill, { wpm: 22, accuracy: 0.98 }).state.unlocked).toContain('t');
+  });
+
+  it('steps the tier down when keys stay too slow even with the looser bar', () => {
+    // Tier 3 asks 480 ms, 552 ms with the stuck allowance; 600 ms misses both, but meets tier 2's 600 ms.
+    const slowKeys = fakeModel(base.unlocked.map((c) => key(c, { latencyMs: 600 })));
     let s: CurriculumState = { ...base, tier: 3 };
     const changes = [];
     for (let i = 0; i < DEFAULT_DRILL_PARAMS.slowTierDrills; i++) {
@@ -328,11 +345,19 @@ describe('afterDrill', () => {
       s = r.state;
       changes.push(...r.changes);
     }
+    expect(s.relaxedKeys).toEqual(base.unlocked);
     expect(s.tier).toBe(2);
     expect(changes).toContainEqual({ type: 'tier-down', tier: 2 });
     expect(s.unlocked).toEqual(base.unlocked);
-    // 500 ms meets tier 2's 600 ms bar, so the next drill unlocks.
     expect(afterDrill(slowKeys, s, en, drill, { wpm: 22, accuracy: 0.98 }).state.unlocked).toContain('t');
+  });
+
+  it('raises the tier only once every key already meets the next tier\'s bar', () => {
+    // Tier 2 asks 600 ms, tier 3 480 ms: 'l' at 500 ms passes now but would block at tier 3.
+    const m = fakeModel(base.unlocked.map((c) => key(c, c === 'l' ? { latencyMs: 500, errorRate: 0.06 } : { errorRate: 0.06 })));
+    let s: CurriculumState = { ...base, tier: 2 };
+    for (let i = 0; i < 10; i++) s = afterDrill(m, s, en, drill, { wpm: 30, accuracy: 0.98 }).state;
+    expect(s.tier).toBe(2);
   });
 
   it('caps the unlock bar\'s speed at 30 WPM, however high the tier', () => {
@@ -345,10 +370,10 @@ describe('afterDrill', () => {
   });
 
   it('steps down past the capped tiers to the first one with a looser bar', () => {
-    const slowKeys = fakeModel(base.unlocked.map((c) => key(c, { latencyMs: 450 })));
+    const slowKeys = fakeModel(base.unlocked.map((c) => key(c, { latencyMs: 470 })));
     let s: CurriculumState = { ...base, tier: 7 };
     for (let i = 0; i < DEFAULT_DRILL_PARAMS.slowTierDrills; i++) s = afterDrill(slowKeys, s, en, drill, { wpm: 22, accuracy: 0.98 }).state;
-    // Tiers 4 to 7 all ask 30 WPM; tier 3 asks 25 WPM (480 ms), which 450 ms meets.
+    // Tiers 4 to 7 all ask 30 WPM (460 ms with the stuck allowance); tier 3 asks 25 WPM (552 ms), which 470 ms meets.
     expect(s.tier).toBe(3);
   });
 

@@ -20,7 +20,7 @@ import { LEGAL_UPDATED, OWNER } from './owner';
  */
 
 export type LegalPage = 'imprint' | 'privacy' | 'terms';
-export type LegalLanguage = 'de' | 'en' | 'fr' | 'es' | 'it' | 'pl' | 'pt-BR' | 'pt-PT';
+export type LegalLanguage = 'de' | 'en' | 'fr' | 'es' | 'it' | 'pl' | 'pt-BR' | 'pt-PT' | 'id';
 
 /** The languages in the switch on the legal pages, each named in its own language. */
 export const LEGAL_LANGUAGES: readonly { id: LegalLanguage; name: string }[] = [
@@ -32,6 +32,7 @@ export const LEGAL_LANGUAGES: readonly { id: LegalLanguage; name: string }[] = [
   { id: 'pl', name: 'Polski' },
   { id: 'pt-BR', name: 'Português (Brasil)' },
   { id: 'pt-PT', name: 'Português (Portugal)' },
+  { id: 'id', name: 'Bahasa Indonesia' },
 ];
 
 export function isLegalLanguage(id: string | null | undefined): id is LegalLanguage {
@@ -102,6 +103,12 @@ const accountMail = {
     section: RESEND ? `
     <p><strong>Envio de e-mails:</strong> enviamos os códigos de acesso, a confirmação do teu endereço de e-mail e os códigos para repor a palavra-passe através do serviço de envio Resend (Resend, Inc., EUA). Para isso, o Resend recebe o teu endereço de e-mail e o conteúdo da mensagem (código e ligação de acesso) e guarda registos de envio (hora, destinatário, estado da entrega) para garantir que o e-mail chega; estes registos são guardados apenas durante um período limitado. Desativámos o seguimento de aberturas e de cliques. Os e-mails são enviados a partir de servidores na UE (Irlanda). O Resend trata os dados como nosso subcontratante, com base no seu acordo de tratamento de dados; quando é possível um acesso a partir dos EUA, este está coberto pelas cláusulas contratuais-tipo da UE (artigo 46.º, n.º 2, alínea c), do RGPD). O fundamento jurídico é o artigo 6.º, n.º 1, alínea b), do RGPD. Mais informações na <a href="https://resend.com/legal/privacy-policy">política de privacidade do Resend</a>.</p>` : '',
   },
+  id: {
+    methods: RESEND ? 'dengan akun Google, dengan alamat e-mail dan kata sandi, atau dengan kode yang kami kirim lewat e-mail' : 'dengan akun Google atau dengan alamat e-mail dan kata sandi',
+    supabase: RESEND ? '. E-mail terkait akunmu dikirim oleh Supabase melalui Resend (lihat di bawah).' : ' dan juga mengirim e-mail terkait akunmu, misalnya untuk mengatur ulang kata sandi.',
+    section: RESEND ? `
+    <p><strong>Pengiriman e-mail:</strong> kode masuk, konfirmasi alamat e-mailmu, dan kode untuk mengatur ulang kata sandi kami kirim melalui layanan pengiriman Resend (Resend, Inc., AS). Untuk itu, Resend menerima alamat e-mailmu dan isi pesan (kode dan tautan masuk) serta menyimpan log pengiriman (waktu, penerima, status pengiriman) untuk memastikan e-mail sampai; log ini hanya disimpan untuk waktu terbatas. Kami telah mematikan pelacakan pembukaan dan klik. E-mail dikirim dari server di Uni Eropa (Irlandia). Resend memproses data sebagai pemroses data kami berdasarkan perjanjian pemrosesan datanya; sejauh akses dari AS dimungkinkan, akses itu dilindungi oleh Klausul Kontrak Standar UE (Pasal 46 ayat (2) huruf c GDPR). Dasar hukumnya adalah Pasal 6 ayat (1) huruf b GDPR. Selengkapnya di <a href="https://resend.com/legal/privacy-policy">kebijakan privasi Resend</a>.</p>` : '',
+  },
 };
 
 /** Whether e-mail sign-in is behind Cloudflare Turnstile (see src/sync/captcha.ts). */
@@ -117,6 +124,7 @@ const captcha = {
     pl: CAPTCHA ? ' Jedyny wyjątek: przy logowaniu i rejestracji przez e-mail Cloudflare Turnstile sprawdza, czy formularz wysyła człowiek (zob. <em>Ochrona przed automatyczną rejestracją</em>).' : '',
     'pt-BR': CAPTCHA ? ' A única exceção: quando você entra ou se cadastra com e-mail, o Cloudflare Turnstile verifica se é uma pessoa que está enviando o formulário (veja <em>Proteção contra cadastros automatizados</em>).' : '',
     'pt-PT': CAPTCHA ? ' A única exceção: quando entras ou te registas com e-mail, o Cloudflare Turnstile verifica se é uma pessoa a enviar o formulário (ver <em>Proteção contra registos automatizados</em>).' : '',
+    id: CAPTCHA ? ' Satu-satunya pengecualian: saat kamu masuk atau mendaftar dengan e-mail, Cloudflare Turnstile memeriksa bahwa yang mengirim formulir adalah manusia (lihat <em>Perlindungan dari pendaftaran otomatis</em>).' : '',
   },
   section: {
     de: CAPTCHA ? `
@@ -135,6 +143,8 @@ const captcha = {
     <p><strong>Proteção contra cadastros automatizados:</strong> quando você envia o formulário para entrar, se cadastrar, receber um código de acesso ou uma nova senha, o Cloudflare Turnstile (Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, EUA) verifica se quem envia é uma pessoa. Só nesse momento seu navegador carrega um script da Cloudflare. Ele analisa características técnicas do seu navegador e do seu dispositivo e o seu endereço IP; em geral você não percebe nada, às vezes aparece uma caixa para marcar. O resultado, um código válido uma única vez, vai para o Supabase, que o confere com a Cloudflare. Segundo a Cloudflare, esses dados não são usados para publicidade nem para reconhecer você em outros sites. A base legal é o nosso interesse legítimo em proteger as contas e o banco de dados contra o abuso por contas criadas automaticamente (art. 6, n.º 1, alínea f, do RGPD). A Cloudflare é certificada no EU-US Data Privacy Framework (art. 45 do RGPD). Mais informações na <a href="https://www.cloudflare.com/turnstile-privacy-policy/">política de privacidade do Turnstile</a>. Entrar com o Google não usa essa verificação.</p>` : '',
     'pt-PT': CAPTCHA ? `
     <p><strong>Proteção contra registos automatizados:</strong> quando envias o formulário para entrar, te registares, receberes um código de acesso ou uma nova palavra-passe, o Cloudflare Turnstile (Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, EUA) verifica se quem envia é uma pessoa. Só nesse momento o teu navegador carrega um script da Cloudflare. Este analisa características técnicas do teu navegador e do teu dispositivo e o teu endereço IP; em geral não notas nada, por vezes aparece uma caixa para assinalar. O resultado, um código válido uma única vez, vai para o Supabase, que o confirma junto da Cloudflare. Segundo a Cloudflare, estes dados não são usados para publicidade nem para te reconhecer noutros sites. O fundamento jurídico é o nosso interesse legítimo em proteger as contas e a base de dados contra o abuso por contas criadas automaticamente (artigo 6.º, n.º 1, alínea f), do RGPD). A Cloudflare está certificada no EU-US Data Privacy Framework (artigo 45.º do RGPD). Mais informações na <a href="https://www.cloudflare.com/turnstile-privacy-policy/">política de privacidade do Turnstile</a>. Entrar com a Google não usa esta verificação.</p>` : '',
+    id: CAPTCHA ? `
+    <p><strong>Perlindungan dari pendaftaran otomatis:</strong> saat kamu mengirim formulir untuk masuk, mendaftar, meminta kode masuk, atau kata sandi baru, Cloudflare Turnstile (Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, AS) memeriksa apakah yang mengirimnya manusia. Baru pada saat itulah browsermu memuat skrip dari Cloudflare. Skrip ini menilai ciri teknis browser dan perangkatmu serta alamat IP-mu; biasanya kamu tidak menyadarinya, kadang muncul kotak untuk dicentang. Hasilnya, kode yang hanya berlaku sekali, dikirim ke Supabase, yang memeriksanya ke Cloudflare. Menurut Cloudflare, data ini tidak dipakai untuk iklan atau untuk mengenalimu di berbagai situs. Dasar hukumnya adalah kepentingan sah kami untuk melindungi akun dan basis data dari penyalahgunaan oleh akun yang dibuat secara otomatis (Pasal 6 ayat (1) huruf f GDPR). Cloudflare tersertifikasi berdasarkan EU-US Data Privacy Framework (Pasal 45 GDPR). Selengkapnya di <a href="https://www.cloudflare.com/turnstile-privacy-policy/">kebijakan privasi Turnstile</a>. Masuk dengan Google tidak memakai pemeriksaan ini.</p>` : '',
   },
 };
 
@@ -149,6 +159,7 @@ const video = {
     pl: " Filmy z YouTube w niektórych artykułach na blogu wczytują się dopiero po kliknięciu (zob. <em>Filmy z YouTube na blogu</em>).",
     "pt-BR": " Os vídeos do YouTube em alguns artigos do blog só carregam quando você clica neles (veja <em>Vídeos do YouTube no blog</em>).",
     "pt-PT": " Os vídeos do YouTube em alguns artigos do blogue só carregam quando clicas neles (ver <em>Vídeos do YouTube no blogue</em>).",
+    id: " Video YouTube di beberapa artikel blog baru dimuat saat kamu mengekliknya (lihat <em>Video YouTube di blog</em>).",
   },
   section: {
     de: `
@@ -183,6 +194,10 @@ const video = {
 
     <h2>Vídeos do YouTube no blogue</h2>
     <p>Alguns artigos do blogue mostram vídeos do YouTube (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlanda). Quando abres o artigo, o teu navegador não carrega nada do YouTube; vês apenas um marcador nosso. Só quando clicas nele é que o leitor é carregado a partir de youtube-nocookie.com. O YouTube recebe então o teu endereço IP, dados técnicos do navegador e do dispositivo, o nosso site como origem e o vídeo que reproduzes. A partir daí, o YouTube pode guardar dados no teu navegador e transferir dados para a Google LLC nos EUA. O fundamento jurídico é o teu consentimento, dado com o clique (artigo 6.º, n.º 1, alínea a), do RGPD, § 165, n.º 3, da lei austríaca das telecomunicações de 2021). Vale apenas para esse vídeo; da próxima vez que abrires a página, o marcador volta a aparecer. A Google está certificada no EU-US Data Privacy Framework (artigo 45.º do RGPD). A própria Google é responsável pelo tratamento no YouTube, ver a <a href="https://policies.google.com/privacy?hl=pt-PT">política de privacidade da Google</a>.</p>`,
+    id: `
+
+    <h2>Video YouTube di blog</h2>
+    <p>Beberapa artikel blog menampilkan video dari YouTube (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlandia). Saat kamu membuka artikelnya, browsermu tidak memuat apa pun dari YouTube; kamu hanya melihat gambar pengganti dari kami. Baru saat kamu mengekliknya, pemutar dimuat dari youtube-nocookie.com. YouTube lalu menerima alamat IP-mu, detail teknis tentang browser dan perangkatmu, situs kami sebagai perujuk, dan video mana yang kamu putar. Sejak saat itu YouTube dapat menyimpan data di browsermu dan mengirim data ke Google LLC di AS. Dasar hukumnya adalah persetujuanmu, yang kamu berikan dengan mengeklik (Pasal 6 ayat (1) huruf a GDPR, § 165 ayat (3) Undang-Undang Telekomunikasi Austria 2021). Persetujuan ini hanya berlaku untuk video itu; saat kamu membuka halaman lagi, gambar pengganti ditampilkan kembali. Google tersertifikasi berdasarkan EU-US Data Privacy Framework (Pasal 45 GDPR). Google bertanggung jawab atas pemrosesan di pihak YouTube, lihat <a href="https://policies.google.com/privacy">kebijakan privasi Google</a>.</p>`,
   },
 };
 
@@ -216,6 +231,9 @@ const analytics = {
     'pt-PT': ANALYTICS
       ? 'Não há publicidade nem conteúdos de terceiros carregados sem o teu clique, nem sequer tipos de letra externos. Apenas contamos de forma anónima, com o Umami e sem cookies, quantas vezes a página inicial, o blogue e o treinador são abertos (ver <em>Estatísticas de visitas</em>); o que fazes e escreves no treinador não é registado.'
       : 'Não há publicidade, nem serviços de análise ou de seguimento, nem conteúdos de terceiros carregados sem o teu clique, nem sequer tipos de letra externos.',
+    id: ANALYTICS
+      ? 'Tidak ada iklan dan tidak ada konten pihak ketiga yang dimuat tanpa klikmu, bahkan font eksternal pun tidak. Kami hanya menghitung secara anonim dengan Umami, tanpa cookie, seberapa sering halaman awal, blog, dan pelatih dibuka (lihat <em>Statistik kunjungan</em>); apa yang kamu lakukan dan ketik di pelatih tidak dicatat.'
+      : 'Tidak ada iklan, tidak ada layanan analitik atau pelacakan, dan tidak ada konten pihak ketiga yang dimuat tanpa klikmu, bahkan font eksternal pun tidak.',
   },
   stored: {
     de: ANALYTICS ? '\n      <li><strong>Reichweitenmessung ausgeschaltet:</strong> nur wenn du sie unten unter <em>Reichweitenmessung</em> ausschaltest, ein Vermerk darüber (<code>umami.disabled</code>).</li>' : '',
@@ -226,6 +244,7 @@ const analytics = {
     pl: ANALYTICS ? '\n      <li><strong>Wyłączone statystyki odwiedzin:</strong> tylko jeśli wyłączysz je niżej w sekcji <em>Statystyki odwiedzin</em>, adnotacja o tym (<code>umami.disabled</code>).</li>' : '',
     'pt-BR': ANALYTICS ? '\n      <li><strong>Estatísticas de visitas desativadas:</strong> só se você as desativar mais abaixo, em <em>Estatísticas de visitas</em>, uma anotação dizendo isso (<code>umami.disabled</code>).</li>' : '',
     'pt-PT': ANALYTICS ? '\n      <li><strong>Estatísticas de visitas desativadas:</strong> só se as desativares mais abaixo, em <em>Estatísticas de visitas</em>, uma nota a indicá-lo (<code>umami.disabled</code>).</li>' : '',
+    id: ANALYTICS ? '\n      <li><strong>Statistik kunjungan dimatikan:</strong> hanya jika kamu mematikannya di bawah pada <em>Statistik kunjungan</em>, berupa catatan tentang hal itu (<code>umami.disabled</code>).</li>' : '',
   },
   section: {
     de: ANALYTICS ? `
@@ -283,6 +302,13 @@ const analytics = {
     <p>Para saber quantas pessoas visitam a página inicial, de onde vêm e se abrem o treinador, contamos as visitas à página inicial, ao blogue e ao treinador com o Umami Cloud (Umami Software, Inc., EUA). No treinador, conta-se apenas o facto de a página ter sido aberta; os teus exercícios, o teu registo de teclas e a tua conta não são afetados. O Umami não funciona nestas páginas legais. Quando uma página é aberta, o teu navegador carrega um script do Umami e envia o seguinte: a página que abriste, sem nada acrescentado ao endereço, a página de onde vieste, o teu navegador, sistema operativo, tipo de dispositivo, tamanho de ecrã e idioma e, se clicares num dos botões da página inicial que levam ao treinador, qual deles. O Umami deduz o teu país e a tua região a partir do teu endereço IP; o próprio endereço IP não é guardado. Para que uma visita conte uma só vez, o Umami cria um identificador a partir do teu endereço IP, de dados do navegador e de um valor secreto que muda todos os meses; este não revela o teu endereço IP e não consegue reconhecer-te de um mês para o outro nem noutros sites. O Umami não usa cookies e não guarda nada no teu dispositivo. Nós só vemos totais.</p>
     <p>O fundamento jurídico é o nosso interesse legítimo em melhorar o site com base em números anónimos de visitas (artigo 6.º, n.º 1, alínea f), do RGPD). O Umami trata os dados como nosso subcontratante, com base no seu acordo de tratamento de dados; quando é possível um tratamento nos EUA, este está coberto pelas cláusulas contratuais-tipo da UE (artigo 46.º, n.º 2, alínea c), do RGPD). As estatísticas são apagadas, no máximo, ao fim de 12 meses. Mais informações na <a href="https://umami.is/privacy">política de privacidade do Umami</a>.</p>
     <p>Podes opor-te: se o teu navegador tiver o "Do Not Track" ativado, o Umami não te conta. Também podes desativar aqui as estatísticas para este navegador; para nos lembrarmos disso, guardamos uma nota no armazenamento local do teu navegador.</p>
+    <p class="legal-optout"><button type="button" data-analytics-optout></button> <span data-analytics-state></span></p>` : '',
+    id: ANALYTICS ? `
+
+    <h2>Statistik kunjungan</h2>
+    <p>Untuk mengetahui berapa banyak orang yang mengunjungi halaman awal, dari mana mereka datang, dan apakah mereka membuka pelatih, kami menghitung kunjungan ke halaman awal, blog, dan pelatih dengan Umami Cloud (Umami Software, Inc., AS). Di pelatih, yang dihitung hanyalah bahwa halaman itu dibuka; latihanmu, log ketukanmu, dan akunmu tidak tersentuh. Umami tidak berjalan di halaman hukum ini. Saat sebuah halaman dibuka, browsermu memuat skrip dari Umami dan mengirim hal berikut: halaman yang kamu buka tanpa tambahan apa pun pada alamatnya, halaman asal kedatanganmu, browser, sistem operasi, jenis perangkat, ukuran layar, dan bahasamu, serta, jika kamu mengeklik salah satu tombol di halaman awal yang menuju pelatih, tombol yang mana. Umami menentukan negara dan wilayahmu dari alamat IP-mu; alamat IP itu sendiri tidak disimpan. Agar satu kunjungan hanya dihitung sekali, Umami membuat penanda dari alamat IP-mu, detail browser, dan nilai rahasia yang berganti setiap bulan; penanda ini tidak mengungkap alamat IP-mu dan tidak dapat mengenalimu dari bulan ke bulan atau di situs lain. Umami tidak memasang cookie dan tidak menyimpan apa pun di perangkatmu. Kami hanya melihat jumlah totalnya.</p>
+    <p>Dasar hukumnya adalah kepentingan sah kami untuk memperbaiki situs berdasarkan jumlah pengunjung yang anonim (Pasal 6 ayat (1) huruf f GDPR). Umami memproses data sebagai pemroses data kami berdasarkan perjanjian pemrosesan datanya; sejauh pemrosesan di AS dimungkinkan, pemrosesan itu dilindungi oleh Klausul Kontrak Standar UE (Pasal 46 ayat (2) huruf c GDPR). Statistik dihapus paling lambat setelah 12 bulan. Selengkapnya di <a href="https://umami.is/privacy">kebijakan privasi Umami</a>.</p>
+    <p>Kamu bisa menolak: jika "Do Not Track" aktif di browsermu, Umami tidak menghitungmu. Kamu juga bisa mematikan statistik untuk browser ini di sini; agar pilihan itu diingat, kami menyimpan sebuah catatan di penyimpanan lokal browsermu.</p>
     <p class="legal-optout"><button type="button" data-analytics-optout></button> <span data-analytics-state></span></p>` : '',
   },
 };
@@ -393,13 +419,26 @@ export const LEGAL_UI = {
     optedOut: 'Desativadas neste navegador.',
     optedIn: 'Ativadas neste navegador.',
   },
+  id: {
+    imprint: 'Informasi hukum (Impressum)',
+    privacy: 'Kebijakan privasi',
+    terms: 'Ketentuan penggunaan',
+    back: '← Kembali ke latihan',
+    language: 'Bahasa',
+    updated: `Terakhir diperbarui: ${LEGAL_UPDATED.id}`,
+    note: 'Ini adalah terjemahan. Versi bahasa Jerman yang mengikat secara hukum.',
+    optOut: 'Matikan statistik kunjungan',
+    optIn: 'Nyalakan lagi statistik kunjungan',
+    optedOut: 'Dimatikan di browser ini.',
+    optedIn: 'Dinyalakan di browser ini.',
+  },
 } satisfies Record<LegalLanguage, Record<string, string>>;
 
 const licenses = {
   de: `
     <h2>Quellen und Lizenzen</h2>
     <ul>
-      <li>Die Übungswörter stammen aus <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">CC BY-SA 4.0</a>. Die deutsche Rechtschreibung wurde mit den Worthäufigkeiten aus <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a> geprüft, die auf <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0) beruhen. Die portugiesische Rechtschreibung (Brasilien und Portugal) wurde mit den <a href="https://github.com/LibreOffice/dictionaries">Rechtschreibwörterbüchern von LibreOffice</a> geprüft (VERO für Brasilien, LGPLv3/MPL; Universidade do Minho für Portugal, GPL/LGPL/MPL). Die daraus erstellten Wortlisten stehen ebenfalls unter CC BY-SA 4.0.</li>
+      <li>Die Übungswörter stammen aus <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">CC BY-SA 4.0</a>. Die deutsche Rechtschreibung wurde mit den Worthäufigkeiten aus <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a> geprüft, die auf <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0) beruhen. Die portugiesische Rechtschreibung (Brasilien und Portugal) wurde mit den <a href="https://github.com/LibreOffice/dictionaries">Rechtschreibwörterbüchern von LibreOffice</a> geprüft (VERO für Brasilien, LGPLv3/MPL; Universidade do Minho für Portugal, GPL/LGPL/MPL). Indonesische Wörter wurden mit dem indonesischen Wörterbuch von LibreOffice (hunspell-id, LGPLv3) geprüft. Die daraus erstellten Wortlisten stehen ebenfalls unter CC BY-SA 4.0.</li>
       <li>Der Filter für anstößige Wörter nutzt die <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, Lizenz <a href="https://creativecommons.org/licenses/by/4.0/deed.de">CC BY 4.0</a>.</li>
     </ul>
     <h2>Danke</h2>
@@ -407,7 +446,7 @@ const licenses = {
   en: `
     <h2>Sources and licenses</h2>
     <ul>
-      <li>Practice words come from <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), licensed <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. German spelling was checked against the word frequencies in <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, which are based on <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). Portuguese spelling (Brazil and Portugal) was checked against the <a href="https://github.com/LibreOffice/dictionaries">LibreOffice spelling dictionaries</a> (VERO for Brazil, LGPLv3/MPL; Universidade do Minho for Portugal, GPL/LGPL/MPL). The resulting word lists are under CC BY-SA 4.0 as well.</li>
+      <li>Practice words come from <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), licensed <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. German spelling was checked against the word frequencies in <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, which are based on <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). Portuguese spelling (Brazil and Portugal) was checked against the <a href="https://github.com/LibreOffice/dictionaries">LibreOffice spelling dictionaries</a> (VERO for Brazil, LGPLv3/MPL; Universidade do Minho for Portugal, GPL/LGPL/MPL). Indonesian words were checked against the Indonesian dictionary of LibreOffice (hunspell-id, LGPLv3). The resulting word lists are under CC BY-SA 4.0 as well.</li>
       <li>The offensive-word filter uses the <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</li>
     </ul>
     <h2>Thanks</h2>
@@ -415,7 +454,7 @@ const licenses = {
   fr: `
     <h2>Sources et licences</h2>
     <ul>
-      <li>Les mots d’entraînement proviennent de <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr">CC BY-SA 4.0</a>. L’orthographe allemande a été vérifiée à l’aide des fréquences de mots de <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, fondées sur <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). L’orthographe portugaise (Brésil et Portugal) a été vérifiée à l’aide des <a href="https://github.com/LibreOffice/dictionaries">dictionnaires orthographiques de LibreOffice</a> (VERO pour le Brésil, LGPLv3/MPL ; Universidade do Minho pour le Portugal, GPL/LGPL/MPL). Les listes de mots qui en résultent sont également sous CC BY-SA 4.0.</li>
+      <li>Les mots d’entraînement proviennent de <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr">CC BY-SA 4.0</a>. L’orthographe allemande a été vérifiée à l’aide des fréquences de mots de <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, fondées sur <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). L’orthographe portugaise (Brésil et Portugal) a été vérifiée à l’aide des <a href="https://github.com/LibreOffice/dictionaries">dictionnaires orthographiques de LibreOffice</a> (VERO pour le Brésil, LGPLv3/MPL ; Universidade do Minho pour le Portugal, GPL/LGPL/MPL). Les mots indonésiens ont été vérifiés avec le dictionnaire indonésien de LibreOffice (hunspell-id, LGPLv3). Les listes de mots qui en résultent sont également sous CC BY-SA 4.0.</li>
       <li>Le filtre de mots choquants utilise la <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, sous licence <a href="https://creativecommons.org/licenses/by/4.0/deed.fr">CC BY 4.0</a>.</li>
     </ul>
     <h2>Merci</h2>
@@ -423,7 +462,7 @@ const licenses = {
   es: `
     <h2>Fuentes y licencias</h2>
     <ul>
-      <li>Las palabras de práctica proceden de <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), con licencia <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es">CC BY-SA 4.0</a>. La ortografía alemana se comprobó con las frecuencias de palabras de <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, basadas en <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). La ortografía portuguesa (Brasil y Portugal) se comprobó con los <a href="https://github.com/LibreOffice/dictionaries">diccionarios ortográficos de LibreOffice</a> (VERO para Brasil, LGPLv3/MPL; Universidade do Minho para Portugal, GPL/LGPL/MPL). Las listas de palabras resultantes también están bajo CC BY-SA 4.0.</li>
+      <li>Las palabras de práctica proceden de <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), con licencia <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es">CC BY-SA 4.0</a>. La ortografía alemana se comprobó con las frecuencias de palabras de <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, basadas en <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). La ortografía portuguesa (Brasil y Portugal) se comprobó con los <a href="https://github.com/LibreOffice/dictionaries">diccionarios ortográficos de LibreOffice</a> (VERO para Brasil, LGPLv3/MPL; Universidade do Minho para Portugal, GPL/LGPL/MPL). Las palabras indonesias se comprobaron con el diccionario indonesio de LibreOffice (hunspell-id, LGPLv3). Las listas de palabras resultantes también están bajo CC BY-SA 4.0.</li>
       <li>El filtro de palabras ofensivas usa la <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, con licencia <a href="https://creativecommons.org/licenses/by/4.0/deed.es">CC BY 4.0</a>.</li>
     </ul>
     <h2>Gracias</h2>
@@ -431,7 +470,7 @@ const licenses = {
   it: `
     <h2>Fonti e licenze</h2>
     <ul>
-      <li>Le parole per l’esercizio provengono da <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), con licenza <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.it">CC BY-SA 4.0</a>. L’ortografia tedesca è stata verificata con le frequenze di parole di <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, basate su <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). L’ortografia portoghese (Brasile e Portogallo) è stata verificata con i <a href="https://github.com/LibreOffice/dictionaries">dizionari ortografici di LibreOffice</a> (VERO per il Brasile, LGPLv3/MPL; Universidade do Minho per il Portogallo, GPL/LGPL/MPL). Anche gli elenchi di parole risultanti sono sotto CC BY-SA 4.0.</li>
+      <li>Le parole per l’esercizio provengono da <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), con licenza <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.it">CC BY-SA 4.0</a>. L’ortografia tedesca è stata verificata con le frequenze di parole di <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, basate su <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). L’ortografia portoghese (Brasile e Portogallo) è stata verificata con i <a href="https://github.com/LibreOffice/dictionaries">dizionari ortografici di LibreOffice</a> (VERO per il Brasile, LGPLv3/MPL; Universidade do Minho per il Portogallo, GPL/LGPL/MPL). Le parole indonesiane sono state verificate con il dizionario indonesiano di LibreOffice (hunspell-id, LGPLv3). Anche gli elenchi di parole risultanti sono sotto CC BY-SA 4.0.</li>
       <li>Il filtro delle parole offensive usa la <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, con licenza <a href="https://creativecommons.org/licenses/by/4.0/deed.it">CC BY 4.0</a>.</li>
     </ul>
     <h2>Grazie</h2>
@@ -439,7 +478,7 @@ const licenses = {
   pl: `
     <h2>Źródła i licencje</h2>
     <ul>
-      <li>Słowa do ćwiczeń pochodzą z <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), licencja <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pl">CC BY-SA 4.0</a>. Pisownię niemiecką sprawdzono na podstawie częstości słów z <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, opartych na <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). Pisownię portugalską (Brazylia i Portugalia) sprawdzono za pomocą <a href="https://github.com/LibreOffice/dictionaries">słowników ortograficznych LibreOffice</a> (VERO dla Brazylii, LGPLv3/MPL; Universidade do Minho dla Portugalii, GPL/LGPL/MPL). Powstałe z nich listy słów również są dostępne na licencji CC BY-SA 4.0.</li>
+      <li>Słowa do ćwiczeń pochodzą z <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), licencja <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pl">CC BY-SA 4.0</a>. Pisownię niemiecką sprawdzono na podstawie częstości słów z <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, opartych na <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). Pisownię portugalską (Brazylia i Portugalia) sprawdzono za pomocą <a href="https://github.com/LibreOffice/dictionaries">słowników ortograficznych LibreOffice</a> (VERO dla Brazylii, LGPLv3/MPL; Universidade do Minho dla Portugalii, GPL/LGPL/MPL). Słowa indonezyjskie sprawdzono słownikiem indonezyjskim LibreOffice (hunspell-id, LGPLv3). Powstałe z nich listy słów również są dostępne na licencji CC BY-SA 4.0.</li>
       <li>Filtr obraźliwych słów korzysta z <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, licencja <a href="https://creativecommons.org/licenses/by/4.0/deed.pl">CC BY 4.0</a>.</li>
     </ul>
     <h2>Dziękujemy</h2>
@@ -447,7 +486,7 @@ const licenses = {
   'pt-BR': `
     <h2>Fontes e licenças</h2>
     <ul>
-      <li>As palavras de prática vêm do <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), licença <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt_BR">CC BY-SA 4.0</a>. A ortografia alemã foi conferida com as frequências de palavras do <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, baseadas no <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). A ortografia portuguesa do Brasil e de Portugal foi conferida com os <a href="https://github.com/LibreOffice/dictionaries">dicionários ortográficos do LibreOffice</a> (VERO para o Brasil, LGPLv3/MPL; Universidade do Minho para Portugal, GPL/LGPL/MPL). As listas de palavras resultantes também estão sob CC BY-SA 4.0.</li>
+      <li>As palavras de prática vêm do <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), licença <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt_BR">CC BY-SA 4.0</a>. A ortografia alemã foi conferida com as frequências de palavras do <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, baseadas no <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). A ortografia portuguesa do Brasil e de Portugal foi conferida com os <a href="https://github.com/LibreOffice/dictionaries">dicionários ortográficos do LibreOffice</a> (VERO para o Brasil, LGPLv3/MPL; Universidade do Minho para Portugal, GPL/LGPL/MPL). As palavras em indonésio foram conferidas com o dicionário indonésio do LibreOffice (hunspell-id, LGPLv3). As listas de palavras resultantes também estão sob CC BY-SA 4.0.</li>
       <li>O filtro de palavras ofensivas usa a <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, licença <a href="https://creativecommons.org/licenses/by/4.0/deed.pt_BR">CC BY 4.0</a>.</li>
     </ul>
     <h2>Agradecimentos</h2>
@@ -455,11 +494,19 @@ const licenses = {
   'pt-PT': `
     <h2>Fontes e licenças</h2>
     <ul>
-      <li>As palavras de prática vêm do <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), licença <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt">CC BY-SA 4.0</a>. A ortografia alemã foi verificada com as frequências de palavras do <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, baseadas no <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). A ortografia portuguesa do Brasil e de Portugal foi verificada com os <a href="https://github.com/LibreOffice/dictionaries">dicionários ortográficos do LibreOffice</a> (VERO para o Brasil, LGPLv3/MPL; Universidade do Minho para Portugal, GPL/LGPL/MPL). As listas de palavras resultantes estão também sob CC BY-SA 4.0.</li>
+      <li>As palavras de prática vêm do <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), licença <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt">CC BY-SA 4.0</a>. A ortografia alemã foi verificada com as frequências de palavras do <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, baseadas no <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). A ortografia portuguesa do Brasil e de Portugal foi verificada com os <a href="https://github.com/LibreOffice/dictionaries">dicionários ortográficos do LibreOffice</a> (VERO para o Brasil, LGPLv3/MPL; Universidade do Minho para Portugal, GPL/LGPL/MPL). As palavras em indonésio foram verificadas com o dicionário indonésio do LibreOffice (hunspell-id, LGPLv3). As listas de palavras resultantes estão também sob CC BY-SA 4.0.</li>
       <li>O filtro de palavras ofensivas usa a <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, licença <a href="https://creativecommons.org/licenses/by/4.0/deed.pt">CC BY 4.0</a>.</li>
     </ul>
     <h2>Agradecimentos</h2>
     <p>O Keypacer inspira-se no <a href="https://monkeytype.com">Monkeytype</a>, o teste de dactilografia de código aberto de Miodec e da sua comunidade. A prática simples e sem distrações que lá se encontra mostrou como escrever no navegador pode ser agradável. O Keypacer não usa código nem listas de palavras do Monkeytype.</p>`,
+  id: `
+    <h2>Sumber dan lisensi</h2>
+    <ul>
+      <li>Kata-kata latihan berasal dari <a href="https://github.com/rspeer/wordfreq">wordfreq</a> (Robyn Speer), berlisensi <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Ejaan bahasa Jerman diperiksa dengan frekuensi kata di <a href="https://github.com/barrust/pyspellchecker">pyspellchecker</a>, yang berdasarkan <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (Hermit Dave, CC BY-SA 4.0). Ejaan bahasa Portugis (Brasil dan Portugal) diperiksa dengan <a href="https://github.com/LibreOffice/dictionaries">kamus ejaan LibreOffice</a> (VERO untuk Brasil, LGPLv3/MPL; Universidade do Minho untuk Portugal, GPL/LGPL/MPL). Kata-kata bahasa Indonesia diperiksa dengan kamus bahasa Indonesia LibreOffice (hunspell-id, LGPLv3). Daftar kata yang dihasilkan juga berlisensi CC BY-SA 4.0.</li>
+      <li>Filter kata kasar memakai <a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words">List of Dirty, Naughty, Obscene, and Otherwise Bad Words</a>, berlisensi <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</li>
+    </ul>
+    <h2>Terima kasih</h2>
+    <p>Keypacer terinspirasi oleh <a href="https://monkeytype.com">Monkeytype</a>, tes mengetik sumber terbuka karya Miodec dan komunitasnya. Latihannya yang bersih dan bebas gangguan menunjukkan betapa menyenangkannya mengetik di browser. Keypacer tidak memakai kode atau daftar kata dari Monkeytype.</p>`,
 };
 
 const imprint: Record<LegalLanguage, string> = {
@@ -511,6 +558,12 @@ const imprint: Record<LegalLanguage, string> = {
     <p>Contacto: ${mail}</p>
     <p>Sobre este site: o Keypacer é um treinador gratuito de dactilografia com os dez dedos. O site é um projeto privado, sem fins comerciais e sem publicidade. O blogue publica artigos sobre aprender a dactilografar e sobre o Keypacer; são escritos em alemão, e as versões nos outros idiomas são traduzidas automaticamente.</p>
     ${licenses['pt-PT']}`,
+  id: `
+    <h2>Pengungkapan menurut § 25 Undang-Undang Media Austria (MedienG)</h2>
+    <p>Pemilik media:<br>${name}<br>Tempat tinggal: ${town}, Austria</p>
+    <p>Kontak: ${mail}</p>
+    <p>Tentang situs ini: Keypacer adalah pelatih mengetik 10 jari gratis. Situs ini adalah proyek pribadi nonkomersial tanpa iklan. Blog menerbitkan artikel tentang belajar mengetik dan tentang Keypacer; artikel ditulis dalam bahasa Jerman, dan versi bahasa lainnya diterjemahkan oleh mesin.</p>
+    ${licenses.id}`,
 };
 
 const privacy: Record<LegalLanguage, string> = {
@@ -850,6 +903,48 @@ const privacy: Record<LegalLanguage, string> = {
 
     <h2>Alterações</h2>
     <p>Se o Keypacer ganhar novas funcionalidades que tratem dados, ou passar a usar outro prestador de serviços, atualizamos esta política antes.</p>`,
+  id: `
+    <h2>Singkatnya</h2>
+    <p>Keypacer tidak memerlukan akun dan tidak memasang cookie. ${analytics.short.id}${captcha.short.id}${video.short.id} Apa yang kamu latih tetap ada di browsermu. Hanya jika kamu memilih untuk masuk, agar kemajuanmu tersinkron antarperangkat, data latihanmu disimpan di server di Uni Eropa (lihat <em>Akun opsional</em>).</p>
+
+    <h2>Pengendali data</h2>
+    <p>${name}<br>${town}, Austria<br>${mail}</p>
+
+    <h2>Data di browsermu</h2>
+    <p>Agar latihan berjalan dan kemajuanmu tersimpan, Keypacer menyimpan hal berikut di perangkatmu, di penyimpanan lokal browser (localStorage dan IndexedDB):</p>
+    <ul>
+      <li><strong>Pengaturan:</strong> tata letak keyboard, bahasa latihan dan tampilan, tema warna, bantuan mengetik, apakah penyiapan sudah selesai atau suatu pemberitahuan sudah ditutup, target mingguanmu, dan, jika kamu memakai beberapa keyboard, nama dan tata letaknya serta mana yang sedang dipilih.</li>
+      <li><strong>Status belajar:</strong> tombol mana yang sudah terbuka dan mana yang sudah kamu kuasai, serta sejauh mana kamu di jalur belajar, per bahasa dan tata letak.</li>
+      <li><strong>Log ketukan:</strong> untuk setiap ketukan di teks latihan, karakter yang seharusnya dan yang diketik, tombolnya, waktu sejak ketukan sebelumnya, tanggal dan jam, serta ronde latihannya, ditambah keyboard yang kamu pakai jika kamu menyiapkan beberapa di <em>Pengaturan → Keyboard</em>. Keypacer memakainya untuk menentukan tombol lemahmu dan latihan berikutnya. Yang dicatat hanya apa yang kamu ketik di kolom latihan.</li>${analytics.stored.id}
+    </ul>
+    <p>Tanpa akun, data ini tidak meninggalkan perangkatmu; kami tidak menerimanya dan tidak bisa melihatnya. Saat kamu masuk, data masukmu (token akses, agar kamu tetap masuk) dan status sinkronisasi terakhir juga disimpan di sini. Penyimpanan ini mutlak diperlukan untuk menyediakan layanan yang secara tegas kamu gunakan (§ 165 ayat (3) Undang-Undang Telekomunikasi Austria 2021, TKG 2021), sehingga tidak memerlukan persetujuan atau banner cookie.</p>
+    <p>Kendali tetap di tanganmu: di <em>Pengaturan → Log ketukan dan ekspor</em> kamu bisa melihat log, mengekspornya sebagai JSON atau CSV, dan menghapusnya. Untuk menghapus semuanya, hapus data situs ini di browsermu.</p>
+
+    <h2>Akun opsional dan sinkronisasi antarperangkat</h2>
+    <p>Di <em>Pengaturan → Akun</em> kamu bisa masuk ${accountMail.id.methods}. Keypacer lalu menjaga kemajuanmu tetap tersinkron antarperangkat. Untuk itu kami memproses:</p>
+    <ul>
+      <li><strong>Data masuk:</strong> alamat e-mailmu, kata sandimu (hanya disimpan sebagai hash satu arah), ID pengguna internal, kapan kamu mendaftar dan terakhir masuk, serta log masuk teknis (alamat IP, detail browser, waktu) yang dipakai untuk melindungi dari penyalahgunaan.</li>
+      <li><strong>Nama pengguna:</strong> yang kamu pilih saat mendaftar. Aplikasi menampilkannya sebagai pengganti alamat e-mailmu. Pengguna lain hanya melihatnya jika kamu bergabung ke grup teman latihan (lihat di bawah); saat mendaftar, yang terungkap hanyalah apakah suatu nama sudah dipakai.</li>
+      <li><strong>Data latihan:</strong> log ketukan dari setiap ronde latihan yang selesai (seperti dijelaskan di atas pada <em>Log ketukan</em>) dan status belajarmu per bahasa dan tata letak, ditambah nama dan tata letak keyboardmu jika kamu menyiapkan beberapa. Pengaturan lainnya tetap di masing-masing perangkat.</li>
+    </ul>
+    <p>Dasar hukumnya adalah pelaksanaan layanan yang kamu daftarkan (Pasal 6 ayat (1) huruf b GDPR, lihat <a href="/nutzungsbedingungen">ketentuan penggunaan</a>); log masuk kami proses berdasarkan kepentingan sah kami atas layanan yang aman (Pasal 6 ayat (1) huruf f GDPR).</p>
+    <p>Akun dan data disimpan di Supabase (Supabase, Inc., AS), di server di Frankfurt am Main (UE). Supabase memproses data sebagai pemroses data kami berdasarkan perjanjian pemrosesan datanya${accountMail.id.supabase} Sejauh akses dari luar UE dimungkinkan, misalnya oleh Supabase sendiri atau subpemrosesnya, akses itu dilindungi oleh Klausul Kontrak Standar UE (Pasal 46 ayat (2) huruf c GDPR). Selengkapnya di <a href="https://supabase.com/privacy">kebijakan privasi Supabase</a>.</p>
+    <p>Kami menyimpan datamu selama kamu memiliki akun. Di <em>Pengaturan → Akun → Hapus akun</em> kamu menghapus akunmu beserta semua data latihan yang tersimpan bersamanya sekaligus; data di perangkatmu tetap ada sampai kamu menghapusnya sendiri. Jika kamu menghapus log di <em>Log ketukan dan ekspor</em> saat sedang masuk, log itu juga dihapus dari akunmu. Supabase menghapus log masuk secara otomatis setelah waktu singkat.</p>
+    <p><strong>Teman latihan (opsional):</strong> dengan akun kamu bisa membuat grup kecil (maksimal 8 orang) dan mengajak teman lewat tautan undangan. Anggota grup saling melihat nama pengguna, target mingguan, berapa hari mereka berlatih di minggu berjalan, rentetan mereka dalam minggu, dan semangat (👏) minggu itu; kecepatan mengetik rata-rata hanya jika anggota itu memilih untuk membagikannya. Untuk itu kami menyimpan grupnya, siapa anggotanya, angka mingguan ini, dan semangatnya. Siapa pun yang punya tautan undangan dapat melihat, sebelum bergabung, nama pengguna orang yang membuat grup dan jumlah anggotanya. Orang lain tidak pernah melihat log ketukan atau alamat e-mailmu. Dasar hukumnya adalah pelaksanaan layanan, karena kamu memakai fitur ini secara tegas (Pasal 6 ayat (1) huruf b GDPR). Saat kamu keluar dari grup, dikeluarkan darinya, atau menghapus akunmu, angka mingguan dan semangatmu di grup itu langsung dihapus.</p>
+    <p><strong>Masuk dengan Google:</strong> jika kamu memilih "Lanjutkan dengan Google", kamu diarahkan ke Google (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlandia) untuk masuk di sana. Google lalu memberi kami alamat e-mailmu, namamu, dan alamat foto profilmu; kami hanya memakai alamat e-mail dan menyimpan sisanya hanya karena Supabase menyimpannya bersama data masuk. Google bertanggung jawab atas proses masuk di pihaknya, lihat <a href="https://policies.google.com/privacy">kebijakan privasi Google</a>. Dasar hukumnya adalah Pasal 6 ayat (1) huruf b GDPR.</p>${accountMail.id.section}${captcha.section.id}${analytics.section.id}${video.section.id}
+
+    <h2>Hosting</h2>
+    <p>Situs ini disajikan melalui Cloudflare (Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, AS). Saat kamu membukanya, Cloudflare memproses data teknis yang diperlukan untuk mengantarkan halaman kepadamu dan melindunginya dari serangan: alamat IP-mu, tanggal dan waktu, alamat yang diminta, serta detail yang dikirim browsermu seperti jenis browser dan sistem operasi. Dasar hukumnya adalah kepentingan sah kami atas situs yang aman dan berfungsi (Pasal 6 ayat (1) huruf f GDPR).</p>
+    <p>Cloudflare bertindak sebagai pemroses data kami berdasarkan perjanjian pemrosesan datanya. Pemrosesan di AS dimungkinkan; Cloudflare tersertifikasi berdasarkan EU-US Data Privacy Framework, yang dicakup oleh keputusan kecukupan Komisi Eropa (Pasal 45 GDPR). Kami sendiri tidak menganalisis log akses. Selengkapnya di <a href="https://www.cloudflare.com/privacypolicy/">kebijakan privasi Cloudflare</a>.</p>
+
+    <h2>Kontak lewat e-mail</h2>
+    <p>Jika kamu menulis kepada kami, kami memakai alamat e-mail dan pesanmu hanya untuk membalasmu (Pasal 6 ayat (1) huruf f GDPR). Kami menghapusnya setelah permintaanmu selesai ditangani, kecuali hukum mewajibkan kami menyimpannya.</p>
+
+    <h2>Hak-hakmu</h2>
+    <p>Kamu berhak atas akses, perbaikan, penghapusan, dan pembatasan pemrosesan, hak atas portabilitas data, dan hak untuk menolak (Pasal 15 sampai 21 GDPR). Cukup kirimkan e-mail kepada kami. Jika menurutmu kami memproses datamu secara melanggar hukum, kamu bisa mengadu ke Otoritas Perlindungan Data Austria (Datenschutzbehörde): Barichgasse 40–42, 1030 Wina, <a href="https://www.dsb.gv.at">www.dsb.gv.at</a>.</p>
+
+    <h2>Perubahan</h2>
+    <p>Jika Keypacer mendapat fitur baru yang memproses data, atau memakai penyedia layanan lain, kami akan memperbarui kebijakan ini terlebih dahulu.</p>`,
 };
 
 /**
@@ -1178,6 +1273,46 @@ const terms: Record<LegalLanguage, string> = {
 
     <h2>10. Lei aplicável</h2>
     <p>Aplica-se a lei austríaca, com exclusão da Convenção das Nações Unidas sobre os Contratos de Compra e Venda Internacional de Mercadorias e das normas de conflitos de leis. Se fores consumidor, manténs a proteção das normas imperativas do país onde vives.</p>`,
+  id: `
+    <h2>Singkatnya</h2>
+    <p>Keypacer gratis dan merupakan proyek pribadi. Kamu bisa berlatih tanpa akun dan tanpa membaca ketentuan ini. Jika kamu membuat akun, ketentuan ini juga berlaku: pilih nama pengguna yang pantas, perlakukan orang lain dengan adil, dan biarkan layanan bekerja sebagaimana mestinya. Siapa pun yang melanggar aturan ini bisa diblokir.</p>
+
+    <h2>1. Penyedia dan cakupan</h2>
+    <p>Keypacer dijalankan oleh ${name}, ${town}, Austria (kontak: ${mail}). Ketentuan ini berlaku untuk penggunaan situs dan khususnya untuk akun opsional. Dengan mendaftar, kamu menyetujuinya. Jika usiamu di bawah 14 tahun, kamu memerlukan izin orang tua untuk membuat akun.</p>
+
+    <h2>2. Layanan gratis tanpa jaminan</h2>
+    <p>Keypacer tidak berbayar dan tidak beriklan. Kami berusaha agar semuanya berfungsi, tetapi tidak bisa menjanjikan bahwa situs selalu tersedia dan bebas kesalahan, atau bahwa datamu tidak akan pernah hilang. Fitur bisa berubah atau dihapus. Simpan salinan data penting melalui <em>Pengaturan → Log ketukan dan ekspor</em>. Keypacer adalah alat latihan, bukan layanan kesehatan: jika tangan, lengan, atau lehermu sakit saat mengetik, beristirahatlah, dan temui dokter jika rasa sakitnya berlanjut.</p>
+
+    <h2>3. Akunmu</h2>
+    <p>Satu akun untuk satu orang. Rahasiakan kata sandimu dan jangan bagikan akunmu. Kamu bisa menghapusnya sendiri kapan saja di <em>Pengaturan → Akun → Hapus akun</em>.</p>
+
+    <h2>4. Nama pengguna</h2>
+    <p>Teman latihanmu bisa melihat nama penggunamu. Nama itu tidak boleh</p>
+    <ul>
+      <li>menghina, mengancam, diskriminatif, seksual, mengagungkan kekerasan, atau menyinggung dengan cara lain,</li>
+      <li>berpura-pura menjadi orang lain, Keypacer sendiri, atau sebuah organisasi,</li>
+      <li>melanggar nama, merek dagang, atau hak lain milik orang lain,</li>
+      <li>berisi iklan, tautan, atau data pribadi orang lain.</li>
+    </ul>
+    <p>Filter otomatis memblokir sebagian nama, tetapi tidak menangkap semuanya. Jika ragu, kami yang memutuskan apakah sebuah nama dapat diterima.</p>
+
+    <h2>5. Bermain adil</h2>
+    <p>Undang ke grup teman latihan hanya orang yang memang ingin bergabung, dan jangan mengganggu siapa pun, termasuk lewat semangat. Juga tidak diperbolehkan membuat akun secara otomatis, mengakali perlindungan atau batasan, mengakses data orang lain, membebani layanan secara berlebihan, atau memakainya untuk hal yang bukan tujuannya. Jika kamu melihat penyalahgunaan, tulis kepada kami di ${mail}.</p>
+
+    <h2>6. Pemblokiran dan penghapusan</h2>
+    <p>Jika seseorang melanggar ketentuan ini, tergantung seberapa serius pelanggarannya, kami dapat mengatur ulang nama penggunanya, mengeluarkannya dari grup, memblokir akunnya untuk sementara, atau menghapusnya. Biasanya kami menghubungimu dulu lewat e-mail dan memberimu kesempatan untuk menanggapi; untuk pelanggaran serius atau jika orang lain atau layanan terancam, kami langsung bertindak. Jika menurutmu pemblokiran itu keliru, tulis kepada kami.</p>
+
+    <h2>7. Tanggung jawab</h2>
+    <p>Karena Keypacer gratis, kami hanya bertanggung jawab atas kerugian yang kami sebabkan dengan sengaja atau karena kelalaian berat. Tanggung jawab atas cedera pribadi mengikuti ketentuan hukum. Pengelola situs yang ditautkan bertanggung jawab atas isinya sendiri.</p>
+
+    <h2>8. Berakhirnya layanan</h2>
+    <p>Kami dapat menghentikan Keypacer atau layanan akun. Dalam hal itu, kami menghapus akun paling cepat 30 hari setelah mengumumkannya lewat e-mail, agar kamu bisa mengekspor datamu terlebih dahulu.</p>
+
+    <h2>9. Perubahan ketentuan ini</h2>
+    <p>Kami dapat mengubah ketentuan ini, misalnya saat ada fitur baru. Perubahan penting kami umumkan lebih dulu kepada pemilik akun lewat e-mail atau di aplikasi. Jika kamu tidak setuju, kamu bisa menghapus akunmu.</p>
+
+    <h2>10. Hukum yang berlaku</h2>
+    <p>Berlaku hukum Austria, dengan pengecualian Konvensi PBB tentang Kontrak Jual Beli Barang Internasional dan kaidah hukum perdata internasional. Jika kamu konsumen, kamu tetap mendapat perlindungan dari hukum yang bersifat memaksa di negara tempat tinggalmu.</p>`,
 };
 
 /** The body of a legal page as HTML. Only OWNER values are interpolated, and they are escaped. */

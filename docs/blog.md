@@ -1,6 +1,6 @@
 # Blogartikel schreiben und veröffentlichen
 
-Der Blog liegt unter `/blog/` (Englisch), `/de/blog/`, `/es/blog/`, `/fr/blog/`, `/it/blog/`, `/pl/blog/`, `/pt-br/blog/` und `/pt-pt/blog/`. Die Ordner unter `content/blog/` heißen `pt-BR` und `pt-PT`, die Adressen klein geschrieben. Es gibt kein Backend und keinen Editor: Jeder Artikel ist eine Markdown-Datei im Repo, und der Build macht daraus fertige Seiten. Veröffentlicht ist ein Artikel, sobald er auf `main` ist.
+Der Blog liegt unter `/blog/` (Englisch), `/de/blog/`, `/es/blog/`, `/fr/blog/`, `/it/blog/`, `/pl/blog/`, `/pt-br/blog/`, `/pt-pt/blog/` und `/id/blog/` (Indonesisch). Die Ordner unter `content/blog/` heißen `pt-BR` und `pt-PT`, die Adressen klein geschrieben. Es gibt kein Backend und keinen Editor: Jeder Artikel ist eine Markdown-Datei im Repo, und der Build macht daraus fertige Seiten. Veröffentlicht ist ein Artikel, sobald er auf `main` ist.
 
 ## Wo die Artikel liegen
 

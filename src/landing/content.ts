@@ -8,7 +8,7 @@
  * the privacy cards the privacy policy (src/legal/content.ts).
  */
 
-export const LANDING_LANGUAGES = ['en', 'de', 'es', 'fr', 'it', 'pl', 'pt-BR', 'pt-PT'] as const;
+export const LANDING_LANGUAGES = ['en', 'de', 'es', 'fr', 'it', 'pl', 'pt-BR', 'pt-PT', 'id'] as const;
 export type LandingLanguage = (typeof LANDING_LANGUAGES)[number];
 
 /** Address of a landing page; English is the site's front page. Paths are lowercase: /pt-br/. */
@@ -180,7 +180,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Features',
       title: 'Everything you need, nothing you don’t',
       items: [
-        { title: 'Your language, your keyboard', text: 'English, German, French, Spanish, Italian, Polish or Portuguese (Brazil and Portugal), on QWERTY, QWERTZ, AZERTY, Dvorak, Colemak and more. Keypacer recognises your layout from the keys you press.' },
+        { title: 'Your language, your keyboard', text: 'English, German, French, Spanish, Italian, Polish, Portuguese (Brazil and Portugal) or Indonesian, on QWERTY, QWERTZ, AZERTY, Dvorak, Colemak and more. Keypacer recognises your layout from the keys you press.' },
         { title: 'Finger guide', text: 'A keyboard under the text shows which finger is next. Keys you already know fade out bit by bit.' },
         { title: 'Placement test', text: 'Can already type a bit? Take a one-minute test and Keypacer skips every key you have already mastered.' },
         { title: 'Progress you can see', text: 'Speed and accuracy over time, an error heatmap and your slowest keys and letter pairs.' },
@@ -310,7 +310,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Funktionen',
       title: 'Alles, was du brauchst, und nicht mehr',
       items: [
-        { title: 'Deine Sprache, deine Tastatur', text: 'Deutsch, Englisch, Französisch, Spanisch, Italienisch, Polnisch oder Portugiesisch (Brasilien und Portugal), auf QWERTZ, QWERTY, AZERTY, Dvorak, Colemak und mehr. Dein Layout erkennt Keypacer an den Tasten, die du drückst.' },
+        { title: 'Deine Sprache, deine Tastatur', text: 'Deutsch, Englisch, Französisch, Spanisch, Italienisch, Polnisch, Portugiesisch (Brasilien und Portugal) oder Indonesisch, auf QWERTZ, QWERTY, AZERTY, Dvorak, Colemak und mehr. Dein Layout erkennt Keypacer an den Tasten, die du drückst.' },
         { title: 'Fingerhilfe', text: 'Unter dem Text zeigt eine Tastatur, welcher Finger dran ist. Tasten, die du schon kannst, blendet sie nach und nach aus.' },
         { title: 'Einstufungstest', text: 'Du tippst schon ein bisschen? Eine Minute Test, und Keypacer überspringt alle Tasten, die du schon beherrschst.' },
         { title: 'Fortschritt, den du siehst', text: 'Tempo und Genauigkeit im Verlauf, eine Fehler-Heatmap und deine langsamsten Tasten und Buchstabenpaare.' },
@@ -440,7 +440,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Funciones',
       title: 'Todo lo que necesitas, nada más',
       items: [
-        { title: 'Tu idioma, tu teclado', text: 'Español, inglés, alemán, francés, italiano, polaco o portugués (Brasil y Portugal), en QWERTY, QWERTZ, AZERTY, Dvorak, Colemak y más. Keypacer reconoce tu distribución por las teclas que pulsas.' },
+        { title: 'Tu idioma, tu teclado', text: 'Español, inglés, alemán, francés, italiano, polaco, portugués (Brasil y Portugal) o indonesio, en QWERTY, QWERTZ, AZERTY, Dvorak, Colemak y más. Keypacer reconoce tu distribución por las teclas que pulsas.' },
         { title: 'Guía de dedos', text: 'Bajo el texto, un teclado muestra qué dedo toca. Las teclas que ya dominas se van atenuando poco a poco.' },
         { title: 'Prueba de nivel', text: '¿Ya escribes algo? Un minuto de prueba y Keypacer se salta todas las teclas que ya dominas.' },
         { title: 'Progreso visible', text: 'Velocidad y precisión a lo largo del tiempo, un mapa de errores y tus teclas y pares de letras más lentos.' },
@@ -570,7 +570,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Fonctionnalités',
       title: 'L’essentiel, rien de plus',
       items: [
-        { title: 'Votre langue, votre clavier', text: 'Français, anglais, allemand, espagnol, italien, polonais ou portugais (Brésil et Portugal), sur AZERTY, QWERTY, QWERTZ, Dvorak, Colemak et d’autres. Keypacer reconnaît votre disposition aux touches que vous tapez.' },
+        { title: 'Votre langue, votre clavier', text: 'Français, anglais, allemand, espagnol, italien, polonais, portugais (Brésil et Portugal) ou indonésien, sur AZERTY, QWERTY, QWERTZ, Dvorak, Colemak et d’autres. Keypacer reconnaît votre disposition aux touches que vous tapez.' },
         { title: 'Guide des doigts', text: 'Sous le texte, un clavier montre quel doigt utiliser. Les touches que vous connaissez déjà s’estompent peu à peu.' },
         { title: 'Test de niveau', text: 'Vous tapez déjà un peu ? Une minute de test, et Keypacer saute toutes les touches que vous maîtrisez.' },
         { title: 'Des progrès visibles', text: 'Vitesse et précision dans le temps, une carte des erreurs et vos touches et paires de lettres les plus lentes.' },
@@ -700,7 +700,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Funzioni',
       title: 'Tutto quello che serve, niente di più',
       items: [
-        { title: 'La tua lingua, la tua tastiera', text: 'Italiano, inglese, tedesco, francese, spagnolo, polacco o portoghese (Brasile e Portogallo), su QWERTY, QWERTZ, AZERTY, Dvorak, Colemak e altre. Keypacer riconosce il tuo layout dai tasti che premi.' },
+        { title: 'La tua lingua, la tua tastiera', text: 'Italiano, inglese, tedesco, francese, spagnolo, polacco, portoghese (Brasile e Portogallo) o indonesiano, su QWERTY, QWERTZ, AZERTY, Dvorak, Colemak e altre. Keypacer riconosce il tuo layout dai tasti che premi.' },
         { title: 'Guida per le dita', text: 'Sotto il testo una tastiera mostra quale dito tocca. I tasti che conosci già sbiadiscono a poco a poco.' },
         { title: 'Test di livello', text: 'Scrivi già un po’? Un minuto di test, e Keypacer salta tutti i tasti che padroneggi.' },
         { title: 'Progressi visibili', text: 'Velocità e precisione nel tempo, una mappa degli errori e i tuoi tasti e coppie di lettere più lenti.' },
@@ -830,7 +830,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Funkcje',
       title: 'Wszystko, czego trzeba, nic ponad to',
       items: [
-        { title: 'Twój język, twoja klawiatura', text: 'Polski, angielski, niemiecki, francuski, hiszpański, włoski lub portugalski (Brazylia i Portugalia), na QWERTY, QWERTZ, AZERTY, Dvorak, Colemak i innych. Keypacer rozpoznaje układ po klawiszach, które naciskasz.' },
+        { title: 'Twój język, twoja klawiatura', text: 'Polski, angielski, niemiecki, francuski, hiszpański, włoski, portugalski (Brazylia i Portugalia) lub indonezyjski, na QWERTY, QWERTZ, AZERTY, Dvorak, Colemak i innych. Keypacer rozpoznaje układ po klawiszach, które naciskasz.' },
         { title: 'Podpowiedź palców', text: 'Pod tekstem klawiatura pokazuje, który palec jest teraz potrzebny. Klawisze, które już znasz, stopniowo przygasają.' },
         { title: 'Test poziomujący', text: 'Już trochę piszesz? Minuta testu i Keypacer pomija wszystkie klawisze, które już opanowałeś(-aś).' },
         { title: 'Widoczne postępy', text: 'Tempo i dokładność w czasie, mapa błędów oraz twoje najwolniejsze klawisze i pary liter.' },
@@ -959,7 +959,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Recursos',
       title: 'Tudo o que você precisa, nada que atrapalhe',
       items: [
-        { title: 'Seu idioma, seu teclado', text: 'Português do Brasil ou de Portugal, inglês, alemão, francês, espanhol, italiano ou polonês, no ABNT2, QWERTY, QWERTZ, AZERTY, Dvorak, Colemak e outros. O Keypacer reconhece seu layout pelas teclas que você aperta.' },
+        { title: 'Seu idioma, seu teclado', text: 'Português do Brasil ou de Portugal, inglês, alemão, francês, espanhol, italiano, polonês ou indonésio, no ABNT2, QWERTY, QWERTZ, AZERTY, Dvorak, Colemak e outros. O Keypacer reconhece seu layout pelas teclas que você aperta.' },
         { title: 'Guia de dedos', text: 'Um teclado abaixo do texto mostra qual dedo vem a seguir. As teclas que você já sabe vão sumindo aos poucos.' },
         { title: 'Teste de nivelamento', text: 'Já digita um pouco? Um teste de um minuto, e o Keypacer pula todas as teclas que você já domina.' },
         { title: 'Progresso visível', text: 'Velocidade e precisão ao longo do tempo, um mapa de calor dos erros e suas teclas e pares de letras mais lentos.' },
@@ -1088,7 +1088,7 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
       eyebrow: 'Funcionalidades',
       title: 'Tudo o que precisas, nada que estorve',
       items: [
-        { title: 'A tua língua, o teu teclado', text: 'Português de Portugal ou do Brasil, inglês, alemão, francês, espanhol, italiano ou polaco, em QWERTY, ABNT2, QWERTZ, AZERTY, Dvorak, Colemak e outros. O Keypacer reconhece a tua disposição pelas teclas em que carregas.' },
+        { title: 'A tua língua, o teu teclado', text: 'Português de Portugal ou do Brasil, inglês, alemão, francês, espanhol, italiano, polaco ou indonésio, em QWERTY, ABNT2, QWERTZ, AZERTY, Dvorak, Colemak e outros. O Keypacer reconhece a tua disposição pelas teclas em que carregas.' },
         { title: 'Guia dos dedos', text: 'Um teclado por baixo do texto mostra que dedo vem a seguir. As teclas que já sabes vão desaparecendo aos poucos.' },
         { title: 'Teste de nível', text: 'Já escreves um pouco? Um teste de um minuto, e o Keypacer salta todas as teclas que já dominas.' },
         { title: 'Progresso à vista', text: 'Velocidade e precisão ao longo do tempo, um mapa de calor dos erros e as tuas teclas e pares de letras mais lentos.' },
@@ -1136,5 +1136,134 @@ export const COPY: Record<LandingLanguage, LandingCopy> = {
     },
     final: { title: 'O teu primeiro exercício demora dois minutos', text: 'Escreve uma linha e o Keypacer fica a saber por onde começas.', cta: 'Começar grátis' },
     foot: { imprint: 'Informação legal', privacy: 'Privacidade', terms: 'Termos' },
+  },
+  id: {
+    name: 'Bahasa Indonesia',
+    ogLocale: 'id_ID',
+    title: 'Belajar mengetik 10 jari gratis, latihan yang menyesuaikan | Keypacer',
+    description:
+      'Belajar mengetik 10 jari gratis dan online. Keypacer mengukur setiap ketukan, menemukan tombol yang memperlambatmu, dan melatih tepat tombol itu. Tanpa daftar.',
+    nav: { languages: 'Bahasa', signIn: 'Masuk', open: 'Buka pelatih', sections: 'Bagian halaman', method: 'Metode', features: 'Fitur', faq: 'Pertanyaan', skip: 'Langsung ke konten' },
+    hero: {
+      eyebrow: 'Gratis · tanpa daftar · tanpa iklan',
+      title: 'Belajar mengetik 10 jari dengan pelatih yang memahami kesalahanmu',
+      rotate: [
+        'Sepuluh jari. Sepuluh menit sehari.',
+        'Setiap latihan menyasar tombol terlambatmu',
+        'Tepat dulu, baru cepat',
+      ],
+      lead: 'Keypacer mengukur setiap ketukan, menemukan tombol dan pasangan huruf yang memperlambatmu, lalu menyusun latihan berikutnya dari situ. Jadi kamu tidak pernah melatih yang sudah kamu kuasai.',
+      cta: 'Mulai latihan gratis',
+      continue: 'Lanjut latihan',
+      note: 'Berjalan di browser. Tanpa iklan, tanpa perlu akun.',
+    },
+    demo: {
+      label: 'Coba sekarang: ketik baris ini',
+      start: 'Klik di sini dan mulai mengetik',
+      result: 'Hasilmu',
+      wpm: 'KPM',
+      wpmLong: 'kata per menit',
+      accuracy: 'akurasi',
+      slowTitle: 'Tombol-tombol ini menahanmu:',
+      slowNone: 'Tepat dan stabil. Mari lihat hasilmu dengan seluruh keyboard.',
+      nextBeginner: 'Pelajaran pertamamu: enam huruf yang paling umum, lalu satu tombol baru setiap kali.',
+      ctaBeginner: 'Mulai pelajaran 1',
+      nextFast: 'Kamu sudah mengetik cukup cepat. Sekitar {n} kata lagi di pelatih, lalu kamu melewati tombol yang sudah kamu kuasai.',
+      ctaFast: 'Selesaikan tes penempatan',
+      again: 'Coba baris lain',
+      lines: [
+        'latihan membawa kemajuan kalau matamu tetap melihat layar',
+        'setiap tombol yang kamu pelajari tanpa melihat membuat tombol berikutnya lebih mudah',
+        'orang yang mengetik tanpa melihat menjaga matanya pada teks dan bukan pada tangan',
+      ],
+    },
+    facts: {
+      label: 'Keypacer dalam angka',
+      items: [
+        { value: '∞', label: 'latihan yang menyesuaikan kemampuanmu' },
+        { value: '1 mnt', label: 'menuju latihan pertama, tanpa daftar' },
+        { value: '10.000', label: 'kata paling umum per bahasa' },
+        { value: '0', label: 'cookie, pelacak, dan iklan' },
+      ],
+    },
+    method: {
+      eyebrow: 'Metodenya',
+      title: 'Cara kamu menjadi lebih cepat',
+      intro: 'Bukan pelajaran yang sama untuk semua orang. Setiap latihan lahir dari caramu mengetik, dan makin tepat di setiap ronde.',
+      items: [
+        { title: 'Satu tombol setiap kali', text: 'Kamu mulai dengan enam huruf yang paling umum dan sejak awal sudah mengetik kata sungguhan. Tombol berikutnya baru ikut setelah semua tombol sebelumnya tepat dan lancar.' },
+        { title: 'Tepat dulu, baru cepat', text: 'Tombol yang salah membuatmu tetap di huruf yang sama sampai kamu menekan yang benar. Saat akurasi turun, penghitung kecepatan menghilang sampai kamu mengetik dengan tepat lagi.' },
+        { title: 'Terarah, bukan seragam', text: 'Setiap latihan berfokus pada tombol dan pasangan huruf yang memperlambatmu, dan memunculkan lagi tombol yang sudah lama tidak kamu latih agar tetap melekat.' },
+        { title: 'Ronde pendek, istirahat sungguhan', text: 'Pemanasan, ronde fokus singkat, lalu kalimat sungguhan. Saat konsentrasimu menurun, Keypacer menyarankan istirahat daripada membiarkan kesalahan tertanam.' },
+      ],
+    },
+    analysis: {
+      eyebrow: 'Apa yang diukur Keypacer',
+      title: 'Keypacer tahu tombol mana yang memperlambatmu',
+      text: 'Kamu ragu sejenak sebelum menekan f, atau sering tertukar antara b dan v? Hampir tidak terasa, tetapi setiap kali itu memakan kecepatan. Keypacer mencatat waktu setiap ketukan hingga milidetik dan menyusun latihan berikutnya tepat dari tombol dan pasangan huruf itu.',
+      points: [
+        { chip: '1×', strong: 'Percobaan pertama yang dihitung.', text: 'Kesalahan tetap kesalahan, meski langsung kamu perbaiki.' },
+        { chip: '2d', strong: 'Jeda berpikir tidak dihitung.', text: 'Jeda lebih dari dua detik tidak mengacaukan kecepatanmu.' },
+        { chip: '↺', strong: 'Tidak ada yang terlupa.', text: 'Tombol yang sudah lama tidak kamu latih muncul lagi untuk diulang.' },
+      ],
+      tableTitle: 'Tombol terlemah',
+      tableNote: 'Contoh setelah tiga ronde',
+      columns: ['Tombol', 'Kesalahan', 'Waktu'],
+      nextPrefix: 'Latihan berikutnya berfokus pada',
+      nextSuffix: 'dan pasangan di sekitarnya.',
+      example: { keys: ['f', 'v', 'z', 'y', 'c'], focus: ['f', 'v', 'ny'] },
+    },
+    features: {
+      eyebrow: 'Fitur',
+      title: 'Semua yang kamu perlukan, tanpa yang tidak perlu',
+      items: [
+        { title: 'Bahasamu, keyboardmu', text: 'Bahasa Indonesia, Inggris, Jerman, Prancis, Spanyol, Italia, Polandia, atau Portugis (Brasil dan Portugal), di QWERTY, QWERTZ, AZERTY, Dvorak, Colemak, dan lainnya. Keypacer mengenali tata letakmu dari tombol yang kamu tekan.' },
+        { title: 'Panduan jari', text: 'Keyboard di bawah teks menunjukkan jari mana yang berikutnya. Tombol yang sudah kamu kuasai perlahan memudar.' },
+        { title: 'Tes penempatan', text: 'Sudah bisa mengetik sedikit? Ikuti tes satu menit, dan Keypacer melewati semua tombol yang sudah kamu kuasai.' },
+        { title: 'Kemajuan yang terlihat', text: 'Kecepatan dan akurasi dari waktu ke waktu, peta panas kesalahan, serta tombol dan pasangan huruf terlambatmu.' },
+        { title: 'Target dan rencana mingguan', text: 'Tentukan seberapa sering kamu ingin berlatih dan tambahkan rencananya ke kalender. Sesi pendek yang rutin lebih bermanfaat daripada sesi panjang yang jarang.' },
+        { title: 'Lanjutkan di mana saja', text: 'Dengan akun gratis, pelajaranmu tetap aman meski data browser terhapus, dan kamu bisa melanjutkan dari tempat terakhir di perangkat mana pun.' },
+      ],
+    },
+    vignettes: {
+      layouts: ['Deutsch · tata letak Jerman', 'Français · tata letak Prancis', 'Bahasa Indonesia · QWERTY AS', 'English · Dvorak'],
+      fingerWord: 'gajah',
+      letters: 'Huruf',
+      placing: 'Tes penempatan berjalan …',
+      skipped: { other: '{n} tombol dilewati' },
+      speed: 'Kecepatan',
+      weekGoal: 'Target mingguan',
+      lesson: 'Pelajaran',
+      laptop: 'Laptop',
+      tablet: 'Tablet',
+      stored: 'Disimpan di Frankfurt, UE',
+    },
+    privacy: {
+      eyebrow: 'Privasi',
+      title: 'Data ketikanmu tetap milikmu',
+      intro: 'Keypacer tahu persis bagaimana kamu mengetik. Karena itu, pengetahuan ini tetap ada padamu.',
+      items: [
+        { title: 'Tanpa cookie, tanpa pelacakan', text: 'Keypacer tidak memasang cookie, tidak menampilkan iklan, dan tidak memakai layanan analitik.', chips: ['0 cookie', '0 pelacak'] },
+        { title: 'Tanpa akun, semuanya tetap di browsermu', text: 'Ketukanmu hanya disimpan secara lokal. Kamu bisa mengekspor atau menghapusnya kapan saja.', chips: ['.json', '.csv'] },
+        { title: 'Dengan akun, di Uni Eropa', text: 'Akun opsional menyinkronkan ronde-rondemu antarperangkat lewat server di Frankfurt.', chips: ['Frankfurt', 'akun opsional'] },
+      ],
+    },
+    analytics: {
+      fact: 'cookie dan iklan',
+      item: { title: 'Tanpa cookie, tanpa iklan', text: 'Keypacer tidak memasang cookie dan tidak menampilkan iklan. Kunjungan hanya dihitung secara anonim, tanpa cookie.', chips: ['0 cookie', 'statistik anonim'] },
+    },
+    faq: {
+      title: 'Pertanyaan',
+      items: [
+        { q: 'Apakah Keypacer gratis?', a: 'Ya. Latihan, kemajuan, dan akun opsional semuanya gratis, tanpa iklan.' },
+        { q: 'Apa bedanya Keypacer dengan aplikasi latihan mengetik lainnya?', a: 'Kebanyakan aplikasi memberi semua orang pelajaran yang sama. Keypacer mengukur setiap ketukan dan menyusun setiap latihan dari tombol dan pasangan huruf yang paling memperlambatmu saat ini.' },
+        { q: 'Apakah aku perlu akun?', a: 'Tidak. Kamu bisa langsung mulai; tanpa akun, kemajuanmu disimpan di browser. Akun gratis menjaganya tetap aman meski data browser terhapus, dan memungkinkanmu melanjutkan di perangkat lain.' },
+        { q: 'Berapa lama belajar mengetik 10 jari?', a: 'Kebanyakan orang sudah bisa mengetik tanpa melihat setelah beberapa minggu berlatih 15 sampai 20 menit sehari. Sesi pendek setiap hari lebih efektif daripada sesi panjang yang jarang, dan kecepatan terus bertambah setelahnya.' },
+        { q: 'Tata letak keyboard apa saja yang didukung?', a: 'QWERTY AS (yang dipakai hampir semua keyboard di Indonesia) dan UK, QWERTZ Jerman dan Swiss, AZERTY Prancis dan Belgia, Spanyol, Italia, Swedia/Finlandia, Polandia, ABNT2 Brasil dan Portugal, Dvorak, Colemak, dan Colemak-DH. Keypacer mengenali tata letakmu dari tombol yang kamu tekan.' },
+        { q: 'Apakah bisa dipakai di ponsel atau tablet?', a: 'Keypacer dibuat untuk keyboard sungguhan. Tablet dengan keyboard bisa dipakai dengan baik; di ponsel kamu bisa melihat-lihat, tetapi mengetik 10 jari memerlukan keyboard fisik.' },
+      ],
+    },
+    final: { title: 'Latihan pertamamu hanya dua menit', text: 'Ketik satu baris, dan Keypacer tahu dari mana kamu mulai.', cta: 'Mulai latihan gratis' },
+    foot: { imprint: 'Informasi hukum', privacy: 'Privasi', terms: 'Ketentuan' },
   },
 };

@@ -2,7 +2,7 @@
  * English interface text, the source every other locale translates.
  * Keys are grouped by screen area (`settings.`, `coach.`, `result.` …);
  * add new strings to the group they belong to, then to every other locale
- * (de, fr, es, it, pl, pt-BR, pt-PT).
+ * (de, fr, es, it, pl, pt-BR, pt-PT, id).
  * `{name}` is a placeholder; `{ one, other }` are plural forms picked by `{n}`,
  * plus `few` and `many` for languages that have them (Polish: 2 minuty, 5 minut).
  */

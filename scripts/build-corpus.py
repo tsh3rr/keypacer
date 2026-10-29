@@ -5,7 +5,7 @@ Usage (from the repo root):
     python -m pip install "wordfreq==3.1.1" "pyspellchecker==0.9.0" "spylls==0.1.7"
     python scripts/build-corpus.py en 10000
     python scripts/build-corpus.py de 10000
-    (likewise fr, es, it, pl, pt-BR, pt-PT)
+    (likewise fr, es, it, pl, pt-BR, pt-PT, id)
 
 Writes src/corpora/<lang>-words.ts. The word data comes from wordfreq
 (https://github.com/rspeer/wordfreq), whose word lists are licensed under
@@ -29,8 +29,16 @@ Brazil, "económico" for Portugal. The Brazilian dictionary also takes names
 and English in lowercase, so a word Portugal's rejects must be neither a name
 nor a common English word, and a short hand-picked list (EXCLUDE) catches the
 rest. Words wordfreq finds more often in English are left out either way.
-spylls is only needed for Portuguese; the dictionaries are downloaded once
-into ~/.cache/keypacer-dictionaries.
+
+Indonesian is checked against LibreOffice's Indonesian Hunspell dictionary the
+same way. It misses many words with a suffix ("harusnya", "tinggalkan"), so a
+word it rejects is kept when it is a word it knows plus -nya, -lah, -kah, -pun,
+-kan, -ku or -mu (or -an and -i on a stem of four letters or more, so names like
+"toni" stay out). Names, English words and abbreviations ("yg", "km") are left
+out, and two-letter words must be on a short list.
+
+spylls is only needed for Portuguese and Indonesian; the dictionaries are
+downloaded once into ~/.cache/keypacer-dictionaries.
 """
 
 import itertools
@@ -54,6 +62,8 @@ LETTERS = {
     # ü left Brazilian spelling in 2009; k, w and y only turn up in loanwords.
     "pt-BR": "abcdefghijklmnopqrstuvwxyzáàâãçéêíóôõú",
     "pt-PT": "abcdefghijklmnopqrstuvwxyzáàâãçéêíóôõú",
+    # Indonesian has no accented letters.
+    "id": "abcdefghijklmnopqrstuvwxyz",
 }
 
 # wordfreq's code for languages whose variants share one list.
@@ -63,6 +73,14 @@ WORDFREQ_LANG = {"pt-BR": "pt", "pt-PT": "pt"}
 # (https://github.com/LibreOffice/dictionaries, pinned to one commit).
 HUNSPELL = {"pt-BR": "pt_BR", "pt-PT": "pt_PT"}
 HUNSPELL_COMMIT = "4f1df64b2e8e14751aa7c2205d170ca016071315"
+# The folder of a dictionary in that repository, where it isn't named like the dictionary.
+HUNSPELL_DIR = {"id_ID": "id"}
+
+# Indonesian suffixes (see the docstring): any stem, and the ones that need a longer stem.
+ID_SUFFIXES = ("nya", "lah", "kah", "pun", "kan", "ku", "mu")
+ID_SHORT_SUFFIXES = ("an", "i")
+# Two-letter Indonesian words; the rest of wordfreq's are abbreviations and chat ("yg", "lu").
+ID_TWO_LETTER = {"di", "ke", "ya", "ia", "ku", "mu", "si", "ah", "eh", "es", "bu"}
 
 # Names, acronyms and misspellings that get past the checks above, picked by hand
 # from the words only one variant's list has.
@@ -74,6 +92,7 @@ EXCLUDE = {
         alagoas vargas armênia mônica polônia macedônia guarulhos sic objectivo excepto excepção ceará
     """.split()),
     "pt-PT": {"jean", "prof", "sra", "dra", "ceará"},
+    "id": {"abdullah", "penisku"},
 }
 
 # wordfreq splits "fazê-lo" into "fazê" and "lo". The pronouns that only come
@@ -97,6 +116,7 @@ SINGLE_LETTER_WORDS = {
     "pl": {"a", "i", "o", "u", "w", "z"},
     "pt-BR": {"a", "à", "e", "é", "o"},
     "pt-PT": {"a", "à", "e", "é", "o"},
+    "id": set(),
 }
 
 LINE_WIDTH = 100
@@ -115,6 +135,12 @@ HUNSPELL_NOTE = """
 
 HUNSPELL_LICENSE = {"pt_BR": "VERO, LGPLv3 / MPL", "pt_PT": "Universidade do Minho, GPL / LGPL / MPL"}
 
+ID_NOTE = """
+// Only words the id_ID Hunspell dictionary of LibreOffice accepts, alone or with a
+// suffix such as -nya or -kan, are kept
+// (https://github.com/LibreOffice/dictionaries/tree/{commit}/id, hunspell-id authors, LGPLv3).
+// Names, English words, abbreviations and chat spellings are left out."""
+
 
 def hunspell(name: str):
     """The LibreOffice dictionary `name` (e.g. "pt_BR"), downloaded once and cached."""
@@ -126,7 +152,8 @@ def hunspell(name: str):
     for ext in ("aff", "dic"):
         f = cache / f"{name}.{ext}"
         if not f.exists():
-            url = f"https://raw.githubusercontent.com/LibreOffice/dictionaries/{HUNSPELL_COMMIT}/{name}/{name}.{ext}"
+            folder = HUNSPELL_DIR.get(name, name)
+            url = f"https://raw.githubusercontent.com/LibreOffice/dictionaries/{HUNSPELL_COMMIT}/{folder}/{name}.{ext}"
             urllib.request.urlretrieve(url, f)
     return Dictionary.from_files(str(cache / name))
 
@@ -141,8 +168,36 @@ def capitalized_entries(name: str) -> set[str]:
     return {re.sub("-[A-Z]{2}$", "", s).lower() for s in stems if s[:1].isupper()} - lower
 
 
+def indonesian_filter():
+    """Keeps Indonesian words the dictionary knows, alone or with a suffix (see the docstring)."""
+    own = hunspell("id_ID")
+    names = capitalized_entries("id_ID")
+
+    def is_name(w: str) -> bool:
+        return w in names and not any(f.stem[:1].islower() for f in own.lookuper.good_forms(w))
+
+    def known(w: str) -> bool:
+        if own.lookup(w):
+            return True
+        for suffix in ID_SUFFIXES + ID_SHORT_SUFFIXES:
+            stem = w[: -len(suffix)]
+            shortest = 4 if suffix in ID_SHORT_SUFFIXES else 3
+            if w.endswith(suffix) and len(stem) >= shortest and own.lookup(stem) and not is_name(stem):
+                return True
+        return False
+
+    def keep(w: str) -> str | None:
+        if w in EXCLUDE["id"] or (len(w) == 2 and w not in ID_TWO_LETTER) or not known(w) or is_name(w):
+            return None
+        return w if wordfreq.zipf_frequency(w, "en") <= wordfreq.zipf_frequency(w, "id") else None
+
+    return keep
+
+
 def spelling_fixer(lang: str):
     """Maps a wordfreq word to its usual spelling, or None to drop it; identity if not needed."""
+    if lang == "id":
+        return indonesian_filter()
     if lang in HUNSPELL:
         own = hunspell(HUNSPELL[lang])
         # The Brazilian dictionary also takes names, brands and English in
@@ -218,6 +273,8 @@ def build(lang: str, count: int) -> list[str]:
 
 
 def note(lang: str) -> str:
+    if lang == "id":
+        return ID_NOTE.format(commit=HUNSPELL_COMMIT)
     if lang in HUNSPELL:
         name = HUNSPELL[lang]
         return HUNSPELL_NOTE.format(name=name, commit=HUNSPELL_COMMIT, license=HUNSPELL_LICENSE[name])

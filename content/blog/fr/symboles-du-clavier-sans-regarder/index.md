@@ -1,6 +1,6 @@
 ---
 title: "Symboles du clavier AZERTY : taper @, €, #, {} et [] sans regarder"
-description: Où se trouvent @, €, #, crochets, accolades et barre verticale sur le clavier AZERTY, quel doigt les tape et comment les apprendre sans regarder.
+description: "Où se trouvent @, €, #, crochets, accolades et barre verticale sur le clavier AZERTY, quel doigt les tape et comment les apprendre sans regarder."
 updated: 2026-10-29
 topic: keyboard
 cover: cover.jpg

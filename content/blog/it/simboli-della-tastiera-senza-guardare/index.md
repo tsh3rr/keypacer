@@ -1,6 +1,6 @@
 ---
 title: "Simboli della tastiera italiana: scrivere @, #, €, [] e {} senza guardare"
-description: Dove si trovano @, #, €, parentesi quadre e graffe sulla tastiera italiana, quale dito li scrive e come impararli senza guardare.
+description: "Dove si trovano @, #, €, parentesi quadre e graffe sulla tastiera italiana, quale dito li scrive e come impararli senza guardare."
 updated: 2026-10-29
 topic: keyboard
 cover: cover.jpg

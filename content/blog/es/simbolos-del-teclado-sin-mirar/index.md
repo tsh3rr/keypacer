@@ -1,6 +1,6 @@
 ---
 title: "Símbolos del teclado: escribe @, €, #, {} y [] sin mirar"
-description: Dónde están @, €, #, corchetes, llaves y la barra vertical en el teclado español, qué dedo los escribe y cómo aprenderlos sin mirar.
+description: "Dónde están @, €, #, corchetes, llaves y la barra vertical en el teclado español, qué dedo los escribe y cómo aprenderlos sin mirar."
 updated: 2026-10-29
 topic: keyboard
 cover: cover.jpg

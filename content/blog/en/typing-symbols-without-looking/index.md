@@ -1,10 +1,10 @@
 ---
 title: "Symbols on the keyboard: type @, #, {}, [] and | without looking"
-description: Where @, #, brackets, backslash and pipe sit on US and UK keyboards, which finger types them, and how to learn them without looking down.
+description: "Where @, #, brackets, backslash and pipe sit on US and UK keyboards, which finger types them, and how to learn them without looking down."
 updated: 2026-10-29
 topic: keyboard
 cover: cover.jpg
-coverAlt: An orange Shift key, a plus sign and keys with @, #, { and } next to it
+coverAlt: "An orange Shift key, a plus sign and keys with @, #, { and } next to it"
 translation: sonderzeichen
 translatedFrom: de
 order: 13

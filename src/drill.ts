@@ -35,6 +35,8 @@ export interface DrillParams {
   /** Unlock bar: effective evidence n, error rate p̂ and latency (vs the tier target T). */
   unlockMinWeight: number;
   unlockMaxErrorRate: number;
+  /** The unlock bar's speed never asks more than this, however high the tier: accuracy first, speed after. */
+  unlockMaxWpm: number;
   /** Latency bar multiplier for a key that kept blocking (stuck rule). */
   stuckLatencySlack: number;
   /** Error-rate bar for a key that kept blocking even longer (second stuck rule). */
@@ -45,6 +47,8 @@ export interface DrillParams {
   stuckDrills: number;
   /** Core drills in a row before the stuck key also gets the looser error-rate bar. */
   stuckErrorDrills: number;
+  /** Core drills in a row with several keys blocking, some too slow, before the tier steps down one. */
+  slowTierDrills: number;
   /** Need added to the focus key and its bigrams. */
   focusBoost: number;
   /** Targets per drill and the softmax temperature used to pick them and words. */
@@ -112,11 +116,13 @@ export const DEFAULT_DRILL_PARAMS: Readonly<DrillParams> = Object.freeze({
   startKeys: 6,
   unlockMinWeight: 25,
   unlockMaxErrorRate: 0.045,
+  unlockMaxWpm: 30,
   stuckLatencySlack: 1.15,
   stuckMaxErrorRate: 0.05,
   shiftLatencySlack: 1.3,
   stuckDrills: 15,
   stuckErrorDrills: 20,
+  slowTierDrills: 15,
   focusBoost: 0.5,
   targets: 5,
   temperature: 0.3,
@@ -171,6 +177,11 @@ export function tierTargetMs(tier: number): number {
   return 12_000 / tierWpm(tier);
 }
 
+/** The unlock bar's per-key latency at a tier: the tier's target, capped at `unlockMaxWpm`. */
+export function unlockTargetMs(tier: number, p: DrillParams = DEFAULT_DRILL_PARAMS): number {
+  return 12_000 / Math.min(tierWpm(tier), p.unlockMaxWpm);
+}
+
 /** What the generator remembers between drills, per language and layout. Plain data, so it serializes. */
 export interface CurriculumState {
   version: 1;
@@ -187,6 +198,8 @@ export interface CurriculumState {
   /** The single step blocking the next unlock, and for how many core drills in a row. */
   blocker: string | null;
   blockedDrills: number;
+  /** Core drills in a row with several steps blocking and some of them too slow. Missing in states saved before it existed. */
+  slowDrills?: number;
   tier: number;
   paceWpm: number;
   /** Usual speed: moving average of drill WPM, warm-ups aside. Missing in states saved before it existed. */
@@ -236,6 +249,7 @@ export type CurriculumChange =
   | { type: 'focus-met'; key: string }
   | { type: 'stuck'; key: string }
   | { type: 'tier'; tier: number }
+  | { type: 'tier-down'; tier: number }
   | { type: 'recovery'; on: boolean };
 
 // --- Curriculum ---
@@ -366,7 +380,7 @@ export function barGap(
 ): BarGap {
   let slack = key && state.relaxedKeys.includes(key.item) ? p.stuckLatencySlack : 1;
   if (key && state.layout !== undefined && needsShift(key.item, state.layout)) slack *= p.shiftLatencySlack;
-  const targetMs = tierTargetMs(state.tier) * slack;
+  const targetMs = unlockTargetMs(state.tier, p) * slack;
   const maxErrorRate = key && state.errorRelaxedKeys?.includes(key.item) ? p.stuckMaxErrorRate : p.unlockMaxErrorRate;
   if (!key) return { few: true, errors: false, slow: false, targetMs, maxErrorRate };
   return {
@@ -1003,17 +1017,36 @@ export function afterDrill(
     s.blockedDrills = 0;
   }
 
-  // Tier: the last few core drills average the tier's speed, accurately, and no new key is still settling in.
+  // Several keys too slow for the tier and none singled out by the stuck rule: the tier asks more than
+  // the learner's speed yet, so it steps down to the first tier with a looser bar (below `unlockMaxWpm`
+  // when above it) rather than holding every unlock back.
+  const tooSlow = blocking.some((k) => barGap(stepStats(model, k, s), s, p).slow);
+  s.slowDrills = blocking.length > 1 && tooSlow ? (s.slowDrills ?? 0) + 1 : 0;
+  let lower = s.tier - 1;
+  while (lower > 1 && unlockTargetMs(lower, p) <= unlockTargetMs(s.tier, p)) lower--;
+  if (s.slowDrills >= p.slowTierDrills && lower >= 1 && unlockTargetMs(lower, p) > unlockTargetMs(s.tier, p)) {
+    s.tier = lower;
+    s.slowDrills = 0;
+    s.coreHistory = [];
+    changes.push({ type: 'tier-down', tier: s.tier });
+    return { state: s, changes };
+  }
+
+  // Tier: the last few core drills average the next tier's speed, accurately, no new key is still settling in
+  // and none is too slow for this tier. The next tier's speed, not this one's: its bar is what every key must
+  // then meet before the next unlock.
   const h = s.coreHistory;
   const avg = (f: (r: DrillResult) => number) => h.reduce((sum, r) => sum + f(r), 0) / h.length;
   if (
     s.focusKey === null &&
+    !tooSlow &&
     s.tier < TIERS.length &&
     h.length >= p.tierWindow &&
-    avg((r) => r.wpm) >= tierWpm(s.tier) &&
+    avg((r) => r.wpm) >= tierWpm(s.tier + 1) &&
     avg((r) => r.accuracy) >= p.tierAccuracy
   ) {
     s.tier++;
+    s.slowDrills = 0;
     s.coreHistory = [];
     changes.push({ type: 'tier', tier: s.tier });
   }

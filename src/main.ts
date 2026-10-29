@@ -6,7 +6,7 @@ import { DEFAULT_LANGUAGE, availableLanguages, getCorpus, guessLanguage, loadCor
 import { clearCurriculum, hasAnyCurriculum, loadCurriculum, saveCurriculum } from './curriculum-store';
 import {
   CAPITALS, DEFAULT_DRILL_PARAMS, afterDrill, blockingKeys, drillFeedback, drillResult, initialCurriculum, isNewSession, meetsBar, modelOptions, needsShift,
-  nextDrill, nextKind, sentencesReady, tierTargetMs, tierWpm, unlockSteps,
+  nextDrill, nextKind, sentencesReady, tierWpm, unlockSteps, unlockTargetMs,
   type CurriculumChange, type CurriculumState, type Drill, type ItemChange,
 } from './drill';
 import { firstAttempts, loadWeaknessModel, type WeaknessModel } from './weakness';
@@ -498,11 +498,11 @@ function renderCoach(): void {
   // What the next unlock waits on.
   let nextTip: string;
   if (path.next === null) {
-    nextTip = t('path.allUnlocked', { next: curriculum.tier + 1, wpm: tierWpm(curriculum.tier), acc: pct(0.96) });
+    nextTip = t('path.allUnlocked', { next: curriculum.tier + 1, wpm: tierWpm(curriculum.tier + 1), acc: pct(0.96) });
   } else {
     const bar = {
       err: pctBar(DEFAULT_DRILL_PARAMS.unlockMaxErrorRate),
-      ms: Math.round(tierTargetMs(curriculum.tier)),
+      ms: Math.round(unlockTargetMs(curriculum.tier)),
       ready: path.ready,
       unlocked: path.unlocked,
     };
@@ -602,6 +602,7 @@ function describeChange(c: CurriculumChange): string {
     case 'focus-met': return t('change.focusMet', { key: keyCap(c.key) });
     case 'stuck': return t('change.stuck', { key: keyCap(c.key) });
     case 'tier': return t('change.tier', { tier: c.tier, wpm: tierWpm(c.tier) });
+    case 'tier-down': return t('change.tierDown', { tier: c.tier, wpm: tierWpm(c.tier) });
     case 'recovery': return c.on ? t('change.recoveryOn', { acc: pct(0.92) }) : t('change.recoveryOff');
   }
 }
@@ -610,7 +611,7 @@ function changeTone(c: CurriculumChange): Tone {
   switch (c.type) {
     case 'unlock': case 'tier': return 'win';
     case 'focus-met': return 'good';
-    case 'stuck': return 'info';
+    case 'stuck': case 'tier-down': return 'info';
     case 'recovery': return c.on ? 'warn' : 'good';
   }
 }

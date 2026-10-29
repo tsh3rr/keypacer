@@ -258,6 +258,7 @@ export const fr: Messages = {
   'change.focusMet': '{key} est au point.',
   'change.stuck': '{key} te freinait : son seuil de vitesse est un peu abaissé et elle est davantage travaillée.',
   'change.tier': 'Niveau supérieur : niveau {tier}, objectif {wpm} MPM.',
+  'change.tierDown': 'Plusieurs touches n’étaient pas encore assez rapides pour ce niveau : l’objectif baisse, niveau {tier}, objectif {wpm} MPM.',
   'change.recoveryOn': 'Deux exercices de suite sous {acc} de précision : ralentis jusqu’à taper de nouveau sans erreur.',
   'change.recoveryOff': 'La précision est revenue. La vitesse s’affiche de nouveau.',
 

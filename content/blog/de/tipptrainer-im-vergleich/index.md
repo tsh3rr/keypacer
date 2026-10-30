@@ -40,7 +40,7 @@ keybr baut seine Übungen im Standardmodus aus erfundenen Wörtern, die nur die 
 
 ## Sprache und Tastaturlayout
 
-Für deutschsprachige Nutzer zählt das QWERTZ-Layout mit <kbd>ä</kbd>, <kbd>ö</kbd>, <kbd>ü</kbd> und <kbd>ß</kbd>. TIPP10 kommt aus Deutschland und ist darauf ausgelegt. Keypacer erkennt dein Layout an den Tasten, die du drückst, und übt in acht Sprachen, darunter Deutsch auf deutschem und Schweizer QWERTZ. keybr und Monkeytype bieten ebenfalls viele Sprachen und Layouts an.
+Für deutschsprachige Nutzer zählt das QWERTZ-Layout mit <kbd>ä</kbd>, <kbd>ö</kbd>, <kbd>ü</kbd> und <kbd>ß</kbd>. TIPP10 kommt aus Deutschland und ist darauf ausgelegt. Keypacer erkennt dein Layout an den Tasten, die du drückst, und übt in neun Sprachen, darunter Deutsch auf deutschem und Schweizer QWERTZ. keybr und Monkeytype bieten ebenfalls viele Sprachen und Layouts an.
 
 ## Welcher Trainer passt zu dir?
 

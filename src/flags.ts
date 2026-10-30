@@ -21,6 +21,7 @@ const FLAGS: Record<string, string> = {
   'pt-BR': '<rect width="60" height="40" fill="#009c3b"/><path d="M30 5 55 20 30 35 5 20z" fill="#ffdf00"/><circle cx="30" cy="20" r="8.5" fill="#002776"/>',
   'pt-PT': '<rect width="60" height="40" fill="#da291c"/><rect width="24" height="40" fill="#046a38"/>'
     + '<circle cx="24" cy="20" r="8" fill="none" stroke="#ffe900" stroke-width="3"/><circle cx="24" cy="20" r="4" fill="#fff"/>',
+  id: '<rect width="60" height="40" fill="#fff"/><rect width="60" height="20" fill="#ce1126"/>',
 };
 
 /** "Automatic" follows the browser, so it gets a globe (the same one as the language menu button). */

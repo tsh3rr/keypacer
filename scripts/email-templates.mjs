@@ -15,7 +15,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
-export const LANGUAGES = ['en', 'de', 'fr', 'es', 'it', 'pl', 'pt-BR', 'pt-PT'];
+export const LANGUAGES = ['en', 'de', 'fr', 'es', 'it', 'pl', 'pt-BR', 'pt-PT', 'id'];
 
 /** The templates Keypacer uses, by their Supabase name. */
 export const KINDS = ['confirmation', 'magic_link', 'recovery'];
@@ -236,6 +236,33 @@ const TEXT = {
     expires: 'O código e a ligação são válidos durante uma hora.',
     tagline: 'Keypacer, o treinador gratuito de dactilografia com os dez dedos',
     privacy: 'Política de privacidade',
+  },
+  id: {
+    confirmation: {
+      subject: 'Konfirmasi akun Keypacer kamu: {{ .Token }}',
+      heading: 'Selamat datang di Keypacer',
+      intro: 'Masukkan kode ini di Keypacer untuk mengonfirmasi alamat e-mailmu dan menyelesaikan pembuatan akun:',
+      button: 'Konfirmasi alamatku',
+      ignore: 'Jika kamu tidak membuat akun, abaikan saja e-mail ini. Tanpa kode ini, tidak ada akun yang dibuka.',
+    },
+    magic_link: {
+      subject: 'Kode masuk Keypacer kamu: {{ .Token }}',
+      heading: 'Masuk ke Keypacer',
+      intro: 'Masukkan kode ini di Keypacer untuk masuk:',
+      button: 'Masuk',
+      ignore: 'Jika kamu tidak meminta untuk masuk, abaikan saja e-mail ini. Tidak ada yang bisa masuk tanpa kode ini.',
+    },
+    recovery: {
+      subject: 'Atur ulang kata sandi Keypacer kamu: {{ .Token }}',
+      heading: 'Pilih kata sandi baru',
+      intro: 'Masukkan kode ini di Keypacer untuk memilih kata sandi baru untuk akunmu:',
+      button: 'Pilih kata sandi baru',
+      ignore: 'Jika kamu tidak memintanya, abaikan saja e-mail ini. Kata sandimu tetap sama.',
+    },
+    or: 'Atau buka tautan ini di perangkat tempat kamu meminta kode:',
+    expires: 'Kode dan tautan ini berlaku selama satu jam.',
+    tagline: 'Keypacer, pelatih mengetik 10 jari gratis',
+    privacy: 'Kebijakan privasi',
   },
 };
 

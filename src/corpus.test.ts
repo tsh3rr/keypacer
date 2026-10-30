@@ -8,6 +8,7 @@ import { it as itCorpus } from './corpora/it';
 import { pl } from './corpora/pl';
 import { ptBR } from './corpora/pt-BR';
 import { ptPT } from './corpora/pt-PT';
+import { id } from './corpora/id';
 import { practiceForm } from './sentences';
 import { CAPITALS, stepChars, unlockSteps } from './drill';
 
@@ -66,6 +67,7 @@ describe.each([
   { corpus: pl, layout: 'qwerty-pl', letters: /^[a-ząćęłńóśźż]+$/, special: 'ąćęłńóśźż', common: 'nie' },
   { corpus: ptBR, layout: 'abnt2-br', letters: /^[a-záàâãçéêíóôõú]+$/, special: 'áàâãçéêíóôõú', common: 'que' },
   { corpus: ptPT, layout: 'qwerty-pt', letters: /^[a-záàâãçéêíóôõú]+$/, special: 'áàâãçéêíóôõú', common: 'que' },
+  { corpus: id, layout: 'qwerty-us', letters: /^[a-z]+$/, special: '', common: 'yang' },
 ])('$corpus.name corpus', ({ corpus, layout, letters, special, common }) => {
   it('has thousands of distinct lowercase words with its accented letters', () => {
     expect(corpus.words.length).toBeGreaterThanOrEqual(5000);
@@ -122,13 +124,18 @@ describe('guessLanguage', () => {
     expect(ptPT.words).not.toContain('econômico');
   });
 
+  it('finds Indonesian, also under its old code "in"', () => {
+    expect(guessLanguage(['id-ID'])).toBe('id');
+    expect(guessLanguage(['in'])).toBe('id');
+  });
+
   it('falls back to English', () => {
     expect(guessLanguage(['xx'])).toBe('en');
     expect(guessLanguage([])).toBe('en');
   });
 
   it('only guesses languages that exist', () => {
-    expect(availableLanguages().map((c) => c.language)).toEqual(expect.arrayContaining(['en', 'de', 'fr', 'es', 'it', 'pl', 'pt-BR', 'pt-PT']));
+    expect(availableLanguages().map((c) => c.language)).toEqual(expect.arrayContaining(['en', 'de', 'fr', 'es', 'it', 'pl', 'pt-BR', 'pt-PT', 'id']));
   });
 
   it('lists each language under its corpus name', async () => {

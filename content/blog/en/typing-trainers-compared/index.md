@@ -41,7 +41,7 @@ By default, keybr builds drills from made-up words that only contain the letters
 
 ## Language and keyboard layout
 
-If you type in a language other than English, your layout matters. Keypacer recognises your layout from the keys you press and lets you practise in eight languages, on QWERTY, QWERTZ, AZERTY, Dvorak, Colemak and more. keybr and Monkeytype also offer many languages and layouts. TIPP10 comes from Germany and is designed for the German layout.
+If you type in a language other than English, your layout matters. Keypacer recognises your layout from the keys you press and lets you practise in nine languages, on QWERTY, QWERTZ, AZERTY, Dvorak, Colemak and more. keybr and Monkeytype also offer many languages and layouts. TIPP10 comes from Germany and is designed for the German layout.
 
 ## Which trainer suits you?
 

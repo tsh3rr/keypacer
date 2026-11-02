@@ -1,14 +1,13 @@
 ---
 title: 8 wskazówek Alego Abdaala, jak szybko pisać, i jedna, którą widzimy inaczej
 description: Ali Abdaal pisze ponad 150 słów na minutę. Jego osiem wskazówek w skrócie, co o nich myślimy i jak wprowadzić je w życie z Keypacerem.
-updated: 2026-10-28
+updated: 2026-11-02
 topic: tips
 cover: cover.jpg
 coverAlt: Niebieski klawisz z cyfrą 8 i liniami prędkości obok symbolu odtwarzania, poniżej rząd podstawowy klawiatury
 translation: ali-abdaal-tipps
 translatedFrom: de
 order: 10
-draft: true
 ---
 
 Ali Abdaal był lekarzem, zanim stał się jednym z najbardziej znanych youtuberów od produktywności. W filmie „How I Type REALLY Fast” pokazuje, jak pisze z prędkością około 155 słów na minutę, i w ośmiu wskazówkach tłumaczy, jak do tego dojść. Film jest lekki, szybko przechodzi do rzeczy i warto go obejrzeć choćby po to, żeby zobaczyć, jak Ali pisze.

@@ -1,14 +1,13 @@
 ---
 title: Les 8 astuces d’Ali Abdaal pour taper vite, et celle qu’on voit autrement
 description: Ali Abdaal tape plus de 150 mots par minute. Ses huit astuces en bref, ce qu’on en pense et comment les appliquer avec Keypacer.
-updated: 2026-10-28
+updated: 2026-11-02
 topic: tips
 cover: cover.jpg
 coverAlt: Une touche bleue avec le chiffre 8 et des traits de vitesse à côté d’un symbole lecture, en dessous la rangée de repos d’un clavier
 translation: ali-abdaal-tipps
 translatedFrom: de
 order: 10
-draft: true
 ---
 
 Ali Abdaal était médecin avant de devenir l’un des youtubeurs productivité les plus connus. Dans sa vidéo « How I Type REALLY Fast », il montre comment il tape à environ 155 mots par minute et explique en huit astuces comment y arriver. La vidéo est divertissante, va droit au but et vaut le détour rien que pour le voir taper.

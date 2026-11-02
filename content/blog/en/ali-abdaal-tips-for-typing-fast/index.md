@@ -1,14 +1,13 @@
 ---
 title: Ali Abdaal's 8 tips for typing fast, and the one we see differently
 description: Ali Abdaal types over 150 words per minute. His eight tips at a glance, what we make of them and how to put them into practice with Keypacer.
-updated: 2026-10-28
+updated: 2026-11-02
 topic: tips
 cover: cover.jpg
 coverAlt: A blue key with the number 8 and speed lines next to a play symbol, with the home row of a keyboard below
 translation: ali-abdaal-tipps
 translatedFrom: de
 order: 10
-draft: true
 ---
 
 Ali Abdaal was a doctor before he became one of the best-known productivity YouTubers. In his video "How I Type REALLY Fast" he shows himself typing at around 155 words per minute and explains, in eight tips, how to get there. The video is entertaining, gets to the point quickly and is worth it just to watch him type.

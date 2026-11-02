@@ -1,14 +1,13 @@
 ---
 title: 8 dicas de Ali Abdaal para escrever depressa, e uma que vemos de outra forma
 description: Ali Abdaal escreve mais de 150 palavras por minuto. As oito dicas dele em resumo, o que pensamos delas e como pô-las em prática com o Keypacer.
-updated: 2026-10-28
+updated: 2026-11-02
 topic: tips
 cover: cover.jpg
 coverAlt: Uma tecla azul com o número 8 e linhas de velocidade ao lado de um símbolo de reprodução, por baixo a fila base de um teclado
 translation: ali-abdaal-tipps
 translatedFrom: de
 order: 10
-draft: true
 ---
 
 Ali Abdaal era médico antes de se tornar um dos youtubers de produtividade mais conhecidos. No vídeo "How I Type REALLY Fast", mostra como escreve a cerca de 155 palavras por minuto e explica em oito dicas como lá chegar. O vídeo é divertido, vai direto ao assunto e vale a pena nem que seja só para o ver a escrever.

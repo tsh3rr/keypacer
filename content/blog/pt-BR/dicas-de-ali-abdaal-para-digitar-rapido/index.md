@@ -1,14 +1,13 @@
 ---
 title: 8 dicas de Ali Abdaal para digitar rápido, e uma que vemos de outro jeito
 description: Ali Abdaal digita mais de 150 palavras por minuto. As oito dicas dele em resumo, o que achamos delas e como colocá-las em prática com o Keypacer.
-updated: 2026-10-28
+updated: 2026-11-02
 topic: tips
 cover: cover.jpg
 coverAlt: Uma tecla azul com o número 8 e linhas de velocidade ao lado de um símbolo de play, embaixo a fileira base de um teclado
 translation: ali-abdaal-tipps
 translatedFrom: de
 order: 10
-draft: true
 ---
 
 Ali Abdaal era médico antes de virar um dos youtubers de produtividade mais conhecidos. No vídeo "How I Type REALLY Fast", ele mostra como digita a cerca de 155 palavras por minuto e explica em oito dicas como chegar lá. O vídeo é divertido, vai direto ao ponto e vale a pena só para ver ele digitando.

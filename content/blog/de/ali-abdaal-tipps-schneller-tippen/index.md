@@ -1,13 +1,12 @@
 ---
 title: 8 Tipps von Ali Abdaal fürs schnelle Tippen, und einer, den wir anders sehen
 description: Ali Abdaal tippt über 150 Wörter pro Minute. Seine acht Tipps im Überblick, was wir davon halten und wie du sie mit Keypacer umsetzt.
-updated: 2026-10-28
+updated: 2026-11-02
 topic: tips
 cover: cover.jpg
 coverAlt: Eine blaue Taste mit der Zahl 8 und Tempostrichen neben einem Play-Symbol, darunter die Grundreihe einer Tastatur
 translation: ali-abdaal-tipps
 order: 10
-draft: true
 ---
 
 Ali Abdaal war Arzt, bevor er zu einem der bekanntesten YouTuber für Produktivität wurde. In seinem Video „How I Type REALLY Fast“ zeigt er, wie er mit rund 155 Wörtern pro Minute tippt, und erklärt in acht Tipps, wie man dorthin kommt. Das Video ist kurzweilig, kommt schnell auf den Punkt und lohnt sich allein dafür, ihm einmal beim Tippen zuzusehen.

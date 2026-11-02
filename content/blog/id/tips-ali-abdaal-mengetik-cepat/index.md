@@ -1,14 +1,13 @@
 ---
 title: 8 tips Ali Abdaal untuk mengetik cepat, dan satu yang kami lihat berbeda
 description: Ali Abdaal mengetik lebih dari 150 kata per menit. Delapan tipsnya secara ringkas, pendapat kami, dan cara mempraktikkannya dengan Keypacer.
-updated: 2026-10-28
+updated: 2026-11-02
 topic: tips
 cover: cover.jpg
 coverAlt: Tombol biru dengan angka 8 dan garis kecepatan di samping simbol putar, dengan baris dasar keyboard di bawahnya
 translation: ali-abdaal-tipps
 translatedFrom: de
 order: 10
-draft: true
 ---
 
 Ali Abdaal adalah seorang dokter sebelum menjadi salah satu YouTuber produktivitas paling terkenal. Dalam videonya "How I Type REALLY Fast" ia memperlihatkan dirinya mengetik sekitar 155 kata per menit dan menjelaskan dalam delapan tips cara mencapainya. Videonya menghibur, langsung ke inti, dan layak ditonton hanya untuk melihatnya mengetik.

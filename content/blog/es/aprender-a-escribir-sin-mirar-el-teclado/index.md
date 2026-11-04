@@ -8,7 +8,7 @@ coverAlt: Un teclado con las teclas sin rotular, solo la F y la J resaltadas con
 translation: blind-tippen-lernen
 translatedFrom: de
 order: 9
-draft: true
+publish: 2026-11-18
 ---
 
 Escribir al tacto significa que la vista se queda en la pantalla mientras los dedos encuentran las teclas. Ese es el núcleo de la mecanografía. Quien escribe con diez dedos pero mira hacia abajo cada pocas palabras pierde buena parte de la ventaja.

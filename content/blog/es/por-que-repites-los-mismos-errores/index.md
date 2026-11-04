@@ -8,7 +8,7 @@ coverAlt: Las teclas d, e e i, la e marcada en rojo, una flecha indica que la e 
 translation: tippfehler-muster
 translatedFrom: de
 order: 14
-draft: true
+publish: 2026-12-16
 ---
 
 Los errores al escribir no son casualidad. Casi todo el mundo comete los mismos una y otra vez: «qeu» en lugar de «que», una «r» en lugar de una «e», una letra que se pierde en «rr» o «ll». La investigación conoce estos patrones desde hace décadas. Aparecen porque los dedos han aprendido mal ciertos movimientos o los confunden con prisa. La buena noticia: lo que sigue un patrón se puede practicar a propósito.

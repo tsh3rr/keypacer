@@ -8,7 +8,7 @@ coverAlt: A keyboard with blank keys, only F and J highlighted with their bumps,
 translation: blind-tippen-lernen
 translatedFrom: de
 order: 9
-draft: true
+publish: 2026-11-18
 ---
 
 Touch typing means your eyes stay on the screen while your fingers find the keys. That is the real core of the technique. If you type with ten fingers but glance down every few words, you lose much of the benefit.

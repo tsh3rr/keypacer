@@ -48,7 +48,7 @@ Cuanto más haces con el teclado, menos saltan tus manos entre el teclado y el r
 
 Ali dice claramente que al principio vas más despacio, y que aun así merece la pena.
 
-**Nuestra opinión:** Totalmente de acuerdo, es la esencia de la mecanografía. Si la mirada se te va hacia abajo: ve más despacio en lugar de mirar, busca la fila guía con las marcas en relieve y, si hace falta, tápate las manos con un paño durante un tiempo. En Keypacer encuentras la siguiente tecla en el teclado en pantalla, y la ayuda desaparece sola en las teclas que ya escribes con seguridad.
+**Nuestra opinión:** Totalmente de acuerdo, es la esencia de la mecanografía. Si la mirada se te va hacia abajo: ve más despacio en lugar de mirar, busca la fila guía con las marcas en relieve y, si hace falta, tápate las manos con un paño durante un tiempo. En Keypacer encuentras la siguiente tecla en el teclado en pantalla, y la ayuda desaparece sola en las teclas que ya escribes con seguridad. Encontrarás más ejercicios contra la mirada hacia abajo en [Aprender a escribir sin mirar el teclado](/es/blog/aprender-a-escribir-sin-mirar-el-teclado/).
 
 ## 6. Deja los dedos en la fila guía
 
@@ -60,7 +60,7 @@ A la izquierda, los dedos descansan sobre <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd>
 
 Ali ha notado que es más rápido cuando golpea las teclas con más fuerza. Él mismo reconoce que no tiene datos que lo demuestren.
 
-**Aquí lo vemos de otra manera.** Es nuestra opinión, no una regla fija: creemos que una pulsación ligera es la mejor opción. Una tecla ya se activa con poca presión, y cada golpe más fuerte carga de más los dedos y los tendones, algo que se acumula a lo largo de una jornada. Una pulsación ligera también es más silenciosa y suele ser más regular. Encaja con las muñecas rectas y un teclado plano a la altura de los codos.
+**Aquí lo vemos de otra manera.** Es nuestra opinión, no una regla fija: creemos que una pulsación ligera es la mejor opción. Una tecla ya se activa con poca presión, y cada golpe más fuerte carga de más los dedos y los tendones, algo que se acumula a lo largo de una jornada. Una pulsación ligera también es más silenciosa y suele ser más regular. Encaja con las muñecas rectas y un teclado plano a la altura de los codos. Cómo preparar tu puesto para ello lo explicamos en [Postura y pausas al escribir en el teclado](/es/blog/postura-y-pausas-al-escribir/).
 
 Aun así, cada mano escribe un poco a su manera. Lo mejor es probar las dos formas, por ejemplo unos días cada una, y fijarte en tu precisión y en cómo notas las manos por la noche. Keypacer te muestra la velocidad y la precisión de cada sesión, así que puedes comparar las dos directamente. Luego quédate con la que te vaya mejor.
 

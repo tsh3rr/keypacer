@@ -7,7 +7,7 @@ cover: cover.jpg
 coverAlt: Aufgehende Sonne hinter den Tasten der Grundreihe, F und J hervorgehoben, daneben eine dampfende Tasse
 translation: morgens-auffrischen
 order: 7
-draft: true
+publish: 2026-11-25
 ---
 
 Wer gerade auf das Zehnfingersystem umsteigt, kennt das: In der Übung klappt es, aber sobald im Alltag eine E-Mail schnell raus muss, sind die alten Bewegungen wieder da. Zwei Finger, ein Blick auf die Tastatur, und das neue System ist für den Rest des Tages vergessen.

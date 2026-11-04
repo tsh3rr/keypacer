@@ -8,7 +8,7 @@ coverAlt: Un tachimetro con la lancetta appena oltre la metà, sotto una fila di
 translation: tempo-durchschnitt
 translatedFrom: de
 order: 12
-draft: true
+publish: 2026-12-09
 ---
 
 Al computer la maggior parte delle persone scrive tra 30 e 60 parole al minuto (PPM), circa 52 in media. Corrisponde a circa 260 battute al minuto. Se arrivi a 70 PPM o più, scrivi decisamente più veloce della maggior parte delle persone. Sullo smartphone la media è di circa 36 PPM.

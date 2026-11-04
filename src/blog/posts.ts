@@ -41,6 +41,8 @@ export interface Post {
   /** Shown on the landing page (at most three, see featuredPosts). */
   featured: boolean;
   draft: boolean;
+  /** Day the article goes live (YYYY-MM-DD); until then production leaves it out like a draft. */
+  publish?: string;
   html: string;
   minutes: number;
   /** Every picture the article uses, the cover included. */
@@ -62,7 +64,7 @@ export class PostError extends Error {}
 
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
-const FIELDS = ['title', 'description', 'updated', 'topic', 'translation', 'translatedFrom', 'cover', 'coverAlt', 'color', 'order', 'featured', 'draft'];
+const FIELDS = ['title', 'description', 'updated', 'publish', 'topic', 'translation', 'translatedFrom', 'cover', 'coverAlt', 'color', 'order', 'featured', 'draft'];
 
 const esc = (s: string): string =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -202,8 +204,15 @@ export function parsePost(src: PostSource): Post {
   const title = text('title')!;
   const description = text('description')!;
   if (description.length < 50 || description.length > 160) throw fail(`"description" should be 50 to 160 characters for search results (it has ${description.length})`);
-  const rawDate = data.updated instanceof Date ? data.updated.toISOString().slice(0, 10) : text('updated')!;
-  if (!DATE.test(rawDate) || Number.isNaN(Date.parse(rawDate))) throw fail('"updated" must be a date like 2026-11-03');
+  const date = (key: string, required: boolean): string | undefined => {
+    const v = data[key] instanceof Date ? (data[key] as Date).toISOString().slice(0, 10) : text(key, required);
+    if (v !== undefined && (!DATE.test(v) || Number.isNaN(Date.parse(v)))) throw fail(`"${key}" must be a date like 2026-11-03`);
+    return v;
+  };
+  const written = date('updated', true)!;
+  const publish = date('publish', false);
+  // An article published later than it was written shows its publication day.
+  const rawDate = publish && publish > written ? publish : written;
   const topic = text('topic')! as Topic;
   if (!TOPICS.includes(topic)) throw fail(`"topic" must be one of ${TOPICS.join(', ')}`);
   const translation = text('translation')!;
@@ -238,6 +247,7 @@ export function parsePost(src: PostSource): Post {
     order,
     featured: flag('featured'),
     draft: flag('draft'),
+    publish,
     html,
     minutes: Math.max(1, Math.round(words / 200)),
     pictures: cover ? [cover, ...pictures.filter((p) => p.file !== cover.file)] : pictures,
@@ -260,9 +270,19 @@ export function checkPosts(posts: Post[]): void {
   }
 }
 
-/** What a build publishes: everything in previews, no drafts in production. Sorted for the overview. */
-export function publishedPosts(posts: Post[], production: boolean): Post[] {
-  return posts.filter((p) => !(production && p.draft)).sort((a, b) => a.order - b.order || b.updated.localeCompare(a.updated) || a.slug.localeCompare(b.slug));
+/** Today's date in Austria, YYYY-MM-DD: the day a publish date is compared with. */
+export const today = (now = new Date()): string => new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Vienna' }).format(now);
+
+/**
+ * What a build publishes: everything in previews, no drafts in production.
+ * An article whose publish day hasn't come yet counts as a draft, so previews
+ * mark it noindex and leave it out of the sitemap. Sorted for the overview.
+ */
+export function publishedPosts(posts: Post[], production: boolean, day = today()): Post[] {
+  return posts
+    .map((p) => (!p.draft && p.publish && p.publish > day ? { ...p, draft: true } : p))
+    .filter((p) => !(production && p.draft))
+    .sort((a, b) => a.order - b.order || b.updated.localeCompare(a.updated) || a.slug.localeCompare(b.slug));
 }
 
 export const postsIn = (posts: Post[], lang: LandingLanguage): Post[] => posts.filter((p) => p.lang === lang);

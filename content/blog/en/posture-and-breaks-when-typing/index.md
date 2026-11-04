@@ -9,7 +9,7 @@ coverAlt: A spirit level with a centred bubble and a pause symbol above the home
 translation: haltung-und-pausen
 translatedFrom: de
 order: 8
-draft: true
+publish: 2026-12-02
 ---
 
 If you type a lot, you often sit in the same position for hours. Most people only notice when their wrists, shoulders or neck start to ache. A few adjustments to your desk and regular breaks go a long way towards preventing that.

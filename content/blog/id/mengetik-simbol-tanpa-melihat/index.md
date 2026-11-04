@@ -8,7 +8,7 @@ coverAlt: "Tombol Shift oranye, tanda plus, dan di sebelahnya tombol dengan @, #
 translation: sonderzeichen
 translatedFrom: de
 order: 13
-draft: true
+publish: 2026-12-23
 ---
 
 Di keyboard QWERTY AS, yang dipakai hampir semua laptop dan keyboard di Indonesia, kamu mengetik tanda @ dengan <kbd>Shift</kbd> + <kbd>2</kbd>, tanda pagar dengan <kbd>Shift</kbd> + <kbd>3</kbd>, dan kurung kurawal dengan <kbd>Shift</kbd> + <kbd>[</kbd> dan <kbd>Shift</kbd> + <kbd>]</kbd>. Di Mac dengan tata letak AS, simbol-simbolnya ada di tempat yang sama.

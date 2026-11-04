@@ -8,7 +8,7 @@ coverAlt: Um sol a nascer atrás das teclas da fila base, com F e J em destaque,
 translation: morgens-auffrischen
 translatedFrom: de
 order: 7
-draft: true
+publish: 2026-11-25
 ---
 
 Se estás a passar para a escrita com os dez dedos, conheces de certeza esta situação: no treino corre bem, mas basta um e-mail ter de seguir à pressa para os movimentos antigos voltarem. Dois dedos, os olhos no teclado, e o método novo fica esquecido até ao dia seguinte.

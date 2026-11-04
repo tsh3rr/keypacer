@@ -8,7 +8,7 @@ coverAlt: Um teclado com teclas sem letras, só F e J em destaque com os seus re
 translation: blind-tippen-lernen
 translatedFrom: de
 order: 9
-draft: true
+publish: 2026-11-18
 ---
 
 Escrever sem olhar significa que os olhos ficam no ecrã enquanto os dedos encontram as teclas. É esse o centro da escrita com os dez dedos. Quem escreve com dez dedos, mas olha para baixo de três em três palavras, perde grande parte da vantagem.

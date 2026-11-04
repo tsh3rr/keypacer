@@ -9,7 +9,7 @@ coverAlt: Une courbe qui monte, reste plate longtemps, puis remonte
 translation: tempo-plateau
 translatedFrom: de
 order: 15
-draft: true
+publish: 2026-12-30
 ---
 
 Beaucoup de gens tapent tous les jours depuis des années et ne vont pourtant pas plus vite. Ce n'est pas une limite naturelle. Dès que la frappe fonctionne « assez bien », elle passe en pilote automatique, et en pilote automatique on n'apprend plus rien. Pour regagner de la vitesse, il faut t'entraîner un moment, consciemment, juste au-dessus de ta vitesse habituelle, travailler tes suites de lettres les plus faibles et prévoir des pauses pour que tout se consolide.

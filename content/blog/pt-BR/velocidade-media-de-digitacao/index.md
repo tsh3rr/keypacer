@@ -8,7 +8,7 @@ coverAlt: Um velocímetro com o ponteiro logo depois do meio e, embaixo, uma fil
 translation: tempo-durchschnitt
 translatedFrom: de
 order: 12
-draft: true
+publish: 2026-12-09
 ---
 
 No computador, a maioria das pessoas digita entre 30 e 60 palavras por minuto (PPM), cerca de 52 em média. Isso dá uns 260 toques por minuto. Se você chega a 70 PPM ou mais, digita bem mais rápido que a maioria. No celular, a média fica em torno de 36 PPM.

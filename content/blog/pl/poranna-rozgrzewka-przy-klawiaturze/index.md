@@ -8,7 +8,7 @@ coverAlt: Słońce wschodzące za klawiszami rzędu podstawowego z wyróżnionym
 translation: morgens-auffrischen
 translatedFrom: de
 order: 7
-draft: true
+publish: 2026-11-25
 ---
 
 Jeśli przestawiasz się na pisanie dziesięcioma palcami, pewnie to znasz: na ćwiczeniach wszystko działa, ale gdy trzeba szybko wysłać maila, wracają stare ruchy. Dwa palce, wzrok na klawiaturze i nowa metoda idzie w odstawkę do następnego dnia.

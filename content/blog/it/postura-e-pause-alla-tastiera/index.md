@@ -9,7 +9,7 @@ coverAlt: Una livella a bolla con la bolla al centro e un simbolo di pausa sopra
 translation: haltung-und-pausen
 translatedFrom: de
 order: 8
-draft: true
+publish: 2026-12-02
 ---
 
 Chi scrive molto passa spesso ore nella stessa posizione. Di solito ce ne si accorge solo quando fanno male i polsi, le spalle o il collo. Con qualche regolazione alla postazione e pause regolari lo si può evitare in buona parte.

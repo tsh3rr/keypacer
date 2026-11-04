@@ -8,7 +8,7 @@ cover: cover.jpg
 coverAlt: Eine Kurve, die steigt, lange flach verläuft und dann wieder ansteigt
 translation: tempo-plateau
 order: 15
-draft: true
+publish: 2026-12-30
 ---
 
 Viele Menschen tippen seit Jahren täglich und werden trotzdem nicht schneller. Das liegt nicht an einer natürlichen Grenze. Sobald das Tippen „gut genug“ funktioniert, läuft es auf Autopilot, und auf Autopilot lernt man nichts Neues mehr. Um wieder schneller zu werden, musst du eine Weile bewusst knapp über deinem gewohnten Tempo üben, an deinen schwächsten Buchstabenfolgen arbeiten und Pausen zum Festigen einplanen.

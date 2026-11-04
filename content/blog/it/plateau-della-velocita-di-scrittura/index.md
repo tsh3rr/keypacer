@@ -9,7 +9,7 @@ coverAlt: Una curva che sale, resta piatta a lungo e poi sale di nuovo
 translation: tempo-plateau
 translatedFrom: de
 order: 15
-draft: true
+publish: 2026-12-30
 ---
 
 Molte persone scrivono ogni giorno da anni e comunque non diventano più veloci. Non è un limite naturale. Appena la scrittura funziona "abbastanza bene", va col pilota automatico, e col pilota automatico non si impara più niente di nuovo. Per tornare a crescere devi allenarti per un po' in modo consapevole poco sopra la tua velocità abituale, lavorare sulle sequenze di lettere più deboli e prevedere pause per consolidare.

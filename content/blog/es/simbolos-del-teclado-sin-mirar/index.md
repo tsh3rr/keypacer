@@ -8,7 +8,7 @@ coverAlt: Una tecla AltGr naranja, un signo más y al lado teclas con @, €, { 
 translation: sonderzeichen
 translatedFrom: de
 order: 13
-draft: true
+publish: 2026-12-23
 ---
 
 En un teclado español la arroba se escribe con <kbd>AltGr</kbd> + <kbd>2</kbd>. El euro va con <kbd>AltGr</kbd> + <kbd>E</kbd> y la almohadilla con <kbd>AltGr</kbd> + <kbd>3</kbd>. Las llaves están a la derecha, en las teclas de los acentos y la ç. En el teclado latinoamericano la arroba se escribe con <kbd>AltGr</kbd> + <kbd>Q</kbd>, y en Mac varios símbolos están en otro sitio y se usan con la tecla Opción <kbd>⌥</kbd>.

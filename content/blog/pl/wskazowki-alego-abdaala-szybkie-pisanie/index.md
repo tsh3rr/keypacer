@@ -48,7 +48,7 @@ Im więcej robisz klawiaturą, tym rzadziej ręce skaczą między klawiaturą a 
 
 Ali mówi wprost, że na początku pisze się przez to wolniej, ale i tak warto.
 
-**Nasz komentarz:** Pełna zgoda, to sedno pisania bezwzrokowego. Jeśli wzrok i tak ucieka w dół: zwolnij zamiast patrzeć, odnajdź rząd podstawowy po wypustkach, a w razie potrzeby przykryj na jakiś czas dłonie ściereczką. W Keypacerze następny klawisz znajdziesz na klawiaturze ekranowej, a przy klawiszach, które piszesz pewnie, podpowiedź sama znika.
+**Nasz komentarz:** Pełna zgoda, to sedno pisania bezwzrokowego. Jeśli wzrok i tak ucieka w dół: zwolnij zamiast patrzeć, odnajdź rząd podstawowy po wypustkach, a w razie potrzeby przykryj na jakiś czas dłonie ściereczką. W Keypacerze następny klawisz znajdziesz na klawiaturze ekranowej, a przy klawiszach, które piszesz pewnie, podpowiedź sama znika. Więcej ćwiczeń na odruch patrzenia w dół znajdziesz w artykule [Jak nauczyć się pisać bez patrzenia na klawiaturę](/pl/blog/pisanie-bez-patrzenia-na-klawiature/).
 
 ## 6. Trzymaj palce w rzędzie podstawowym
 
@@ -60,7 +60,7 @@ Lewa ręka spoczywa na <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> <kbd>F</kbd>, praw
 
 Ali zauważa, że pisze szybciej, kiedy mocniej uderza w klawisze. Sam przyznaje, że nie ma na to danych.
 
-**Tu widzimy to inaczej.** To nasza opinia, a nie sztywna zasada: uważamy, że lekkie uderzenie to lepszy wybór. Klawisz reaguje już przy lekkim nacisku, a każde mocniejsze uderzenie dodatkowo obciąża palce i ścięgna, co w ciągu długiego dnia pracy się sumuje. Lekkie uderzenie jest też cichsze i zwykle bardziej równe. Pasują do niego proste nadgarstki i płasko leżąca klawiatura na wysokości łokci.
+**Tu widzimy to inaczej.** To nasza opinia, a nie sztywna zasada: uważamy, że lekkie uderzenie to lepszy wybór. Klawisz reaguje już przy lekkim nacisku, a każde mocniejsze uderzenie dodatkowo obciąża palce i ścięgna, co w ciągu długiego dnia pracy się sumuje. Lekkie uderzenie jest też cichsze i zwykle bardziej równe. Pasują do niego proste nadgarstki i płasko leżąca klawiatura na wysokości łokci. Jak urządzić do tego stanowisko pracy, opisujemy w artykule [Postawa i przerwy przy pisaniu na klawiaturze](/pl/blog/postawa-i-przerwy-przy-pisaniu/).
 
 Każdy pisze jednak trochę inaczej. Najlepiej wypróbuj oba sposoby, na przykład po kilka dni każdy, i zwróć uwagę na swoją dokładność i na to, jak czujesz dłonie wieczorem. Keypacer pokazuje tempo i dokładność każdej sesji, więc możesz od razu porównać oba warianty. Potem wybierz to, co pasuje do ciebie.
 

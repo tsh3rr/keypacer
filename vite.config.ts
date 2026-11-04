@@ -71,7 +71,8 @@ function readPosts(production: boolean): Post[] {
     }
   }
   checkPosts(posts);
-  return publishedPosts(posts, production);
+  // BLOG_TODAY=2026-11-18 builds the site as it will look on that day.
+  return publishedPosts(posts, production, process.env.BLOG_TODAY || undefined);
 }
 
 /** Writes the placeholder pages and picture copies; returns them as build entries. */

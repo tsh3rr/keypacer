@@ -8,7 +8,7 @@ coverAlt: Un velocímetro con la aguja justo pasada la mitad y debajo una fila d
 translation: tempo-durchschnitt
 translatedFrom: de
 order: 12
-draft: true
+publish: 2026-12-09
 ---
 
 En el ordenador, la mayoría de la gente escribe entre 30 y 60 palabras por minuto (PPM), unas 52 de media. Eso equivale a unas 260 pulsaciones por minuto. Si llegas a 70 PPM o más, escribes claramente más rápido que la mayoría. En el móvil la media ronda las 36 PPM.

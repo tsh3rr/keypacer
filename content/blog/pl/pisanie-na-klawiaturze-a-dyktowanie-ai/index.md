@@ -32,7 +32,7 @@ To nie podlega dyskusji. [Badanie Uniwersytetu Stanforda z 2016 roku](https://ar
 
 **Znaki, których się nie wymawia.** Kod, wzory, ścieżki plików, hasła, nawiasy i znaki specjalne trudno podyktować.
 
-**Miejsca, w których nie możesz mówić.** Open space, biblioteka, pociąg, trwająca wideorozmowa. A niektórych rzeczy wolisz nie mówić na głos.
+**Miejsca, w których nie możesz mówić.** Open space, biblioteka, pociąg, trwająca wideorozmowa. A niektórych rzeczy wolisz nie mówić na głos. Jak przy pisaniu chronić też to, co masz na ekranie, wyjaśniamy w artykule [Pisanie jest bardziej prywatne](/pl/blog/pisanie-jest-bardziej-prywatne/).
 
 **Formułowanie.** Mówienie i pisanie to różne czynności. Pisząc, przeformułowujesz, skreślasz i przestawiasz zdania. Wiele osób myśli wtedy inaczej niż przy mówieniu.
 

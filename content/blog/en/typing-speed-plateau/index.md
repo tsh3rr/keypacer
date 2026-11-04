@@ -9,7 +9,7 @@ coverAlt: A curve that rises, runs flat for a long time and then rises again
 translation: tempo-plateau
 translatedFrom: de
 order: 15
-draft: true
+publish: 2026-12-30
 ---
 
 Many people have typed every day for years and still don't get any faster. That isn't a natural limit. As soon as typing works "well enough", it runs on autopilot, and on autopilot you don't learn anything new. To get faster again, you need to spend a while practising deliberately just above your usual speed, work on your weakest letter sequences and plan breaks to let it sink in.

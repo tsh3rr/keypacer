@@ -8,7 +8,7 @@ coverAlt: Portátil cujo ecrã escurece para um dos lados, ao lado de um olho ri
 translation: privatsphaere
 translatedFrom: de
 order: 6
-draft: true
+publish: 2026-11-11
 ---
 
 Em [Porque aprender a escrever no teclado se a IA pode ditar?](/pt-pt/blog/escrever-ou-ditar-com-ia/) vimos quando ditar ajuda e quando o teclado é melhor. Há um ponto que merece um artigo próprio: a privacidade.

@@ -32,7 +32,7 @@ That is not in dispute. A [2016 study at Stanford University](https://arxiv.org/
 
 **Characters you don’t speak.** Code, formulas, file paths, passwords, brackets and special characters are hard to dictate.
 
-**Places where you can’t talk.** Open-plan office, library, train, a video call in progress. And some things you would rather not say out loud.
+**Places where you can’t talk.** Open-plan office, library, train, a video call in progress. And some things you would rather not say out loud. How to also protect your screen while you type is covered in [Typing is more private](/blog/typing-is-more-private/).
 
 **Wording.** Speaking and writing are different activities. When writing, you rephrase, cut and move sentences around. Many people think differently than when they talk.
 

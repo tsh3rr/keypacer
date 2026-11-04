@@ -8,7 +8,7 @@ coverAlt: Un sole che sorge dietro i tasti della riga base, con F e J evidenziat
 translation: morgens-auffrischen
 translatedFrom: de
 order: 7
-draft: true
+publish: 2026-11-25
 ---
 
 Se stai passando alla scrittura a dieci dita, la situazione ti sarà familiare: durante l’esercizio funziona, ma appena un’email deve partire in fretta tornano i movimenti di sempre. Due dita, lo sguardo sulla tastiera, e il nuovo metodo è dimenticato fino al giorno dopo.

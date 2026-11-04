@@ -7,7 +7,7 @@ cover: cover.jpg
 coverAlt: Die Tasten d, e und i, das e rot markiert, ein Pfeil zeigt, dass e und i vertauscht wurden
 translation: tippfehler-muster
 order: 14
-draft: true
+publish: 2026-12-16
 ---
 
 Tippfehler sind kein Zufall. Fast jeder macht immer wieder dieselben: ein „dei“ statt „die“, ein „r“ statt „e“, ein verschlucktes „n“ am Wortende. Die Forschung kennt diese Muster seit Jahrzehnten. Sie entstehen, weil die Finger bestimmte Bewegungen falsch gelernt haben oder sie unter Zeitdruck verwechseln. Die gute Nachricht: Was einem Muster folgt, lässt sich gezielt üben.

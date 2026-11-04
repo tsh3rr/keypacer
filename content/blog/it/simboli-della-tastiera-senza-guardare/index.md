@@ -8,7 +8,7 @@ coverAlt: Un tasto AltGr arancione, un segno più e accanto tasti con @, €, { 
 translation: sonderzeichen
 translatedFrom: de
 order: 13
-draft: true
+publish: 2026-12-23
 ---
 
 Sulla tastiera italiana la chiocciola si scrive con <kbd>AltGr</kbd> + <kbd>ò</kbd> e il cancelletto con <kbd>AltGr</kbd> + <kbd>à</kbd>. L'euro si ottiene con <kbd>AltGr</kbd> + <kbd>E</kbd>, le parentesi quadre con <kbd>AltGr</kbd> + <kbd>è</kbd> e <kbd>AltGr</kbd> + <kbd>+</kbd>, e le graffe aggiungendo anche Maiusc. Su Mac molti simboli stanno altrove e si usano con il tasto Opzione <kbd>⌥</kbd>.

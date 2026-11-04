@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { imageSize } from './imageSize';
-import { checkPosts, featuredPosts, parsePost, publishedPosts, translationsOf, PostError, type PostSource } from './posts';
+import { checkPosts, featuredPosts, parsePost, publishedPosts, today, translationsOf, PostError, type PostSource } from './posts';
 
 /** A 1×1 PNG with its size patched to 1200×675. */
 function png(width = 1200, height = 675): Uint8Array {
@@ -117,6 +117,19 @@ describe('articles together', () => {
     const draft = parsePost(source({ draft: true, order: 1, translation: 'entwurf' }, 'Text.', { slug: 'entwurf' }));
     expect(publishedPosts([de, draft], true)).toEqual([de]);
     expect(publishedPosts([de, draft], false)).toEqual([draft, de]);
+  });
+
+  it('publishes a dated article on its day, and shows that day as its date', () => {
+    const later = parsePost(source({ publish: '2026-11-11', translation: 'geplant' }, 'Text.', { slug: 'geplant' }));
+    expect(later.updated).toBe('2026-11-11');
+    expect(publishedPosts([de, later], true, '2026-11-10')).toEqual([de]);
+    expect(publishedPosts([de, later], false, '2026-11-10').find((p) => p.slug === 'geplant')?.draft).toBe(true);
+    expect(publishedPosts([de, later], true, '2026-11-11').map((p) => p.slug)).toContain('geplant');
+    expect(() => parsePost(source({ publish: 'nächste Woche' }))).toThrow('"publish" must be a date');
+  });
+
+  it('takes today in Austria, not in UTC', () => {
+    expect(today(new Date('2026-11-10T23:30:00Z'))).toBe('2026-11-11');
   });
 
   it('puts featured articles first on the landing page, three at most', () => {

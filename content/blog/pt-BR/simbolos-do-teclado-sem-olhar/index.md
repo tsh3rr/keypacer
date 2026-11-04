@@ -8,7 +8,7 @@ coverAlt: "Uma tecla Shift laranja, um sinal de mais e, ao lado, teclas com @, #
 translation: sonderzeichen
 translatedFrom: de
 order: 13
-draft: true
+publish: 2026-12-23
 ---
 
 No teclado brasileiro ABNT2, a arroba se digita com <kbd>Shift</kbd> + <kbd>2</kbd> e a cerquilha com <kbd>Shift</kbd> + <kbd>3</kbd>. Os colchetes [ e ] têm teclas próprias à direita, e as chaves { e } ficam nas mesmas teclas, com Shift. A barra / tem uma tecla extra à direita do ponto e vírgula. Em notebooks sem essa tecla, ela sai com <kbd>AltGr</kbd> + <kbd>Q</kbd>.

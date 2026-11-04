@@ -8,7 +8,7 @@ coverAlt: Pomarańczowy klawisz AltGr, znak plus, a obok klawisze z ą, ę, ł i
 translation: sonderzeichen
 translatedFrom: de
 order: 13
-draft: true
+publish: 2026-12-23
 ---
 
 Na polskiej klawiaturze (układ „Polski programisty”) polskie litery piszesz z prawym <kbd>Alt</kbd>, czyli <kbd>AltGr</kbd>: <kbd>AltGr</kbd> + <kbd>A</kbd> daje ą, <kbd>AltGr</kbd> + <kbd>L</kbd> daje ł, <kbd>AltGr</kbd> + <kbd>X</kbd> daje ź, a <kbd>AltGr</kbd> + <kbd>Z</kbd> daje ż. Symbole takie jak @, # i nawiasy klamrowe są tam, gdzie na klawiaturze amerykańskiej: @ to <kbd>Shift</kbd> + <kbd>2</kbd>, a { i } to <kbd>Shift</kbd> + <kbd>[</kbd> i <kbd>]</kbd>.

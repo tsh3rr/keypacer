@@ -8,7 +8,7 @@ coverAlt: As teclas d, e e i, o e marcado em vermelho, uma seta mostra que o e e
 translation: tippfehler-muster
 translatedFrom: de
 order: 14
-draft: true
+publish: 2026-12-16
 ---
 
 Erros de digitação não são por acaso. Quase todo mundo comete os mesmos, de novo e de novo: "qeu" em vez de "que", um "r" no lugar de um "e", uma letra que some em "rr" ou "ss". A pesquisa conhece esses padrões há décadas. Eles surgem porque os dedos aprenderam certos movimentos de forma errada ou os confundem na pressa. A boa notícia: o que segue um padrão pode ser treinado de propósito.

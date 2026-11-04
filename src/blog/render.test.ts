@@ -48,6 +48,16 @@ describe('blog pages', () => {
     expect(html).toContain('<a href="/es/" hreflang="es" lang="es">Español</a>');
   });
 
+  it('leaves out a sentence that links to an article this build does not have', () => {
+    const withLinks = {
+      ...de,
+      html: '<p>Erst das. Mehr in <a href="/de/blog/kommt-noch/">Bald</a>. Und <a href="/de/blog/zehnfinger/#plan">da</a>.</p>\n<p>Siehe <a href="/de/blog/kommt-noch/">Bald</a>.</p>\n<p>Rest.</p>\n',
+    };
+    const html = renderPost(withLinks, posts, SITE);
+    expect(html).toContain('<p>Erst das. Und <a href="/de/blog/zehnfinger/#plan">da</a>.</p>\n<p>Rest.</p>');
+    expect(html).not.toContain('kommt-noch');
+  });
+
   it('carries the article data for search engines', () => {
     const html = renderPost(en, posts, SITE);
     const ld = JSON.parse(/<script type="application\/ld\+json">([^<]*)<\/script>/.exec(html)![1].replace(/\\u003c/g, '<'));

@@ -8,7 +8,7 @@ coverAlt: I tasti d, e e i, la e segnata in rosso, una freccia mostra che la e e
 translation: tippfehler-muster
 translatedFrom: de
 order: 14
-draft: true
+publish: 2026-12-16
 ---
 
 Gli errori di battitura non sono un caso. Quasi tutti fanno sempre gli stessi: "dle" invece di "del", una "r" invece di una "e", una lettera che salta in "zz" o "tt". La ricerca conosce questi schemi da decenni. Nascono perché le dita hanno imparato male certi movimenti o li confondono quando vanno di fretta. La buona notizia: ciò che segue uno schema si può allenare in modo mirato.

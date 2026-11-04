@@ -48,7 +48,7 @@ Makin banyak yang kamu lakukan dari keyboard, makin jarang tanganmu bolak-balik 
 
 Ali terus terang bahwa ini awalnya membuatmu lebih lambat, dan bahwa tetap sepadan.
 
-**Pendapat kami:** Sepenuhnya setuju, inilah inti mengetik 10 jari. Saat matamu masih ingin turun: pelan-pelan daripada melihat, temukan baris dasar dari tonjolan di tombol, dan jika perlu, tutupi tanganmu dengan kain untuk sementara. Di Keypacer kamu menemukan tombol berikutnya di keyboard layar, dan panduan meredup sendiri untuk tombol yang kamu ketik dengan andal.
+**Pendapat kami:** Sepenuhnya setuju, inilah inti mengetik 10 jari. Saat matamu masih ingin turun: pelan-pelan daripada melihat, temukan baris dasar dari tonjolan di tombol, dan jika perlu, tutupi tanganmu dengan kain untuk sementara. Di Keypacer kamu menemukan tombol berikutnya di keyboard layar, dan panduan meredup sendiri untuk tombol yang kamu ketik dengan andal. Latihan lain agar pandanganmu tidak turun ke keyboard ada di [Belajar mengetik tanpa melihat keyboard](/id/blog/mengetik-tanpa-melihat-keyboard/).
 
 ## 6. Jaga jari di baris dasar
 
@@ -60,7 +60,7 @@ Di kiri jarimu bertumpu di <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> <kbd>F</kbd>, 
 
 Ali memperhatikan bahwa ia lebih cepat saat menekan tombol lebih keras. Ia sendiri mengatakan tidak punya data untuk mendukungnya.
 
-**Di sini kami tidak sependapat.** Ini pandangan kami, bukan aturan mutlak: menurut kami sentuhan ringan adalah pilihan yang lebih baik. Tombol sudah terdaftar dengan tekanan ringan, dan setiap ketukan yang lebih keras memberi beban tambahan pada jari dan tendon, yang menumpuk sepanjang hari kerja yang panjang. Sentuhan ringan juga lebih senyap dan biasanya lebih merata. Itu cocok dengan pergelangan tangan yang lurus dan keyboard yang rata setinggi siku.
+**Di sini kami tidak sependapat.** Ini pandangan kami, bukan aturan mutlak: menurut kami sentuhan ringan adalah pilihan yang lebih baik. Tombol sudah terdaftar dengan tekanan ringan, dan setiap ketukan yang lebih keras memberi beban tambahan pada jari dan tendon, yang menumpuk sepanjang hari kerja yang panjang. Sentuhan ringan juga lebih senyap dan biasanya lebih merata. Itu cocok dengan pergelangan tangan yang lurus dan keyboard yang rata setinggi siku. Cara menata tempat kerjamu untuk itu ada di [Postur dan istirahat saat mengetik](/id/blog/postur-dan-istirahat-saat-mengetik/).
 
 Namun tangan setiap orang mengetik sedikit berbeda. Yang terbaik adalah mencoba keduanya, misalnya masing-masing beberapa hari, dan memperhatikan seberapa tepat kamu mengetik dan bagaimana rasanya tanganmu di malam hari. Keypacer menunjukkan kecepatan dan akurasi setiap sesi, jadi kamu bisa membandingkan keduanya secara langsung. Lalu pilih yang cocok untukmu.
 

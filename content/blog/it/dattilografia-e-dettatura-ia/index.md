@@ -32,7 +32,7 @@ Su questo non ci sono dubbi. Uno [studio della Stanford University del 2016](htt
 
 **Caratteri che non si pronunciano.** Codice, formule, percorsi di file, password, parentesi e caratteri speciali si dettano a fatica.
 
-**Luoghi in cui non puoi parlare.** Open space, biblioteca, treno, una videochiamata in corso. E certe cose preferisci non dirle ad alta voce.
+**Luoghi in cui non puoi parlare.** Open space, biblioteca, treno, una videochiamata in corso. E certe cose preferisci non dirle ad alta voce. Come proteggere anche il tuo schermo mentre scrivi lo spieghiamo in [Scrivere è più riservato](/it/blog/scrivere-e-piu-riservato/).
 
 **Formulare.** Parlare e scrivere sono attività diverse. Scrivendo riformuli, cancelli e sposti frasi. Molte persone pensano in modo diverso da quando parlano.
 

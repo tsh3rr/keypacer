@@ -3,8 +3,16 @@
 {
   "name": "keypacer",
   "compatibility_date": "2026-10-01",
+  // Only runs for missing addresses and for the daily rebuild (see src/worker.ts).
+  "main": "src/worker.ts",
   "assets": {
     "directory": "./dist/",
+    "binding": "ASSETS",
     "not_found_handling": "404-page"
+  },
+  // 05:55 UTC, so 06:55 in winter and 07:55 in summer in Austria: articles
+  // with a publish date go live in the morning.
+  "triggers": {
+    "crons": ["55 5 * * *"]
   }
 }

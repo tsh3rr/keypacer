@@ -32,7 +32,7 @@ C’est incontesté. Une [étude de l’université Stanford de 2016](https://ar
 
 **Les caractères qu’on ne prononce pas.** Code, formules, chemins de fichiers, mots de passe, parenthèses et caractères spéciaux se dictent difficilement.
 
-**Les lieux où tu ne peux pas parler.** Open space, bibliothèque, train, une visioconférence en cours. Et certaines choses, tu préfères ne pas les dire à voix haute.
+**Les lieux où tu ne peux pas parler.** Open space, bibliothèque, train, une visioconférence en cours. Et certaines choses, tu préfères ne pas les dire à voix haute. Comment protéger aussi ton écran quand tu tapes, on l’explique dans [Taper est plus discret](/fr/blog/taper-est-plus-discret/).
 
 **Formuler.** Parler et écrire sont deux activités différentes. En écrivant, tu reformules, tu supprimes, tu déplaces des phrases. Beaucoup de gens pensent autrement qu’en parlant.
 

@@ -8,7 +8,7 @@ coverAlt: Sebuah laptop yang layarnya menggelap ke satu sisi, di samping mata ya
 translation: privatsphaere
 translatedFrom: de
 order: 6
-draft: true
+publish: 2026-11-11
 ---
 
 Dalam [Untuk apa belajar mengetik kalau AI bisa menulis dari dikte?](/id/blog/mengetik-atau-dikte-ai/) kami membahas kapan dikte membantu dan kapan keyboard lebih baik. Ada satu hal yang layak mendapat artikel tersendiri: privasi.

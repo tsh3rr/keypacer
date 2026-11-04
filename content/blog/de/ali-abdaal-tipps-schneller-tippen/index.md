@@ -47,7 +47,7 @@ Je mehr du mit der Tastatur erledigst, desto weniger springen die Hände zwische
 
 Ali sagt klar, dass man dafür am Anfang langsamer wird, und dass es sich trotzdem lohnt.
 
-**Unsere Einordnung:** Volle Zustimmung, das ist der Kern des Zehnfingersystems. Wenn der Blick doch nach unten will: langsamer werden statt hinschauen, die Grundstellung an den Rillen ertasten und notfalls die Hände eine Zeit lang mit einem Tuch abdecken. In Keypacer findest du die nächste Taste auf der Bildschirmtastatur, und bei Tasten, die du sicher tippst, blendet die Hilfe von selbst ab.
+**Unsere Einordnung:** Volle Zustimmung, das ist der Kern des Zehnfingersystems. Wenn der Blick doch nach unten will: langsamer werden statt hinschauen, die Grundstellung an den Rillen ertasten und notfalls die Hände eine Zeit lang mit einem Tuch abdecken. In Keypacer findest du die nächste Taste auf der Bildschirmtastatur, und bei Tasten, die du sicher tippst, blendet die Hilfe von selbst ab. Mehr Übungen gegen den Blick nach unten findest du in [Blind tippen lernen](/de/blog/blind-tippen-lernen/).
 
 ## 6. Die Finger auf der Grundreihe lassen
 
@@ -59,7 +59,7 @@ Links liegen die Finger auf <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> <kbd>F</kbd>,
 
 Ali hat beobachtet, dass er schneller ist, wenn er kräftiger auf die Tasten schlägt. Er sagt selbst, dass er dafür keine Daten hat.
 
-**Hier sehen wir es anders.** Das ist unsere Einschätzung, keine feste Regel: Wir halten einen leichten Anschlag für die bessere Wahl. Eine Taste löst schon bei leichtem Druck aus, und jeder kräftigere Anschlag belastet Finger und Sehnen zusätzlich, über einen langen Arbeitstag summiert sich das. Ein leichter Anschlag ist außerdem leiser und meist gleichmäßiger. Dazu passen gerade Handgelenke und eine flach liegende Tastatur auf Ellbogenhöhe.
+**Hier sehen wir es anders.** Das ist unsere Einschätzung, keine feste Regel: Wir halten einen leichten Anschlag für die bessere Wahl. Eine Taste löst schon bei leichtem Druck aus, und jeder kräftigere Anschlag belastet Finger und Sehnen zusätzlich, über einen langen Arbeitstag summiert sich das. Ein leichter Anschlag ist außerdem leiser und meist gleichmäßiger. Dazu passen gerade Handgelenke und eine flach liegende Tastatur auf Ellbogenhöhe. Wie du deinen Arbeitsplatz dafür einrichtest, steht in [Haltung und Pausen beim Tippen](/de/blog/haltung-und-pausen-beim-tippen/).
 
 Trotzdem tippt jede Hand ein bisschen anders. Probier am besten beides aus, zum Beispiel jeweils ein paar Tage, und achte darauf, wie genau du tippst und wie sich deine Hände am Abend anfühlen. Keypacer zeigt dir Tempo und Genauigkeit jeder Sitzung, so kannst du beide Varianten direkt vergleichen. Nimm dann, was für dich passt.
 

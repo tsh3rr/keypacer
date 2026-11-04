@@ -48,7 +48,7 @@ Quanto mais você faz pelo teclado, menos as mãos pulam entre teclado e mouse. 
 
 Ali diz com todas as letras que no começo você fica mais devagar, e que mesmo assim vale a pena.
 
-**Nossa opinião:** Concordamos totalmente, essa é a essência da digitação com os dez dedos. Se o olhar ainda quiser descer: vá mais devagar em vez de olhar, encontre a fileira base pelos relevos das teclas e, se precisar, cubra as mãos com um pano por um tempo. No Keypacer você encontra a próxima tecla no teclado na tela, e a ajuda some sozinha nas teclas que você já digita com segurança.
+**Nossa opinião:** Concordamos totalmente, essa é a essência da digitação com os dez dedos. Se o olhar ainda quiser descer: vá mais devagar em vez de olhar, encontre a fileira base pelos relevos das teclas e, se precisar, cubra as mãos com um pano por um tempo. No Keypacer você encontra a próxima tecla no teclado na tela, e a ajuda some sozinha nas teclas que você já digita com segurança. Mais exercícios contra a vontade de olhar para baixo estão em [Como aprender a digitar sem olhar para o teclado](/pt-br/blog/digitar-sem-olhar-para-o-teclado/).
 
 ## 6. Mantenha os dedos na fileira base
 
@@ -60,7 +60,7 @@ Ali diz com todas as letras que no começo você fica mais devagar, e que mesmo 
 
 Ali percebeu que é mais rápido quando bate nas teclas com mais força. Ele mesmo admite que não tem dados sobre isso.
 
-**Aqui vemos de outro jeito.** É a nossa opinião, não uma regra fixa: achamos que um toque leve é a melhor escolha. A tecla já é acionada com pouca pressão, e cada batida mais forte sobrecarrega dedos e tendões, algo que se acumula ao longo de um dia de trabalho. Um toque leve também é mais silencioso e costuma ser mais uniforme. Combina com pulsos retos e um teclado plano na altura dos cotovelos.
+**Aqui vemos de outro jeito.** É a nossa opinião, não uma regra fixa: achamos que um toque leve é a melhor escolha. A tecla já é acionada com pouca pressão, e cada batida mais forte sobrecarrega dedos e tendões, algo que se acumula ao longo de um dia de trabalho. Um toque leve também é mais silencioso e costuma ser mais uniforme. Combina com pulsos retos e um teclado plano na altura dos cotovelos. Como arrumar seu posto de trabalho para isso, explicamos em [Postura e pausas ao digitar](/pt-br/blog/postura-e-pausas-ao-digitar/).
 
 Mesmo assim, cada mão digita de um jeito. O melhor é testar as duas formas, por exemplo alguns dias cada uma, e prestar atenção na sua precisão e em como suas mãos estão no fim do dia. O Keypacer mostra a velocidade e a precisão de cada sessão, então você pode comparar as duas na hora. Depois fique com a que funciona para você.
 

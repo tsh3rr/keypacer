@@ -8,7 +8,7 @@ coverAlt: Une touche AltGr orange, un signe plus et à côté des touches avec @
 translation: sonderzeichen
 translatedFrom: de
 order: 13
-draft: true
+publish: 2026-12-23
 ---
 
 Sur un clavier AZERTY français, l'arobase se tape avec <kbd>AltGr</kbd> + <kbd>à</kbd> (la touche du 0). L'euro s'obtient avec <kbd>AltGr</kbd> + <kbd>E</kbd>, le dièse avec <kbd>AltGr</kbd> + <kbd>"</kbd> (la touche du 3) et les accolades avec <kbd>AltGr</kbd> + <kbd>'</kbd> et <kbd>AltGr</kbd> + <kbd>=</kbd>. Sur Mac, la plupart de ces symboles sont ailleurs et passent par la touche Option <kbd>⌥</kbd>.

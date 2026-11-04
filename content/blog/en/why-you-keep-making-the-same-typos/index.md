@@ -8,7 +8,7 @@ coverAlt: The keys t, e and h, the e marked in red, an arrow shows that e and h 
 translation: tippfehler-muster
 translatedFrom: de
 order: 14
-draft: true
+publish: 2026-12-16
 ---
 
 Typos are not random. Almost everyone makes the same ones again and again: "teh" instead of "the", an "r" instead of an "e", a missing letter in a double "ll". Research has known these patterns for decades. They come about because your fingers have learned certain movements wrongly or mix them up under time pressure. The good news: anything that follows a pattern can be practised on purpose.

@@ -9,7 +9,7 @@ coverAlt: Un niveau à bulle avec la bulle au centre et un symbole pause au-dess
 translation: haltung-und-pausen
 translatedFrom: de
 order: 8
-draft: true
+publish: 2026-12-02
 ---
 
 Quand on tape beaucoup, on reste souvent des heures dans la même position. La plupart du temps, on ne s’en rend compte que lorsque les poignets, les épaules ou la nuque font mal. Quelques réglages au poste de travail et des pauses régulières permettent largement de l’éviter.

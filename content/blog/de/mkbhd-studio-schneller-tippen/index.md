@@ -17,7 +17,7 @@ GdT_XyB9voI
 Who's the Fastest Typist at MKBHD's Studio? · The Studio
 ```
 
-Wir gehen die Experimente der Reihe nach durch und sagen jeweils, was wir davon halten und was die Forschung dazu weiß.
+Wir gehen die Experimente der Reihe nach durch und sagen jeweils, was wir davon halten und was die Forschung dazu weiß. Ein ähnliches Video haben wir uns schon bei Ali Abdaal angesehen: [8 Tipps von Ali Abdaal fürs schnelle Tippen](/de/blog/ali-abdaal-tipps-schneller-tippen/).
 
 ## Die Ausgangslage
 

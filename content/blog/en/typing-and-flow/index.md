@@ -1,14 +1,13 @@
 ---
 title: Typing as a flow experience
 description: Why learning to type leads naturally into flow, and why confident typing is what makes flow possible when you write.
-updated: 2026-10-28
+updated: 2026-11-04
 topic: method
 cover: cover.jpg
 coverAlt: Keys with the letters f, l, o and w along a curved line
 translation: flow-erlebnis
 translatedFrom: de
 order: 5
-draft: true
 ---
 
 Flow is the state of being completely absorbed in what you are doing. You stop thinking about the doing, and time passes faster than usual. The psychologist Mihaly Csikszentmihalyi described it after studying musicians, athletes and craftspeople at work.

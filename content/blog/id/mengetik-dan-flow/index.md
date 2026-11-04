@@ -1,14 +1,13 @@
 ---
 title: Mengetik sebagai pengalaman flow
 description: Mengapa belajar mengetik secara alami membawa ke flow, dan mengapa mengetik dengan mantap justru memungkinkan flow saat menulis.
-updated: 2026-10-28
+updated: 2026-11-04
 topic: method
 cover: cover.jpg
 coverAlt: Tombol-tombol dengan huruf f, l, o, dan w di sepanjang garis melengkung
 translation: flow-erlebnis
 translatedFrom: de
 order: 5
-draft: true
 ---
 
 Flow adalah keadaan ketika kamu benar-benar larut dalam apa yang kamu kerjakan. Kamu berhenti memikirkan cara melakukannya, dan waktu terasa berjalan lebih cepat dari biasanya. Psikolog Mihaly Csikszentmihalyi menggambarkannya setelah mengamati musisi, atlet, dan perajin saat bekerja.

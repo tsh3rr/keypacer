@@ -19,7 +19,7 @@ import { en, type Message } from './locales/en';
  * practise English with German menus.
  *
  * Only English ships with the app; the other languages are loaded when they
- * are picked (`setUiLanguage` waits for that), so nobody downloads seven sets
+ * are picked (`setUiLanguage` waits for that), so nobody downloads eight sets
  * of menus they never see.
  */
 
@@ -36,6 +36,7 @@ const LOADERS = {
   pl: async () => (await import('./locales/pl')).pl,
   'pt-BR': async () => (await import('./locales/pt-BR')).ptBR,
   'pt-PT': async () => (await import('./locales/pt-PT')).ptPT,
+  id: async () => (await import('./locales/id')).id,
 } satisfies Record<string, () => Promise<Messages>>;
 export type UiLanguage = keyof typeof LOADERS;
 
@@ -51,6 +52,7 @@ export const UI_LANGUAGES: readonly { id: UiLanguage; name: string }[] = [
   { id: 'pl', name: 'Polski' },
   { id: 'pt-BR', name: 'Português (Brasil)' },
   { id: 'pt-PT', name: 'Português (Portugal)' },
+  { id: 'id', name: 'Bahasa Indonesia' },
 ];
 
 let current: UiLanguage = 'en';

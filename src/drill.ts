@@ -35,16 +35,20 @@ export interface DrillParams {
   /** Unlock bar: effective evidence n, error rate p̂ and latency (vs the tier target T). */
   unlockMinWeight: number;
   unlockMaxErrorRate: number;
+  /** The unlock bar's speed never asks more than this, however high the tier: accuracy first, speed after. */
+  unlockMaxWpm: number;
   /** Latency bar multiplier for a key that kept blocking (stuck rule). */
   stuckLatencySlack: number;
   /** Error-rate bar for a key that kept blocking even longer (second stuck rule). */
   stuckMaxErrorRate: number;
   /** Latency bar multiplier for capitals and other characters typed with Shift on the layout. */
   shiftLatencySlack: number;
-  /** Core drills in a row with the same single blocking key before the stuck rule applies (~2–3 sessions). */
+  /** Core drills without an unlock before the steps still too slow get the looser latency bar (~2–3 sessions). */
   stuckDrills: number;
-  /** Core drills in a row before the stuck key also gets the looser error-rate bar. */
+  /** Core drills without an unlock before the steps still making too many errors get the looser error-rate bar. */
   stuckErrorDrills: number;
+  /** Core drills without an unlock before the tier steps down, if a step is still too slow; again every `stuckDrills` after. */
+  slowTierDrills: number;
   /** Need added to the focus key and its bigrams. */
   focusBoost: number;
   /** Targets per drill and the softmax temperature used to pick them and words. */
@@ -112,11 +116,13 @@ export const DEFAULT_DRILL_PARAMS: Readonly<DrillParams> = Object.freeze({
   startKeys: 6,
   unlockMinWeight: 25,
   unlockMaxErrorRate: 0.045,
+  unlockMaxWpm: 30,
   stuckLatencySlack: 1.15,
   stuckMaxErrorRate: 0.05,
   shiftLatencySlack: 1.3,
   stuckDrills: 15,
   stuckErrorDrills: 20,
+  slowTierDrills: 30,
   focusBoost: 0.5,
   targets: 5,
   temperature: 0.3,
@@ -171,6 +177,11 @@ export function tierTargetMs(tier: number): number {
   return 12_000 / tierWpm(tier);
 }
 
+/** The unlock bar's per-key latency at a tier: the tier's target, capped at `unlockMaxWpm`. */
+export function unlockTargetMs(tier: number, p: DrillParams = DEFAULT_DRILL_PARAMS): number {
+  return 12_000 / Math.min(tierWpm(tier), p.unlockMaxWpm);
+}
+
 /** What the generator remembers between drills, per language and layout. Plain data, so it serializes. */
 export interface CurriculumState {
   version: 1;
@@ -184,7 +195,7 @@ export interface CurriculumState {
   relaxedKeys: string[];
   /** Steps the second stuck rule also gave a looser error-rate bar. Missing in states saved before it existed. */
   errorRelaxedKeys?: string[];
-  /** The single step blocking the next unlock, and for how many core drills in a row. */
+  /** The first step blocking the next unlock, and how many core drills have gone by without one. */
   blocker: string | null;
   blockedDrills: number;
   tier: number;
@@ -236,6 +247,7 @@ export type CurriculumChange =
   | { type: 'focus-met'; key: string }
   | { type: 'stuck'; key: string }
   | { type: 'tier'; tier: number }
+  | { type: 'tier-down'; tier: number }
   | { type: 'recovery'; on: boolean };
 
 // --- Curriculum ---
@@ -366,7 +378,7 @@ export function barGap(
 ): BarGap {
   let slack = key && state.relaxedKeys.includes(key.item) ? p.stuckLatencySlack : 1;
   if (key && state.layout !== undefined && needsShift(key.item, state.layout)) slack *= p.shiftLatencySlack;
-  const targetMs = tierTargetMs(state.tier) * slack;
+  const targetMs = unlockTargetMs(state.tier, p) * slack;
   const maxErrorRate = key && state.errorRelaxedKeys?.includes(key.item) ? p.stuckMaxErrorRate : p.unlockMaxErrorRate;
   if (!key) return { few: true, errors: false, slow: false, targetMs, maxErrorRate };
   return {
@@ -983,34 +995,58 @@ export function afterDrill(
     s.blocker = null;
     s.blockedDrills = 0;
     changes.push({ type: 'unlock', key: next });
-  } else if (blocking.length === 1) {
-    // Stuck rule: one key holding everything up for long gets a looser latency bar and the focus;
-    // still stuck a while later, it also gets a looser error-rate bar.
-    s.blockedDrills = s.blocker === blocking[0] ? s.blockedDrills + 1 : 1;
+  } else if (blocking.length > 0) {
+    // Stuck rule: counted in drills without an unlock, whichever steps block, so a step that keeps
+    // blocking is not let off the hook by another one slipping now and then. Past `stuckDrills`, every
+    // step still too slow gets a looser latency bar; past `stuckErrorDrills`, every step still making
+    // too many errors also gets a looser error-rate bar. The first of them gets the focus.
+    s.blockedDrills++;
     s.blocker = blocking[0];
-    if (s.blockedDrills >= p.stuckDrills && !s.relaxedKeys.includes(s.blocker)) {
-      s.relaxedKeys.push(s.blocker);
-      s.focusKey = s.blocker;
-      changes.push({ type: 'stuck', key: s.blocker });
+    const gaps = blocking.map((k) => ({ k, gap: barGap(stepStats(model, k, s), s, p) }));
+    if (s.blockedDrills >= p.stuckDrills) {
+      const slow = gaps.filter(({ k, gap }) => gap.slow && !s.relaxedKeys.includes(k)).map(({ k }) => k);
+      for (const k of slow) changes.push({ type: 'stuck', key: k });
+      s.relaxedKeys.push(...slow);
+      if (slow.length > 0) s.focusKey = slow[0];
     }
     const errorRelaxed = s.errorRelaxedKeys ?? [];
-    if (s.blockedDrills >= p.stuckErrorDrills && !errorRelaxed.includes(s.blocker)) {
-      s.errorRelaxedKeys = [...errorRelaxed, s.blocker];
-      s.focusKey = s.blocker;
+    if (s.blockedDrills >= p.stuckErrorDrills) {
+      const sloppy = gaps.filter(({ k, gap }) => gap.errors && !errorRelaxed.includes(k)).map(({ k }) => k);
+      s.errorRelaxedKeys = [...errorRelaxed, ...sloppy];
+      if (sloppy.length > 0) s.focusKey = sloppy[0];
+    }
+
+    // Still too slow long after that: the tier asks more than the learner's speed yet, so it steps down
+    // to the first tier with a looser bar (below `unlockMaxWpm` when above it), and again every
+    // `stuckDrills` while that lasts.
+    const since = s.blockedDrills - p.slowTierDrills;
+    let lower = s.tier - 1;
+    while (lower > 1 && unlockTargetMs(lower, p) <= unlockTargetMs(s.tier, p)) lower--;
+    if (
+      since >= 0 && since % p.stuckDrills === 0 && gaps.some(({ gap }) => gap.slow) &&
+      lower >= 1 && unlockTargetMs(lower, p) > unlockTargetMs(s.tier, p)
+    ) {
+      s.tier = lower;
+      s.coreHistory = [];
+      changes.push({ type: 'tier-down', tier: s.tier });
+      return { state: s, changes };
     }
   } else {
     s.blocker = null;
     s.blockedDrills = 0;
   }
 
-  // Tier: the last few core drills average the tier's speed, accurately, and no new key is still settling in.
+  // Tier: the last few core drills average the next tier's speed, accurately, no new key is still settling in,
+  // and every unlocked step is already fast enough for the next tier's bar, so raising it blocks nothing.
   const h = s.coreHistory;
   const avg = (f: (r: DrillResult) => number) => h.reduce((sum, r) => sum + f(r), 0) / h.length;
+  const up = { ...s, tier: s.tier + 1 };
   if (
     s.focusKey === null &&
+    s.unlocked.every((k) => !barGap(stepStats(model, k, s), up, p).slow) &&
     s.tier < TIERS.length &&
     h.length >= p.tierWindow &&
-    avg((r) => r.wpm) >= tierWpm(s.tier) &&
+    avg((r) => r.wpm) >= tierWpm(s.tier + 1) &&
     avg((r) => r.accuracy) >= p.tierAccuracy
   ) {
     s.tier++;

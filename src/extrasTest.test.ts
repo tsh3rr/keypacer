@@ -98,7 +98,7 @@ describe('placeExtras', () => {
   });
 
   it('unlocks nothing for a slow typist', () => {
-    const p = placeExtras(typeText(text, EN, 900), state, steps);
+    const p = placeExtras(typeText(text, EN, 1100), state, steps);
     expect(p.unlocked).toEqual([]);
     expect(p.stoppedAt).toBe(CAPITALS);
   });

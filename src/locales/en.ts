@@ -2,7 +2,7 @@
  * English interface text, the source every other locale translates.
  * Keys are grouped by screen area (`settings.`, `coach.`, `result.` …);
  * add new strings to the group they belong to, then to every other locale
- * (de, fr, es, it, pl, pt-BR, pt-PT).
+ * (de, fr, es, it, pl, pt-BR, pt-PT, id).
  * `{name}` is a placeholder; `{ one, other }` are plural forms picked by `{n}`,
  * plus `few` and `many` for languages that have them (Polish: 2 minuty, 5 minut).
  */
@@ -261,6 +261,7 @@ export const en = {
   'change.focusMet': '{key} is up to speed.',
   'change.stuck': '{key} has been holding you back, so its speed bar is a little lower and it gets extra practice.',
   'change.tier': 'Level up: level {tier}, aiming for {wpm} WPM.',
+  'change.tierDown': 'Several keys were not yet fast enough for this level, so the goal comes down: level {tier}, aiming for {wpm} WPM.',
   'change.recoveryOn': 'Two drills in a row under {acc} accuracy: slow down until you are typing accurately again.',
   'change.recoveryOff': 'Accuracy is back. Speed is shown again.',
 

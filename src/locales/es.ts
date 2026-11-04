@@ -256,6 +256,7 @@ export const es: Messages = {
   'change.focusMet': '{key} ya va rápida.',
   'change.stuck': '{key} te estaba frenando, así que su umbral de velocidad baja un poco y recibe práctica extra.',
   'change.tier': 'Subes de nivel: nivel {tier}, con objetivo de {wpm} PPM.',
+  'change.tierDown': 'Varias teclas aún no eran lo bastante rápidas para este nivel, así que el objetivo baja: nivel {tier}, con objetivo de {wpm} PPM.',
   'change.recoveryOn': 'Dos ejercicios seguidos por debajo del {acc} de precisión: ve más despacio hasta volver a escribir sin errores.',
   'change.recoveryOff': 'La precisión ha vuelto. La velocidad se muestra de nuevo.',
 

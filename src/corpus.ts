@@ -50,6 +50,7 @@ const LOADERS = new Map<string, { name: string; load: () => Promise<Corpus> }>([
   ['pl', { name: 'Polski', load: () => import('./corpora/pl').then((m) => m.pl) }],
   ['pt-BR', { name: 'Português (Brasil)', load: () => import('./corpora/pt-BR').then((m) => m.ptBR) }],
   ['pt-PT', { name: 'Português (Portugal)', load: () => import('./corpora/pt-PT').then((m) => m.ptPT) }],
+  ['id', { name: 'Bahasa Indonesia', load: () => import('./corpora/id').then((m) => m.id) }],
 ]);
 
 const LANGUAGES: readonly Language[] = [...LOADERS].map(([language, { name }]) => ({ language, name }));

@@ -22,6 +22,7 @@ const INFLECTIONS: Record<string, readonly string[]> = {
   it: ['a', 'e', 'i', 'o'],
   pl: ['a', 'ach', 'ami', 'em', 'i', 'ie', 'om', 'ów', 'u', 'y'],
   pt: ['a', 'as', 'o', 'os', 's', 'es', 'inha', 'inho', 'ão', 'ões'],
+  id: ['an', 'kan', 'i', 'nya', 'lah', 'mu', 'ku'],
 };
 
 /** Terms this short are only blocked as whole words; inside longer words they'd reject too much harmless text. */

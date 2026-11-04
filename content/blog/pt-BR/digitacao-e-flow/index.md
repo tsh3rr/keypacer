@@ -1,14 +1,13 @@
 ---
 title: Digitação como experiência de flow
 description: Por que aprender a digitar leva com facilidade ao estado de flow e por que digitar com segurança é o que torna o flow possível ao escrever.
-updated: 2026-10-28
+updated: 2026-11-04
 topic: method
 cover: cover.jpg
 coverAlt: Teclas com as letras f, l, o e w ao longo de uma linha curva
 translation: flow-erlebnis
 translatedFrom: de
 order: 5
-draft: true
 ---
 
 Flow, ou estado de fluxo, é o momento em que você fica totalmente absorvido pelo que está fazendo. Você para de pensar em como faz, e o tempo passa mais rápido do que o normal. Quem descreveu esse estado foi o psicólogo Mihály Csíkszentmihályi, depois de observar músicos, atletas e artesãos trabalhando.

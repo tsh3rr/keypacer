@@ -1,12 +1,12 @@
 import '@fontsource-variable/jetbrains-mono';
 import { TypingSession } from './session';
 import { KeystrokeStore, toCsv } from './store';
-import { withFlag } from './flags';
+import { flag, withFlag } from './flags';
 import { DEFAULT_LANGUAGE, availableLanguages, getCorpus, guessLanguage, loadCorpus } from './corpus';
 import { clearCurriculum, hasAnyCurriculum, loadCurriculum, saveCurriculum } from './curriculum-store';
 import {
   CAPITALS, DEFAULT_DRILL_PARAMS, afterDrill, blockingKeys, drillFeedback, drillResult, initialCurriculum, isNewSession, meetsBar, modelOptions, needsShift,
-  nextDrill, nextKind, sentencesReady, tierTargetMs, tierWpm, unlockSteps,
+  nextDrill, nextKind, sentencesReady, tierWpm, unlockSteps, unlockTargetMs,
   type CurriculumChange, type CurriculumState, type Drill, type ItemChange,
 } from './drill';
 import { firstAttempts, loadWeaknessModel, type WeaknessModel } from './weakness';
@@ -498,11 +498,11 @@ function renderCoach(): void {
   // What the next unlock waits on.
   let nextTip: string;
   if (path.next === null) {
-    nextTip = t('path.allUnlocked', { next: curriculum.tier + 1, wpm: tierWpm(curriculum.tier), acc: pct(0.96) });
+    nextTip = t('path.allUnlocked', { next: curriculum.tier + 1, wpm: tierWpm(curriculum.tier + 1), acc: pct(0.96) });
   } else {
     const bar = {
       err: pctBar(DEFAULT_DRILL_PARAMS.unlockMaxErrorRate),
-      ms: Math.round(tierTargetMs(curriculum.tier)),
+      ms: Math.round(unlockTargetMs(curriculum.tier)),
       ready: path.ready,
       unlocked: path.unlocked,
     };
@@ -602,6 +602,7 @@ function describeChange(c: CurriculumChange): string {
     case 'focus-met': return t('change.focusMet', { key: keyCap(c.key) });
     case 'stuck': return t('change.stuck', { key: keyCap(c.key) });
     case 'tier': return t('change.tier', { tier: c.tier, wpm: tierWpm(c.tier) });
+    case 'tier-down': return t('change.tierDown', { tier: c.tier, wpm: tierWpm(c.tier) });
     case 'recovery': return c.on ? t('change.recoveryOn', { acc: pct(0.92) }) : t('change.recoveryOff');
   }
 }
@@ -610,7 +611,7 @@ function changeTone(c: CurriculumChange): Tone {
   switch (c.type) {
     case 'unlock': case 'tier': return 'win';
     case 'focus-met': return 'good';
-    case 'stuck': return 'info';
+    case 'stuck': case 'tier-down': return 'info';
     case 'recovery': return c.on ? 'warn' : 'good';
   }
 }
@@ -1610,31 +1611,36 @@ methodPop.addEventListener('keydown', (e) => {
 });
 
 // Interface language: every string on screen is redrawn in place, so a drill in progress carries on.
-const uiLanguageEl = $('ui-language');
+// A native select rather than a row of buttons: it stays one line wide however many languages there are.
+const uiLanguageEl = $('ui-language') as HTMLSelectElement;
 
 /** "auto" follows the browser language; otherwise the language the learner picked. */
 let uiChoice: string = isUiLanguage(savedUiLanguage) ? savedUiLanguage : 'auto';
 
 function renderUiLanguagePicker(): void {
-  const choices = [{ id: 'auto', name: t('settings.uiAuto') }, ...UI_LANGUAGES];
-  uiLanguageEl.replaceChildren(...choices.map((l) => {
-    const b = Object.assign(document.createElement('button'), { type: 'button' });
-    b.append(...withFlag(l.id, l.name));
-    b.setAttribute('role', 'radio');
-    if (isUiLanguage(l.id)) b.setAttribute('lang', l.id);
-    else b.title = t('settings.uiAutoTitle');
-    b.setAttribute('aria-checked', String(l.id === uiChoice));
-    b.addEventListener('click', () => {
-      uiChoice = l.id;
-      saveUiLanguageSetting(l.id);
-      setUiLanguage(isUiLanguage(l.id) ? l.id : guessUiLanguage(browserLocales))
-        .catch((err) => console.error('Failed to load interface language', err));
-      // The language may not change (e.g. Automatic picks the one already shown); the choice did.
-      renderUiLanguagePicker();
-    });
-    return b;
+  // "Automatic" names the language it settles on, so the closed select says what is shown.
+  const auto = UI_LANGUAGES.find((l) => l.id === guessUiLanguage(browserLocales));
+  const autoName = auto ? `${t('settings.uiAuto')} (${auto.name})` : t('settings.uiAuto');
+  const autoOption = new Option(autoName, 'auto', false, uiChoice === 'auto');
+  autoOption.title = t('settings.uiAutoTitle');
+  uiLanguageEl.replaceChildren(autoOption, ...UI_LANGUAGES.map((l) => {
+    const o = new Option(l.name, l.id, false, l.id === uiChoice);
+    o.lang = l.id;
+    return o;
   }));
+  uiLanguageEl.value = uiChoice;
+  uiLanguageEl.title = uiChoice === 'auto' ? t('settings.uiAutoTitle') : '';
+  const f = flag(uiChoice);
+  $('ui-language-flag').replaceChildren(...(f ? [f] : []));
 }
+uiLanguageEl.addEventListener('change', () => {
+  uiChoice = uiLanguageEl.value;
+  saveUiLanguageSetting(uiChoice);
+  setUiLanguage(isUiLanguage(uiChoice) ? uiChoice : guessUiLanguage(browserLocales))
+    .catch((err) => console.error('Failed to load interface language', err));
+  // The language may not change (e.g. Automatic picks the one already shown); the choice did.
+  renderUiLanguagePicker();
+});
 renderUiLanguagePicker();
 renderBreakText();
 

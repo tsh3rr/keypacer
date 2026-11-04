@@ -56,7 +56,11 @@
       </div>
       <section class="drawer-group">
         <h3 data-i18n="settings.uiLanguage">Interface language</h3>
-        <div id="ui-language" class="segmented" role="radiogroup" aria-label="Interface language" data-i18n-aria-label="settings.uiLanguage"></div>
+        <div class="lang-select">
+          <span id="ui-language-flag" class="lang-select-flag"></span>
+          <select id="ui-language" aria-label="Interface language" data-i18n-aria-label="settings.uiLanguage"></select>
+          <svg class="lang-select-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
       </section>
       <section class="drawer-group">
         <h3 data-i18n="settings.appearance">Appearance</h3>

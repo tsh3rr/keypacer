@@ -1,6 +1,6 @@
 import type { Corpus } from './corpus';
 import {
-  DEFAULT_DRILL_PARAMS, TIERS, drillResult, eligibleWords, initialCurriculum, tierTargetMs, unlockSteps,
+  DEFAULT_DRILL_PARAMS, TIERS, drillResult, eligibleWords, initialCurriculum, unlockSteps, unlockTargetMs,
   type CurriculumState, type DrillParams,
 } from './drill';
 import { PLACEMENT_MIN_ACCURACY, PLACEMENT_MIN_WPM, PLACEMENT_WORDS } from './handoff';
@@ -161,7 +161,7 @@ export function placeFromTest(
 
   state.tier = Math.max(1, TIERS.filter((w) => w <= wpm * 0.8).length);
   state.paceWpm = Math.max(TIERS[0], Math.round(wpm));
-  const maxMs = tierTargetMs(state.tier) * p.latencySlack;
+  const maxMs = unlockTargetMs(state.tier, dp) * p.latencySlack;
 
   const stats = new Map<string, { n: number; errors: number; logs: number[] }>();
   for (const a of firstAttempts(events)) {

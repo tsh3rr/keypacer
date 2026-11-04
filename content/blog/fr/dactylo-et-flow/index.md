@@ -1,14 +1,13 @@
 ---
 title: La dactylographie, une expérience de flow
 description: Pourquoi apprendre à taper mène facilement à l’état de flow, et pourquoi une frappe sûre rend le flow possible quand on écrit.
-updated: 2026-10-28
+updated: 2026-11-04
 topic: method
 cover: cover.jpg
 coverAlt: Des touches portant les lettres f, l, o et w le long d’une ligne courbe
 translation: flow-erlebnis
 translatedFrom: de
 order: 5
-draft: true
 ---
 
 On appelle flow, ou expérience optimale, l’état dans lequel on est complètement absorbé par ce qu’on fait. On ne pense plus à la manière de le faire, et le temps passe plus vite que d’habitude. Le psychologue Mihály Csíkszentmihályi l’a décrit après avoir observé des musiciens, des sportifs et des artisans au travail.

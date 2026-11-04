@@ -4,7 +4,7 @@ import { de } from './corpora/de';
 import { en } from './corpora/en';
 import { es } from './corpora/es';
 import {
-  CAPITALS, DEFAULT_DRILL_PARAMS, DEFAULT_PUNCTUATION, DIGIT_ORDER, afterDrill, decorate, drillFeedback, drillResult,
+  CAPITALS, DEFAULT_DRILL_PARAMS, DEFAULT_PUNCTUATION, DIGIT_ORDER, afterDrill, barGap, decorate, drillFeedback, drillResult,
   eligibleWords, initialCurriculum, isNewSession, modelOptions, needsShift, nextDrill, nextKind, openChars, pseudoShare,
   reviewItems, seededRandom, sentencePool, sentencesReady, spaceOut, stepChars, stepStats, tierTargetMs, unlockOrder, unlockSteps,
   type CurriculumState,
@@ -244,8 +244,8 @@ describe('afterDrill', () => {
     const slow = { wpm: 10, accuracy: 0.98 };
     let s = base;
     for (let i = 0; i < DEFAULT_DRILL_PARAMS.stuckErrorDrills - 1; i++) s = afterDrill(m, s, en, drill, slow).state;
-    // Past the first stuck rule, but 4.8 % is still above the 4.5 % bar.
-    expect(s.relaxedKeys).toEqual(['l']);
+    // Past the first stuck rule, which only loosens speed; 4.8 % is still above the 4.5 % bar.
+    expect(s.relaxedKeys).toEqual([]);
     expect(s.errorRelaxedKeys ?? []).toEqual([]);
     expect(s.unlocked).toEqual(base.unlocked);
     s = afterDrill(m, s, en, drill, slow).state;
@@ -292,14 +292,96 @@ describe('afterDrill', () => {
   });
 
   it('moves up a tier after five fast, accurate core drills with no new key settling in', () => {
-    const slowKeys = fakeModel(base.unlocked.map((c) => key(c, { latencyMs: 900 })));
+    // Held back by errors, not speed, so nothing unlocks and the tier is free to move.
+    const sloppyKeys = fakeModel(base.unlocked.map((c) => key(c, { errorRate: 0.06 })));
     let s = base;
-    for (let i = 0; i < 5; i++) s = afterDrill(slowKeys, s, en, drill, good).state;
+    for (let i = 0; i < 5; i++) s = afterDrill(sloppyKeys, s, en, drill, good).state;
     expect(s.tier).toBe(2);
     const settling: CurriculumState = { ...base, focusKey: 'r' };
     let t = settling;
-    for (let i = 0; i < 5; i++) t = afterDrill(slowKeys, t, en, drill, good).state;
+    for (let i = 0; i < 5; i++) t = afterDrill(sloppyKeys, t, en, drill, good).state;
     expect(t.tier).toBe(1);
+  });
+
+  it('moves up a tier only once drills reach the next tier\'s speed', () => {
+    const sloppyKeys = fakeModel(base.unlocked.map((c) => key(c, { errorRate: 0.06 })));
+    let s = base;
+    // 18 WPM is past tier 1 (15) but short of tier 2 (20), whose bar every key would then need.
+    for (let i = 0; i < 10; i++) s = afterDrill(sloppyKeys, s, en, drill, { wpm: 18, accuracy: 0.98 }).state;
+    expect(s.tier).toBe(1);
+  });
+
+  it('keeps the tier while keys are still too slow for it', () => {
+    const slowKeys = fakeModel(base.unlocked.map((c) => key(c, { latencyMs: 900 })));
+    let s = base;
+    for (let i = 0; i < 5; i++) s = afterDrill(slowKeys, s, en, drill, good).state;
+    expect(s.tier).toBe(1);
+  });
+
+  it('loosens the bar for a key that keeps blocking while others slip now and then', () => {
+    // Tier 4 asks 400 ms; 'l' is a little slow throughout, and every other drill 'e' makes too many errors too.
+    const lSlow = base.unlocked.map((c) => key(c, c === 'l' ? { latencyMs: 420 } : {}));
+    const alone = fakeModel(lSlow);
+    const withE = fakeModel(lSlow.map((k) => (k.item === 'e' ? { ...k, errorRate: 0.06 } : k)));
+    let s: CurriculumState = { ...base, tier: 4 };
+    const changes = [];
+    for (let i = 0; i < DEFAULT_DRILL_PARAMS.stuckDrills; i++) {
+      const r = afterDrill(i % 2 ? withE : alone, s, en, drill, { wpm: 22, accuracy: 0.98 });
+      s = r.state;
+      changes.push(...r.changes);
+    }
+    expect(changes).toContainEqual({ type: 'stuck', key: 'l' });
+    expect(s.relaxedKeys).toEqual(['l']);
+    expect(afterDrill(alone, s, en, drill, { wpm: 22, accuracy: 0.98 }).state.unlocked).toContain('t');
+  });
+
+  it('steps the tier down when keys stay too slow even with the looser bar', () => {
+    // Tier 3 asks 480 ms, 552 ms with the stuck allowance; 600 ms misses both, but meets tier 2's 600 ms.
+    const slowKeys = fakeModel(base.unlocked.map((c) => key(c, { latencyMs: 600 })));
+    let s: CurriculumState = { ...base, tier: 3 };
+    const changes = [];
+    for (let i = 0; i < DEFAULT_DRILL_PARAMS.slowTierDrills; i++) {
+      const r = afterDrill(slowKeys, s, en, drill, { wpm: 22, accuracy: 0.98 });
+      s = r.state;
+      changes.push(...r.changes);
+    }
+    expect(s.relaxedKeys).toEqual(base.unlocked);
+    expect(s.tier).toBe(2);
+    expect(changes).toContainEqual({ type: 'tier-down', tier: 2 });
+    expect(s.unlocked).toEqual(base.unlocked);
+    expect(afterDrill(slowKeys, s, en, drill, { wpm: 22, accuracy: 0.98 }).state.unlocked).toContain('t');
+  });
+
+  it('raises the tier only once every key already meets the next tier\'s bar', () => {
+    // Tier 2 asks 600 ms, tier 3 480 ms: 'l' at 500 ms passes now but would block at tier 3.
+    const m = fakeModel(base.unlocked.map((c) => key(c, c === 'l' ? { latencyMs: 500, errorRate: 0.06 } : { errorRate: 0.06 })));
+    let s: CurriculumState = { ...base, tier: 2 };
+    for (let i = 0; i < 10; i++) s = afterDrill(m, s, en, drill, { wpm: 30, accuracy: 0.98 }).state;
+    expect(s.tier).toBe(2);
+  });
+
+  it('caps the unlock bar\'s speed at 30 WPM, however high the tier', () => {
+    // Tier 7 is 50 WPM (240 ms), but the bar asks at most 30 WPM: 400 ms.
+    const s: CurriculumState = { ...base, tier: 7 };
+    expect(barGap(key('e', { latencyMs: 390 }), s).slow).toBe(false);
+    expect(barGap(key('e', { latencyMs: 410 }), s).slow).toBe(true);
+    const at400 = fakeModel(base.unlocked.map((c) => key(c, { latencyMs: 390 })));
+    expect(afterDrill(at400, s, en, drill, good).state.unlocked).toContain('t');
+  });
+
+  it('steps down past the capped tiers to the first one with a looser bar', () => {
+    const slowKeys = fakeModel(base.unlocked.map((c) => key(c, { latencyMs: 470 })));
+    let s: CurriculumState = { ...base, tier: 7 };
+    for (let i = 0; i < DEFAULT_DRILL_PARAMS.slowTierDrills; i++) s = afterDrill(slowKeys, s, en, drill, { wpm: 22, accuracy: 0.98 }).state;
+    // Tiers 4 to 7 all ask 30 WPM (460 ms with the stuck allowance); tier 3 asks 25 WPM (552 ms), which 470 ms meets.
+    expect(s.tier).toBe(3);
+  });
+
+  it('never steps below tier 1', () => {
+    const slowKeys = fakeModel(base.unlocked.map((c) => key(c, { latencyMs: 900 })));
+    let s = base;
+    for (let i = 0; i < DEFAULT_DRILL_PARAMS.slowTierDrills * 2; i++) s = afterDrill(slowKeys, s, en, drill, { wpm: 12, accuracy: 0.98 }).state;
+    expect(s.tier).toBe(1);
   });
 
   it('schedules a focus burst after every third core drill', () => {
@@ -536,9 +618,9 @@ describe('capitals, punctuation and digits', () => {
   });
 
   it('gives keys typed with Shift a looser speed bar', () => {
-    // Tier 7 (50 WPM) wants 240 ms per key; 280 ms passes only with the Shift allowance.
-    const s: CurriculumState = { ...lettersDone, tier: 7, unlocked: [...allLetters, CAPITALS, '.', '?'] };
-    const slow = (c: string) => key(c, { latencyMs: 280 });
+    // Tier 4 (30 WPM) wants 400 ms per key; 480 ms passes only with the Shift allowance.
+    const s: CurriculumState = { ...lettersDone, tier: 4, unlocked: [...allLetters, CAPITALS, '.', '?'] };
+    const slow = (c: string) => key(c, { latencyMs: 480 });
     const base = [...allLetters.map((c) => key(c, { latencyMs: 200 })), ...allLetters.map((c) => key(c.toUpperCase(), { latencyMs: 200 }))];
     const qSlow = fakeModel([...base, key('.', { latencyMs: 200 }), slow('?')]);
     expect(afterDrill(qSlow, s, en, drill, good).changes).toContainEqual({ type: 'unlock', key: ',' });

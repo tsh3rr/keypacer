@@ -1,14 +1,13 @@
 ---
 title: La dattilografia come esperienza di flow
 description: Perché imparare a scrivere a dieci dita porta facilmente nel flow, e perché scrivere con sicurezza rende possibile il flow quando scrivi.
-updated: 2026-10-28
+updated: 2026-11-04
 topic: method
 cover: cover.jpg
 coverAlt: Tasti con le lettere f, l, o e w lungo una linea curva
 translation: flow-erlebnis
 translatedFrom: de
 order: 5
-draft: true
 ---
 
 Si chiama flow, o stato di flusso, il momento in cui sei completamente assorbito da quello che fai. Smetti di pensare a come lo fai e il tempo passa più in fretta del solito. Lo ha descritto lo psicologo Mihály Csíkszentmihályi, osservando musicisti, sportivi e artigiani al lavoro.

@@ -39,6 +39,7 @@ TATOEBA_CODES = {
     # result for the other variant's spelling (ô/ó, ê/é) and words.
     "pt-BR": "por",
     "pt-PT": "por",
+    "id": "ind",
 }
 
 # Letters a language's sentences may use (lowercase; capitals are allowed too).
@@ -51,6 +52,7 @@ LETTERS = {
     "pl": "abcdefghijklmnopqrstuvwxyząćęłńóśźż",
     "pt-BR": "abcdefghijklmnopqrstuvwxyzáàâãçéêíóôõú",
     "pt-PT": "abcdefghijklmnopqrstuvwxyzáàâãçéêíóôõú",
+    "id": "abcdefghijklmnopqrstuvwxyz",
 }
 
 # Languages that capitalise nouns, so a capital mid-sentence is not a name.

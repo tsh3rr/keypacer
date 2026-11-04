@@ -1,14 +1,13 @@
 ---
 title: La mecanografía como experiencia de flow
 description: Por qué aprender mecanografía lleva con facilidad al estado de flow y por qué escribir con soltura es lo que permite el flow al redactar.
-updated: 2026-10-28
+updated: 2026-11-04
 topic: method
 cover: cover.jpg
 coverAlt: Teclas con las letras f, l, o y w sobre una línea curva
 translation: flow-erlebnis
 translatedFrom: de
 order: 5
-draft: true
 ---
 
 Se llama flow, o estado de flujo, al momento en que estás completamente absorto en lo que haces. Dejas de pensar en cómo lo haces y el tiempo pasa más rápido de lo normal. Lo describió el psicólogo Mihály Csíkszentmihályi tras observar a músicos, deportistas y artesanos mientras trabajaban.

@@ -1,8 +1,14 @@
 name: Database keep-alive
 
 # Supabase pauses free-tier projects after a week without database activity.
-# This asks both projects a small question three times a week, at times that
-# change from week to week, so neither gets paused while nobody practises.
+# This asks the production project a small question three times a week, at
+# times that change from week to week, so it doesn't get paused while nobody
+# practises.
+#
+# Staging is left out: it was paused twice although it was pinged (with a
+# write) every three and a half days at most, so pinging doesn't keep it
+# awake, and a paused staging only made every run fail. Restore it in the
+# Supabase dashboard when a preview build or a migration needs it.
 #
 # The schedule wakes up every three hours; most runs do nothing. Each week
 # and project gets its own random time in each of three windows:
@@ -12,11 +18,10 @@ name: Database keep-alive
 # whenever no successful run has happened since the latest chosen time.
 # A ping waits a further random 0–20 minutes, asks one or two of the
 # queries the sign-up and buddy forms use, with made-up names and codes,
-# and writes the one-row keep_alive table: Supabase paused staging even
-# though it had been read from two days before, so reads alone don't count.
+# and writes the one-row keep_alive table.
 #
 # Uses the public URL and publishable key from vite.config.ts; no secrets.
-# Run workflow (workflow_dispatch) pings both projects right away.
+# Run workflow (workflow_dispatch) pings right away.
 
 on:
   schedule:
@@ -39,7 +44,6 @@ jobs:
           set -euo pipefail
           projects=(
             "production https://ubjwlxcawxwrgolszlkz.supabase.co sb_publishable_QnvlL5E5MkUhOZENBSrkdg_rUaim9ep"
-            "staging https://dghypouxfnfcdvpylznt.supabase.co sb_publishable_pSD1knxbPjl5ih5bqi0zog_bcDsSb_o"
           )
           now=$(date -u +%s)
 
@@ -68,8 +72,7 @@ jobs:
 
           rand_name() { LC_ALL=C tr -dc 'a-z0-9' < <(head -c 600 /dev/urandom) | head -c "$1"; }
 
-          # Writes the keep_alive row (supabase/migrations/*_keep_alive.sql):
-          # read-only queries alone did not stop Supabase from pausing.
+          # Writes the keep_alive row (supabase/migrations/*_keep_alive.sql).
           write() {
             echo "  keep_alive"
             curl --fail-with-body -sS --retry 3 --retry-all-errors --max-time 30 \

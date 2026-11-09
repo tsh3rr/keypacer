@@ -8,7 +8,7 @@ coverAlt: Prędkościomierz ze wskazówką tuż za połową, pod nim rząd klawi
 translation: tempo-durchschnitt
 translatedFrom: de
 order: 12
-draft: true
+publish: 2026-12-09
 ---
 
 Na komputerze większość ludzi pisze od 30 do 60 słów na minutę (sł./min), średnio około 52. To mniej więcej 260 znaków na minutę. Jeśli osiągasz 70 sł./min lub więcej, piszesz wyraźnie szybciej niż większość. Na smartfonie średnia wynosi około 36 sł./min.

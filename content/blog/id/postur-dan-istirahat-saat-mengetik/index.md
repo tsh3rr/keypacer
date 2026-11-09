@@ -9,7 +9,7 @@ coverAlt: Waterpas dengan gelembung di tengah dan simbol jeda di atas baris dasa
 translation: haltung-und-pausen
 translatedFrom: de
 order: 8
-draft: true
+publish: 2026-12-02
 ---
 
 Jika kamu banyak mengetik, kamu sering duduk dalam posisi yang sama selama berjam-jam. Kebanyakan orang baru menyadarinya saat pergelangan tangan, bahu, atau leher mulai pegal. Beberapa penyesuaian pada mejamu dan istirahat yang rutin sangat membantu mencegahnya.

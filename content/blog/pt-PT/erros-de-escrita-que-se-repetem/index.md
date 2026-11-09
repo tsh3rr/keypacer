@@ -8,7 +8,7 @@ coverAlt: As teclas d, e e i, o e marcado a vermelho, uma seta mostra que o e e 
 translation: tippfehler-muster
 translatedFrom: de
 order: 14
-draft: true
+publish: 2026-12-16
 ---
 
 Os erros ao escrever no teclado não são por acaso. Quase toda a gente dá os mesmos, uma e outra vez: "qeu" em vez de "que", um "r" em vez de um "e", uma letra que desaparece em "rr" ou "ss". A investigação conhece estes padrões há décadas. Surgem porque os dedos aprenderam mal certos movimentos ou os confundem com a pressa. A boa notícia: o que segue um padrão pode ser treinado de propósito.

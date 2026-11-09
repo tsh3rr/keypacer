@@ -8,7 +8,7 @@ coverAlt: Matahari terbit di balik tombol baris dasar dengan F dan J disorot, di
 translation: morgens-auffrischen
 translatedFrom: de
 order: 7
-draft: true
+publish: 2026-11-25
 ---
 
 Jika kamu sedang beralih ke mengetik 10 jari, mungkin kamu kenal pola ini. Saat latihan berhasil, tetapi begitu sebuah e-mail harus segera dikirim, kebiasaan lama kembali: dua jari, mata ke tombol, dan teknik baru hilang untuk sisa hari itu.

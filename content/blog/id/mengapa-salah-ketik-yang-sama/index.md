@@ -8,7 +8,7 @@ coverAlt: Tombol d, e, dan i, huruf e ditandai merah, sebuah panah menunjukkan b
 translation: tippfehler-muster
 translatedFrom: de
 order: 14
-draft: true
+publish: 2026-12-16
 ---
 
 Salah ketik bukan kebetulan. Hampir semua orang membuat kesalahan yang sama berulang kali: "yagn" alih-alih "yang", "r" alih-alih "e", huruf "n" yang hilang di akhir kata. Penelitian sudah mengenal pola-pola ini selama puluhan tahun. Pola ini muncul karena jari mempelajari gerakan tertentu dengan salah atau tertukar di bawah tekanan waktu. Kabar baiknya: apa yang mengikuti pola bisa dilatih secara terarah.

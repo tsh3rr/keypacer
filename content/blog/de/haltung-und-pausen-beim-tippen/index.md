@@ -8,7 +8,7 @@ cover: cover.jpg
 coverAlt: Wasserwaage mit mittiger Blase und ein Pausensymbol über der Grundreihe einer Tastatur
 translation: haltung-und-pausen
 order: 8
-draft: true
+publish: 2026-12-02
 ---
 
 Wer viel tippt, sitzt oft stundenlang in derselben Haltung. Meistens merkt man das erst, wenn Handgelenke, Schultern oder Nacken wehtun. Mit ein paar Einstellungen am Arbeitsplatz und regelmäßigen Pausen lässt sich das gut vermeiden.

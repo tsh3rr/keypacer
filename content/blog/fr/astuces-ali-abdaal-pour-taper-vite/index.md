@@ -48,7 +48,7 @@ Plus tu en fais au clavier, moins tes mains font d’allers-retours entre le cla
 
 Ali le dit clairement : au début, ça te ralentit, et ça vaut quand même le coup.
 
-**Notre avis :** Entièrement d’accord, c’est le cœur de la frappe à dix doigts. Si ton regard veut quand même descendre : ralentis au lieu de regarder, retrouve la rangée de repos grâce aux petits ergots et, si besoin, couvre tes mains avec un torchon pendant un moment. Dans Keypacer, tu trouves la touche suivante sur le clavier à l’écran, et l’aide disparaît toute seule pour les touches que tu tapes avec assurance.
+**Notre avis :** Entièrement d’accord, c’est le cœur de la frappe à dix doigts. Si ton regard veut quand même descendre : ralentis au lieu de regarder, retrouve la rangée de repos grâce aux petits ergots et, si besoin, couvre tes mains avec un torchon pendant un moment. Dans Keypacer, tu trouves la touche suivante sur le clavier à l’écran, et l’aide disparaît toute seule pour les touches que tu tapes avec assurance. Tu trouveras d’autres exercices contre le regard vers le bas dans [Apprendre à taper sans regarder le clavier](/fr/blog/apprendre-a-taper-sans-regarder-le-clavier/).
 
 ## 6. Garder les doigts sur la rangée de repos
 
@@ -60,7 +60,7 @@ Ali le dit clairement : au début, ça te ralentit, et ça vaut quand même le c
 
 Ali a remarqué qu’il est plus rapide quand il frappe les touches plus fort. Il reconnaît lui-même qu’il n’a pas de données pour le prouver.
 
-**Là, on voit les choses autrement.** C’est notre avis, pas une règle absolue : on pense qu’une frappe légère est le meilleur choix. Une touche se déclenche déjà avec une faible pression, et chaque frappe plus forte sollicite davantage les doigts et les tendons, ce qui s’accumule sur une longue journée de travail. Une frappe légère est aussi plus silencieuse et en général plus régulière. Elle va bien avec des poignets droits et un clavier posé à plat, à hauteur des coudes.
+**Là, on voit les choses autrement.** C’est notre avis, pas une règle absolue : on pense qu’une frappe légère est le meilleur choix. Une touche se déclenche déjà avec une faible pression, et chaque frappe plus forte sollicite davantage les doigts et les tendons, ce qui s’accumule sur une longue journée de travail. Une frappe légère est aussi plus silencieuse et en général plus régulière. Elle va bien avec des poignets droits et un clavier posé à plat, à hauteur des coudes. Comment installer ton poste pour ça, on l’explique dans [Posture et pauses au clavier](/fr/blog/posture-et-pauses-au-clavier/).
 
 Cela dit, chacun tape un peu à sa façon. Le mieux, c’est d’essayer les deux, par exemple quelques jours chacune, et de faire attention à ta précision et à l’état de tes mains le soir. Keypacer t’affiche la vitesse et la précision de chaque séance, tu peux donc comparer les deux directement. Ensuite, garde ce qui te convient.
 

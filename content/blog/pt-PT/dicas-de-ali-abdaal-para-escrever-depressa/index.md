@@ -48,7 +48,7 @@ Quanto mais fazes com o teclado, menos as mãos saltam entre o teclado e o rato.
 
 Ali diz claramente que, ao início, se fica mais lento, e que mesmo assim compensa.
 
-**A nossa opinião:** Totalmente de acordo, é a essência da dactilografia com os dez dedos. Se o olhar continuar a querer descer: abranda em vez de olhar, encontra a fila base pelos relevos das teclas e, se for preciso, tapa as mãos com um pano durante algum tempo. No Keypacer encontras a tecla seguinte no teclado no ecrã, e a ajuda desaparece sozinha nas teclas que já escreves com segurança.
+**A nossa opinião:** Totalmente de acordo, é a essência da dactilografia com os dez dedos. Se o olhar continuar a querer descer: abranda em vez de olhar, encontra a fila base pelos relevos das teclas e, se for preciso, tapa as mãos com um pano durante algum tempo. No Keypacer encontras a tecla seguinte no teclado no ecrã, e a ajuda desaparece sozinha nas teclas que já escreves com segurança. Encontras mais exercícios contra a vontade de olhar para baixo em [Como aprender a escrever sem olhar para o teclado](/pt-pt/blog/escrever-sem-olhar-para-o-teclado/).
 
 ## 6. Mantém os dedos na fila base
 
@@ -60,7 +60,7 @@ Ali diz claramente que, ao início, se fica mais lento, e que mesmo assim compen
 
 Ali reparou que é mais rápido quando bate nas teclas com mais força. Ele próprio admite que não tem dados que o comprovem.
 
-**Aqui vemos as coisas de outra forma.** É a nossa opinião, não uma regra fixa: achamos que um toque leve é a melhor escolha. Uma tecla já é acionada com pouca pressão, e cada pancada mais forte sobrecarrega os dedos e os tendões, o que se vai acumulando ao longo de um dia de trabalho. Um toque leve também é mais silencioso e costuma ser mais regular. Combina com pulsos direitos e um teclado plano à altura dos cotovelos.
+**Aqui vemos as coisas de outra forma.** É a nossa opinião, não uma regra fixa: achamos que um toque leve é a melhor escolha. Uma tecla já é acionada com pouca pressão, e cada pancada mais forte sobrecarrega os dedos e os tendões, o que se vai acumulando ao longo de um dia de trabalho. Um toque leve também é mais silencioso e costuma ser mais regular. Combina com pulsos direitos e um teclado plano à altura dos cotovelos. Como preparar o teu posto de trabalho para isso, explicamos em [Postura e pausas ao escrever no teclado](/pt-pt/blog/postura-e-pausas-ao-escrever/).
 
 Ainda assim, cada mão escreve à sua maneira. O melhor é experimentares as duas formas, por exemplo alguns dias cada uma, e prestares atenção à tua precisão e a como sentes as mãos ao fim do dia. O Keypacer mostra-te a velocidade e a precisão de cada sessão, por isso podes comparar as duas diretamente. Depois fica com a que te servir melhor.
 

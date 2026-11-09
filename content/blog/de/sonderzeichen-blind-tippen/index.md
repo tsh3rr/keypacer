@@ -7,7 +7,7 @@ cover: cover.jpg
 coverAlt: Eine orange AltGr-Taste, ein Plus und daneben Tasten mit @, €, { und }
 translation: sonderzeichen
 order: 13
-draft: true
+publish: 2026-12-23
 ---
 
 Auf einer deutschen Tastatur tippst du das @-Zeichen mit <kbd>AltGr</kbd> + <kbd>Q</kbd>. Das Euro-Zeichen kommt mit <kbd>AltGr</kbd> + <kbd>E</kbd>, die geschweiften Klammern mit <kbd>AltGr</kbd> + <kbd>7</kbd> und <kbd>AltGr</kbd> + <kbd>0</kbd>. Auf dem Mac nimmst du statt AltGr die Wahltaste <kbd>⌥</kbd>, und viele Zeichen liegen dort woanders.

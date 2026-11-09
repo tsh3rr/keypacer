@@ -8,7 +8,7 @@ coverAlt: Speedometer dengan jarum sedikit di atas tengah, di bawahnya sebaris t
 translation: tempo-durchschnitt
 translatedFrom: de
 order: 12
-draft: true
+publish: 2026-12-09
 ---
 
 Di komputer, kebanyakan orang mengetik antara 30 dan 60 kata per menit (KPM), rata-rata sekitar 52. Itu setara dengan sekitar 260 ketukan per menit. Jika kamu mencapai 70 KPM atau lebih, kamu jauh lebih cepat daripada kebanyakan orang. Di ponsel, rata-ratanya sekitar 36 KPM.

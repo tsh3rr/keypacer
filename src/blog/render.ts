@@ -16,6 +16,24 @@ import { postsIn, translationsOf, type Post } from './posts.ts';
 /** Address of a language's overview: /blog/, /de/blog/, … */
 export const blogPath = (lang: LandingLanguage): string => `${landingPath(lang)}blog/`;
 export const postPath = (p: Post): string => `${blogPath(p.lang)}${p.slug}/`;
+
+/**
+ * An article can link to one that goes live later (a draft, or a publish date
+ * still to come). Until then this build has no page for it, so the sentence
+ * with that link is left out; on the day the target is published, the next
+ * build shows the sentence with its link. Keep such a link in a sentence of
+ * its own, one the paragraph reads fine without.
+ */
+export function unlinkMissing(html: string, posts: Post[]): string {
+  const live = new Set(posts.map(postPath));
+  const link = /<a href="(\/(?:[a-z-]+\/)?blog\/[a-z0-9-]+\/)(?:#[^"]*)?"/g;
+  const missing = (part: string) => [...part.matchAll(link)].some((m) => !live.has(m[1]));
+  return html.replace(/<(p|li)>([\s\S]*?)<\/\1>\n?/g, (block, tag: string, inner: string) => {
+    if (!missing(inner)) return block;
+    const kept = inner.split(/(?<=[.!?…])\s+/).filter((sentence) => !missing(sentence)).join(' ');
+    return kept ? `<${tag}>${kept}</${tag}>\n` : '';
+  });
+}
 /** A picture of the article, by the address it has next to the page. */
 const fileUrl = (p: Post, file: string): string => `${postPath(p)}${file}`;
 
@@ -218,7 +236,7 @@ export function renderPost(post: Post, posts: Post[], site: string, umami = ''):
         <p class="bl-note">${esc(b.translated)} <a href="${postPath(original)}" hreflang="${original.lang}">${esc(b.original)} ${ARROW}</a></p>` : ''}${post.cover ? `
         <figure class="bl-cover"><img src="${post.cover.file}" width="${post.cover.width}" height="${post.cover.height}" alt="${esc(post.cover.alt)}" decoding="async" fetchpriority="high" /></figure>` : ''}
         <div class="bl-prose">
-${post.html}
+${unlinkMissing(post.html, posts)}
         </div>
         <aside class="bl-cta">
           <h2>${esc(b.cta.title)}</h2>

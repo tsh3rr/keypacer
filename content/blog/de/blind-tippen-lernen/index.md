@@ -7,7 +7,7 @@ cover: cover.jpg
 coverAlt: Tastatur ohne Beschriftung, nur F und J mit ihren Rillen hervorgehoben, darüber ein geschlossenes Auge
 translation: blind-tippen-lernen
 order: 9
-draft: true
+publish: 2026-11-18
 ---
 
 Blind tippen heißt, die Augen bleiben auf dem Bildschirm, während die Finger die Tasten finden. Das ist der eigentliche Kern des Zehnfingersystems. Wer mit zehn Fingern tippt, aber bei jedem dritten Wort nach unten schaut, verliert einen großen Teil des Vorteils.

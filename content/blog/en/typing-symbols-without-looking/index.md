@@ -8,7 +8,7 @@ coverAlt: "An orange Shift key, a plus sign and keys with @, #, { and } next to 
 translation: sonderzeichen
 translatedFrom: de
 order: 13
-draft: true
+publish: 2026-12-23
 ---
 
 On a US keyboard you type the @ sign with <kbd>Shift</kbd> + <kbd>2</kbd>, the hash with <kbd>Shift</kbd> + <kbd>3</kbd> and curly braces with <kbd>Shift</kbd> + <kbd>[</kbd> and <kbd>Shift</kbd> + <kbd>]</kbd>. On a UK keyboard some of them move: there the @ is <kbd>Shift</kbd> + <kbd>'</kbd>. On a Mac with a US layout, the symbols sit in the same places.

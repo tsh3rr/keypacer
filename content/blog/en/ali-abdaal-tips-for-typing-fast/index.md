@@ -48,7 +48,7 @@ The more you do from the keyboard, the less your hands jump back and forth betwe
 
 Ali is clear that this makes you slower at first, and that it is worth it anyway.
 
-**Our take:** Fully agreed, this is the heart of touch typing. When your eyes still want to drop: slow down instead of looking, find the home row by the bumps on the keys, and if you need to, cover your hands with a cloth for a while. In Keypacer you find the next key on the on-screen keyboard, and the guide fades out by itself for keys you type reliably.
+**Our take:** Fully agreed, this is the heart of touch typing. When your eyes still want to drop: slow down instead of looking, find the home row by the bumps on the keys, and if you need to, cover your hands with a cloth for a while. In Keypacer you find the next key on the on-screen keyboard, and the guide fades out by itself for keys you type reliably. You’ll find more exercises against glancing down in [Learn to type without looking at the keyboard](/blog/learn-to-type-without-looking/).
 
 ## 6. Keep your fingers on the home row
 
@@ -60,7 +60,7 @@ On the left your fingers rest on <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> <kbd>F</
 
 Ali has noticed that he is faster when he hits the keys harder. He says himself that he has no data to back this up.
 
-**This is where we disagree.** It is our view, not a hard rule: we think a light touch is the better choice. A key already registers with light pressure, and every harder stroke puts extra strain on your fingers and tendons, which adds up over a long working day. A light touch is also quieter and usually more even. It goes well with straight wrists and a keyboard lying flat at elbow height.
+**This is where we disagree.** It is our view, not a hard rule: we think a light touch is the better choice. A key already registers with light pressure, and every harder stroke puts extra strain on your fingers and tendons, which adds up over a long working day. A light touch is also quieter and usually more even. It goes well with straight wrists and a keyboard lying flat at elbow height. How to set up your desk for it is covered in [Posture and breaks when typing](/blog/posture-and-breaks-when-typing/).
 
 Still, everyone's hands type a little differently. The best thing is to try both, say for a few days each, and pay attention to how accurately you type and how your hands feel in the evening. Keypacer shows you the speed and accuracy of every session, so you can compare the two directly. Then go with whatever suits you.
 

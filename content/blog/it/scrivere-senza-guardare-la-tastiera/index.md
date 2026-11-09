@@ -8,7 +8,7 @@ coverAlt: Una tastiera con i tasti senza lettere, solo F e J evidenziati con i l
 translation: blind-tippen-lernen
 translatedFrom: de
 order: 9
-draft: true
+publish: 2026-11-18
 ---
 
 Scrivere senza guardare significa che gli occhi restano sullo schermo mentre le dita trovano i tasti. È il vero cuore della scrittura a dieci dita. Chi usa dieci dita ma abbassa lo sguardo ogni tre parole perde gran parte del vantaggio.

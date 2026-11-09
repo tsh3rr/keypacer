@@ -9,7 +9,7 @@ coverAlt: Uma curva que sobe, fica plana durante muito tempo e depois volta a su
 translation: tempo-plateau
 translatedFrom: de
 order: 15
-draft: true
+publish: 2026-12-30
 ---
 
 Muita gente escreve ao teclado todos os dias há anos e mesmo assim não fica mais rápida. Isso não é um limite natural. Assim que a escrita funciona "bem que chegue", entra em piloto automático, e em piloto automático já não se aprende nada de novo. Para voltares a ganhar velocidade, tens de treinar durante algum tempo, de forma consciente, um pouco acima do teu ritmo habitual, trabalhar as sequências de letras mais fracas e prever pausas para fixar o que aprendeste.

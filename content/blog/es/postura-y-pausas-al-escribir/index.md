@@ -9,7 +9,7 @@ coverAlt: Un nivel de burbuja con la burbuja centrada y un símbolo de pausa sob
 translation: haltung-und-pausen
 translatedFrom: de
 order: 8
-draft: true
+publish: 2026-12-02
 ---
 
 Quien escribe mucho suele pasar horas en la misma postura. Normalmente se nota cuando ya duelen las muñecas, los hombros o el cuello. Con unos pocos ajustes en el puesto de trabajo y pausas regulares se puede evitar en buena medida.

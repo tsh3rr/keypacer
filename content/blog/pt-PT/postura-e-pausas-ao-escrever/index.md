@@ -9,7 +9,7 @@ coverAlt: Um nível de bolha com a bolha ao centro e um símbolo de pausa por ci
 translation: haltung-und-pausen
 translatedFrom: de
 order: 8
-draft: true
+publish: 2026-12-02
 ---
 
 Quem escreve muito passa muitas vezes horas na mesma posição. Normalmente só se dá por isso quando os pulsos, os ombros ou o pescoço começam a doer. Com alguns ajustes no posto de trabalho e pausas regulares, consegue-se evitar boa parte disso.

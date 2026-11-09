@@ -9,7 +9,7 @@ coverAlt: Una curva que sube, se queda plana mucho tiempo y luego vuelve a subir
 translation: tempo-plateau
 translatedFrom: de
 order: 15
-draft: true
+publish: 2026-12-30
 ---
 
 Mucha gente escribe a diario desde hace años y aun así no va más rápido. No es un límite natural. En cuanto escribir funciona «lo bastante bien», va en piloto automático, y en piloto automático ya no se aprende nada nuevo. Para volver a ganar velocidad, tienes que practicar durante un tiempo de forma consciente justo por encima de tu ritmo habitual, trabajar tus secuencias de letras más débiles y dejar pausas para que se asiente.

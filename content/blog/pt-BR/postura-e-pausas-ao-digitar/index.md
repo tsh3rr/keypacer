@@ -9,7 +9,7 @@ coverAlt: Um nível de bolha com a bolha no centro e um símbolo de pausa acima 
 translation: haltung-und-pausen
 translatedFrom: de
 order: 8
-draft: true
+publish: 2026-12-02
 ---
 
 Quem digita muito costuma passar horas na mesma posição. Em geral, só se percebe quando os punhos, os ombros ou o pescoço começam a doer. Com alguns ajustes no posto de trabalho e pausas regulares, dá para evitar boa parte disso.

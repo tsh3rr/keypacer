@@ -8,7 +8,7 @@ coverAlt: Uma tecla AltGr laranja, um sinal de mais e, ao lado, teclas com @, �
 translation: sonderzeichen
 translatedFrom: de
 order: 13
-draft: true
+publish: 2026-12-23
 ---
 
 No teclado português, a arroba escreve-se com <kbd>AltGr</kbd> + <kbd>2</kbd>. O euro sai com <kbd>AltGr</kbd> + <kbd>E</kbd>, as chavetas com <kbd>AltGr</kbd> + <kbd>7</kbd> e <kbd>AltGr</kbd> + <kbd>0</kbd> e os parênteses retos com <kbd>AltGr</kbd> + <kbd>8</kbd> e <kbd>AltGr</kbd> + <kbd>9</kbd>. No Mac, vários símbolos ficam noutro sítio e usam a tecla Opção <kbd>⌥</kbd>.

@@ -32,7 +32,7 @@ Itu tidak terbantahkan. Sebuah [studi tahun 2016 di Universitas Stanford](https:
 
 **Karakter yang tidak kamu ucapkan.** Kode, rumus, jalur file, kata sandi, tanda kurung, dan karakter khusus sulit didiktekan.
 
-**Tempat di mana kamu tidak bisa berbicara.** Kantor terbuka, perpustakaan, kereta, rapat video yang sedang berlangsung. Dan ada hal yang lebih baik tidak diucapkan keras-keras.
+**Tempat di mana kamu tidak bisa berbicara.** Kantor terbuka, perpustakaan, kereta, rapat video yang sedang berlangsung. Dan ada hal yang lebih baik tidak diucapkan keras-keras. Cara melindungi layarmu saat mengetik kami jelaskan di [Mengetik lebih privat](/id/blog/mengetik-lebih-privat/).
 
 **Merangkai kata.** Berbicara dan menulis adalah kegiatan yang berbeda. Saat menulis, kamu merumuskan ulang, memangkas, dan memindahkan kalimat. Banyak orang berpikir berbeda dibandingkan saat berbicara.
 

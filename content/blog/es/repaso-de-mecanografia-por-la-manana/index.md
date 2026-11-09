@@ -8,7 +8,7 @@ coverAlt: Un sol que sale detrás de las teclas de la fila guía, con la F y la 
 translation: morgens-auffrischen
 translatedFrom: de
 order: 7
-draft: true
+publish: 2026-11-25
 ---
 
 Si estás pasando a escribir con diez dedos, seguro que te suena: en la práctica funciona, pero en cuanto tienes que mandar un correo con prisa vuelven los gestos de siempre. Dos dedos, la vista en el teclado, y el método nuevo queda olvidado hasta el día siguiente.

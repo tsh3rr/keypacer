@@ -8,7 +8,7 @@ coverAlt: A sun rising behind the home row keys with F and J highlighted, next t
 translation: morgens-auffrischen
 translatedFrom: de
 order: 7
-draft: true
+publish: 2026-11-25
 ---
 
 If you are switching to touch typing, you probably know this pattern. It works during practice, but the moment an email has to go out quickly, your old habits are back: two fingers, eyes on the keys, and the new technique is gone for the rest of the day.

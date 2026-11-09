@@ -8,7 +8,7 @@ coverAlt: Un compteur de vitesse dont l'aiguille dépasse à peine le milieu, av
 translation: tempo-durchschnitt
 translatedFrom: de
 order: 12
-draft: true
+publish: 2026-12-09
 ---
 
 Sur ordinateur, la plupart des gens tapent entre 30 et 60 mots par minute (MPM), environ 52 en moyenne. Cela correspond à environ 260 frappes par minute. Si tu atteins 70 MPM ou plus, tu tapes nettement plus vite que la plupart des gens. Sur smartphone, la moyenne tourne autour de 36 MPM.

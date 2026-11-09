@@ -7,7 +7,7 @@ cover: cover.jpg
 coverAlt: Ein Tacho, dessen Zeiger knapp über der Mitte steht, darunter eine Reihe Tasten
 translation: tempo-durchschnitt
 order: 12
-draft: true
+publish: 2026-12-09
 ---
 
 Am Computer tippen die meisten Menschen zwischen 30 und 60 Wörtern pro Minute (WpM), im Durchschnitt etwa 52. Das entspricht rund 260 Anschlägen pro Minute. Wer 70 WpM oder mehr schafft, ist deutlich schneller als die meisten. Am Smartphone liegt der Schnitt bei etwa 36 WpM.

@@ -8,7 +8,7 @@ coverAlt: Klawisze d, e oraz i, e zaznaczone na czerwono, strzałka pokazuje, ż
 translation: tippfehler-muster
 translatedFrom: de
 order: 14
-draft: true
+publish: 2026-12-16
 ---
 
 Literówki nie są przypadkiem. Prawie każdy robi wciąż te same: „nei” zamiast „nie”, „r” zamiast „e”, zgubioną literę w „zz” czy „nn”. Nauka zna te wzorce od dziesięcioleci. Powstają, bo palce źle nauczyły się pewnych ruchów albo mylą je w pośpiechu. Dobra wiadomość: to, co ma wzorzec, da się celowo przećwiczyć.

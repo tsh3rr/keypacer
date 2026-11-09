@@ -8,7 +8,7 @@ coverAlt: Um velocímetro com o ponteiro logo a seguir ao meio e, por baixo, uma
 translation: tempo-durchschnitt
 translatedFrom: de
 order: 12
-draft: true
+publish: 2026-12-09
 ---
 
 No computador, a maioria das pessoas escreve entre 30 e 60 palavras por minuto (PPM), cerca de 52 em média. Isso dá à volta de 260 toques por minuto. Se chegas às 70 PPM ou mais, escreves claramente mais depressa do que a maioria. No telemóvel, a média ronda as 36 PPM.

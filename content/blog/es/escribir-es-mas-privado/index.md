@@ -8,7 +8,7 @@ coverAlt: Portátil cuya pantalla se oscurece hacia un lado, junto a un ojo tach
 translation: privatsphaere
 translatedFrom: de
 order: 6
-draft: true
+publish: 2026-11-11
 ---
 
 En [¿Por qué aprender mecanografía si la IA puede dictar?](/es/blog/mecanografia-y-dictado-ia/) vimos cuándo ayuda dictar y cuándo es mejor el teclado. Hay un punto que merece artículo propio: la privacidad.

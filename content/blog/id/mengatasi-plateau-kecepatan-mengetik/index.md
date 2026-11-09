@@ -9,7 +9,7 @@ coverAlt: Kurva yang naik, lama mendatar, lalu naik lagi
 translation: tempo-plateau
 translatedFrom: de
 order: 15
-draft: true
+publish: 2026-12-30
 ---
 
 Banyak orang mengetik setiap hari selama bertahun-tahun, tetapi tidak menjadi lebih cepat. Itu bukan karena batas alami. Begitu mengetik sudah "cukup baik", semuanya berjalan otomatis, dan dalam mode otomatis kita tidak lagi mempelajari hal baru. Agar kembali lebih cepat, kamu perlu berlatih secara sadar sedikit di atas tempo biasamu untuk sementara waktu, menggarap urutan huruf terlemahmu, dan menyisihkan waktu istirahat untuk pemantapan.

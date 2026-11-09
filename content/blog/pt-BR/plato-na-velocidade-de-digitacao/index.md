@@ -9,7 +9,7 @@ coverAlt: Uma curva que sobe, fica plana por muito tempo e depois volta a subir
 translation: tempo-plateau
 translatedFrom: de
 order: 15
-draft: true
+publish: 2026-12-30
 ---
 
 Muita gente digita todos os dias há anos e mesmo assim não fica mais rápida. Isso não é um limite natural. Assim que a digitação funciona "bem o suficiente", ela entra no piloto automático, e no piloto automático não se aprende mais nada. Para voltar a ganhar velocidade, você precisa treinar por um tempo, de forma consciente, um pouco acima do seu ritmo habitual, trabalhar as sequências de letras mais fracas e planejar pausas para fixar o que aprendeu.

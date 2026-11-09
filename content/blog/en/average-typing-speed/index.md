@@ -8,7 +8,7 @@ coverAlt: A speedometer with its needle just past the middle, a row of keys belo
 translation: tempo-durchschnitt
 translatedFrom: de
 order: 12
-draft: true
+publish: 2026-12-09
 ---
 
 On a computer, most people type between 30 and 60 words per minute (WPM), about 52 on average. That is around 260 characters per minute. If you manage 70 WPM or more, you are clearly faster than most people. On a smartphone the average is about 36 WPM.

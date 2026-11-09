@@ -48,7 +48,7 @@ Più cose fai con la tastiera, meno le mani saltano avanti e indietro tra tastie
 
 Ali lo dice chiaramente: all’inizio si va più piano, ma ne vale comunque la pena.
 
-**Il nostro parere:** Pienamente d’accordo, è il cuore della dattilografia a dieci dita. Se lo sguardo vuole comunque scendere: rallenta invece di guardare, ritrova la riga base grazie ai rilievi e, se serve, copri le mani con un panno per un po’. In Keypacer trovi il tasto successivo sulla tastiera a schermo, e l’aiuto sparisce da solo per i tasti che digiti con sicurezza.
+**Il nostro parere:** Pienamente d’accordo, è il cuore della dattilografia a dieci dita. Se lo sguardo vuole comunque scendere: rallenta invece di guardare, ritrova la riga base grazie ai rilievi e, se serve, copri le mani con un panno per un po’. In Keypacer trovi il tasto successivo sulla tastiera a schermo, e l’aiuto sparisce da solo per i tasti che digiti con sicurezza. Altri esercizi contro lo sguardo verso il basso li trovi in [Imparare a scrivere senza guardare la tastiera](/it/blog/scrivere-senza-guardare-la-tastiera/).
 
 ## 6. Tieni le dita sulla riga base
 
@@ -60,7 +60,7 @@ A sinistra le dita poggiano su <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> <kbd>F</kb
 
 Ali ha notato di essere più veloce quando colpisce i tasti con più forza. Lui stesso ammette di non avere dati a sostegno.
 
-**Qui la vediamo diversamente.** È il nostro parere, non una regola fissa: pensiamo che una battuta leggera sia la scelta migliore. Un tasto si attiva già con una pressione leggera, e ogni colpo più forte affatica di più dita e tendini, cosa che si accumula nel corso di una lunga giornata di lavoro. Una battuta leggera è anche più silenziosa e di solito più regolare. Si accompagna bene a polsi dritti e a una tastiera piatta all’altezza dei gomiti.
+**Qui la vediamo diversamente.** È il nostro parere, non una regola fissa: pensiamo che una battuta leggera sia la scelta migliore. Un tasto si attiva già con una pressione leggera, e ogni colpo più forte affatica di più dita e tendini, cosa che si accumula nel corso di una lunga giornata di lavoro. Una battuta leggera è anche più silenziosa e di solito più regolare. Si accompagna bene a polsi dritti e a una tastiera piatta all’altezza dei gomiti. Come sistemare la postazione per questo lo spieghiamo in [Postura e pause alla tastiera](/it/blog/postura-e-pause-alla-tastiera/).
 
 Detto questo, ognuno scrive un po’ a modo suo. La cosa migliore è provare entrambe, per esempio qualche giorno ciascuna, e fare attenzione alla tua precisione e a come senti le mani la sera. Keypacer ti mostra velocità e precisione di ogni sessione, così puoi confrontare le due direttamente. Poi scegli quella che fa per te.
 

@@ -8,7 +8,7 @@ coverAlt: Un clavier aux touches vierges, seules F et J mises en avant avec leur
 translation: blind-tippen-lernen
 translatedFrom: de
 order: 9
-draft: true
+publish: 2026-11-18
 ---
 
 Taper sans regarder, c’est garder les yeux sur l’écran pendant que les doigts trouvent les touches. C’est le cœur même de la frappe à dix doigts. Taper avec dix doigts mais baisser les yeux tous les trois mots, c’est perdre une bonne partie de l’intérêt.

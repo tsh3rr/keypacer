@@ -31,7 +31,7 @@ Das ist unbestritten. Eine [Studie der Stanford University von 2016](https://arx
 
 **Zeichen, die man nicht spricht.** Code, Formeln, Dateipfade, Passwörter, Klammern und Sonderzeichen lassen sich kaum diktieren.
 
-**Orte, an denen du nicht sprechen kannst.** Großraumbüro, Bibliothek, Zug, eine laufende Videokonferenz. Manches möchtest du auch nicht laut sagen.
+**Orte, an denen du nicht sprechen kannst.** Großraumbüro, Bibliothek, Zug, eine laufende Videokonferenz. Manches möchtest du auch nicht laut sagen. Wie du beim Tippen auch deinen Bildschirm schützt, steht in [Tippen ist privater](/de/blog/tippen-ist-privater/).
 
 **Formulieren.** Sprechen und Schreiben sind verschiedene Tätigkeiten. Beim Schreiben formulierst du um, streichst und stellst Sätze um. Viele denken dabei anders als beim Reden.
 

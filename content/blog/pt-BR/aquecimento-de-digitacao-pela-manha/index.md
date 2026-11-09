@@ -8,7 +8,7 @@ coverAlt: Um sol nascendo atrás das teclas da fileira base, com F e J em destaq
 translation: morgens-auffrischen
 translatedFrom: de
 order: 7
-draft: true
+publish: 2026-11-25
 ---
 
 Se você está mudando para a digitação com os dez dedos, provavelmente já passou por isso: no treino funciona, mas é só um e-mail precisar sair às pressas que os movimentos antigos voltam. Dois dedos, os olhos no teclado, e o método novo fica esquecido até o dia seguinte.

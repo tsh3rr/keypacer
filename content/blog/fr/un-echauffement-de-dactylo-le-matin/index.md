@@ -8,7 +8,7 @@ coverAlt: Un soleil levant derrière les touches de la rangée de repos, F et J 
 translation: morgens-auffrischen
 translatedFrom: de
 order: 7
-draft: true
+publish: 2026-11-25
 ---
 
 Si tu passes à la frappe à dix doigts, tu connais sans doute la scène : à l’entraînement, ça marche, mais dès qu’un mail doit partir vite, les vieux réflexes reviennent. Deux doigts, les yeux sur le clavier, et la nouvelle méthode est oubliée jusqu’au lendemain.

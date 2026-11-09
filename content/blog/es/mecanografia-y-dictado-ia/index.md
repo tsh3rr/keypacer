@@ -32,7 +32,7 @@ Eso no se discute. Un [estudio de la Universidad de Stanford de 2016](https://ar
 
 **Caracteres que no se pronuncian.** Código, fórmulas, rutas de archivo, contraseñas, paréntesis y caracteres especiales apenas se pueden dictar.
 
-**Lugares donde no puedes hablar.** Oficina abierta, biblioteca, tren, una videollamada en curso. Y hay cosas que prefieres no decir en voz alta.
+**Lugares donde no puedes hablar.** Oficina abierta, biblioteca, tren, una videollamada en curso. Y hay cosas que prefieres no decir en voz alta. Cómo proteger también tu pantalla mientras escribes lo explicamos en [Escribir es más privado](/es/blog/escribir-es-mas-privado/).
 
 **Redactar.** Hablar y escribir son actividades distintas. Al escribir reformulas, tachas y reordenas frases. Muchas personas piensan de otra manera que al hablar.
 

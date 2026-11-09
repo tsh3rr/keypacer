@@ -9,7 +9,7 @@ coverAlt: Krzywa, która rośnie, długo biegnie płasko, a potem znowu rośnie
 translation: tempo-plateau
 translatedFrom: de
 order: 15
-draft: true
+publish: 2026-12-30
 ---
 
 Wiele osób pisze codziennie od lat, a mimo to nie przyspiesza. To nie jest naturalna granica. Gdy tylko pisanie działa „wystarczająco dobrze”, przechodzi na autopilota, a na autopilocie niczego nowego się nie uczysz. Żeby znowu przyspieszyć, musisz przez jakiś czas świadomie ćwiczyć tuż powyżej swojego zwykłego tempa, pracować nad najsłabszymi sekwencjami liter i planować przerwy, żeby wszystko się utrwaliło.

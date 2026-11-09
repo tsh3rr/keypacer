@@ -8,7 +8,7 @@ coverAlt: Keyboard dengan tombol kosong, hanya F dan J yang disorot dengan tonjo
 translation: blind-tippen-lernen
 translatedFrom: de
 order: 9
-draft: true
+publish: 2026-11-18
 ---
 
 Mengetik 10 jari berarti matamu tetap di layar sementara jari-jarimu menemukan tombol. Itulah inti sebenarnya dari teknik ini. Jika kamu mengetik dengan sepuluh jari tetapi melirik ke bawah setiap beberapa kata, kamu kehilangan sebagian besar manfaatnya.

@@ -8,7 +8,7 @@ coverAlt: Les touches d, e et i, le e marqué en rouge, une flèche montre que l
 translation: tippfehler-muster
 translatedFrom: de
 order: 14
-draft: true
+publish: 2026-12-16
 ---
 
 Les fautes de frappe ne sont pas le fruit du hasard. Presque tout le monde fait les mêmes, encore et encore : « els » au lieu de « les », un « r » au lieu d'un « e », une lettre qui saute dans « ss » ou « mm ». La recherche connaît ces schémas depuis des décennies. Ils apparaissent parce que les doigts ont mal appris certains mouvements ou les confondent sous la pression du temps. La bonne nouvelle : ce qui suit un schéma peut s'entraîner de façon ciblée.

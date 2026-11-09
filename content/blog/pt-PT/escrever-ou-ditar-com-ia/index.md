@@ -32,7 +32,7 @@ Isso ninguém contesta. Um [estudo da Universidade de Stanford de 2016](https://
 
 **Caracteres que ninguém diz.** Código, fórmulas, caminhos de ficheiros, palavras-passe, parênteses e caracteres especiais quase não se conseguem ditar.
 
-**Sítios onde não podes falar.** Open space, biblioteca, comboio, uma videochamada a decorrer. E há coisas que também não queres dizer em voz alta.
+**Sítios onde não podes falar.** Open space, biblioteca, comboio, uma videochamada a decorrer. E há coisas que também não queres dizer em voz alta. Como proteger também o teu ecrã enquanto escreves, explicamos em [Escrever é mais privado](/pt-pt/blog/escrever-e-mais-privado/).
 
 **Redigir.** Falar e escrever são atividades diferentes. Quando escreves, reformulas, cortas e mudas frases de sítio. Muitas pessoas pensam de forma diferente quando escrevem e quando falam.
 

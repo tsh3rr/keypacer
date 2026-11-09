@@ -32,7 +32,7 @@ Isso ninguém discute. Um [estudo da Universidade Stanford de 2016](https://arxi
 
 **Caracteres que ninguém fala.** Código, fórmulas, caminhos de arquivo, senhas, parênteses e caracteres especiais são quase impossíveis de ditar.
 
-**Lugares onde você não pode falar.** Escritório aberto, biblioteca, ônibus, uma videochamada em andamento. E tem coisas que você também não quer dizer em voz alta.
+**Lugares onde você não pode falar.** Escritório aberto, biblioteca, ônibus, uma videochamada em andamento. E tem coisas que você também não quer dizer em voz alta. Como proteger também a sua tela enquanto digita, explicamos em [Digitar é mais privado](/pt-br/blog/digitar-e-mais-privado/).
 
 **Escrever o texto.** Falar e escrever são atividades diferentes. Quando você escreve, reformula, corta e muda frases de lugar. Muita gente pensa de um jeito diferente quando escreve e quando fala.
 

@@ -9,7 +9,7 @@ coverAlt: Poziomica z pęcherzykiem pośrodku i symbol pauzy nad rzędem podstaw
 translation: haltung-und-pausen
 translatedFrom: de
 order: 8
-draft: true
+publish: 2026-12-02
 ---
 
 Kto dużo pisze, często siedzi godzinami w tej samej pozycji. Zwykle zauważa się to dopiero wtedy, gdy zaczynają boleć nadgarstki, barki albo kark. Kilka zmian przy biurku i regularne przerwy pozwalają w dużej mierze tego uniknąć.

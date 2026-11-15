@@ -1,14 +1,13 @@
 ---
 title: "Mengetik lebih privat: cara melindungi isi layarmu"
 description: Mengapa mengetik lebih privat daripada mendikte, dan cara menjaga layarmu dari mata yang ingin tahu di kereta, kafe, dan kantor.
-updated: 2026-10-28
+updated: 2026-11-15
 topic: tips
 cover: cover.jpg
 coverAlt: Sebuah laptop yang layarnya menggelap ke satu sisi, di samping mata yang dicoret
 translation: privatsphaere
 translatedFrom: de
 order: 6
-draft: true
 ---
 
 Dalam [Untuk apa belajar mengetik kalau AI bisa menulis dari dikte?](/id/blog/mengetik-atau-dikte-ai/) kami membahas kapan dikte membantu dan kapan keyboard lebih baik. Ada satu hal yang layak mendapat artikel tersendiri: privasi.

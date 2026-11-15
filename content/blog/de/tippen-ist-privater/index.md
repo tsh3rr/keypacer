@@ -1,13 +1,12 @@
 ---
 title: "Tippen ist privater: So schützt du, was auf deinem Bildschirm steht"
 description: Warum Tippen privater ist als Diktieren und wie du deinen Bildschirm im Zug, im Café und im Büro vor fremden Blicken schützt.
-updated: 2026-10-28
+updated: 2026-11-15
 topic: tips
 cover: cover.jpg
 coverAlt: Laptop, dessen Bildschirm zur Seite hin abgedunkelt ist, daneben ein durchgestrichenes Auge
 translation: privatsphaere
 order: 6
-draft: true
 ---
 
 Im Artikel [Warum tippen lernen, wenn KI diktieren kann?](/de/blog/tippen-trotz-ki-diktat/) ging es darum, wann Diktieren hilft und wann die Tastatur besser ist. Ein Punkt verdient einen eigenen Artikel: die Privatsphäre.

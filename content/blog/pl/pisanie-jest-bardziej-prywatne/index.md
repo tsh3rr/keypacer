@@ -1,14 +1,13 @@
 ---
 title: "Pisanie jest bardziej prywatne: jak chronić to, co masz na ekranie"
 description: Dlaczego pisanie na klawiaturze jest bardziej prywatne niż dyktowanie i jak chronić ekran przed cudzym wzrokiem w pociągu, kawiarni i biurze.
-updated: 2026-10-28
+updated: 2026-11-15
 topic: tips
 cover: cover.jpg
 coverAlt: Laptop, którego ekran ciemnieje z jednej strony, obok przekreślone oko
 translation: privatsphaere
 translatedFrom: de
 order: 6
-draft: true
 ---
 
 W artykule [Po co uczyć się pisać, skoro AI potrafi dyktować?](/pl/blog/pisanie-na-klawiaturze-a-dyktowanie-ai/) pisaliśmy o tym, kiedy dyktowanie pomaga, a kiedy lepsza jest klawiatura. Jedna sprawa zasługuje na osobny tekst: prywatność.

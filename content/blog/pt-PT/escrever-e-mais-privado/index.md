@@ -1,14 +1,13 @@
 ---
 title: "Escrever é mais privado: como proteger o que está no teu ecrã"
 description: Porque escrever no teclado é mais privado do que ditar e como proteger o teu ecrã de olhares alheios no comboio, no café e no escritório.
-updated: 2026-10-28
+updated: 2026-11-15
 topic: tips
 cover: cover.jpg
 coverAlt: Portátil cujo ecrã escurece para um dos lados, ao lado de um olho riscado
 translation: privatsphaere
 translatedFrom: de
 order: 6
-draft: true
 ---
 
 Em [Porque aprender a escrever no teclado se a IA pode ditar?](/pt-pt/blog/escrever-ou-ditar-com-ia/) vimos quando ditar ajuda e quando o teclado é melhor. Há um ponto que merece um artigo próprio: a privacidade.

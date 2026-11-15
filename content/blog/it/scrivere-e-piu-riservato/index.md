@@ -1,14 +1,13 @@
 ---
 title: "Scrivere è più riservato: come proteggere ciò che c’è sul tuo schermo"
 description: Perché digitare è più riservato che dettare e come proteggere lo schermo da sguardi indiscreti in treno, al bar e in ufficio.
-updated: 2026-10-28
+updated: 2026-11-15
 topic: tips
 cover: cover.jpg
 coverAlt: Un portatile il cui schermo si scurisce verso un lato, accanto a un occhio barrato
 translation: privatsphaere
 translatedFrom: de
 order: 6
-draft: true
 ---
 
 In [Perché imparare a scrivere a macchina se l’IA può dettare?](/it/blog/dattilografia-e-dettatura-ia/) abbiamo visto quando la dettatura aiuta e quando la tastiera è meglio. Un punto merita un articolo a sé: la riservatezza.

@@ -1,14 +1,13 @@
 ---
 title: "Digitar é mais privado: como proteger o que está na sua tela"
 description: Por que digitar é mais privado do que ditar e como proteger sua tela de olhares alheios no ônibus, no café e no escritório.
-updated: 2026-10-28
+updated: 2026-11-15
 topic: tips
 cover: cover.jpg
 coverAlt: Notebook cuja tela escurece para um lado, ao lado de um olho riscado
 translation: privatsphaere
 translatedFrom: de
 order: 6
-draft: true
 ---
 
 Em [Por que aprender a digitar se a IA pode ditar?](/pt-br/blog/digitar-ou-ditar-com-ia/) vimos quando ditar ajuda e quando o teclado é melhor. Um ponto merece um artigo próprio: a privacidade.

@@ -1,14 +1,13 @@
 ---
 title: "Taper est plus discret : comment protéger ce qui s’affiche sur ton écran"
 description: Pourquoi taper au clavier est plus discret que dicter, et comment protéger ton écran des regards indiscrets dans le train, au café et au bureau.
-updated: 2026-10-28
+updated: 2026-11-15
 topic: tips
 cover: cover.jpg
 coverAlt: Un ordinateur portable dont l’écran s’assombrit sur le côté, à côté d’un œil barré
 translation: privatsphaere
 translatedFrom: de
 order: 6
-draft: true
 ---
 
 Dans [Pourquoi apprendre à taper quand l’IA peut dicter ?](/fr/blog/taper-au-clavier-et-dictee-ia/), nous avons vu quand la dictée aide et quand le clavier fait mieux. Un point mérite son propre article : la confidentialité.

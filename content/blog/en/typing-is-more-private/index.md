@@ -1,14 +1,13 @@
 ---
 title: "Typing is more private: how to protect what is on your screen"
 description: Why typing is more private than dictating, and how to keep your screen away from prying eyes on the train, in cafés and at the office.
-updated: 2026-10-28
+updated: 2026-11-15
 topic: tips
 cover: cover.jpg
 coverAlt: A laptop whose screen darkens towards one side, next to a crossed-out eye
 translation: privatsphaere
 translatedFrom: de
 order: 6
-draft: true
 ---
 
 In [Why learn to type when AI can take dictation?](/blog/why-learn-to-type-with-ai-dictation/) we looked at when dictation helps and when the keyboard is better. One point deserves its own article: privacy.

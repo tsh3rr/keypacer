@@ -1,14 +1,13 @@
 ---
 title: "Escribir es más privado: cómo proteger lo que hay en tu pantalla"
 description: Por qué escribir en el teclado es más privado que dictar y cómo proteger tu pantalla de miradas ajenas en el tren, la cafetería y la oficina.
-updated: 2026-10-28
+updated: 2026-11-15
 topic: tips
 cover: cover.jpg
 coverAlt: Portátil cuya pantalla se oscurece hacia un lado, junto a un ojo tachado
 translation: privatsphaere
 translatedFrom: de
 order: 6
-draft: true
 ---
 
 En [¿Por qué aprender mecanografía si la IA puede dictar?](/es/blog/mecanografia-y-dictado-ia/) vimos cuándo ayuda dictar y cuándo es mejor el teclado. Hay un punto que merece artículo propio: la privacidad.

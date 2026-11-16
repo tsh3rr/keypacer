@@ -48,7 +48,7 @@ Ab hier der Text in Markdown …
 | `cover`, `coverAlt` | nein | Titelbild im Ordner (PNG, JPEG oder WebP, am besten 1200 × 675) und seine Beschreibung. Ohne Bild zeigt die Karte die Themenfarbe mit Logo, beim Teilen erscheint `og.png`. |
 | `color` | nein | Kartenfarbe: `ember`, `magenta`, `cobalt` oder `neutral` (hellgrau). Ohne Angabe kommt sie vom Thema. |
 | `order` | nein | Reihenfolge in der Übersicht, kleinste Zahl zuerst (Standard 100) |
-| `featured` | nein | `true` = erscheint auf der Startseite unter „Aus dem Blog“ (höchstens drei) |
+| `featured` | nein | `true` = erscheint auf der Startseite unter „Aus dem Blog“ (die Startseite zeigt sechs: zuerst die markierten, dann die neuesten) |
 | `draft` | nein | `true` = nur in Vorschau-Builds sichtbar, nie auf keypacer.com |
 
 ## Was im Text geht

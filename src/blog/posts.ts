@@ -38,7 +38,7 @@ export interface Post {
   color: Color;
   /** Position on the overview, lowest first. */
   order: number;
-  /** Shown on the landing page (at most three, see featuredPosts). */
+  /** Shown first on the landing page (it shows six, see featuredPosts). */
   featured: boolean;
   draft: boolean;
   html: string;
@@ -272,7 +272,11 @@ export function translationsOf(post: Post, posts: Post[]): Post[] {
   return LANDING_LANGUAGES.flatMap((l) => posts.filter((p) => p.lang === l && p.translation === post.translation && p !== post));
 }
 
-/** The landing page's three: those marked featured first, then the overview's order. */
+/** How many articles the landing page shows: two full rows of three, three rows of two, or a swipeable row on a phone. */
+export const FEATURED_COUNT = 6;
+
+/** The landing page's articles: those marked featured first (in the overview's order), then the newest. */
 export function featuredPosts(posts: Post[]): Post[] {
-  return [...posts.filter((p) => p.featured), ...posts.filter((p) => !p.featured)].slice(0, 3);
+  const rest = posts.filter((p) => !p.featured).sort((a, b) => b.updated.localeCompare(a.updated));
+  return [...posts.filter((p) => p.featured), ...rest].slice(0, FEATURED_COUNT);
 }

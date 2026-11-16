@@ -71,6 +71,11 @@ describe('blog pages', () => {
     const landing = renderLanding('de', SITE, '', [de]);
     expect(landing).toContain('<a href="/de/blog/">Blog</a>');
     expect(landing).toContain('id="lp-blog"');
+    expect(landing).not.toContain('bl-count');
+    const seven = Array.from({ length: 7 }, (_, i) => ({ ...de, slug: `a${i}` }));
+    const full = renderLanding('de', SITE, '', seven);
+    expect(full.match(/class="bl-card"/g)).toHaveLength(6);
+    expect(full).toContain('<span class="bl-count">7</span>');
     expect(renderLanding('es', SITE)).not.toContain('/es/blog/');
   });
 });

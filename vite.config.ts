@@ -1,7 +1,7 @@
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { defineConfig, loadEnv, type Plugin } from 'vite';
-import { checkPosts, featuredPosts, parsePost, postsIn, publishedPosts, type Post } from './src/blog/posts.ts';
+import { checkPosts, parsePost, postsIn, publishedPosts, type Post } from './src/blog/posts.ts';
 import { blogFeed, blogPath, blogSitemapUrls, postPath, renderBlogIndex, renderPost } from './src/blog/render.ts';
 import { LANDING_LANGUAGES, type LandingLanguage } from './src/landing/content.ts';
 import { llmsTxt } from './src/landing/llms.ts';
@@ -26,7 +26,7 @@ function landing(production: boolean, umami: string, blog: Blog): Plugin {
       order: 'pre',
       handler(html, ctx) {
         const lang = /keypacer-landing:([\w-]+)/.exec(html)?.[1] as LandingLanguage | undefined;
-        if (lang && LANDING_LANGUAGES.includes(lang)) return renderLanding(lang, SITE_URL, umami, featuredPosts(postsIn(blog.posts(), lang)));
+        if (lang && LANDING_LANGUAGES.includes(lang)) return renderLanding(lang, SITE_URL, umami, postsIn(blog.posts(), lang));
         // The trainer counts only that its page was opened, never what happens in it.
         if (umami && ctx.path === '/app/index.html') return html.replace('</head>', `  ${umamiTag(umami)}\n  </head>`);
         return html;

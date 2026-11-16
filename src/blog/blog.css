@@ -17,6 +17,35 @@
 .bl-all a { font-weight: 650; color: var(--accent); text-decoration: none; }
 .bl-all a:hover { text-decoration: underline; }
 
+/* The landing page's section: six cards in full rows (three, then two columns), a swipeable row on a phone. */
+.bl-teaser .bl-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); justify-content: stretch; }
+.bl-teaser .bl-card-body { padding: 14px 18px 16px; }
+.bl-teaser .bl-card h3 { font-size: 1.05rem; }
+.bl-teaser .bl-card p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; }
+.bl-teaser .bl-all { margin-top: 32px; }
+.bl-all-btn {
+  display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px 10px 18px; border-radius: var(--r-lg);
+  background: var(--panel); border: 1px solid var(--border); box-shadow: var(--card-lift); transition: transform 0.08s ease-out, border-color 0.15s;
+}
+.bl-all .bl-all-btn:hover { text-decoration: none; transform: translateY(-1px); border-color: var(--accent); }
+.bl-count {
+  font-family: var(--mono); font-size: 12px; font-weight: 700; line-height: 1; color: var(--accent);
+  padding: 4px 7px; border-radius: 999px; background: var(--accent-soft);
+}
+@media (max-width: 900px) {
+  .bl-teaser .bl-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .bl-teaser .bl-cards {
+    display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+    margin: 0 -16px; padding: 4px 16px 12px; scroll-padding: 0 16px; scrollbar-width: none;
+  }
+  .bl-teaser .bl-cards::-webkit-scrollbar { display: none; }
+  .bl-teaser .bl-card { flex: 0 0 82%; scroll-snap-align: start; }
+  .bl-teaser .bl-card:hover { transform: none; }
+  .bl-teaser .bl-all { margin-top: 20px; }
+}
+
 /* The picture on top: the cover, or the card's colour with the logo. */
 .bl-thumb { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-bottom: 3px solid var(--edge); background: var(--fill); }
 .bl-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.25s ease-out; }

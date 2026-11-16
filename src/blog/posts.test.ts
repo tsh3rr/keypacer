@@ -119,9 +119,10 @@ describe('articles together', () => {
     expect(publishedPosts([de, draft], false)).toEqual([draft, de]);
   });
 
-  it('puts featured articles first on the landing page, three at most', () => {
-    const many = [1, 2, 3, 4].map((n) => parsePost(source({ translation: `a${n}`, order: n, featured: n === 4 }, 'Text.', { slug: `a${n}` })));
-    expect(featuredPosts(many).map((p) => p.slug)).toEqual(['a4', 'a1', 'a2']);
+  it('puts featured articles first on the landing page, then the newest, six at most', () => {
+    const many = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => parsePost(source({ translation: `a${n}`, order: n, featured: n === 4 || n === 2, updated: `2026-10-1${n}` }, 'Text.', { slug: `a${n}` })));
+    expect(featuredPosts(many).map((p) => p.slug)).toEqual(['a2', 'a4', 'a8', 'a7', 'a6', 'a5']);
+    expect(featuredPosts(many.slice(0, 3)).map((p) => p.slug)).toEqual(['a2', 'a3', 'a1']);
   });
 });
 

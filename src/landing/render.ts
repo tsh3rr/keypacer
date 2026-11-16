@@ -251,7 +251,8 @@ export function siteFooter(lang: LandingLanguage, ch: Chrome): string {
 /**
  * The page for one language. With an Umami website ID, the page loads Umami
  * (umamiTag) and swaps its
- * "0 trackers" claims for the analytics copy.
+ * "0 trackers" claims for the analytics copy. `posts` are all of the
+ * language's articles: the blog section picks six of them.
  */
 export function renderLanding(lang: LandingLanguage, site: string, umami = '', posts: Post[] = []): string {
   const base = COPY[lang];

@@ -2,7 +2,7 @@ import { BRAND_MARK } from '../landing/brand.ts';
 import { COPY, LANDING_LANGUAGES, landingPath, type LandingLanguage } from '../landing/content.ts';
 import { appPath, esc, headLinks, jsonBlock, siteFooter, siteHeader, type Chrome } from '../landing/render.ts';
 import { BLOG_COPY } from './copy.ts';
-import { postsIn, translationsOf, type Post } from './posts.ts';
+import { featuredPosts, postsIn, translationsOf, type Post } from './posts.ts';
 
 /**
  * Builds the blog's pages at build time (the blog plugin in vite.config.ts):
@@ -42,15 +42,17 @@ function card(p: Post, n: number): string {
 const cards = (posts: Post[], from = 0): string =>
   `<ul class="bl-cards">\n          ${posts.map((p, i) => card(p, from + i)).join('\n          ')}\n        </ul>`;
 
-/** The landing page's section with three articles (featuredPosts). */
-export function blogTeaser(lang: LandingLanguage, featured: Post[]): string {
+/** The landing page's section: six of the language's articles (featuredPosts) and a link to all of them. */
+export function blogTeaser(lang: LandingLanguage, posts: Post[]): string {
   const b = BLOG_COPY[lang];
-  return `<section id="blog" class="lp-section" aria-labelledby="lp-blog">
+  const shown = featuredPosts(posts);
+  const count = new Intl.NumberFormat(lang).format(posts.length);
+  return `<section id="blog" class="lp-section bl-teaser" aria-labelledby="lp-blog">
         <p class="lp-kicker">${esc(b.teaser.eyebrow)}</p>
         <h2 id="lp-blog">${esc(b.teaser.title)}</h2>
         <p class="lp-intro">${esc(b.teaser.intro)}</p>
-        ${cards(featured)}
-        <p class="bl-all"><a href="${blogPath(lang)}">${esc(b.teaser.all)} ${ARROW}</a></p>
+        ${cards(shown)}
+        <p class="bl-all"><a class="bl-all-btn" href="${blogPath(lang)}">${esc(b.teaser.all)}${posts.length > shown.length ? ` <span class="bl-count">${count}</span>` : ''} ${ARROW}</a></p>
       </section>
 
       `;

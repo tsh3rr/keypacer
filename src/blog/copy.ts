@@ -18,7 +18,7 @@ export interface BlogCopy {
   /** Overview heading and the line under it. */
   heading: string;
   intro: string;
-  /** The landing page section with three articles. */
+  /** The landing page section with six articles and a link to all of them. */
   teaser: { eyebrow: string; title: string; intro: string; all: string };
   /** `{n}`: minutes. */
   minutes: string;

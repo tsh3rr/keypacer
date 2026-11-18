@@ -47,7 +47,7 @@ Je mehr du mit der Tastatur erledigst, desto weniger springen die Hände zwische
 
 Ali sagt klar, dass man dafür am Anfang langsamer wird, und dass es sich trotzdem lohnt.
 
-**Unsere Einordnung:** Volle Zustimmung, das ist der Kern des Zehnfingersystems. Wenn der Blick doch nach unten will: langsamer werden statt hinschauen, die Grundstellung an den Rillen ertasten und notfalls die Hände eine Zeit lang mit einem Tuch abdecken. In Keypacer findest du die nächste Taste auf der Bildschirmtastatur, und bei Tasten, die du sicher tippst, blendet die Hilfe von selbst ab.
+**Unsere Einordnung:** Volle Zustimmung, das ist der Kern des Zehnfingersystems. Wenn der Blick doch nach unten will: langsamer werden statt hinschauen, die Grundstellung an den Rillen ertasten und notfalls die Hände eine Zeit lang mit einem Tuch abdecken. In Keypacer findest du die nächste Taste auf der Bildschirmtastatur, und bei Tasten, die du sicher tippst, blendet die Hilfe von selbst ab. Mehr Übungen gegen den Blick nach unten findest du in [Blind tippen lernen](/de/blog/blind-tippen-lernen/).
 
 ## 6. Die Finger auf der Grundreihe lassen
 

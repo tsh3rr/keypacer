@@ -1,14 +1,13 @@
 ---
 title: Como aprender a digitar sem olhar para o teclado
 description: Como perder o hábito de olhar para o teclado ao digitar, com exercícios concretos para as teclas que puxam o seu olhar para baixo.
-updated: 2026-10-28
+updated: 2026-11-18
 topic: tips
 cover: cover.jpg
 coverAlt: Um teclado com teclas sem letras, só F e J em destaque com seus relevos, e acima um olho fechado
 translation: blind-tippen-lernen
 translatedFrom: de
 order: 9
-draft: true
 ---
 
 Digitar sem olhar significa que os olhos ficam na tela enquanto os dedos encontram as teclas. Esse é o coração da digitação com os dez dedos. Quem digita com dez dedos, mas olha para baixo a cada poucas palavras, perde boa parte da vantagem.

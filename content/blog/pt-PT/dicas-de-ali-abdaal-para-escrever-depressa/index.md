@@ -48,7 +48,7 @@ Quanto mais fazes com o teclado, menos as mãos saltam entre o teclado e o rato.
 
 Ali diz claramente que, ao início, se fica mais lento, e que mesmo assim compensa.
 
-**A nossa opinião:** Totalmente de acordo, é a essência da dactilografia com os dez dedos. Se o olhar continuar a querer descer: abranda em vez de olhar, encontra a fila base pelos relevos das teclas e, se for preciso, tapa as mãos com um pano durante algum tempo. No Keypacer encontras a tecla seguinte no teclado no ecrã, e a ajuda desaparece sozinha nas teclas que já escreves com segurança.
+**A nossa opinião:** Totalmente de acordo, é a essência da dactilografia com os dez dedos. Se o olhar continuar a querer descer: abranda em vez de olhar, encontra a fila base pelos relevos das teclas e, se for preciso, tapa as mãos com um pano durante algum tempo. No Keypacer encontras a tecla seguinte no teclado no ecrã, e a ajuda desaparece sozinha nas teclas que já escreves com segurança. Encontras mais exercícios contra a vontade de olhar para baixo em [Como aprender a escrever sem olhar para o teclado](/pt-pt/blog/escrever-sem-olhar-para-o-teclado/).
 
 ## 6. Mantém os dedos na fila base
 

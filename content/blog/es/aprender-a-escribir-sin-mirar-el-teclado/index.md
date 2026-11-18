@@ -1,14 +1,13 @@
 ---
 title: Aprender a escribir sin mirar el teclado
 description: Cómo dejar de mirar el teclado al escribir, con ejercicios concretos para las teclas que te hacen bajar la vista.
-updated: 2026-10-28
+updated: 2026-11-18
 topic: tips
 cover: cover.jpg
 coverAlt: Un teclado con las teclas sin rotular, solo la F y la J resaltadas con sus marcas, y encima un ojo cerrado
 translation: blind-tippen-lernen
 translatedFrom: de
 order: 9
-draft: true
 ---
 
 Escribir al tacto significa que la vista se queda en la pantalla mientras los dedos encuentran las teclas. Ese es el núcleo de la mecanografía. Quien escribe con diez dedos pero mira hacia abajo cada pocas palabras pierde buena parte de la ventaja.

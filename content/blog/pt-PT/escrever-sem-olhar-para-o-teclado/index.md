@@ -1,14 +1,13 @@
 ---
 title: Como aprender a escrever sem olhar para o teclado
 description: Como perder o hábito de olhar para o teclado enquanto escreves, com exercícios concretos para as teclas que te puxam o olhar para baixo.
-updated: 2026-10-28
+updated: 2026-11-18
 topic: tips
 cover: cover.jpg
 coverAlt: Um teclado com teclas sem letras, só F e J em destaque com os seus relevos, e por cima um olho fechado
 translation: blind-tippen-lernen
 translatedFrom: de
 order: 9
-draft: true
 ---
 
 Escrever sem olhar significa que os olhos ficam no ecrã enquanto os dedos encontram as teclas. É esse o centro da escrita com os dez dedos. Quem escreve com dez dedos, mas olha para baixo de três em três palavras, perde grande parte da vantagem.

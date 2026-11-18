@@ -48,7 +48,7 @@ Makin banyak yang kamu lakukan dari keyboard, makin jarang tanganmu bolak-balik 
 
 Ali terus terang bahwa ini awalnya membuatmu lebih lambat, dan bahwa tetap sepadan.
 
-**Pendapat kami:** Sepenuhnya setuju, inilah inti mengetik 10 jari. Saat matamu masih ingin turun: pelan-pelan daripada melihat, temukan baris dasar dari tonjolan di tombol, dan jika perlu, tutupi tanganmu dengan kain untuk sementara. Di Keypacer kamu menemukan tombol berikutnya di keyboard layar, dan panduan meredup sendiri untuk tombol yang kamu ketik dengan andal.
+**Pendapat kami:** Sepenuhnya setuju, inilah inti mengetik 10 jari. Saat matamu masih ingin turun: pelan-pelan daripada melihat, temukan baris dasar dari tonjolan di tombol, dan jika perlu, tutupi tanganmu dengan kain untuk sementara. Di Keypacer kamu menemukan tombol berikutnya di keyboard layar, dan panduan meredup sendiri untuk tombol yang kamu ketik dengan andal. Latihan lain agar pandanganmu tidak turun ke keyboard ada di [Belajar mengetik tanpa melihat keyboard](/id/blog/mengetik-tanpa-melihat-keyboard/).
 
 ## 6. Jaga jari di baris dasar
 

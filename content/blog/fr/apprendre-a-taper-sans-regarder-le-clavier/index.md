@@ -1,14 +1,13 @@
 ---
 title: Apprendre à taper sans regarder le clavier
 description: Comment perdre l’habitude de regarder le clavier en tapant, avec des exercices concrets pour les touches qui attirent ton regard vers le bas.
-updated: 2026-10-28
+updated: 2026-11-18
 topic: tips
 cover: cover.jpg
 coverAlt: Un clavier aux touches vierges, seules F et J mises en avant avec leurs ergots, et au-dessus un œil fermé
 translation: blind-tippen-lernen
 translatedFrom: de
 order: 9
-draft: true
 ---
 
 Taper sans regarder, c’est garder les yeux sur l’écran pendant que les doigts trouvent les touches. C’est le cœur même de la frappe à dix doigts. Taper avec dix doigts mais baisser les yeux tous les trois mots, c’est perdre une bonne partie de l’intérêt.

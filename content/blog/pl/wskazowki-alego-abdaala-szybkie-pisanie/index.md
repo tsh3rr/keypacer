@@ -48,7 +48,7 @@ Im więcej robisz klawiaturą, tym rzadziej ręce skaczą między klawiaturą a 
 
 Ali mówi wprost, że na początku pisze się przez to wolniej, ale i tak warto.
 
-**Nasz komentarz:** Pełna zgoda, to sedno pisania bezwzrokowego. Jeśli wzrok i tak ucieka w dół: zwolnij zamiast patrzeć, odnajdź rząd podstawowy po wypustkach, a w razie potrzeby przykryj na jakiś czas dłonie ściereczką. W Keypacerze następny klawisz znajdziesz na klawiaturze ekranowej, a przy klawiszach, które piszesz pewnie, podpowiedź sama znika.
+**Nasz komentarz:** Pełna zgoda, to sedno pisania bezwzrokowego. Jeśli wzrok i tak ucieka w dół: zwolnij zamiast patrzeć, odnajdź rząd podstawowy po wypustkach, a w razie potrzeby przykryj na jakiś czas dłonie ściereczką. W Keypacerze następny klawisz znajdziesz na klawiaturze ekranowej, a przy klawiszach, które piszesz pewnie, podpowiedź sama znika. Więcej ćwiczeń na odruch patrzenia w dół znajdziesz w artykule [Jak nauczyć się pisać bez patrzenia na klawiaturę](/pl/blog/pisanie-bez-patrzenia-na-klawiature/).
 
 ## 6. Trzymaj palce w rzędzie podstawowym
 

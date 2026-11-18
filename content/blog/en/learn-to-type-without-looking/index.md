@@ -1,14 +1,13 @@
 ---
 title: Learn to type without looking at the keyboard
 description: How to break the habit of looking down while you type, with concrete exercises for the keys that keep pulling your eyes to the keyboard.
-updated: 2026-10-28
+updated: 2026-11-18
 topic: tips
 cover: cover.jpg
 coverAlt: A keyboard with blank keys, only F and J highlighted with their bumps, and a closed eye above it
 translation: blind-tippen-lernen
 translatedFrom: de
 order: 9
-draft: true
 ---
 
 Touch typing means your eyes stay on the screen while your fingers find the keys. That is the real core of the technique. If you type with ten fingers but glance down every few words, you lose much of the benefit.

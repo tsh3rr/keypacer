@@ -48,7 +48,7 @@ Più cose fai con la tastiera, meno le mani saltano avanti e indietro tra tastie
 
 Ali lo dice chiaramente: all’inizio si va più piano, ma ne vale comunque la pena.
 
-**Il nostro parere:** Pienamente d’accordo, è il cuore della dattilografia a dieci dita. Se lo sguardo vuole comunque scendere: rallenta invece di guardare, ritrova la riga base grazie ai rilievi e, se serve, copri le mani con un panno per un po’. In Keypacer trovi il tasto successivo sulla tastiera a schermo, e l’aiuto sparisce da solo per i tasti che digiti con sicurezza.
+**Il nostro parere:** Pienamente d’accordo, è il cuore della dattilografia a dieci dita. Se lo sguardo vuole comunque scendere: rallenta invece di guardare, ritrova la riga base grazie ai rilievi e, se serve, copri le mani con un panno per un po’. In Keypacer trovi il tasto successivo sulla tastiera a schermo, e l’aiuto sparisce da solo per i tasti che digiti con sicurezza. Altri esercizi contro lo sguardo verso il basso li trovi in [Imparare a scrivere senza guardare la tastiera](/it/blog/scrivere-senza-guardare-la-tastiera/).
 
 ## 6. Tieni le dita sulla riga base
 

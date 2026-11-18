@@ -48,7 +48,7 @@ Plus tu en fais au clavier, moins tes mains font d’allers-retours entre le cla
 
 Ali le dit clairement : au début, ça te ralentit, et ça vaut quand même le coup.
 
-**Notre avis :** Entièrement d’accord, c’est le cœur de la frappe à dix doigts. Si ton regard veut quand même descendre : ralentis au lieu de regarder, retrouve la rangée de repos grâce aux petits ergots et, si besoin, couvre tes mains avec un torchon pendant un moment. Dans Keypacer, tu trouves la touche suivante sur le clavier à l’écran, et l’aide disparaît toute seule pour les touches que tu tapes avec assurance.
+**Notre avis :** Entièrement d’accord, c’est le cœur de la frappe à dix doigts. Si ton regard veut quand même descendre : ralentis au lieu de regarder, retrouve la rangée de repos grâce aux petits ergots et, si besoin, couvre tes mains avec un torchon pendant un moment. Dans Keypacer, tu trouves la touche suivante sur le clavier à l’écran, et l’aide disparaît toute seule pour les touches que tu tapes avec assurance. Tu trouveras d’autres exercices contre le regard vers le bas dans [Apprendre à taper sans regarder le clavier](/fr/blog/apprendre-a-taper-sans-regarder-le-clavier/).
 
 ## 6. Garder les doigts sur la rangée de repos
 

@@ -48,7 +48,7 @@ Cuanto más haces con el teclado, menos saltan tus manos entre el teclado y el r
 
 Ali dice claramente que al principio vas más despacio, y que aun así merece la pena.
 
-**Nuestra opinión:** Totalmente de acuerdo, es la esencia de la mecanografía. Si la mirada se te va hacia abajo: ve más despacio en lugar de mirar, busca la fila guía con las marcas en relieve y, si hace falta, tápate las manos con un paño durante un tiempo. En Keypacer encuentras la siguiente tecla en el teclado en pantalla, y la ayuda desaparece sola en las teclas que ya escribes con seguridad.
+**Nuestra opinión:** Totalmente de acuerdo, es la esencia de la mecanografía. Si la mirada se te va hacia abajo: ve más despacio en lugar de mirar, busca la fila guía con las marcas en relieve y, si hace falta, tápate las manos con un paño durante un tiempo. En Keypacer encuentras la siguiente tecla en el teclado en pantalla, y la ayuda desaparece sola en las teclas que ya escribes con seguridad. Encontrarás más ejercicios contra la mirada hacia abajo en [Aprender a escribir sin mirar el teclado](/es/blog/aprender-a-escribir-sin-mirar-el-teclado/).
 
 ## 6. Deja los dedos en la fila guía
 

@@ -48,7 +48,7 @@ Quanto mais você faz pelo teclado, menos as mãos pulam entre teclado e mouse. 
 
 Ali diz com todas as letras que no começo você fica mais devagar, e que mesmo assim vale a pena.
 
-**Nossa opinião:** Concordamos totalmente, essa é a essência da digitação com os dez dedos. Se o olhar ainda quiser descer: vá mais devagar em vez de olhar, encontre a fileira base pelos relevos das teclas e, se precisar, cubra as mãos com um pano por um tempo. No Keypacer você encontra a próxima tecla no teclado na tela, e a ajuda some sozinha nas teclas que você já digita com segurança.
+**Nossa opinião:** Concordamos totalmente, essa é a essência da digitação com os dez dedos. Se o olhar ainda quiser descer: vá mais devagar em vez de olhar, encontre a fileira base pelos relevos das teclas e, se precisar, cubra as mãos com um pano por um tempo. No Keypacer você encontra a próxima tecla no teclado na tela, e a ajuda some sozinha nas teclas que você já digita com segurança. Mais exercícios contra a vontade de olhar para baixo estão em [Como aprender a digitar sem olhar para o teclado](/pt-br/blog/digitar-sem-olhar-para-o-teclado/).
 
 ## 6. Mantenha os dedos na fileira base
 

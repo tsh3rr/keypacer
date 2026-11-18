@@ -1,14 +1,13 @@
 ---
 title: Belajar mengetik tanpa melihat keyboard
 description: Cara menghilangkan kebiasaan melirik ke bawah saat mengetik, dengan latihan konkret untuk tombol-tombol yang terus menarik matamu ke keyboard.
-updated: 2026-10-28
+updated: 2026-11-18
 topic: tips
 cover: cover.jpg
 coverAlt: Keyboard dengan tombol kosong, hanya F dan J yang disorot dengan tonjolannya, dan mata tertutup di atasnya
 translation: blind-tippen-lernen
 translatedFrom: de
 order: 9
-draft: true
 ---
 
 Mengetik 10 jari berarti matamu tetap di layar sementara jari-jarimu menemukan tombol. Itulah inti sebenarnya dari teknik ini. Jika kamu mengetik dengan sepuluh jari tetapi melirik ke bawah setiap beberapa kata, kamu kehilangan sebagian besar manfaatnya.

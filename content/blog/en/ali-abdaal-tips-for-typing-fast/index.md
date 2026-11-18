@@ -48,7 +48,7 @@ The more you do from the keyboard, the less your hands jump back and forth betwe
 
 Ali is clear that this makes you slower at first, and that it is worth it anyway.
 
-**Our take:** Fully agreed, this is the heart of touch typing. When your eyes still want to drop: slow down instead of looking, find the home row by the bumps on the keys, and if you need to, cover your hands with a cloth for a while. In Keypacer you find the next key on the on-screen keyboard, and the guide fades out by itself for keys you type reliably.
+**Our take:** Fully agreed, this is the heart of touch typing. When your eyes still want to drop: slow down instead of looking, find the home row by the bumps on the keys, and if you need to, cover your hands with a cloth for a while. In Keypacer you find the next key on the on-screen keyboard, and the guide fades out by itself for keys you type reliably. You’ll find more exercises against glancing down in [Learn to type without looking at the keyboard](/blog/learn-to-type-without-looking/).
 
 ## 6. Keep your fingers on the home row
 

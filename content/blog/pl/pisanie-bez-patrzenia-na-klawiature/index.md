@@ -1,14 +1,13 @@
 ---
 title: Jak nauczyć się pisać bez patrzenia na klawiaturę
 description: Jak oduczyć się patrzenia na klawiaturę przy pisaniu, z konkretnymi ćwiczeniami na klawisze, przy których wzrok ucieka w dół.
-updated: 2026-10-28
+updated: 2026-11-18
 topic: tips
 cover: cover.jpg
 coverAlt: Klawiatura z klawiszami bez oznaczeń, tylko F i J wyróżnione z wypustkami, nad nią zamknięte oko
 translation: blind-tippen-lernen
 translatedFrom: de
 order: 9
-draft: true
 ---
 
 Pisanie bezwzrokowe oznacza, że oczy zostają na ekranie, a palce same znajdują klawisze. To jest sedno pisania dziesięcioma palcami. Kto pisze dziesięcioma palcami, ale co kilka słów zerka w dół, traci dużą część korzyści.

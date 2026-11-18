@@ -1,14 +1,13 @@
 ---
 title: Imparare a scrivere senza guardare la tastiera
 description: Come perdere l’abitudine di guardare la tastiera mentre scrivi, con esercizi concreti per i tasti che ti fanno abbassare lo sguardo.
-updated: 2026-10-28
+updated: 2026-11-18
 topic: tips
 cover: cover.jpg
 coverAlt: Una tastiera con i tasti senza lettere, solo F e J evidenziati con i loro rilievi, e sopra un occhio chiuso
 translation: blind-tippen-lernen
 translatedFrom: de
 order: 9
-draft: true
 ---
 
 Scrivere senza guardare significa che gli occhi restano sullo schermo mentre le dita trovano i tasti. È il vero cuore della scrittura a dieci dita. Chi usa dieci dita ma abbassa lo sguardo ogni tre parole perde gran parte del vantaggio.

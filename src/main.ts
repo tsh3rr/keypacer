@@ -5,7 +5,7 @@ import { flag, withFlag } from './flags';
 import { DEFAULT_LANGUAGE, availableLanguages, getCorpus, guessLanguage, loadCorpus } from './corpus';
 import { clearCurriculum, hasAnyCurriculum, loadCurriculum, saveCurriculum } from './curriculum-store';
 import {
-  CAPITALS, DEFAULT_DRILL_PARAMS, afterDrill, blockingKeys, drillFeedback, drillResult, initialCurriculum, isNewSession, meetsBar, modelOptions, needsShift,
+  CAPITALS, DEFAULT_DRILL_PARAMS, activeHotKeys, afterDrill, blockingKeys, drillFeedback, drillResult, initialCurriculum, isNewSession, meetsBar, modelOptions, needsShift,
   nextDrill, nextKind, sentencesReady, tierWpm, unlockSteps, unlockTargetMs,
   type CurriculumChange, type CurriculumState, type Drill, type ItemChange,
 } from './drill';
@@ -705,6 +705,8 @@ async function finishDrill(): Promise<void> {
         improved: improved.map(itemLabel), slipped: slipped.map(itemLabel), next: next && stepName(next),
         nextKey: next?.kind === 'focus' && curriculum?.focusKey ? keyCap(curriculum.focusKey) : null,
         misses, gate: counted ? gate : null, maxError: DEFAULT_DRILL_PARAMS.unlockMaxErrorRate,
+        // Only once the curriculum took this drill in, so the keys match what the next drill leans on.
+        hotNext: counted && curriculum ? activeHotKeys(curriculum).filter((h) => h.heat >= 0.5).map((h) => keyCap(h.key)) : [],
       }, () => {
         if (!finishing && breakEndsAt === null) startDrill().catch((err) => console.error('Failed to start drill', err));
       });

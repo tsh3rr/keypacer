@@ -282,6 +282,7 @@ export const ptPT: Messages = {
   'result.preciseLead': 'Mais precisão.',
   'result.precise': '{err} das tuas teclas saíram erradas à primeira. As novas teclas só chegam quando todas estiverem abaixo de {max} de erros, cerca de {need} certas, por isso abranda um pouco.',
   'result.misses': 'Erros neste exercício',
+  'result.hotNext': 'Aparecem mais no próximo exercício',
   'result.next': 'A seguir: {name}',
   'result.nextOn': 'A seguir: {name} com {key}',
   'result.nextDrill': 'Exercício seguinte',

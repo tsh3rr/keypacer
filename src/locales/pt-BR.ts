@@ -282,6 +282,7 @@ export const ptBR: Messages = {
   'result.preciseLead': 'Mais precisão.',
   'result.precise': '{err} das suas teclas saíram erradas na primeira tentativa. Novas teclas só chegam quando todas estiverem abaixo de {max} de erros, cerca de {need} certas, então vá um pouco mais devagar.',
   'result.misses': 'Erros neste exercício',
+  'result.hotNext': 'Aparecem mais no próximo exercício',
   'result.next': 'A seguir: {name}',
   'result.nextOn': 'A seguir: {name} com {key}',
   'result.nextDrill': 'Próximo exercício',

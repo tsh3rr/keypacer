@@ -280,6 +280,7 @@ export const es: Messages = {
   'result.preciseLead': 'Más precisión.',
   'result.precise': 'El {err} de tus pulsaciones falló al primer intento. Las teclas nuevas solo llegan cuando cada tecla está por debajo del {max} de errores, es decir, un {need} de aciertos. Baja un poco el ritmo.',
   'result.misses': 'Fallos en este ejercicio',
+  'result.hotNext': 'Saldrán más en el próximo ejercicio',
   'result.next': 'Luego: {name}',
   'result.nextOn': 'Luego: {name} con {key}',
   'result.nextDrill': 'Siguiente ejercicio',

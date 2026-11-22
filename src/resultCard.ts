@@ -35,6 +35,8 @@ export interface ResultData {
   gate?: GateData | null;
   /** Highest error rate per key the unlock bar allows, 0–1; a drill with more errors gets a hint to slow down. */
   maxError?: number;
+  /** Keys missed too often lately, which the next drill brings up more often. */
+  hotNext?: string[];
 }
 
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, text?: string) => {
@@ -140,7 +142,8 @@ function errorBox(d: ResultData): HTMLElement | null {
   const misses = d.misses ?? [];
   const gate = d.gate && !gateEmpty(d.gate) ? d.gate : null;
   const tooMany = d.maxError !== undefined && 1 - d.accuracy > d.maxError;
-  if (!tooMany && !misses.length && !gate) return null;
+  const hot = d.hotNext ?? [];
+  if (!tooMany && !misses.length && !gate && !hot.length) return null;
   const box = el('div', 'rc-why');
   if (tooMany) {
     const p = el('p', 'rc-precise');
@@ -158,6 +161,14 @@ function errorBox(d: ResultData): HTMLElement | null {
       c.append(el('kbd', '', m.label), el('small', '', `×${m.count}`));
       list.append(c);
     }
+    row.append(list);
+    box.append(row);
+  }
+  if (hot.length) {
+    const row = el('div', 'rc-why-row rc-hot');
+    row.append(el('span', 'rc-why-label', t('result.hotNext')));
+    const list = el('span', 'gate-keys');
+    for (const k of hot) list.append(el('kbd', 'rc-hot-key', k));
     row.append(list);
     box.append(row);
   }

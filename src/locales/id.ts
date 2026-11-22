@@ -282,6 +282,7 @@ export const id: Messages = {
   'result.preciseLead': 'Lebih tepat lagi.',
   'result.precise': '{err} ketukanmu salah pada percobaan pertama. Tombol baru baru datang setelah setiap tombol di bawah {max} kesalahan, sekitar {need} benar, jadi pelan-pelan sedikit.',
   'result.misses': 'Salah di latihan ini',
+  'result.hotNext': 'Lebih sering muncul di latihan berikutnya',
   'result.next': 'Berikutnya: {name}',
   'result.nextOn': 'Berikutnya: {name} untuk {key}',
   'result.nextDrill': 'Latihan berikutnya',

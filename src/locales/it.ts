@@ -280,6 +280,7 @@ export const it: Messages = {
   'result.preciseLead': 'Più precisione.',
   'result.precise': 'Il {err} dei tuoi tasti era sbagliato al primo tentativo. I nuovi tasti arrivano solo quando ogni tasto resta sotto il {max} di errori, cioè circa il {need} giusti. Rallenta un po’.',
   'result.misses': 'Errori in questo esercizio',
+  'result.hotNext': 'Più frequenti nel prossimo esercizio',
   'result.next': 'Poi: {name}',
   'result.nextOn': 'Poi: {name} su {key}',
   'result.nextDrill': 'Prossimo esercizio',

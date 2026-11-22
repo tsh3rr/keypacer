@@ -279,6 +279,7 @@ export const de: Messages = {
   'result.preciseLead': 'Präziser werden.',
   'result.precise': '{err} deiner Anschläge waren beim ersten Versuch falsch. Neue Tasten kommen erst, wenn jede Taste unter {max} Fehler hat, also etwa {need} richtig. Tipp lieber etwas langsamer.',
   'result.misses': 'Falsch in dieser Übung',
+  'result.hotNext': 'Kommt in der nächsten Übung öfter dran',
   'result.next': 'Als Nächstes: {name}',
   'result.nextOn': 'Als Nächstes: {name} auf {key}',
   'result.nextDrill': 'Nächste Übung',

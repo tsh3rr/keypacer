@@ -283,6 +283,7 @@ export const pl: Messages = {
   'result.preciseLead': 'Więcej precyzji.',
   'result.precise': '{err} uderzeń było błędnych przy pierwszej próbie. Nowe klawisze pojawiają się dopiero, gdy każdy klawisz ma poniżej {max} błędów, czyli ok. {need} poprawnych. Zwolnij trochę.',
   'result.misses': 'Błędy w tym ćwiczeniu',
+  'result.hotNext': 'Częściej w następnym ćwiczeniu',
   'result.next': 'Dalej: {name}',
   'result.nextOn': 'Dalej: {name} z {key}',
   'result.nextDrill': 'Następne ćwiczenie',

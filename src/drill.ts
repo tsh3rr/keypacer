@@ -110,6 +110,22 @@ export interface DrillParams {
   /** Sentence drills need this many unlocked letters and this many sentences typeable with them. */
   sentenceMinLetters: number;
   sentenceMinCount: number;
+  /**
+   * Recent misses: a key typed wrong more often than the unlock bar allows in a drill (and at least
+   * `hotMinErrors` times) turns "hot", so the very next drills lean on it before the slower weakness
+   * model has caught up. Its heat starts at 1 and falls by `hotDecay` per drill, faster when typed
+   * cleanly (at least `hotCleanAttempts` tries within the bar); below `hotMinHeat` it is dropped.
+   */
+  hotMinErrors: number;
+  hotDecay: number;
+  hotCleanAttempts: number;
+  hotMinHeat: number;
+  /** At most this many hot keys at once, the hottest first. */
+  hotMax: number;
+  /** Need added to a hot key (half to its bigrams), times its heat. */
+  hotBoost: number;
+  /** Share of a drill's words that contain a hot key at heat 1 (scaled by heat). */
+  hotCoverage: number;
 }
 
 export const DEFAULT_DRILL_PARAMS: Readonly<DrillParams> = Object.freeze({
@@ -164,6 +180,13 @@ export const DEFAULT_DRILL_PARAMS: Readonly<DrillParams> = Object.freeze({
   sessionGapMinutes: 30,
   sentenceMinLetters: 20,
   sentenceMinCount: 10,
+  hotMinErrors: 2,
+  hotDecay: 0.5,
+  hotCleanAttempts: 5,
+  hotMinHeat: 0.2,
+  hotMax: 3,
+  hotBoost: 0.6,
+  hotCoverage: 0.35,
 });
 
 /** Speed tiers in WPM. Tier n (1-based) sets the per-key latency target T = 12,000 / WPM ms. */
@@ -211,7 +234,21 @@ export interface CurriculumState {
   coreDrills: number;
   /** Words of the last few drills, newest last. */
   recentWords: string[][];
+  /**
+   * Keys missed too often in the last drills, hottest first, with a heat of 0–1 that fades drill by drill.
+   * The next drills lean on them right away. Missing in states saved before it existed.
+   */
+  hotKeys?: HotKey[];
 }
+
+/** A key recently missed more often than the unlock bar allows; see `DrillParams.hotMinErrors`. */
+export interface HotKey {
+  key: string;
+  heat: number;
+}
+
+/** First tries and misses per expected character in one drill. */
+export type KeyTally = Record<string, { attempts: number; errors: number }>;
 
 /**
  * - warmup: opens a session; items due for review, in easy common words. Moves nothing.
@@ -239,6 +276,8 @@ export interface DrillResult {
   wpm: number;
   /** Share of positions typed right first time. */
   accuracy: number;
+  /** First tries and misses per key in this drill, for the hot keys. Not stored in the curriculum. */
+  keys?: KeyTally;
 }
 
 /** Something the learner should hear about after a drill. */
@@ -435,6 +474,7 @@ export function initialCurriculum(
     coreHistory: [],
     coreDrills: 0,
     recentWords: [],
+    hotKeys: [],
   };
   if (!model || model.baseline.attempts < 100) return state;
 
@@ -489,6 +529,12 @@ export function eligibleWords(corpus: Corpus, allowed: ReadonlySet<string>): str
   return out;
 }
 
+/** Hot keys that are still open (not locked again by a reset), hottest first. */
+export function activeHotKeys(state: CurriculumState): HotKey[] {
+  const open = openChars(state);
+  return (state.hotKeys ?? []).filter((h) => open.has(h.key));
+}
+
 /** The characters of the focus step, if any. */
 function focusChars(state: CurriculumState): Set<string> {
   return new Set(state.focusKey === null ? [] : stepChars(state.focusKey, state.unlocked.filter(isLetter), state.layout));
@@ -502,11 +548,16 @@ function focusChars(state: CurriculumState): Set<string> {
 export function adjustedItems(model: WeaknessModel, state: CurriculumState, p: DrillParams = DEFAULT_DRILL_PARAMS): WeaknessItem[] {
   const open = openChars(state).add(' ');
   const focus = focusChars(state);
+  const hot = new Map(activeHotKeys(state).map((h) => [h.key, h.heat]));
   return model.ranked
     .map((it) => {
       if (![...it.item].every((c) => open.has(c))) return { ...it, priority: 0 };
-      if (![...it.item].some((c) => focus.has(c))) return it;
-      const need = it.need + p.focusBoost;
+      const chars = [...it.item];
+      // A recently missed key gets its boost in full, its bigrams half of it.
+      const heat = Math.max(0, ...chars.map((c) => hot.get(c) ?? 0));
+      const extra = (chars.some((c) => focus.has(c)) ? p.focusBoost : 0) + heat * p.hotBoost * (it.kind === 'key' ? 1 : 0.5);
+      if (extra === 0) return it;
+      const need = it.need + extra;
       return { ...it, need, priority: need * (0.5 + 0.5 * it.frequency) };
     })
     .sort((a, b) => b.priority - a.priority || (a.item < b.item ? -1 : 1));
@@ -643,6 +694,26 @@ export function nextDrill(
     if (worst < 0) break;
     release(used, picked[worst].word);
     picked[worst] = draw(withTarget);
+  }
+
+  // Recent misses: each hot key gets its own share of words, so one that slipped last drill comes up
+  // often in this one even while the focus key and other targets fill the general coverage.
+  if (kind !== 'warmup') {
+    const hot = activeHotKeys(state).filter((h) => allowed.has(h.key));
+    const hasHot = (w: string) => hot.some((h) => w.includes(h.key));
+    for (const h of hot) {
+      const pool = candidates.filter((c) => c.word.includes(h.key));
+      const want = Math.ceil(p.hotCoverage * h.heat * picked.length);
+      for (let swaps = 0; swaps < p.maxSwaps && pool.length > 0; swaps++) {
+        if (picked.filter((c) => c.word.includes(h.key)).length >= want) break;
+        // Keep words with a target or another hot key where possible.
+        let slot = lowestWithout(picked, (w) => hits(w) || hasHot(w));
+        if (slot < 0) slot = lowestWithout(picked, hasHot);
+        if (slot < 0) break;
+        release(used, picked[slot].word);
+        picked[slot] = draw(pool);
+      }
+    }
   }
 
   // Confusions: for a target key often typed as another unlocked key, add a word with that key too.
@@ -869,21 +940,25 @@ function chooseTargets(
   ].slice(0, 2);
   const focus = focusKeys.length ? focusKeys : [pool.find((it) => it.kind === 'key')?.item].filter((k): k is string => k !== undefined);
   if (kind === 'focus' && focus.length > 0) {
-    // The focus keys and their weakest bigrams.
+    // The focus keys and their weakest bigrams, plus the hottest recent miss.
+    const hot = hotTargets(state).filter((k) => !focus.includes(k)).slice(0, 1);
     const bigrams = pool
       .filter((it) => it.kind === 'bigram' && focus.some((f) => it.item.includes(f)))
-      .slice(0, p.targets - focus.length);
-    return [...focus, ...bigrams.map((it) => it.item)];
+      .slice(0, p.targets - focus.length - hot.length);
+    return [...focus, ...hot, ...bigrams.map((it) => it.item)];
   }
   const picked = pickFocusItems(
     { ranked: pool } as unknown as WeaknessModel,
     { count: p.targets, temperature: p.temperature, rand },
   ).map((it) => it.item);
-  if (focusKeys.length && !picked.includes(focusKeys[0])) {
-    picked.pop();
-    picked.unshift(focusKeys[0]);
-  }
-  return picked;
+  // The focus key leads, then the keys missed in the last drills, ahead of whatever the sampling found.
+  const lead = [...focusKeys.slice(0, 1), ...hotTargets(state)].filter((k, i, all) => all.indexOf(k) === i);
+  return [...lead, ...picked.filter((k) => !lead.includes(k))].slice(0, Math.max(p.targets, lead.length));
+}
+
+/** Hot keys hot enough to be drill targets, hottest first: at most two, so the drill keeps some variety. */
+function hotTargets(state: CurriculumState): string[] {
+  return activeHotKeys(state).filter((h) => h.heat >= 0.5).slice(0, 2).map((h) => h.key);
 }
 
 /**
@@ -925,17 +1000,56 @@ export function spaceOut(words: readonly string[], targets: readonly string[], s
 
 // --- After a drill ---
 
-/** Speed and first-attempt accuracy of one typed drill. */
+/** Speed, first-attempt accuracy and per-key misses of one typed drill. */
 export function drillResult(events: readonly KeystrokeEvent[]): DrillResult {
   const attempts = firstAttempts(events, Infinity);
   const errors = attempts.filter((a) => a.error).length;
+  const keys: KeyTally = {};
+  for (const a of attempts) {
+    const k = (keys[a.expected] ??= { attempts: 0, errors: 0 });
+    k.attempts++;
+    if (a.error) k.errors++;
+  }
   const correct = events.filter((e) => e.correct);
   const span = events.length ? Math.max(...correct.map((e) => e.timestamp)) - Math.min(...events.map((e) => e.timestamp)) : 0;
   return {
     // The first key starts the clock, so it is not counted as typed within the span.
     wpm: span > 0 ? (Math.max(correct.length - 1, 0) / 5) / (span / 60_000) : 0,
     accuracy: attempts.length ? 1 - errors / attempts.length : 1,
+    keys,
   };
+}
+
+/**
+ * The hot keys after a drill: the old ones fade by `hotDecay` (twice over when typed cleanly
+ * this time), and every key missed more often than the unlock bar allows turns hot again.
+ * `overBar` names keys whose overall error rate is already over the bar: for them one miss is enough.
+ */
+export function updateHotKeys(
+  hot: readonly HotKey[],
+  keys: KeyTally,
+  p: DrillParams = DEFAULT_DRILL_PARAMS,
+  overBar: ReadonlySet<string> = new Set(),
+): HotKey[] {
+  const heat = new Map<string, number>();
+  for (const h of hot) {
+    const k = keys[h.key];
+    const clean = k !== undefined && k.attempts >= p.hotCleanAttempts && k.errors / k.attempts <= p.unlockMaxErrorRate;
+    heat.set(h.key, h.heat * p.hotDecay * (clean ? p.hotDecay : 1));
+  }
+  const misses: { key: string; rate: number }[] = [];
+  for (const [key, k] of Object.entries(keys)) {
+    if (key === ' ' || k.errors === 0) continue;
+    if (!overBar.has(key) && (k.errors < p.hotMinErrors || k.errors / k.attempts <= p.unlockMaxErrorRate)) continue;
+    misses.push({ key, rate: k.errors / k.attempts });
+    heat.set(key, 1);
+  }
+  const rate = new Map(misses.map((m) => [m.key, m.rate]));
+  return [...heat]
+    .filter(([, h]) => h >= p.hotMinHeat)
+    .sort((a, b) => b[1] - a[1] || (rate.get(b[0]) ?? 0) - (rate.get(a[0]) ?? 0) || (a[0] < b[0] ? -1 : 1))
+    .slice(0, p.hotMax)
+    .map(([key, h]) => ({ key, heat: Math.round(h * 1000) / 1000 }));
 }
 
 /**
@@ -953,8 +1067,12 @@ export function afterDrill(
   const s: CurriculumState = structuredClone(state);
   const changes: CurriculumChange[] = [];
   s.recentWords = [...s.recentWords, drill.baseWords ?? drill.words].slice(-p.recentDrills);
-  // A warm-up is typed cold, so it moves neither pace nor recovery.
+  // A warm-up is typed cold, so it moves neither pace, recovery nor the hot keys.
   if (drill.kind === 'warmup') return { state: s, changes };
+  if (result.keys) {
+    const overBar = new Set(model.keys.filter((k) => k.errorRate > p.unlockMaxErrorRate).map((k) => k.item));
+    s.hotKeys = updateHotKeys(s.hotKeys ?? [], result.keys, p, overBar);
+  }
 
   // Pace: up 5% after a clean drill that reached it, down after a sloppy one, and never far above
   // the usual speed, so accuracy alone cannot compound it out of reach.
@@ -980,7 +1098,7 @@ export function afterDrill(
   // Unlocks and tiers only move on core drills.
   if (drill.kind !== 'core') return { state: s, changes };
   s.coreDrills++;
-  s.coreHistory = [...s.coreHistory, result].slice(-p.tierWindow);
+  s.coreHistory = [...s.coreHistory, { wpm: result.wpm, accuracy: result.accuracy }].slice(-p.tierWindow);
 
   if (s.focusKey !== null && meetsBar(stepStats(model, s.focusKey, s), s, p)) {
     changes.push({ type: 'focus-met', key: s.focusKey });

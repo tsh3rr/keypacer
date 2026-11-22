@@ -7,7 +7,7 @@ import {
   CAPITALS, DEFAULT_DRILL_PARAMS, DEFAULT_PUNCTUATION, DIGIT_ORDER, afterDrill, barGap, decorate, drillFeedback, drillResult,
   eligibleWords, initialCurriculum, isNewSession, modelOptions, needsShift, nextDrill, nextKind, openChars, pseudoShare,
   reviewItems, seededRandom, sentencePool, sentencesReady, spaceOut, stepChars, stepStats, tierTargetMs, unlockOrder, unlockSteps,
-  type CurriculumState,
+  updateHotKeys, type CurriculumState,
 } from './drill';
 import { TrigramModel } from './pseudowords';
 import { TypingSession } from './session';
@@ -168,6 +168,115 @@ describe('nextDrill', () => {
     let drilled = '';
     for (let seed = 1; seed <= 5; seed++) drilled += nextDrill(m, all, en, 'core', seed).text + ' ';
     expect(share(drilled)).toBeGreaterThanOrEqual(2 * natural);
+  });
+});
+
+describe('recent misses (hot keys)', () => {
+  const tally = (attempts: number, errors: number) => ({ attempts, errors });
+
+  it('turns a key hot when a drill misses it more often than the unlock bar allows', () => {
+    // 3 of 20 wrong is 15%, over the 4.5% bar; one slip alone, or 2 of 60, is not enough.
+    const hot = updateHotKeys([], { l: tally(20, 3), k: tally(5, 1), e: tally(60, 2), ' ': tally(30, 5) });
+    expect(hot).toEqual([{ key: 'l', heat: 1 }]);
+  });
+
+  it('fades a hot key drill by drill, faster when it is typed cleanly, and drops it', () => {
+    const start = [{ key: 'l', heat: 1 }, { key: 'k', heat: 1 }];
+    const next = updateHotKeys(start, { l: tally(20, 0), k: tally(2, 0) });
+    expect(next).toEqual([{ key: 'k', heat: 0.5 }, { key: 'l', heat: 0.25 }]);
+    expect(updateHotKeys(next, { l: tally(20, 0), k: tally(20, 0) })).toEqual([]);
+    // Missed again: back to full heat.
+    expect(updateHotKeys(next, { l: tally(10, 3) })).toEqual([{ key: 'l', heat: 1 }, { key: 'k', heat: 0.25 }]);
+  });
+
+  it('needs just one miss for a key whose overall error rate is already over the bar', () => {
+    expect(updateHotKeys([], { l: tally(20, 1), g: tally(20, 1) }, DEFAULT_DRILL_PARAMS, new Set(['l', 'e']))).toEqual([{ key: 'l', heat: 1 }]);
+  });
+
+  it('keeps at most three, the worst misses first', () => {
+    const hot = updateHotKeys([], { a: tally(10, 2), b: tally(10, 5), c: tally(10, 3), d: tally(10, 4) });
+    expect(hot.map((h) => h.key)).toEqual(['b', 'd', 'c']);
+  });
+
+  it('records hot keys after every drill but a warm-up, and keeps the tally out of the stored history', () => {
+    const state = initialCurriculum(en, CTX);
+    const m = buildWeaknessModel([], CTX, { now: NOW, ...modelOptions(state, en) });
+    const result = { wpm: 20, accuracy: 0.9, keys: { n: tally(12, 3) } };
+    const core = afterDrill(m, state, en, { kind: 'core', words: ['nine'] }, result).state;
+    expect(core.hotKeys).toEqual([{ key: 'n', heat: 1 }]);
+    expect(core.coreHistory.at(-1)).toEqual({ wpm: 20, accuracy: 0.9 });
+    expect(afterDrill(m, state, en, { kind: 'focus', words: ['nine'] }, result).state.hotKeys).toEqual([{ key: 'n', heat: 1 }]);
+    expect(afterDrill(m, state, en, { kind: 'warmup', words: ['nine'] }, result).state.hotKeys).toEqual([]);
+  });
+
+  it('counts first tries per key in drillResult', () => {
+    const events = typeText('lal', 'l', 'k');
+    expect(drillResult(events).keys).toEqual({ l: tally(2, 2), a: tally(1, 0) });
+  });
+
+  // An experienced learner: every letter open and thousands of clean keystrokes behind them.
+  const all: CurriculumState = { ...initialCurriculum(en, CTX), unlocked: unlockOrder(en), paceWpm: 40 };
+  const history = [1, 2, 3, 4, 5, 6, 7, 8].flatMap((d) => typeText(en.words.slice(d * 400, d * 400 + 400).join(' '), '', '', NOW - d * DAY));
+
+  /** Types `text`, missing every third `weak`. */
+  function typeSloppy(text: string, weak: string, start: number): KeystrokeEvent[] {
+    const s = new TypingSession(text, CTX, `x${start}`);
+    const out: KeystrokeEvent[] = [];
+    let t = start;
+    let n = 0;
+    for (const c of text) {
+      if (c === weak && n++ % 3 === 0) out.push(s.press('q', (t += 200), null)!);
+      out.push(s.press(c, (t += 200), null)!);
+    }
+    return out;
+  }
+
+  it('makes the very next drill lean on a key that one drill got wrong', () => {
+    const weak = 'u';
+    const before = buildWeaknessModel(history, CTX, { now: NOW - 3600_000, ...modelOptions(all, en) });
+    const drill = nextDrill(before, all, en, 'core', 11);
+    const typed = typeSloppy(drill.text, weak, NOW - 3600_000);
+    const result = drillResult(typed);
+    expect(result.keys![weak].errors / result.keys![weak].attempts).toBeGreaterThan(DEFAULT_DRILL_PARAMS.unlockMaxErrorRate);
+
+    const after = buildWeaknessModel([...history, ...typed], CTX, { now: NOW, ...modelOptions(all, en) });
+    const { state } = afterDrill(after, all, en, drill, result);
+    expect(state.hotKeys?.map((h) => h.key)).toContain(weak);
+
+    const share = (s: CurriculumState) => {
+      let words = 0;
+      let hits = 0;
+      for (let seed = 1; seed <= 6; seed++) {
+        const d = nextDrill(after, s, en, 'core', seed);
+        expect(d.targets).toEqual(s.hotKeys?.length ? expect.arrayContaining([weak]) : expect.anything());
+        words += d.words.length;
+        hits += d.words.filter((w) => w.includes(weak)).length;
+      }
+      return hits / words;
+    };
+    // Same model, without and with the hot key: the long-term model alone barely notices one bad drill.
+    const without = share({ ...state, hotKeys: [] });
+    const withHot = share(state);
+    expect(withHot).toBeGreaterThanOrEqual(DEFAULT_DRILL_PARAMS.hotCoverage);
+    expect(withHot).toBeGreaterThan(1.5 * without);
+  });
+
+  it('fades back to normal after clean drills', () => {
+    let state: CurriculumState = { ...all, hotKeys: [{ key: 'u', heat: 1 }] };
+    const m = buildWeaknessModel(history, CTX, { now: NOW, ...modelOptions(all, en) });
+    for (let i = 0; i < 2; i++) {
+      const d = nextDrill(m, state, en, 'core', 20 + i);
+      state = afterDrill(m, state, en, d, drillResult(typeText(d.text, '', '', NOW + i * 120_000))).state;
+    }
+    expect(state.hotKeys).toEqual([]);
+  });
+
+  it('also brings a hot key into focus bursts and sentence drills', () => {
+    const s: CurriculumState = { ...all, focusKey: 'z', hotKeys: [{ key: 'u', heat: 1 }] };
+    const m = buildWeaknessModel(history, CTX, { now: NOW, ...modelOptions(s, en) });
+    expect(nextDrill(m, s, en, 'focus', 3).targets.slice(0, 2)).toEqual(['z', 'u']);
+    expect(nextDrill(m, s, en, 'core', 3).targets.slice(0, 2)).toEqual(['z', 'u']);
+    expect(nextDrill(m, s, en, 'sentence', 3).targets).toContain('u');
   });
 });
 

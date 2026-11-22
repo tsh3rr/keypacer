@@ -285,6 +285,7 @@ export const en = {
   'result.preciseLead': 'Be more precise.',
   'result.precise': '{err} of your keystrokes were wrong on the first try. New keys only come once every key is under {max} errors, about {need} right, so slow down a little.',
   'result.misses': 'Wrong in this drill',
+  'result.hotNext': 'Coming up more in the next drill',
   'result.next': 'Next: {name}',
   'result.nextOn': 'Next: {name} on {key}',
   'result.nextDrill': 'Next drill',

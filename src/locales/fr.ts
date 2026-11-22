@@ -282,6 +282,7 @@ export const fr: Messages = {
   'result.preciseLead': 'Plus de précision.',
   'result.precise': '{err} de tes frappes étaient fausses au premier essai. Une nouvelle touche ne vient que lorsque chaque touche est sous {max} d’erreurs, soit environ {need} de justes. Ralentis un peu.',
   'result.misses': 'Fautes dans cet exercice',
+  'result.hotNext': 'Plus présentes au prochain exercice',
   'result.next': 'Ensuite : {name}',
   'result.nextOn': 'Ensuite : {name} sur {key}',
   'result.nextDrill': 'Exercice suivant',

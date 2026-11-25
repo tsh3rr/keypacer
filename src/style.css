@@ -525,6 +525,11 @@ main { max-width: 960px; margin: 0 auto; padding: 20px 16px 40px; }
   position: fixed; top: 0; left: 0; width: 1px; height: 1px;
   opacity: 0; border: 0; padding: 0; resize: none; font-size: 16px;
 }
+/*
+ * One box per word (renderText in main.ts): lines break only at spaces, never inside a word
+ * at the cursor. A word longer than the line still wraps inside its box (break-word above).
+ */
+.text .word { display: inline-block; }
 .text .typed { color: var(--typed); }
 .text .current { position: relative; }
 .text .current::before {

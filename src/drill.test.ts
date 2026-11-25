@@ -812,3 +812,34 @@ describe('capitals, punctuation and digits', () => {
     expect(next.recentWords.at(-1)).toEqual(d.baseWords);
   });
 });
+
+describe('letters blocking the next unlock', () => {
+  // The learner's case: everything up to P is unlocked, K is the focus, O and Z sit just over the error bar.
+  const order = unlockOrder(de);
+  const unlocked = order.slice(0, order.indexOf('p'));
+  const base: CurriculumState = { ...initialCurriculum(de, { language: 'de', layout: 'qwertz-de' }), unlocked, focusKey: 'k', paceWpm: 23 };
+  const share = (m: WeaknessModel, letter: string) => {
+    let words = 0;
+    let hits = 0;
+    for (let seed = 1; seed <= 12; seed++) {
+      const d = nextDrill(m, base, de, 'core', seed);
+      words += d.baseWords.length;
+      hits += d.baseWords.filter((w) => w.includes(letter)).length;
+      expect(d.baseWords.some((w) => w.includes(letter)), `seed ${seed}`).toBe(true);
+    }
+    return hits / words;
+  };
+
+  it('puts every blocking letter into every core drill, rare ones like z included', () => {
+    expect(unlocked).toContain('z');
+    const m = fakeModel(unlocked.map((c) => key(c, c === 'o' || c === 'z' ? { errorRate: 0.048 } : {})));
+    expect(share(m, 'z')).toBeGreaterThanOrEqual(DEFAULT_DRILL_PARAMS.blockerCoverage);
+    expect(share(m, 'o')).toBeGreaterThanOrEqual(DEFAULT_DRILL_PARAMS.blockerCoverage);
+  });
+
+  it('leaves focus bursts and warm-ups to their own targets', () => {
+    const m = fakeModel(unlocked.map((c) => key(c, c === 'z' ? { errorRate: 0.048 } : {})));
+    const plain = fakeModel(unlocked.map((c) => key(c)));
+    expect(nextDrill(m, base, de, 'focus', 3).text).toBe(nextDrill(plain, base, de, 'focus', 3).text);
+  });
+});

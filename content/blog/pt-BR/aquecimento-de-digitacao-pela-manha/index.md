@@ -1,14 +1,13 @@
 ---
 title: Um aquecimento rápido de digitação pela manhã
 description: Por que alguns minutos de treino pela manhã ajudam você a manter a digitação com os dez dedos durante o dia todo.
-updated: 2026-10-28
+updated: 2026-11-25
 topic: method
 cover: cover.jpg
 coverAlt: Um sol nascendo atrás das teclas da fileira base, com F e J em destaque, ao lado de uma caneca fumegante
 translation: morgens-auffrischen
 translatedFrom: de
 order: 7
-draft: true
 ---
 
 Se você está mudando para a digitação com os dez dedos, provavelmente já passou por isso: no treino funciona, mas é só um e-mail precisar sair às pressas que os movimentos antigos voltam. Dois dedos, os olhos no teclado, e o método novo fica esquecido até o dia seguinte.

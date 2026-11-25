@@ -1,14 +1,13 @@
 ---
 title: Un petit échauffement de dactylo le matin
 description: Pourquoi quelques minutes d’entraînement le matin t’aident à garder la frappe à dix doigts tout au long de la journée.
-updated: 2026-10-28
+updated: 2026-11-25
 topic: method
 cover: cover.jpg
 coverAlt: Un soleil levant derrière les touches de la rangée de repos, F et J mises en avant, à côté d’une tasse fumante
 translation: morgens-auffrischen
 translatedFrom: de
 order: 7
-draft: true
 ---
 
 Si tu passes à la frappe à dix doigts, tu connais sans doute la scène : à l’entraînement, ça marche, mais dès qu’un mail doit partir vite, les vieux réflexes reviennent. Deux doigts, les yeux sur le clavier, et la nouvelle méthode est oubliée jusqu’au lendemain.

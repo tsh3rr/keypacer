@@ -1,14 +1,13 @@
 ---
 title: Un breve ripasso di dattilografia al mattino
 description: Perché qualche minuto di esercizio al mattino ti aiuta a mantenere la scrittura a dieci dita per tutta la giornata.
-updated: 2026-10-28
+updated: 2026-11-25
 topic: method
 cover: cover.jpg
 coverAlt: Un sole che sorge dietro i tasti della riga base, con F e J evidenziati, accanto a una tazza fumante
 translation: morgens-auffrischen
 translatedFrom: de
 order: 7
-draft: true
 ---
 
 Se stai passando alla scrittura a dieci dita, la situazione ti sarà familiare: durante l’esercizio funziona, ma appena un’email deve partire in fretta tornano i movimenti di sempre. Due dita, lo sguardo sulla tastiera, e il nuovo metodo è dimenticato fino al giorno dopo.

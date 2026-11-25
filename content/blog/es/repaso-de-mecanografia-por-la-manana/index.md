@@ -1,14 +1,13 @@
 ---
 title: Un repaso corto de mecanografía por la mañana
 description: Por qué unos minutos de práctica por la mañana te ayudan a mantener la mecanografía con diez dedos durante todo el día.
-updated: 2026-10-28
+updated: 2026-11-25
 topic: method
 cover: cover.jpg
 coverAlt: Un sol que sale detrás de las teclas de la fila guía, con la F y la J resaltadas, junto a una taza humeante
 translation: morgens-auffrischen
 translatedFrom: de
 order: 7
-draft: true
 ---
 
 Si estás pasando a escribir con diez dedos, seguro que te suena: en la práctica funciona, pero en cuanto tienes que mandar un correo con prisa vuelven los gestos de siempre. Dos dedos, la vista en el teclado, y el método nuevo queda olvidado hasta el día siguiente.

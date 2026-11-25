@@ -1,14 +1,13 @@
 ---
 title: Pemanasan mengetik singkat di pagi hari
 description: Mengapa latihan mengetik beberapa menit di pagi hari membantumu tetap mengetik 10 jari sepanjang hari.
-updated: 2026-10-28
+updated: 2026-11-25
 topic: method
 cover: cover.jpg
 coverAlt: Matahari terbit di balik tombol baris dasar dengan F dan J disorot, di samping cangkir yang mengepul
 translation: morgens-auffrischen
 translatedFrom: de
 order: 7
-draft: true
 ---
 
 Jika kamu sedang beralih ke mengetik 10 jari, mungkin kamu kenal pola ini. Saat latihan berhasil, tetapi begitu sebuah e-mail harus segera dikirim, kebiasaan lama kembali: dua jari, mata ke tombol, dan teknik baru hilang untuk sisa hari itu.

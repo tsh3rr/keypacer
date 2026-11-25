@@ -1,14 +1,13 @@
 ---
 title: Um aquecimento curto de dactilografia de manhã
 description: Porque alguns minutos de treino de manhã te ajudam a manter a escrita com os dez dedos ao longo de todo o dia.
-updated: 2026-10-28
+updated: 2026-11-25
 topic: method
 cover: cover.jpg
 coverAlt: Um sol a nascer atrás das teclas da fila base, com F e J em destaque, ao lado de uma caneca a fumegar
 translation: morgens-auffrischen
 translatedFrom: de
 order: 7
-draft: true
 ---
 
 Se estás a passar para a escrita com os dez dedos, conheces de certeza esta situação: no treino corre bem, mas basta um e-mail ter de seguir à pressa para os movimentos antigos voltarem. Dois dedos, os olhos no teclado, e o método novo fica esquecido até ao dia seguinte.

@@ -1,14 +1,13 @@
 ---
 title: A short typing warm-up in the morning
 description: Why a few minutes of typing practice in the morning help you stick with touch typing for the rest of the day.
-updated: 2026-10-28
+updated: 2026-11-25
 topic: method
 cover: cover.jpg
 coverAlt: A sun rising behind the home row keys with F and J highlighted, next to a steaming mug
 translation: morgens-auffrischen
 translatedFrom: de
 order: 7
-draft: true
 ---
 
 If you are switching to touch typing, you probably know this pattern. It works during practice, but the moment an email has to go out quickly, your old habits are back: two fingers, eyes on the keys, and the new technique is gone for the rest of the day.

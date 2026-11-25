@@ -1,14 +1,13 @@
 ---
 title: Krótka poranna rozgrzewka przy klawiaturze
 description: Dlaczego kilka minut ćwiczeń rano pomaga utrzymać pisanie bezwzrokowe przez cały dzień.
-updated: 2026-10-28
+updated: 2026-11-25
 topic: method
 cover: cover.jpg
 coverAlt: Słońce wschodzące za klawiszami rzędu podstawowego z wyróżnionymi F i J, obok parujący kubek
 translation: morgens-auffrischen
 translatedFrom: de
 order: 7
-draft: true
 ---
 
 Jeśli przestawiasz się na pisanie dziesięcioma palcami, pewnie to znasz: na ćwiczeniach wszystko działa, ale gdy trzeba szybko wysłać maila, wracają stare ruchy. Dwa palce, wzrok na klawiaturze i nowa metoda idzie w odstawkę do następnego dnia.

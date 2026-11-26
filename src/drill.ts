@@ -126,6 +126,13 @@ export interface DrillParams {
   hotBoost: number;
   /** Share of a drill's words that contain a hot key at heat 1 (scaled by heat). */
   hotCoverage: number;
+  /**
+   * Share of a core drill's words that contain each letter still blocking the next unlock, so a rare
+   * blocker such as z comes up in every drill instead of only when the sampling happens to pick it.
+   */
+  blockerCoverage: number;
+  /** At most this many blocking letters get that share at once, in unlock order. */
+  blockerMax: number;
 }
 
 export const DEFAULT_DRILL_PARAMS: Readonly<DrillParams> = Object.freeze({
@@ -187,6 +194,8 @@ export const DEFAULT_DRILL_PARAMS: Readonly<DrillParams> = Object.freeze({
   hotMax: 3,
   hotBoost: 0.6,
   hotCoverage: 0.35,
+  blockerCoverage: 0.15,
+  blockerMax: 3,
 });
 
 /** Speed tiers in WPM. Tier n (1-based) sets the per-key latency target T = 12,000 / WPM ms. */
@@ -716,6 +725,26 @@ export function nextDrill(
     }
   }
 
+  // Blockers: every letter that still keeps the next one locked gets its own share of a core drill's words.
+  // Rare letters (z, q, j) barely surface from the ranking alone, yet the unlock waits on them.
+  const blockers = kind === 'core' ? drillBlockers(model, state, allowed, p) : [];
+  if (blockers.length > 0) {
+    const hot = activeHotKeys(state).map((h) => h.key).filter((k) => allowed.has(k));
+    const keep = (w: string) => hits(w) || [...hot, ...blockers].some((k) => w.includes(k));
+    for (const b of blockers) {
+      const pool = candidates.filter((c) => c.word.includes(b));
+      const want = Math.ceil(p.blockerCoverage * picked.length);
+      for (let swaps = 0; swaps < p.maxSwaps && pool.length > 0; swaps++) {
+        if (picked.filter((c) => c.word.includes(b)).length >= want) break;
+        let slot = lowestWithout(picked, keep);
+        if (slot < 0) slot = lowestWithout(picked, (w) => blockers.some((k) => w.includes(k)));
+        if (slot < 0) break;
+        release(used, picked[slot].word);
+        picked[slot] = draw(pool);
+      }
+    }
+  }
+
   // Confusions: for a target key often typed as another unlocked key, add a word with that key too.
   for (const t of wordTargets) {
     const key = model.keys.find((k) => k.item === t);
@@ -728,7 +757,8 @@ export function nextDrill(
     picked[slot] = draw(pool);
   }
 
-  const baseWords = spaceOut(picked.map((c) => c.word), wordTargets, p.spacing, rand);
+  const spread = [...wordTargets, ...blockers.filter((b) => !wordTargets.includes(b))];
+  const baseWords = spaceOut(picked.map((c) => c.word), spread, p.spacing, rand);
   const blocked = corpusFilter(corpus);
   const words = decorate(baseWords, { open: openChars(state), focus: focusChars(state), targets, prio, rand, blocked }, p);
   return { text: words.join(' '), words, baseWords, targets, kind, paceWpm: state.paceWpm, seed };
@@ -954,6 +984,18 @@ function chooseTargets(
   // The focus key leads, then the keys missed in the last drills, ahead of whatever the sampling found.
   const lead = [...focusKeys.slice(0, 1), ...hotTargets(state)].filter((k, i, all) => all.indexOf(k) === i);
   return [...lead, ...picked.filter((k) => !lead.includes(k))].slice(0, Math.max(p.targets, lead.length));
+}
+
+/**
+ * Letters that block the next unlock and get a guaranteed share of the drill: the ones the
+ * progress view lists under the next letter, minus the focus key (already the lead target).
+ */
+export function drillBlockers(
+  model: WeaknessModel, state: CurriculumState, allowed: ReadonlySet<string>, p: DrillParams = DEFAULT_DRILL_PARAMS,
+): string[] {
+  return blockingKeys(model, state, p)
+    .filter((k) => k !== state.focusKey && allowed.has(k))
+    .slice(0, p.blockerMax);
 }
 
 /** Hot keys hot enough to be drill targets, hottest first: at most two, so the drill keeps some variety. */

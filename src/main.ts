@@ -173,8 +173,15 @@ wordFilterToggle.addEventListener('change', () => {
   inputEl.focus();
 });
 
+/** The text's letter spans, one per code point (words are wrapped in `.word` boxes, see renderText). */
+let charEls: HTMLElement[] = [];
+
 function renderText(): void {
   const frag = document.createDocumentFragment();
+  charEls = [];
+  // Each word sits in its own box, so a line can only break at a space. Firefox otherwise breaks a word
+  // at the cursor (its out-of-flow ::before), and the word jumps along the line ends as it is typed.
+  let word: HTMLElement | null = null;
   // The drill's single-key targets are underlined until typed.
   const focusKeys = new Set(drill?.targets.filter((k) => [...k].length === 1) ?? []);
   // Spread by code point so positions line up with TypingSession.position.
@@ -189,7 +196,18 @@ function renderText(): void {
     if (i > session.position && focusKeys.has(ch.toLowerCase())) cls.push('focus');
     if (ch === ' ') cls.push('sp');
     span.className = cls.join(' ');
-    frag.append(span);
+    charEls.push(span);
+    if (ch === ' ' || ch === '\n') {
+      word = null;
+      frag.append(span);
+      return;
+    }
+    if (!word) {
+      word = document.createElement('span');
+      word.className = 'word';
+      frag.append(word);
+    }
+    word.append(span);
   });
   textEl.replaceChildren(frag);
   const fresh = centredText !== session.text;
@@ -209,8 +227,7 @@ function centreText(): void {
   const box = textEl.getBoundingClientRect();
   let left = Infinity;
   let right = -Infinity;
-  for (const span of textEl.children) {
-    if (span.classList.contains('sp')) continue;
+  for (const span of textEl.querySelectorAll('.word')) {
     const r = span.getBoundingClientRect();
     left = Math.min(left, r.left);
     right = Math.max(right, r.right);
@@ -232,8 +249,8 @@ new ResizeObserver(() => { centreText(); scrollText(true); }).observe(textEl.par
  */
 function scrollText(instant: boolean): void {
   const wrap = textEl.parentElement;
-  const first = textEl.firstElementChild as HTMLElement | null;
-  const last = textEl.lastElementChild as HTMLElement | null;
+  const first = charEls[0] as HTMLElement | undefined;
+  const last = charEls[charEls.length - 1] as HTMLElement | undefined;
   const cur = textEl.querySelector<HTMLElement>('.current') ?? last;
   const style = getComputedStyle(textEl);
   const lh = parseFloat(style.lineHeight);
